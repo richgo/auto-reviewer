@@ -149,6 +149,16 @@ Invoke an **output skill** based on desired format:
 
 **Default:** Use `review-report.md` for comprehensive review comment.
 
+### Step 9: Adversarial Handoff (Optional)
+When adversarial mode is enabled, hand off to adversarial commands:
+
+- `adversarial-review` for a new run
+- `adversarial-resume` for an existing run
+
+Pass run identity fields: `repo`, `pr`, and `commit_sha`.
+
+If adversarial checks fail (for example provider/quorum issues), emit explicit `degraded` status metadata and continue baseline output flow.
+
 ## Example Orchestration
 
 **Input:** PR with Python Flask changes
