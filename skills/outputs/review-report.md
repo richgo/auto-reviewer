@@ -65,6 +65,11 @@ Transform aggregated code review findings into a well-formatted, actionable Mark
 
 ## Formatting Rules
 
+### Adversarial Metadata
+- Include a **confidence** class for each finding (`high-confidence`, `contested`, `debunked`).
+- Include a **consensus** score when available from adversarial routing.
+- Include a compact **debate summary** describing challenge/defense outcome for contested findings.
+
 ### 1. Emoji Usage
 - 🔴 Critical severity
 - 🟠 High severity
