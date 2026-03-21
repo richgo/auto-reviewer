@@ -35,6 +35,14 @@ class TestAdversarialAgentEntry(unittest.TestCase):
         self.assertIn("repo, pr, commit_sha", content)
         self.assertIn("transaction", content)
 
+    def test_adversarial_agent_entry_defines_explicit_round_order(self):
+        repo_root = Path(__file__).resolve().parents[3]
+        agent_path = repo_root / "agents" / "adversarial" / "agent.md"
+        content = agent_path.read_text(encoding="utf-8").lower()
+
+        self.assertIn("round order", content)
+        self.assertIn("detector -> challenger -> defender -> judge", content)
+
 
 if __name__ == "__main__":
     unittest.main()

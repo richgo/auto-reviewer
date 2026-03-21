@@ -15,6 +15,10 @@ Run adversarial review flows using role-based debate and confidence-bucket outpu
 - defender: defend challenged findings with evidence.
 - judge: arbitrate unresolved findings.
 
+### Round Order
+
+`detector -> challenger -> defender -> judge`
+
 ## Output Contract
 
 - `high-confidence`: findings with strong consensus.
