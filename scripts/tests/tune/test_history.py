@@ -30,6 +30,12 @@ class TestHistory(unittest.TestCase):
         self.assertEqual(rows[0]["run_id"], "run-1")
         self.assertTrue(rows[0]["accepted"])
 
+    def test_read_history_returns_empty_for_missing_file(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            history_file = Path(tmp_dir) / "missing.jsonl"
+            rows = read_history(history_file=history_file)
+        self.assertEqual(rows, [])
+
 
 if __name__ == "__main__":
     unittest.main()

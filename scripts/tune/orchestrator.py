@@ -55,6 +55,32 @@ def build_run_plan(
     return filtered
 
 
+def compose_run_plan(
+    *,
+    skills_dir: Path,
+    evals_dir: Path,
+    config_path: Path,
+    skills_filter: Optional[List[str]],
+    models_filter: Optional[List[str]],
+    trigger: str,
+    run_id: str,
+) -> List[Dict[str, str]]:
+    plan = build_plan(
+        skills_dir=skills_dir,
+        evals_dir=evals_dir,
+        config_path=config_path,
+        skills_filter=skills_filter,
+        models_filter=models_filter,
+    )
+    return build_run_plan(
+        pairs=plan,
+        skills_filter=skills_filter,
+        models_filter=models_filter,
+        trigger=trigger,
+        run_id=run_id,
+    )
+
+
 def update_model_scores_snapshot(
     *,
     scores_path: Path,
@@ -106,15 +132,10 @@ def main():
     args = parse_args()
     skills_filter = [token.strip() for token in args.skills.split(",")] if args.skills else None
     models_filter = [token.strip() for token in args.models.split(",")] if args.models else None
-    plan = build_plan(
+    run_plan = compose_run_plan(
         skills_dir=args.skills_dir,
         evals_dir=args.evals_dir,
         config_path=args.config,
-        skills_filter=None,
-        models_filter=None,
-    )
-    run_plan = build_run_plan(
-        pairs=plan,
         skills_filter=skills_filter,
         models_filter=models_filter,
         trigger=args.trigger,

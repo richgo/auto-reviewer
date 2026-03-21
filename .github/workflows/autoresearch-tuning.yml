@@ -70,3 +70,12 @@ jobs:
             --evals "evals/${{ matrix.skill }}.json" \
             --model "${{ matrix.model }}" \
             --history-file "tune-history/${{ matrix.skill }}/${{ matrix.model }}.jsonl"
+
+  promote:
+    needs: tune_pair
+    uses: ./.github/workflows/autoresearch-promote.yml
+    with:
+      skill: security-injection
+      model: gpt-4.1
+      run_id: ${{ github.run_id }}
+      base_branch: main

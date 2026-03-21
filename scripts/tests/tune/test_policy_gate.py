@@ -25,6 +25,15 @@ class TestPolicyGate(unittest.TestCase):
             )
         )
 
+    def test_should_accept_candidate_allows_improvement_within_fpr_tolerance(self):
+        accepted = should_accept_candidate(
+            baseline={"f1": 0.70, "fpr": 0.10},
+            candidate={"f1": 0.73, "fpr": 0.11},
+            min_f1_delta=0.01,
+            max_fpr_regression=0.02,
+        )
+        self.assertTrue(accepted)
+
 
 if __name__ == "__main__":
     unittest.main()

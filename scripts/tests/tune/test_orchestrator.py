@@ -4,7 +4,7 @@ from pathlib import Path
 
 import yaml
 
-from tune.orchestrator import build_plan, build_run_plan
+from tune.orchestrator import build_plan, build_run_plan, compose_run_plan
 
 
 class TestOrchestrator(unittest.TestCase):
@@ -64,6 +64,70 @@ class TestOrchestrator(unittest.TestCase):
                 {
                     "run_id": "run-123",
                     "trigger": "schedule",
+                    "skill": "security-injection",
+                    "model": "gpt-4.1",
+                }
+            ],
+        )
+
+    def test_build_plan_is_deterministic_for_repeated_calls(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills" / "concerns"
+            evals_dir = root / "evals"
+            skills_dir.mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+            for name in ["security-injection", "correctness", "concurrency"]:
+                (skills_dir / f"{name}.md").write_text("skill", encoding="utf-8")
+                (evals_dir / f"{name}.json").write_text("{}", encoding="utf-8")
+            config = root / "config.yaml"
+            config.write_text(yaml.safe_dump({"models": ["z-model", "a-model"]}), encoding="utf-8")
+
+            first = build_plan(
+                skills_dir=root / "skills",
+                evals_dir=evals_dir,
+                config_path=config,
+                skills_filter=None,
+                models_filter=None,
+            )
+            second = build_plan(
+                skills_dir=root / "skills",
+                evals_dir=evals_dir,
+                config_path=config,
+                skills_filter=None,
+                models_filter=None,
+            )
+
+        self.assertEqual(first, second)
+
+    def test_compose_run_plan_uses_cli_model_filter_when_config_has_no_models(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills" / "concerns"
+            evals_dir = root / "evals"
+            skills_dir.mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+            (skills_dir / "security-injection.md").write_text("skill", encoding="utf-8")
+            (evals_dir / "security-injection.json").write_text("{}", encoding="utf-8")
+            config = root / "config.yaml"
+            config.write_text(yaml.safe_dump({}), encoding="utf-8")
+
+            run_plan = compose_run_plan(
+                skills_dir=root / "skills",
+                evals_dir=evals_dir,
+                config_path=config,
+                skills_filter=["security-injection"],
+                models_filter=["gpt-4.1"],
+                trigger="manual",
+                run_id="manual-check",
+            )
+
+        self.assertEqual(
+            run_plan,
+            [
+                {
+                    "run_id": "manual-check",
+                    "trigger": "manual",
                     "skill": "security-injection",
                     "model": "gpt-4.1",
                 }

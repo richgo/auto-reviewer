@@ -52,6 +52,20 @@ class TestMutatorConstraints(unittest.TestCase):
         self.assertEqual(sorted(clusters.keys()), ["detected_bug", "no_false_positive"])
         self.assertEqual([row["case_id"] for row in clusters["detected_bug"]], ["case-1", "case-2"])
 
+    def test_constrain_candidates_respects_mutation_budget(self):
+        candidates = [
+            {"id": "a", "content": "line1"},
+            {"id": "b", "content": "line1"},
+            {"id": "c", "content": "line1"},
+        ]
+        selected = constrain_candidates(
+            candidates=candidates,
+            baseline_content="line1",
+            mutation_budget=2,
+            max_diff_lines=0,
+        )
+        self.assertEqual([row["id"] for row in selected], ["a", "b"])
+
 
 if __name__ == "__main__":
     unittest.main()
