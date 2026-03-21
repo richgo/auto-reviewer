@@ -4,7 +4,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from tune.autoresearch import should_accept_candidate
+from tune.autoresearch import is_stale_inputs, should_accept_candidate
 
 
 class TestPolicyGate(unittest.TestCase):
@@ -16,6 +16,14 @@ class TestPolicyGate(unittest.TestCase):
             max_fpr_regression=0.02,
         )
         self.assertFalse(accepted)
+
+    def test_is_stale_inputs_detects_hash_mismatch(self):
+        self.assertTrue(
+            is_stale_inputs(
+                recorded_hashes={"skill": "a1", "eval": "b1"},
+                current_hashes={"skill": "a2", "eval": "b1"},
+            )
+        )
 
 
 if __name__ == "__main__":

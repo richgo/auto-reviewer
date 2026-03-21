@@ -91,6 +91,10 @@ def should_accept_candidate(
     return f1_delta >= min_f1_delta and fpr_regression <= max_fpr_regression
 
 
+def is_stale_inputs(*, recorded_hashes: Dict[str, str], current_hashes: Dict[str, str]) -> bool:
+    return recorded_hashes != current_hashes
+
+
 class AutoResearcher:
     """
     Main autoresearch tuning loop.
