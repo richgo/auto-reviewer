@@ -18,19 +18,19 @@
 
 ## Phase 2: Orchestrator/Output Integration and Routing Rules
 
-- [ ] **2.1** Wire review orchestrator skill to adversarial mode handoff  
+- [x] **2.1** Wire review orchestrator skill to adversarial mode handoff  
   Update `skills/core/review-orchestrator.md` to call adversarial commands, pass run identity inputs, and require explicit degraded-status metadata when fallback is used. (Design: Augment Existing Review Path with Explicit Fallback)
 
-- [ ] **2.2** Define canonical finding fingerprint and SQL consensus routing rules  
+- [x] **2.2** Define canonical finding fingerprint and SQL consensus routing rules  
   Extend `agents/adversarial/agent.md` with canonical finding fields, fingerprinting rules, and deterministic SQL-backed routing to `high-confidence`, `contested`, and `debunked` buckets. (Design: SQL-Backed Consensus and Confidence Routing)
 
-- [ ] **2.3** Update review report output contract for adversarial metadata  
+- [x] **2.3** Update review report output contract for adversarial metadata  
   Update `skills/outputs/review-report.md` templates/examples to include confidence class, consensus score, and compact challenge/defense summary sections while keeping existing report structure stable. (Design: Components Affected outputs + Backwards Compatibility)
 
-- [ ] **2.4** Update inline comments output contract for adversarial metadata  
+- [x] **2.4** Update inline comments output contract for adversarial metadata  
   Update `skills/outputs/inline-comments.md` so inline findings include confidence indicator and short debate rationale without breaking existing platform comment payload conventions. (Design: Components Affected outputs)
 
-- [ ] **2.5** Document adversarial run/resume/cleanup lifecycle  
+- [x] **2.5** Document adversarial run/resume/cleanup lifecycle  
   Update `README.md` with adversarial command usage, SQLite storage location, retention/cleanup behavior, and fallback expectations for insufficient quorum/provider failures. (Design: Components Affected docs + Edge Cases)
 
 ## Phase 3: Testing & Verification
