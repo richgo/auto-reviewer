@@ -210,7 +210,11 @@ skills:
 3. **A/B test in production:**
    - Deploy calibrated skill to 10% of reviews
    - Monitor false positive rate vs. global skill
-   - Full rollout if FP rate drops without missing real bugs
+    - Full rollout if FP rate drops without missing real bugs
+
+### Workflow Permission Behavior
+
+If GitHub Actions lacks `contents: write` or `pull-requests: write`, tuning runs should still produce benchmark and history artifacts but skip promotion with explicit failed status. This keeps local calibration evidence available without silent promotion failures.
 
 ## Maintenance
 

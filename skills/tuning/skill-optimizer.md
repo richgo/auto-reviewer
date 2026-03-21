@@ -32,6 +32,17 @@ python scripts/tune/autoresearch.py \
   --log tune-logs/security-injection.jsonl
 ```
 
+### Scheduled Automation (Phase 3)
+
+Autoresearch runs are now expected to execute via GitHub workflows:
+
+- `.github/workflows/autoresearch-tuning.yml` handles weekly + dispatch + path-triggered runs.
+- `.github/workflows/autoresearch-promote.yml` handles branch-first promotion PR creation.
+- `tune-history/<skill>/<model>.jsonl` stores append-only decision history per pair.
+
+Promotion is gate-driven. Candidates must satisfy minimum F1 improvement and maximum FPR regression constraints from `scripts/tune/config.yaml`.
+Large diffs are labeled for manual review before merge.
+
 ### Parameters Explained
 
 - **--skill:** Path to skill markdown file to optimize
@@ -41,6 +52,8 @@ python scripts/tune/autoresearch.py \
 - **--target-pass-rate:** Stop when this pass rate is reached (0.90-0.95 recommended)
 - **--output:** Where to save optimized skill (can overwrite input)
 - **--log:** JSONL log of each iteration (for analysis)
+- **--history-file:** Append-only trajectory file for accepted/rejected decisions
+- **--dry-run:** Build/score the plan without persisting skill changes
 
 ### Typical Workflow
 

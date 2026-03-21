@@ -21,6 +21,14 @@ This will:
 3. Score results with binary assertions
 4. Output `benchmark-results/model_scores.json`
 
+### Automated Tuning Integration
+
+Phase 3 workflows consume benchmark outputs during gated promotion:
+
+- tune workflow screens candidates on failing subsets, then validates on full benchmark coverage.
+- accepted results update `skills/model-scores.yml` snapshots.
+- trajectory rows are appended to `tune-history/<skill>/<model>.jsonl` for auditability.
+
 ### Parameters
 
 - **--skills-dir:** Directory containing skill markdown files (default: `skills/`)
