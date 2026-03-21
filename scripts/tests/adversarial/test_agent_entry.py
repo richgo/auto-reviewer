@@ -21,6 +21,20 @@ class TestAdversarialAgentEntry(unittest.TestCase):
         self.assertIn("contested", content.lower())
         self.assertIn("debunked", content.lower())
 
+    def test_adversarial_agent_entry_defines_sqlite_persistence_contract(self):
+        repo_root = Path(__file__).resolve().parents[3]
+        agent_path = repo_root / "agents" / "adversarial" / "agent.md"
+        content = agent_path.read_text(encoding="utf-8").lower()
+
+        self.assertIn(".auto-reviewer/adversarial.db", content)
+        self.assertIn("runs", content)
+        self.assertIn("findings", content)
+        self.assertIn("stances", content)
+        self.assertIn("verdicts", content)
+        self.assertIn("cleanup", content)
+        self.assertIn("repo, pr, commit_sha", content)
+        self.assertIn("transaction", content)
+
 
 if __name__ == "__main__":
     unittest.main()

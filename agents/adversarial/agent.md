@@ -20,3 +20,10 @@ Run adversarial review flows using role-based debate and confidence-bucket outpu
 - `high-confidence`: findings with strong consensus.
 - `contested`: findings requiring human review.
 - `debunked`: findings rejected by adversarial debate.
+
+## SQLite Persistence Contract
+
+- database path: `.auto-reviewer/adversarial.db`
+- required tables: `runs`, `findings`, `stances`, `verdicts`, `cleanup_events`
+- resume key: `repo, pr, commit_sha`
+- transaction boundary: each debate round write is committed as a transaction
