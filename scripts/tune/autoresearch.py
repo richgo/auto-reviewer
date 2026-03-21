@@ -71,6 +71,14 @@ def select_top_candidate(candidates: List[Dict[str, Any]]) -> Dict[str, Any]:
     )[0]
 
 
+def reached_convergence(history: List[float], *, convergence_rounds: int, min_delta: float) -> bool:
+    if len(history) < convergence_rounds + 1:
+        return False
+    trailing = history[-(convergence_rounds + 1):]
+    best_before_last = max(trailing[:-1])
+    return (trailing[-1] - best_before_last) < min_delta
+
+
 class AutoResearcher:
     """
     Main autoresearch tuning loop.
