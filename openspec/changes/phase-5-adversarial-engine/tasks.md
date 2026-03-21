@@ -4,16 +4,16 @@
 
 ## Phase 1: Agent Contract and Local Persistence Foundations
 
-- [ ] **1.1** Create adversarial agent entry instructions  
+- [x] **1.1** Create adversarial agent entry instructions  
   Add `agents/adversarial/agent.md` with `adversarial-review`, `adversarial-resume`, and `adversarial-cleanup` command flow, role order (detector/challenger/defender/judge), and confidence-bucket output contract. (Design: Agent.md-Only Orchestration; Fixed Four-Role Debate Protocol)
 
-- [ ] **1.2** Define SQLite persistence contract for debate state  
+- [x] **1.2** Define SQLite persistence contract for debate state  
   In `agents/adversarial/agent.md`, define local DB path, required tables/keys (`runs`, `findings`, `stances`, `verdicts`, cleanup tracking), resume key semantics, and transaction boundaries for deterministic reruns. (Design: SQLite as Local Source of Truth)
 
-- [ ] **1.3** Add adversarial runtime config and local artifact ignore rules  
+- [x] **1.3** Add adversarial runtime config and local artifact ignore rules  
   Update `apm.yml` with additive `config.adversarial` defaults (panel size, round limits, db path, retention policy) and update `.gitignore` to exclude `.auto-reviewer/adversarial.db` plus transient artifact directories. (Design: API Changes + Migration/Backwards Compatibility)
 
-- [ ] **1.4** Add explicit post-merge cleanup contract  
+- [x] **1.4** Add explicit post-merge cleanup contract  
   Create `agents/adversarial/cleanup.md` (or equivalent section in `agents/adversarial/agent.md`) defining merge-triggered archive/purge flow, stale-row pruning, and idempotent SQLite vacuum behavior. (Design: Mandatory Post-Merge Cleanup)
 
 ## Phase 2: Orchestrator/Output Integration and Routing Rules
