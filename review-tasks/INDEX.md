@@ -74,18 +74,60 @@ Every task in the Security section is mapped to one or more [OWASP Cheat Sheets]
 - 🔲 [serverless-security](security/serverless-security.md) — medium `[OWASP: Serverless_FaaS_Security]`
 - 🔲 [multi-tenant-isolation](security/multi-tenant-isolation.md) — critical `[OWASP: Multi_Tenant_Security]`
 
-## Security — Mobile (3 tasks)
-- 🔲 [insecure-storage-mobile](security/insecure-storage-mobile.md) — high `[OWASP: Mobile_Application_Security]`
-- 🔲 [insecure-communication-mobile](security/insecure-communication-mobile.md) — high `[OWASP: Mobile_Application_Security, Pinning]`
-- 🔲 [insufficient-binary-protection](security/insufficient-binary-protection.md) — medium `[OWASP: Mobile_Application_Security]`
+## Security — Android (8 tasks) `[OWASP: Mobile_Application_Security, MASVS]`
+- 🔲 [android-insecure-storage](security/android/insecure-storage.md) — high — SharedPreferences/SQLite with plaintext secrets, world-readable files `[MASVS-STORAGE]`
+- 🔲 [android-exported-components](security/android/exported-components.md) — critical — exported Activities/Services/Receivers/Providers without permission checks `[MASVS-PLATFORM]`
+- 🔲 [android-intent-injection](security/android/intent-injection.md) — high — unvalidated Intent extras, implicit intents for sensitive ops `[MASVS-PLATFORM]`
+- 🔲 [android-webview-security](security/android/webview-security.md) — high — JavaScript enabled, file access, universal XSS in WebView `[MASVS-PLATFORM]`
+- 🔲 [android-insecure-crypto](security/android/insecure-crypto.md) — high — hardcoded keys, weak algorithms, missing Android Keystore usage `[MASVS-CRYPTO]`
+- 🔲 [android-network-security](security/android/network-security.md) — high — missing network_security_config, cleartext traffic, cert validation bypass `[MASVS-NETWORK]`
+- 🔲 [android-logging-sensitive-data](security/android/logging-sensitive-data.md) — medium — Log.d/Log.i with PII/tokens in release builds `[MASVS-STORAGE]`
+- 🔲 [android-backup-exposure](security/android/backup-exposure.md) — medium — allowBackup=true, unencrypted auto-backup exposing app data `[MASVS-STORAGE]`
+
+## Security — iOS (8 tasks) `[OWASP: Mobile_Application_Security, MASVS]`
+- 🔲 [ios-insecure-storage](security/ios/insecure-storage.md) — high — UserDefaults/plist with secrets, missing Keychain for sensitive data `[MASVS-STORAGE]`
+- 🔲 [ios-ats-bypass](security/ios/ats-bypass.md) — high — NSAllowsArbitraryLoads, NSExceptionDomains overrides disabling ATS `[MASVS-NETWORK]`
+- 🔲 [ios-url-scheme-hijack](security/ios/url-scheme-hijack.md) — high — custom URL schemes without validation, universal link misconfiguration `[MASVS-PLATFORM]`
+- 🔲 [ios-keychain-misuse](security/ios/keychain-misuse.md) — medium — wrong Keychain accessibility class, missing access control flags `[MASVS-CRYPTO]`
+- 🔲 [ios-pasteboard-leak](security/ios/pasteboard-leak.md) — medium — sensitive data copied to system pasteboard (UIPasteboard.general) `[MASVS-STORAGE]`
+- 🔲 [ios-screenshot-exposure](security/ios/screenshot-exposure.md) — low — sensitive screens not hidden during app backgrounding `[MASVS-STORAGE]`
+- 🔲 [ios-insecure-crypto](security/ios/insecure-crypto.md) — high — deprecated CommonCrypto usage, ECB mode, hardcoded IVs `[MASVS-CRYPTO]`
+- 🔲 [ios-jailbreak-detection-bypass](security/ios/jailbreak-detection-bypass.md) — medium — trivially bypassable jailbreak checks `[MASVS-RESILIENCE]`
+
+## Security — Mobile Shared (5 tasks) `[OWASP: Mobile_Application_Security, Pinning, MASVS]`
+- 🔲 [mobile-cert-pinning](security/mobile/cert-pinning.md) — high — missing certificate/public key pinning, bypassable implementations `[MASVS-NETWORK, Pinning]`
+- 🔲 [mobile-biometric-auth-bypass](security/mobile/biometric-auth-bypass.md) — high — local-only biometric check without backend token validation `[MASVS-AUTH]`
+- 🔲 [mobile-deep-link-hijack](security/mobile/deep-link-hijack.md) — high — unvalidated deep link parameters, open redirect via deep links `[MASVS-PLATFORM]`
+- 🔲 [mobile-binary-hardening](security/mobile/binary-hardening.md) — medium — missing obfuscation, debug symbols in release, anti-tamper checks `[MASVS-RESILIENCE]`
+- 🔲 [mobile-privacy-data-collection](security/mobile/privacy-data-collection.md) — medium — excessive permissions, tracking without consent, clipboard snooping `[MASVS-PRIVACY]`
 
 ## Security — Logging & Error Handling (2 tasks)
 - 🔲 [security-error-info-leak](security/security-error-info-leak.md) — medium `[OWASP: Error_Handling]`
 - 🔲 [security-logging](security/security-logging.md) — medium `[OWASP: Logging, Logging_Vocabulary]`
 
-## Security — Microservices (2 tasks)
-- 🔲 [microservices-auth](security/microservices-auth.md) — high `[OWASP: Microservices_Security, Microservices_based_Security_Arch_Doc]`
-- 🔲 [service-mesh-bypass](security/service-mesh-bypass.md) — high `[OWASP: Network_Segmentation, Microservices_Security]`
+## Security — Microservices (7 tasks) `[OWASP: Microservices_Security, Microservices_based_Security_Arch_Doc]`
+- 🔲 [microservices-auth](security/microservices/auth.md) — high — missing service-to-service auth, shared secrets between services
+- 🔲 [microservices-broken-trust-boundary](security/microservices/broken-trust-boundary.md) — critical — internal APIs trusting external input, missing gateway validation
+- 🔲 [microservices-data-exposure](security/microservices/data-exposure.md) — high — over-fetching across service boundaries, PII leaking between services
+- 🔲 [microservices-insecure-messaging](security/microservices/insecure-messaging.md) — high — unencrypted message queues, unsigned events, replay attacks
+- 🔲 [microservices-distributed-session](security/microservices/distributed-session.md) — medium — inconsistent session handling across services, JWT validation gaps
+- 🔲 [microservices-service-mesh-bypass](security/microservices/service-mesh-bypass.md) — high — direct pod-to-pod calls bypassing mesh policies `[OWASP: Network_Segmentation]`
+- 🔲 [microservices-cascading-failure](security/microservices/cascading-failure.md) — high — missing circuit breakers, unbounded retries causing cascading outages
+
+## Security — Web-Specific (consolidation)
+The following tasks are web-platform-specific and already listed in other sections:
+- XSS, DOM XSS → Injection
+- CSRF, clickjacking, CSP headers, CORS → Network & Client-Side
+- Cookie security, prototype pollution, third-party JS → Cookie & Client-Side
+- GraphQL, REST security → API & GraphQL
+- Session management, OAuth → Auth & Session
+
+Additional web-specific tasks:
+- 🔲 [web-csp-bypass](security/web/csp-bypass.md) — medium — CSP policies with unsafe-inline/unsafe-eval, nonce misuse
+- 🔲 [web-subresource-integrity](security/web/subresource-integrity.md) — medium — CDN scripts without SRI hashes
+- 🔲 [web-postmessage-origin](security/web/postmessage-origin.md) — high — `postMessage` without origin validation, `window.opener` attacks
+- 🔲 [web-client-side-storage](security/web/client-side-storage.md) — medium — tokens/secrets in localStorage, unencrypted IndexedDB
+- 🔲 [web-html-injection](security/web/html-injection.md) — medium — user content in meta tags, link injection, form action hijack
 
 ## Security — Framework-Specific (language skills reference)
 These map to **language skills** rather than standalone tasks. Each language skill should incorporate the relevant framework cheat sheet:
@@ -191,10 +233,13 @@ These OWASP cheat sheets inform the review system's design but aren't discrete c
 | Security — Supply Chain | 0 | 3 | 3 |
 | Security — DoS | 0 | 2 | 2 |
 | Security — Infrastructure | 0 | 5 | 5 |
-| Security — Mobile | 0 | 3 | 3 |
+| Security — Android | 0 | 8 | 8 |
+| Security — iOS | 0 | 8 | 8 |
+| Security — Mobile Shared | 0 | 5 | 5 |
+| Security — Web-Specific | 0 | 5 | 5 |
 | Security — Logging & Errors | 0 | 2 | 2 |
-| Security — Microservices | 0 | 2 | 2 |
-| **Security Total** | **8** | **44** | **52** |
+| Security — Microservices | 0 | 7 | 7 |
+| **Security Total** | **8** | **72** | **80** |
 | Concurrency | 3 | 2 | 5 |
 | Correctness | 2 | 4 | 6 |
 | Testing | 2 | 3 | 5 |
@@ -204,8 +249,25 @@ These OWASP cheat sheets inform the review system's design but aren't discrete c
 | Data | 2 | 2 | 4 |
 | Observability | 1 | 2 | 3 |
 | Code Quality | 1 | 4 | 5 |
-| **Grand Total** | **24** | **71** | **95** |
+| **Grand Total** | **24** | **99** | **123** |
 
 Plus 7 framework-specific security references mapped to language skills, and 12 process/architecture OWASP sheets informing system design.
 
+---
+
+## Platform Coverage Matrix
+
+Shows which review tasks apply to each platform. ● = primary, ○ = applicable.
+
+| Platform | Security Tasks | Key Concerns |
+|----------|---------------|--------------|
+| **Web** | XSS, DOM XSS, CSRF, clickjacking, CSP, CORS, cookies, prototype pollution, third-party JS, postMessage, SRI, client-side storage, HTML injection, session management, OAuth | 20+ dedicated tasks |
+| **Android** | exported components, intent injection, WebView, insecure storage (SharedPrefs/SQLite), network_security_config, logging, backup exposure, crypto (Keystore) | 8 dedicated + 5 shared mobile |
+| **iOS** | ATS bypass, URL scheme hijack, Keychain misuse, pasteboard leak, screenshot exposure, insecure crypto (CommonCrypto), jailbreak detection, insecure storage (UserDefaults) | 8 dedicated + 5 shared mobile |
+| **Mobile (shared)** | cert pinning, biometric auth bypass, deep link hijack, binary hardening, privacy/data collection | 5 cross-platform tasks |
+| **Microservices** | service auth, trust boundaries, data exposure, message queue security, distributed sessions, service mesh bypass, cascading failures | 7 dedicated tasks |
+| **API** | GraphQL, REST security, transaction authorization, input validation, mass assignment, auth bypass (BOLA/IDOR) | 6+ tasks across sections |
+| **Infrastructure** | Docker, IaC/K8s, CI/CD, serverless, multi-tenant | 5 dedicated tasks |
+
 **Full OWASP CheatSheetSeries coverage: 100/100 cheat sheets mapped.**
+**Full OWASP MASVS coverage: all 8 control groups mapped (STORAGE, CRYPTO, AUTH, NETWORK, PLATFORM, CODE, RESILIENCE, PRIVACY).**
