@@ -1,6 +1,6 @@
 import argparse
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import yaml
 
@@ -53,6 +53,41 @@ def build_run_plan(
             }
         )
     return filtered
+
+
+def update_model_scores_snapshot(
+    *,
+    scores_path: Path,
+    model: str,
+    skill: str,
+    metrics: Dict[str, Any],
+    accepted: bool,
+) -> bool:
+    if not accepted:
+        return False
+
+    payload = yaml.safe_load(scores_path.read_text(encoding="utf-8")) or {}
+    payload.setdefault("models", {})
+    payload["models"].setdefault(model, {})
+    payload["models"][model][skill] = {
+        "pass_rate": float(metrics.get("pass_rate", 0.0)),
+        "f1": float(metrics.get("f1", 0.0)),
+        "last_run": metrics.get("last_run"),
+    }
+    payload["last_updated"] = metrics.get("last_run")
+    scores_path.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
+    return True
+
+
+def build_trajectory_summary(*, history_rows: List[Dict[str, Any]]) -> Dict[str, Any]:
+    runs = len(history_rows)
+    accepted = sum(1 for row in history_rows if bool(row.get("accepted")))
+    accept_rate = (accepted / runs) if runs else 0.0
+    return {
+        "runs": runs,
+        "accepted": accepted,
+        "accept_rate": accept_rate,
+    }
 
 
 def parse_args(argv=None):
