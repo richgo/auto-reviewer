@@ -1,6 +1,6 @@
 import argparse
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import yaml
 
@@ -30,6 +30,31 @@ def build_plan(
     return [(skill_name, model) for skill_name in skill_names for model in models]
 
 
+def build_run_plan(
+    *,
+    pairs: List[Tuple[str, str]],
+    skills_filter: Optional[List[str]],
+    models_filter: Optional[List[str]],
+    trigger: str,
+    run_id: str,
+) -> List[Dict[str, str]]:
+    filtered = []
+    for skill_name, model in pairs:
+        if skills_filter and skill_name not in skills_filter:
+            continue
+        if models_filter and model not in models_filter:
+            continue
+        filtered.append(
+            {
+                "run_id": run_id,
+                "trigger": trigger,
+                "skill": skill_name,
+                "model": model,
+            }
+        )
+    return filtered
+
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Plan skill × model autoresearch runs")
     parser.add_argument("--skills-dir", type=Path, default=Path("skills"))
@@ -50,11 +75,18 @@ def main():
         skills_dir=args.skills_dir,
         evals_dir=args.evals_dir,
         config_path=args.config,
+        skills_filter=None,
+        models_filter=None,
+    )
+    run_plan = build_run_plan(
+        pairs=plan,
         skills_filter=skills_filter,
         models_filter=models_filter,
+        trigger=args.trigger,
+        run_id=args.run_id or "manual",
     )
-    for skill_name, model in plan:
-        print(f"{skill_name},{model}")
+    for row in run_plan:
+        print(f"{row['run_id']},{row['trigger']},{row['skill']},{row['model']}")
 
 
 if __name__ == "__main__":

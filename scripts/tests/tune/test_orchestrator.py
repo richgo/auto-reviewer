@@ -4,7 +4,7 @@ from pathlib import Path
 
 import yaml
 
-from tune.orchestrator import build_plan
+from tune.orchestrator import build_plan, build_run_plan
 
 
 class TestOrchestrator(unittest.TestCase):
@@ -41,6 +41,32 @@ class TestOrchestrator(unittest.TestCase):
                 ("correctness", "gpt-4.1"),
                 ("security-injection", "claude-sonnet-4-20250514"),
                 ("security-injection", "gpt-4.1"),
+            ],
+        )
+
+    def test_build_run_plan_applies_filters_trigger_and_run_id(self):
+        pairs = [
+            ("correctness", "claude-sonnet-4-20250514"),
+            ("correctness", "gpt-4.1"),
+            ("security-injection", "claude-sonnet-4-20250514"),
+            ("security-injection", "gpt-4.1"),
+        ]
+        run_plan = build_run_plan(
+            pairs=pairs,
+            skills_filter=["security-injection"],
+            models_filter=["gpt-4.1"],
+            trigger="schedule",
+            run_id="run-123",
+        )
+        self.assertEqual(
+            run_plan,
+            [
+                {
+                    "run_id": "run-123",
+                    "trigger": "schedule",
+                    "skill": "security-injection",
+                    "model": "gpt-4.1",
+                }
             ],
         )
 
