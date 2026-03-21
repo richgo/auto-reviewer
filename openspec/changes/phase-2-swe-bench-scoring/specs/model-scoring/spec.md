@@ -23,7 +23,7 @@ The system SHALL evaluate each benchmark result against the eval case's binary a
 - GIVEN a review output and an assertion to evaluate
 - WHEN the scorer judges the assertion
 - THEN it SHALL send a structured prompt to a judge model containing: the original code snippet, the review output, the assertion criteria, and instructions to respond with pass/fail and a one-line justification
-- AND it SHALL use a cheaper/faster model for judging (configurable, default: `claude-sonnet-4-20250514`)
+- AND it SHALL use a cheaper/faster model for judging via the Copilot SDK (configurable, default: `gpt-4.1`)
 - AND the judge prompt SHALL instruct strict binary evaluation with no subjective interpretation
 
 #### Scenario: Counter-Example Scoring

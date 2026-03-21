@@ -35,39 +35,42 @@ The system SHALL execute review skills against eval cases by sending the skill's
 - THEN it SHALL skip execution and reuse the cached result
 - AND it SHALL log that the result was cached
 
-### Requirement: Multi-Provider LLM Client
+### Requirement: Copilot SDK Integration
 
-The system SHALL support multiple LLM providers through a unified interface using raw HTTP (httpx).
+The system SHALL use the GitHub Copilot SDK (`github-copilot-sdk`) as the unified LLM client, providing access to all models through a single interface.
 
-#### Scenario: Anthropic API
+#### Scenario: Session-Based Model Access
 
-- GIVEN the environment variable `ANTHROPIC_API_KEY` is set
-- AND the target model starts with `claude-`
-- WHEN the harness sends a request
-- THEN it SHALL use the Anthropic Messages API (`/v1/messages`)
-- AND it SHALL extract token usage from the response `usage` field
+- GIVEN the Copilot CLI is installed and authenticated
+- AND a target model is specified (e.g., `claude-sonnet-4-20250514`, `gpt-4.1`, `gemini-2.5-pro`)
+- WHEN the harness creates a benchmark session
+- THEN it SHALL use `CopilotClient.create_session(model=<model>)` to create a session for each model
+- AND it SHALL send the skill's SKILL.md as the system message
+- AND it SHALL send the eval case's code snippet as the user prompt via `session.send_and_wait()`
+- AND it SHALL capture the response content, latency, and token usage
 
-#### Scenario: OpenAI-Compatible API
+#### Scenario: BYOK (Bring Your Own Key) Support
 
-- GIVEN the environment variable `OPENAI_API_KEY` is set
-- AND the target model does not start with `claude-` or `gemini-`
-- WHEN the harness sends a request
-- THEN it SHALL use the OpenAI Chat Completions API (`/v1/chat/completions`)
-- AND it SHALL support custom base URLs via `OPENAI_BASE_URL` for compatible providers (DeepSeek, Together, etc.)
+- GIVEN the user configures BYOK via provider settings
+- WHEN the harness runs with a BYOK model
+- THEN it SHALL pass the provider configuration to `create_session(provider=<config>)`
+- AND it SHALL support OpenAI, Anthropic, and Azure AI Foundry endpoints via BYOK
 
-#### Scenario: Google Gemini API
+#### Scenario: Available Models Discovery
 
-- GIVEN the environment variable `GOOGLE_API_KEY` is set
-- AND the target model starts with `gemini-`
-- WHEN the harness sends a request
-- THEN it SHALL use the Google Generative AI API
+- GIVEN the Copilot CLI is authenticated
+- WHEN the harness starts
+- THEN it SHALL call `client.list_models()` to discover available models
+- AND it SHALL validate requested models against the available list
+- AND it SHALL skip unavailable models with a warning (not fail the entire batch)
 
-#### Scenario: Missing API Key
+#### Scenario: Streaming for Latency Measurement
 
-- GIVEN a target model requires an API key that is not set
-- WHEN the harness attempts to execute
-- THEN it SHALL skip that model with a warning (not fail the entire batch)
-- AND it SHALL record the skip reason in the results
+- GIVEN streaming is enabled for a benchmark session
+- WHEN the harness measures latency
+- THEN it SHALL record time-to-first-token (TTFT) from `assistant.message_delta` events
+- AND it SHALL record total completion time from `session.idle` events
+- AND both metrics SHALL be stored in the result
 
 ### Requirement: Result Storage
 
