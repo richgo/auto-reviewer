@@ -64,6 +64,13 @@ def build_tuning_policy(*, config_path: Path, overrides: Dict[str, Any]) -> Tuni
     )
 
 
+def select_top_candidate(candidates: List[Dict[str, Any]]) -> Dict[str, Any]:
+    return sorted(
+        candidates,
+        key=lambda row: (-float(row.get("screen_score", 0.0)), str(row.get("id", ""))),
+    )[0]
+
+
 class AutoResearcher:
     """
     Main autoresearch tuning loop.
