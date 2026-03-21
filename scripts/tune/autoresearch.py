@@ -22,6 +22,9 @@ import sys
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
 from datetime import datetime
+from dataclasses import dataclass
+
+import yaml
 
 from rich.console import Console
 from rich.progress import track
@@ -32,6 +35,33 @@ from .mutator import Mutator
 
 
 console = Console()
+
+
+@dataclass(frozen=True)
+class TuningPolicy:
+    max_rounds: int
+    convergence_rounds: int
+    min_f1_delta: float
+    max_fpr_regression: float
+    dry_run: bool
+
+
+def build_tuning_policy(*, config_path: Path, overrides: Dict[str, Any]) -> TuningPolicy:
+    raw = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+
+    def _pick(name: str):
+        override_value = overrides.get(name)
+        if override_value is not None:
+            return override_value
+        return raw[name]
+
+    return TuningPolicy(
+        max_rounds=int(_pick("max_rounds")),
+        convergence_rounds=int(_pick("convergence_rounds")),
+        min_f1_delta=float(_pick("min_f1_delta")),
+        max_fpr_regression=float(_pick("max_fpr_regression")),
+        dry_run=bool(_pick("dry_run")),
+    )
 
 
 class AutoResearcher:
