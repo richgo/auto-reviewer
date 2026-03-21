@@ -1,0 +1,141 @@
+{
+  "description": "Eval cases for injection vulnerabilities: SQL injection, XSS, command injection, LDAP injection, NoSQL injection",
+  "skill": "security-injection",
+  "cases": [
+    {
+      "id": "sql-injection-001",
+      "name": "Python f-string SQL injection",
+      "description": "SQL query built with f-string interpolation",
+      "code_snippet": "def get_user(username):\n    query = f\"SELECT * FROM users WHERE username = '{username}'\"\n    cursor.execute(query)\n    return cursor.fetchone()",
+      "language": "python",
+      "expected_findings": [{
+        "type": "sql-injection",
+        "line": 2,
+        "description_contains": ["SQL injection", "f-string", "parameterized query"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "sql-injection-002",
+      "name": "Node.js template literal SQL injection",
+      "description": "SQL query built with template literal",
+      "code_snippet": "app.get('/users', (req, res) => {\n  const query = `SELECT * FROM users WHERE role = '${req.query.role}'`;\n  db.query(query, (err, results) => {\n    res.json(results);\n  });\n});",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "sql-injection",
+        "line": 2,
+        "description_contains": ["SQL injection", "template literal", "parameterized"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "xss-001",
+      "name": "React dangerouslySetInnerHTML XSS",
+      "description": "User content rendered with dangerouslySetInnerHTML",
+      "code_snippet": "function Comment({ comment }) {\n  return <div dangerouslySetInnerHTML={{ __html: comment.body }} />;\n}",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "xss",
+        "line": 2,
+        "description_contains": ["XSS", "dangerouslySetInnerHTML", "sanitize"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "command-injection-001",
+      "name": "Python subprocess shell injection",
+      "description": "Subprocess call with shell=True and user input",
+      "code_snippet": "import subprocess\nfilename = request.args.get('file')\nsubprocess.call(f'cat /var/logs/{filename}', shell=True)",
+      "language": "python",
+      "expected_findings": [{
+        "type": "command-injection",
+        "line": 3,
+        "description_contains": ["command injection", "shell=True", "argument list"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "nosql-injection-001",
+      "name": "MongoDB injection via unvalidated object",
+      "description": "MongoDB query with user-supplied object",
+      "code_snippet": "app.post('/login', (req, res) => {\n  db.collection('users').findOne({ username: req.body.username }, (err, user) => {\n    if (user) res.json({ success: true });\n  });\n});",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "nosql-injection",
+        "line": 2,
+        "description_contains": ["NoSQL injection", "validate", "type check"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "dom-xss-001",
+      "name": "DOM XSS via innerHTML",
+      "description": "Setting innerHTML from URL parameter",
+      "code_snippet": "const params = new URLSearchParams(window.location.search);\nconst msg = params.get('message');\ndocument.getElementById('output').innerHTML = msg;",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "dom-xss",
+        "line": 3,
+        "description_contains": ["DOM XSS", "innerHTML", "textContent"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "ldap-injection-001",
+      "name": "LDAP filter injection",
+      "description": "LDAP filter with unescaped user input",
+      "code_snippet": "def authenticate(username, password):\n    filter = f\"(&(uid={username})(password={password}))\"\n    result = ldap_conn.search_s(base_dn, ldap.SCOPE_SUBTREE, filter)\n    return len(result) > 0",
+      "language": "python",
+      "expected_findings": [{
+        "type": "ldap-injection",
+        "line": 2,
+        "description_contains": ["LDAP injection", "escape", "special characters"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "safe-sql-001",
+      "name": "Safe parameterized SQL query",
+      "description": "Correctly parameterized query should not be flagged",
+      "code_snippet": "def get_user(username):\n    cursor.execute(\"SELECT * FROM users WHERE username = %s\", (username,))\n    return cursor.fetchone()",
+      "language": "python",
+      "expected_findings": [],
+      "assertions": {
+        "no_false_positive": true
+      }
+    }
+  ]
+}

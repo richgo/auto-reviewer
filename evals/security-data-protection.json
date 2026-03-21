@@ -1,0 +1,100 @@
+{
+  "description": "Eval cases for data protection: secrets exposure, path traversal, insecure deserialization",
+  "skill": "security-data-protection",
+  "cases": [
+    {
+      "id": "secrets-exposure-001",
+      "name": "Hardcoded API key",
+      "description": "API key hardcoded in source",
+      "code_snippet": "API_KEY = \"sk-abc123456789\"\nSECRET_TOKEN = \"token-xyz\"",
+      "language": "python",
+      "expected_findings": [{
+        "type": "secrets-exposure",
+        "line": 1,
+        "description_contains": ["hardcoded", "secret", "environment variable"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "path-traversal-001",
+      "name": "Path traversal vulnerability",
+      "description": "File path constructed from user input without validation",
+      "code_snippet": "filename = request.args.get('file')\nwith open(f\"/var/uploads/{filename}\") as f:\n    return f.read()",
+      "language": "python",
+      "expected_findings": [{
+        "type": "path-traversal",
+        "line": 2,
+        "description_contains": ["path traversal", "canonicalize", "allowlist"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "insecure-deserialization-001",
+      "name": "Pickle deserialization",
+      "description": "Deserializing untrusted data with pickle",
+      "code_snippet": "import pickle\ndata = pickle.loads(user_input)",
+      "language": "python",
+      "expected_findings": [{
+        "type": "insecure-deserialization",
+        "line": 2,
+        "description_contains": ["deserialization", "pickle", "JSON"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "pii-logging-001",
+      "name": "PII in logs",
+      "description": "Sensitive data logged without redaction",
+      "code_snippet": "logger.info(f\"User login: {user.email} with password {password}\")",
+      "language": "python",
+      "expected_findings": [{
+        "type": "pii-exposure",
+        "line": 1,
+        "description_contains": ["PII", "password", "sensitive", "redact"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "insecure-crypto-001",
+      "name": "Weak encryption algorithm",
+      "description": "Using deprecated/weak crypto (MD5, DES)",
+      "code_snippet": "import hashlib\npassword_hash = hashlib.md5(password.encode()).hexdigest()",
+      "language": "python",
+      "expected_findings": [{
+        "type": "weak-crypto",
+        "line": 2,
+        "description_contains": ["MD5", "weak", "bcrypt", "argon2"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "safe-env-001",
+      "name": "Proper environment variable usage",
+      "description": "Reading secrets from environment should not be flagged",
+      "code_snippet": "import os\nAPI_KEY = os.environ.get('API_KEY')\nif not API_KEY:\n    raise ValueError('API_KEY not set')",
+      "language": "python",
+      "expected_findings": [],
+      "assertions": {
+        "no_false_positive": true
+      }
+    }
+  ]
+}

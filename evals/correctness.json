@@ -1,0 +1,98 @@
+{
+  "description": "Eval cases for correctness issues: null dereference, off-by-one, logic errors",
+  "skill": "correctness",
+  "cases": [
+    {
+      "id": "null-deref-001",
+      "name": "Null pointer dereference",
+      "description": "Accessing object without null check",
+      "code_snippet": "String name = user.getName();  // user might be null",
+      "language": "java",
+      "expected_findings": [{
+        "type": "null-deref",
+        "line": 1,
+        "description_contains": ["null", "NPE", "check"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "off-by-one-001",
+      "name": "Off-by-one error in loop",
+      "description": "Loop bounds cause array index out of bounds",
+      "code_snippet": "for i in range(len(array) + 1):\n    print(array[i])",
+      "language": "python",
+      "expected_findings": [{
+        "type": "off-by-one",
+        "line": 1,
+        "description_contains": ["off-by-one", "IndexError", "bounds"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "integer-overflow-001",
+      "name": "Integer overflow",
+      "description": "Multiplication can overflow",
+      "code_snippet": "int result = a * b;  // Can overflow for large values",
+      "language": "java",
+      "expected_findings": [{
+        "type": "integer-overflow",
+        "line": 1,
+        "description_contains": ["overflow", "Math.multiplyExact", "long"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "floating-point-comparison-001",
+      "name": "Floating point equality comparison",
+      "description": "Using == for float comparison",
+      "code_snippet": "if (price == 19.99) {\n    applyDiscount();\n}",
+      "language": "java",
+      "expected_findings": [{
+        "type": "floating-point-comparison",
+        "line": 1,
+        "description_contains": ["floating point", "epsilon", "compareTo"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "logic-inversion-001",
+      "name": "Inverted boolean logic",
+      "description": "Logic error in condition",
+      "code_snippet": "if (!user.isActive()) {\n    grantAccess();  // Should deny access\n}",
+      "language": "python",
+      "expected_findings": [{
+        "type": "logic-error",
+        "line": 1,
+        "description_contains": ["logic", "inverted", "condition"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "safe-null-check-001",
+      "name": "Proper null check",
+      "description": "Null-checked access should not be flagged",
+      "code_snippet": "if (user != null) {\n    String name = user.getName();\n    processName(name);\n}",
+      "language": "java",
+      "expected_findings": [],
+      "assertions": {
+        "no_false_positive": true
+      }
+    }
+  ]
+}

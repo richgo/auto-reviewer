@@ -1,0 +1,98 @@
+{
+  "description": "Eval cases for concurrency issues: race conditions, deadlocks, async misuse",
+  "skill": "concurrency",
+  "cases": [
+    {
+      "id": "race-condition-001",
+      "name": "Shared variable without synchronization",
+      "description": "Counter incremented by multiple threads without lock",
+      "code_snippet": "counter = 0\n\ndef increment():\n    global counter\n    counter += 1  # Not thread-safe",
+      "language": "python",
+      "expected_findings": [{
+        "type": "race-condition",
+        "line": 4,
+        "description_contains": ["race condition", "lock", "atomic", "thread-safe"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "async-misuse-001",
+      "name": "Sequential async operations",
+      "description": "Awaiting in loop instead of parallel execution",
+      "code_snippet": "for (const item of items) {\n  await processItem(item);\n}",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "async-misuse",
+        "line": 2,
+        "description_contains": ["sequential", "parallel", "Promise.all"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "deadlock-001",
+      "name": "Potential deadlock with nested locks",
+      "description": "Acquiring locks in inconsistent order",
+      "code_snippet": "def transfer(from_account, to_account, amount):\n    from_account.lock.acquire()\n    to_account.lock.acquire()\n    # Transfer logic\n    to_account.lock.release()\n    from_account.lock.release()",
+      "language": "python",
+      "expected_findings": [{
+        "type": "deadlock",
+        "line": 2,
+        "description_contains": ["deadlock", "lock order", "consistent"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "thread-unsafe-collection-001",
+      "name": "Thread-unsafe collection",
+      "description": "Using non-thread-safe collection from multiple threads",
+      "code_snippet": "Map<String, String> cache = new HashMap<>();\n\nvoid updateCache(String key, String value) {\n    cache.put(key, value);  // HashMap not thread-safe\n}",
+      "language": "java",
+      "expected_findings": [{
+        "type": "thread-unsafe-collection",
+        "line": 4,
+        "description_contains": ["HashMap", "ConcurrentHashMap", "thread-safe"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "missing-await-001",
+      "name": "Missing await on async function",
+      "description": "Async function called without await",
+      "code_snippet": "async function saveData(data) {\n  database.save(data);  // Should be await\n}\n\nasync function process() {\n  saveData(data);  // Missing await\n  return 'done';\n}",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "missing-await",
+        "line": 6,
+        "description_contains": ["missing await", "async", "promise"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "safe-concurrent-001",
+      "name": "Proper lock usage",
+      "description": "Synchronized access should not be flagged",
+      "code_snippet": "import threading\n\ncounter = 0\nlock = threading.Lock()\n\ndef increment():\n    global counter\n    with lock:\n        counter += 1",
+      "language": "python",
+      "expected_findings": [],
+      "assertions": {
+        "no_false_positive": true
+      }
+    }
+  ]
+}
