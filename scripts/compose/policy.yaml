@@ -1,0 +1,28 @@
+core:
+  - richgo/auto-reviewer/skills/core/review-orchestrator
+  - richgo/auto-reviewer/skills/core/diff-analysis
+
+fallback:
+  - richgo/auto-reviewer/skills/concerns/correctness
+  - richgo/auto-reviewer/skills/concerns/code-quality
+
+signals:
+  python:
+    patterns:
+      - "*.py"
+      - "requirements.txt"
+      - "pyproject.toml"
+    dependencies:
+      - richgo/auto-reviewer/skills/languages/python
+  typescript:
+    patterns:
+      - "*.ts"
+      - "*.tsx"
+      - "package.json"
+    dependencies:
+      - richgo/auto-reviewer/skills/languages/typescript
+  ci_github_actions:
+    patterns:
+      - ".github/workflows/"
+    dependencies:
+      - richgo/auto-reviewer/skills/outputs/inline-comments
