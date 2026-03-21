@@ -79,6 +79,18 @@ def reached_convergence(history: List[float], *, convergence_rounds: int, min_de
     return (trailing[-1] - best_before_last) < min_delta
 
 
+def should_accept_candidate(
+    *,
+    baseline: Dict[str, float],
+    candidate: Dict[str, float],
+    min_f1_delta: float,
+    max_fpr_regression: float,
+) -> bool:
+    f1_delta = float(candidate.get("f1", 0.0)) - float(baseline.get("f1", 0.0))
+    fpr_regression = float(candidate.get("fpr", 0.0)) - float(baseline.get("fpr", 0.0))
+    return f1_delta >= min_f1_delta and fpr_regression <= max_fpr_regression
+
+
 class AutoResearcher:
     """
     Main autoresearch tuning loop.
