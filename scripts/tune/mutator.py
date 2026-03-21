@@ -350,3 +350,19 @@ def constrain_candidates(
         if len(selected) >= mutation_budget:
             break
     return selected
+
+
+def cluster_failures(scores: List[Tuple[Dict[str, Any], EvalScore]]) -> Dict[str, List[Dict[str, Any]]]:
+    clusters: Dict[str, List[Dict[str, Any]]] = {}
+    for eval_case, score in scores:
+        case_id = str(eval_case.get("id", ""))
+        for assertion in score.assertion_results:
+            if assertion.passed:
+                continue
+            clusters.setdefault(assertion.name, []).append(
+                {
+                    "case_id": case_id,
+                    "reason": assertion.reason,
+                }
+            )
+    return clusters
