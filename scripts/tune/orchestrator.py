@@ -1,4 +1,5 @@
 import argparse
+import json
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -12,6 +13,7 @@ def build_plan(
     config_path: Path,
     skills_filter: Optional[List[str]],
     models_filter: Optional[List[str]],
+    skills_prefix: Optional[str] = None,
 ) -> List[Tuple[str, str]]:
     raw = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
     configured_models = [str(model) for model in raw.get("models", [])]
@@ -24,6 +26,8 @@ def build_plan(
         if not (evals_dir / f"{skill_name}.json").exists():
             continue
         if skills_filter and skill_name not in skills_filter:
+            continue
+        if skills_prefix and not skill_name.startswith(skills_prefix):
             continue
         skill_names.append(skill_name)
 
@@ -62,6 +66,7 @@ def compose_run_plan(
     config_path: Path,
     skills_filter: Optional[List[str]],
     models_filter: Optional[List[str]],
+    skills_prefix: Optional[str] = None,
     trigger: str,
     run_id: str,
 ) -> List[Dict[str, str]]:
@@ -71,6 +76,7 @@ def compose_run_plan(
         config_path=config_path,
         skills_filter=skills_filter,
         models_filter=models_filter,
+        skills_prefix=skills_prefix,
     )
     return build_run_plan(
         pairs=plan,
@@ -123,6 +129,13 @@ def parse_args(argv=None):
     parser.add_argument("--config", type=Path, default=Path(__file__).with_name("config.yaml"))
     parser.add_argument("--skills", help="Comma separated skill names")
     parser.add_argument("--models", help="Comma separated model ids")
+    parser.add_argument("--skills-prefix", help="Filter skills by name prefix (e.g. security-)")
+    parser.add_argument(
+        "--output-format",
+        choices=["csv", "github-matrix"],
+        default="csv",
+        help="Output format: csv (default) or github-matrix (JSON for GitHub Actions matrix)",
+    )
     parser.add_argument("--trigger", default="manual")
     parser.add_argument("--run-id")
     return parser.parse_args(argv)
@@ -138,11 +151,16 @@ def main():
         config_path=args.config,
         skills_filter=skills_filter,
         models_filter=models_filter,
+        skills_prefix=args.skills_prefix,
         trigger=args.trigger,
         run_id=args.run_id or "manual",
     )
-    for row in run_plan:
-        print(f"{row['run_id']},{row['trigger']},{row['skill']},{row['model']}")
+    if args.output_format == "github-matrix":
+        matrix_includes = [{"skill": row["skill"], "model": row["model"]} for row in run_plan]
+        print(json.dumps({"include": matrix_includes}))
+    else:
+        for row in run_plan:
+            print(f"{row['run_id']},{row['trigger']},{row['skill']},{row['model']}")
 
 
 if __name__ == "__main__":
