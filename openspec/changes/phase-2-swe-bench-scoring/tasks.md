@@ -25,34 +25,34 @@
 
 ## Phase 2: Scoring, Aggregation, and Reporting
 
-- [ ] **2.1** Build binary assertion judge module  
+- [x] **2.1** Build binary assertion judge module  
   Create `scripts/benchmark/judge.py` with strict pass/fail prompt templates, configurable judge model (default `gpt-4.1`), and robust response parsing. (Specs: model-scoring Assertion Types + LLM-as-Judge Scoring)
 
-- [ ] **2.2** Add eval assertion migration utility  
+- [x] **2.2** Add eval assertion migration utility  
   Create `scripts/benchmark/migrate_evals.py` and migrate `evals/*.json` from legacy assertion keys to binary assertion schema while preserving counter-example metadata. (Specs: model-scoring Binary Assertion Evaluation + Counter-Example Scoring)
 
-- [ ] **2.3** Implement assertion scoring pipeline and JSONL output  
+- [x] **2.3** Implement assertion scoring pipeline and JSONL output  
   Create `scripts/benchmark/scorer.py` and integrate with `runner.py` to evaluate each assertion, skip non-`no_false_positive` checks for counter examples, and write `assertion_results.jsonl`. (Specs: model-scoring Binary Assertion Evaluation scenarios)
 
-- [ ] **2.4** Implement aggregate metric calculations with confidence rules  
+- [x] **2.4** Implement aggregate metric calculations with confidence rules  
   Add aggregation logic in `scripts/benchmark/scorer.py` for pass_rate, detection/false-positive/actionability rates, precision/recall/F1, mean latency/tokens, stddev outputs, and low-confidence flags for `N < 5`. (Specs: model-scoring Aggregate Metrics scenarios)
 
-- [ ] **2.5** Generate model score matrix and best-model updates  
+- [x] **2.5** Generate model score matrix and best-model updates  
   Write `benchmark-results/<run-id>/model_scores.json` with required nested shape and update `skills/model-scores.yml` using F1 then pass_rate tie-breaks, including `needs tuning` flags when F1 <= 0.70. (Specs: model-scoring Matrix Generation + Best Model Selection)
 
-- [ ] **2.6** Add per-run and per-skill cost rollups  
+- [x] **2.6** Add per-run and per-skill cost rollups  
   Use token usage plus `scripts/benchmark/pricing.json` to compute estimated cost per `(skill, model)` and total run cost, and expose values in score outputs. (Spec: model-scoring Per-Run Cost Tracking)
 
-- [ ] **2.7** Extend reporter CLI formats and baseline comparison  
+- [x] **2.7** Extend reporter CLI formats and baseline comparison  
   Update `scripts/benchmark/reporter.py` to support `--format markdown|json|github` and `--compare-to` baseline inputs with shared report data assembly. (Specs: reporting JSON Export + GitHub Actions Output + Cross-Run Comparison)
 
-- [ ] **2.8** Implement markdown leaderboard, difficulty, and pairing sections  
+- [x] **2.8** Implement markdown leaderboard, difficulty, and pairing sections  
   Generate overall/per-category F1 leaderboard, hardest-to-easiest skill ranking with unsolved/trivial flags, and `recommended_pairings` based on complementary miss patterns. (Specs: reporting Model Leaderboard, Skill Difficulty Ranking, Adversarial Pairings)
 
-- [ ] **2.9** Implement heatmap export and regression reporting  
+- [x] **2.9** Implement heatmap export and regression reporting  
   Export `benchmark-results/<run-id>/heatmap.csv`, add emoji color bands in markdown, and produce `regressions` section for F1 drop > 0.05 and latency increase > 50%. (Specs: reporting Heatmap Data Export + Regression Detection)
 
-- [ ] **2.10** Implement GitHub summary outputs and failure signaling  
+- [x] **2.10** Implement GitHub summary outputs and failure signaling  
   For `--format github`, emit step-summary markdown, set outputs for overall pass rate and regression count, and return exit code 1 when regression thresholds are exceeded. (Spec: reporting GitHub Actions Output)
 
 ## Phase 3: Testing & Verification
