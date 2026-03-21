@@ -77,6 +77,29 @@ class TestBenchmarkReporter(unittest.TestCase):
             self.assertIn("trivial", report.lower())
             self.assertIn("recommended_pairings", report)
 
+    def test_generate_report_writes_heatmap_csv_rows(self):
+        current = {
+            "timestamp": "2026-03-21T00:00:00Z",
+            "models": {
+                "model-a": {"security-injection": {"f1": 0.95, "pass_rate": 0.95}},
+                "model-b": {"security-injection": {"f1": 0.65, "pass_rate": 0.65}},
+            },
+            "skills": ["security-injection"],
+        }
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp = Path(tmp_dir)
+            current_path = tmp / "current.json"
+            heatmap_path = tmp / "heatmap.csv"
+            current_path.write_text(json.dumps(current), encoding="utf-8")
+
+            reporter = BenchmarkReporter(current_path)
+            reporter.write_heatmap_csv(heatmap_path)
+
+            content = heatmap_path.read_text(encoding="utf-8")
+            self.assertIn("model,security-injection", content)
+            self.assertIn("model-a,0.95", content)
+            self.assertIn("model-b,0.65", content)
+
 
 if __name__ == "__main__":
     unittest.main()

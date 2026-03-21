@@ -10,6 +10,7 @@ Produces:
 """
 
 import argparse
+import csv
 import json
 from pathlib import Path
 from typing import Dict, List, Any, Tuple, Optional
@@ -315,6 +316,22 @@ class BenchmarkReporter:
         lines.append("```")
         
         return lines
+
+    def write_heatmap_csv(self, output_path: Path) -> None:
+        models = list(self.results.get("models", {}).keys())
+        skills = self.results.get("skills", [])
+        with output_path.open("w", newline="", encoding="utf-8") as handle:
+            writer = csv.writer(handle)
+            writer.writerow(["model", *skills])
+            for model in models:
+                row = [model, *self._heatmap_f1_values(model, skills)]
+                writer.writerow(row)
+
+    def _heatmap_f1_values(self, model: str, skills: List[str]) -> List[float]:
+        return [
+            self.results["models"].get(model, {}).get(skill, {}).get("f1", 0.0)
+            for skill in skills
+        ]
 
 
 def main():
