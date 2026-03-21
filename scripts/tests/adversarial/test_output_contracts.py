@@ -12,6 +12,14 @@ class TestAdversarialOutputContracts(unittest.TestCase):
         self.assertIn("consensus", content)
         self.assertIn("debate", content)
 
+    def test_inline_comments_mentions_confidence_and_debate_rationale(self):
+        repo_root = Path(__file__).resolve().parents[3]
+        inline_path = repo_root / "skills" / "outputs" / "inline-comments.md"
+        content = inline_path.read_text(encoding="utf-8").lower()
+
+        self.assertIn("confidence", content)
+        self.assertIn("debate", content)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -155,6 +155,11 @@ for comment in comments:
 - Post critical/high inline
 - Group medium/low in summary comment
 
+## Adversarial Metadata
+
+- include finding confidence in each inline comment body.
+- include short debate rationale when a finding is challenged or contested.
+
 ## Special Cases
 
 ### Multi-Line Findings
