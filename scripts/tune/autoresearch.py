@@ -332,8 +332,7 @@ Provide a code review following the skill's guidelines. Include:
             return random.choice(["add_platform_guidance", "remove_noise"])
 
 
-def main():
-    """CLI entry point."""
+def parse_args(argv=None):
     parser = argparse.ArgumentParser(
         description="Autoresearch tuning loop for code review skills"
     )
@@ -361,6 +360,42 @@ def main():
         help="Maximum optimization iterations"
     )
     parser.add_argument(
+        "--max-rounds",
+        type=int,
+        dest="max_rounds",
+        help="Maximum optimization rounds"
+    )
+    parser.add_argument(
+        "--convergence-rounds",
+        type=int,
+        help="Stop after N non-improving rounds"
+    )
+    parser.add_argument(
+        "--min-f1-delta",
+        type=float,
+        help="Minimum F1 gain required for acceptance"
+    )
+    parser.add_argument(
+        "--max-fpr-regression",
+        type=float,
+        help="Maximum allowed FPR regression"
+    )
+    parser.add_argument(
+        "--history-file",
+        type=Path,
+        help="Path to tuning history JSONL"
+    )
+    parser.add_argument(
+        "--config",
+        type=Path,
+        help="Path to tuning policy config"
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Plan tuning run without persisting mutations"
+    )
+    parser.add_argument(
         "--target-pass-rate",
         type=float,
         default=0.95,
@@ -376,8 +411,13 @@ def main():
         type=Path,
         help="Path for tuning log JSONL (default: tune-logs/<skill-name>.jsonl)"
     )
-    
-    args = parser.parse_args()
+
+    return parser.parse_args(argv)
+
+
+def main():
+    """CLI entry point."""
+    args = parse_args()
     
     # Set defaults
     if args.output is None:
