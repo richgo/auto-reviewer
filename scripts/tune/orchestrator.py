@@ -1,0 +1,61 @@
+import argparse
+from pathlib import Path
+from typing import List, Optional, Tuple
+
+import yaml
+
+
+def build_plan(
+    *,
+    skills_dir: Path,
+    evals_dir: Path,
+    config_path: Path,
+    skills_filter: Optional[List[str]],
+    models_filter: Optional[List[str]],
+) -> List[Tuple[str, str]]:
+    raw = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    configured_models = [str(model) for model in raw.get("models", [])]
+    models = sorted(models_filter or configured_models)
+
+    skill_names = []
+    concerns_dir = skills_dir / "concerns"
+    for skill_path in sorted(concerns_dir.glob("*.md")):
+        skill_name = skill_path.stem
+        if not (evals_dir / f"{skill_name}.json").exists():
+            continue
+        if skills_filter and skill_name not in skills_filter:
+            continue
+        skill_names.append(skill_name)
+
+    return [(skill_name, model) for skill_name in skill_names for model in models]
+
+
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="Plan skill × model autoresearch runs")
+    parser.add_argument("--skills-dir", type=Path, default=Path("skills"))
+    parser.add_argument("--evals-dir", type=Path, default=Path("evals"))
+    parser.add_argument("--config", type=Path, default=Path(__file__).with_name("config.yaml"))
+    parser.add_argument("--skills", help="Comma separated skill names")
+    parser.add_argument("--models", help="Comma separated model ids")
+    parser.add_argument("--trigger", default="manual")
+    parser.add_argument("--run-id")
+    return parser.parse_args(argv)
+
+
+def main():
+    args = parse_args()
+    skills_filter = [token.strip() for token in args.skills.split(",")] if args.skills else None
+    models_filter = [token.strip() for token in args.models.split(",")] if args.models else None
+    plan = build_plan(
+        skills_dir=args.skills_dir,
+        evals_dir=args.evals_dir,
+        config_path=args.config,
+        skills_filter=skills_filter,
+        models_filter=models_filter,
+    )
+    for skill_name, model in plan:
+        print(f"{skill_name},{model}")
+
+
+if __name__ == "__main__":
+    main()
