@@ -17,3 +17,7 @@ config:
     enabled: true
     min_models: 2
     cross_examination: true
+    panel_size: 3
+    max_rounds: 4
+    db_path: .auto-reviewer/adversarial.db
+    retention_days: 14
