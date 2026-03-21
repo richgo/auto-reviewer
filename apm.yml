@@ -1,0 +1,19 @@
+name: auto-reviewer
+version: 0.1.0
+description: Adversarial, multi-model code review — APM-packaged, self-tuning
+
+dependencies:
+  apm: []
+
+config:
+  outputs:
+    - inline-comments
+    - review-report
+  severity_threshold: medium
+  model_preference: auto
+  parallel_agents: 4
+  platform: auto
+  adversarial:
+    enabled: true
+    min_models: 2
+    cross_examination: true
