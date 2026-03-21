@@ -329,3 +329,24 @@ Return the FULL modified skill content with noise removed.
                 description=f"Failed: {str(e)}",
                 modified_skill=skill_content
             )
+
+
+def constrain_candidates(
+    *,
+    candidates: List[Dict[str, Any]],
+    baseline_content: str,
+    mutation_budget: int,
+    max_diff_lines: int,
+) -> List[Dict[str, Any]]:
+    baseline_lines = len(baseline_content.splitlines())
+    selected: List[Dict[str, Any]] = []
+    for candidate in candidates:
+        diff_lines = abs(len(candidate.get("content", "").splitlines()) - baseline_lines)
+        if diff_lines > max_diff_lines:
+            continue
+        row = dict(candidate)
+        row["diff_lines"] = diff_lines
+        selected.append(row)
+        if len(selected) >= mutation_budget:
+            break
+    return selected
