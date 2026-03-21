@@ -81,6 +81,36 @@ class BenchmarkReporter:
             "regressions": self._regressions(),
             "model_scores": self.results.get("models", {}),
         }
+
+    def generate_github_output(self) -> Dict[str, Any]:
+        json_payload = self.generate_json_report()
+        regressions = json_payload.get("regressions", [])
+        overall_pass_rates = self._collect_pass_rates()
+        overall_pass_rate = (
+            sum(overall_pass_rates) / len(overall_pass_rates)
+            if overall_pass_rates
+            else 0.0
+        )
+        summary_lines = [
+            "## Benchmark Summary",
+            "",
+            f"- Overall pass rate: {overall_pass_rate:.1%}",
+            f"- Regressions: {len(regressions)}",
+        ]
+        return {
+            "summary_markdown": "\n".join(summary_lines),
+            "outputs": {
+                "overall_pass_rate": round(overall_pass_rate, 6),
+                "regression_count": len(regressions),
+            },
+            "exit_code": 1 if regressions else 0,
+        }
+
+    def _collect_pass_rates(self) -> List[float]:
+        pass_rates: List[float] = []
+        for model_scores in self.results.get("models", {}).values():
+            pass_rates.extend(score.get("pass_rate", 0.0) for score in model_scores.values())
+        return pass_rates
     
     def _model_leaderboard(self) -> List[str]:
         """Generate model leaderboard section."""

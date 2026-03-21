@@ -100,6 +100,36 @@ class TestBenchmarkReporter(unittest.TestCase):
             self.assertIn("model-a,0.95", content)
             self.assertIn("model-b,0.65", content)
 
+    def test_generate_github_output_sets_summary_outputs_and_exit_code(self):
+        current = {
+            "timestamp": "2026-03-21T00:00:00Z",
+            "models": {
+                "gpt-4.1": {"security-injection": {"f1": 0.80, "pass_rate": 0.80, "mean_latency_ms": 1000}}
+            },
+            "skills": ["security-injection"],
+        }
+        baseline = {
+            "timestamp": "2026-03-20T00:00:00Z",
+            "models": {
+                "gpt-4.1": {"security-injection": {"f1": 0.90, "pass_rate": 0.90, "mean_latency_ms": 600}}
+            },
+            "skills": ["security-injection"],
+        }
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp = Path(tmp_dir)
+            current_path = tmp / "current.json"
+            baseline_path = tmp / "baseline.json"
+            current_path.write_text(json.dumps(current), encoding="utf-8")
+            baseline_path.write_text(json.dumps(baseline), encoding="utf-8")
+
+            reporter = BenchmarkReporter(current_path, compare_to=baseline_path)
+            payload = reporter.generate_github_output()
+
+            self.assertIn("summary_markdown", payload)
+            self.assertIn("outputs", payload)
+            self.assertEqual(payload["outputs"]["regression_count"], 1)
+            self.assertEqual(payload["exit_code"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()
