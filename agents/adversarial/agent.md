@@ -27,3 +27,10 @@ Run adversarial review flows using role-based debate and confidence-bucket outpu
 - required tables: `runs`, `findings`, `stances`, `verdicts`, `cleanup_events`
 - resume key: `repo, pr, commit_sha`
 - transaction boundary: each debate round write is committed as a transaction
+
+## Canonical Finding and Consensus Routing
+
+- normalize each finding into a canonical record before challenge/defense rounds.
+- generate a deterministic fingerprint for each canonical finding to cluster duplicates.
+- use SQL aggregation over `findings`, `stances`, and `verdicts` for routing.
+- route findings into: `high-confidence`, `contested`, `debunked`.
