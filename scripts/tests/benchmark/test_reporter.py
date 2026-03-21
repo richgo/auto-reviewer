@@ -44,6 +44,39 @@ class TestBenchmarkReporter(unittest.TestCase):
             self.assertEqual(len(payload["regressions"]), 1)
             self.assertEqual(payload["regressions"][0]["skill"], "security-injection")
 
+    def test_generate_report_includes_unsolved_trivial_and_pairings(self):
+        current = {
+            "timestamp": "2026-03-21T00:00:00Z",
+            "models": {
+                "model-a": {
+                    "security-injection": {"f1": 0.96, "pass_rate": 0.96, "mean_latency_ms": 400},
+                    "correctness": {"f1": 0.50, "pass_rate": 0.50, "mean_latency_ms": 450},
+                },
+                "model-b": {
+                    "security-injection": {"f1": 0.97, "pass_rate": 0.97, "mean_latency_ms": 380},
+                    "correctness": {"f1": 0.62, "pass_rate": 0.62, "mean_latency_ms": 420},
+                },
+            },
+            "skills": ["security-injection", "correctness"],
+            "assertion_results": [
+                {"skill_name": "correctness", "model_id": "model-a", "eval_case_id": "e1", "assertion_name": "detected_bug", "status": "pass"},
+                {"skill_name": "correctness", "model_id": "model-b", "eval_case_id": "e1", "assertion_name": "detected_bug", "status": "fail"},
+                {"skill_name": "correctness", "model_id": "model-a", "eval_case_id": "e2", "assertion_name": "detected_bug", "status": "fail"},
+                {"skill_name": "correctness", "model_id": "model-b", "eval_case_id": "e2", "assertion_name": "detected_bug", "status": "pass"},
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp = Path(tmp_dir)
+            current_path = tmp / "current.json"
+            current_path.write_text(json.dumps(current), encoding="utf-8")
+
+            reporter = BenchmarkReporter(current_path)
+            report = reporter.generate_report()
+
+            self.assertIn("unsolved", report.lower())
+            self.assertIn("trivial", report.lower())
+            self.assertIn("recommended_pairings", report)
+
 
 if __name__ == "__main__":
     unittest.main()

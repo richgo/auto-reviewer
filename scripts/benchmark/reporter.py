@@ -180,6 +180,8 @@ class BenchmarkReporter:
         
         lines.append("| Rank | Skill | Avg Pass Rate | Difficulty |")
         lines.append("|------|-------|---------------|------------|")
+        unsolved_skills: List[str] = []
+        trivial_skills: List[str] = []
         
         for rank, (skill, avg) in enumerate(skill_avgs, 1):
             if avg < 0.5:
@@ -192,6 +194,13 @@ class BenchmarkReporter:
                 difficulty = "🟢 Easy"
             
             lines.append(f"| {rank} | {skill} | {avg:.1%} | {difficulty} |")
+            if avg < 0.70:
+                unsolved_skills.append(skill)
+            if avg > 0.95:
+                trivial_skills.append(skill)
+
+        lines.append("")
+        lines.extend(self._difficulty_labels(unsolved_skills, trivial_skills))
         
         return lines
     
@@ -227,6 +236,8 @@ class BenchmarkReporter:
             "## Adversarial Pairing Recommendations",
             "",
             "Model combinations that complement each other (different strengths):",
+            "",
+            "recommended_pairings",
             ""
         ]
         
@@ -269,6 +280,13 @@ class BenchmarkReporter:
             lines.append("*(All models perform similarly)*")
         
         return lines
+
+    @staticmethod
+    def _difficulty_labels(unsolved_skills: List[str], trivial_skills: List[str]) -> List[str]:
+        return [
+            f"unsolved: {', '.join(unsolved_skills) if unsolved_skills else '(none)'}",
+            f"trivial: {', '.join(trivial_skills) if trivial_skills else '(none)'}",
+        ]
     
     def _heatmap_data(self) -> List[str]:
         """Generate heatmap data section."""
