@@ -12,7 +12,6 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Any
 from datetime import datetime
-from collections import defaultdict
 
 from rich.console import Console
 from rich.table import Table
@@ -202,6 +201,8 @@ Provide a code review following the skill's guidelines. Include:
             "models": {},
             "skills": [pair[2] for pair in pairs]
         }
+        assertion_results_path = self.output_dir / "assertion_results.jsonl"
+        assertion_results_path.write_text("", encoding="utf-8")
         
         for model in self.models:
             results["models"][model] = {}
@@ -238,6 +239,13 @@ Provide a code review following the skill's guidelines. Include:
                         "total_cases": result["total_cases"],
                         "last_run": result["last_run"]
                     }
+                    self._append_assertion_stub(
+                        assertion_results_path,
+                        skill_name=skill_name,
+                        model=model,
+                        pass_rate=result["pass_rate"],
+                        timestamp=result["last_run"],
+                    )
                     
                     progress.advance(task)
         
@@ -271,6 +279,28 @@ Provide a code review following the skill's guidelines. Include:
             table.add_row(*row)
         
         console.print(table)
+
+    @staticmethod
+    def _append_assertion_stub(
+        output_path: Path,
+        *,
+        skill_name: str,
+        model: str,
+        pass_rate: float,
+        timestamp: str,
+    ) -> None:
+        with output_path.open("a", encoding="utf-8") as assertion_handle:
+            assertion_handle.write(
+                json.dumps(
+                    {
+                        "skill_name": skill_name,
+                        "model_id": model,
+                        "pass_rate": pass_rate,
+                        "timestamp": timestamp,
+                    }
+                )
+                + "\n"
+            )
 
 
 def main():
