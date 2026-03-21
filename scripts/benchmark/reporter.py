@@ -70,6 +70,11 @@ class BenchmarkReporter:
         
         # Heatmap data
         lines.extend(self._heatmap_data())
+
+        regressions = self._regressions()
+        if regressions:
+            lines.append("")
+            lines.extend(self._regressions_section(regressions))
         
         return "\n".join(lines)
 
@@ -344,6 +349,8 @@ class BenchmarkReporter:
         
         lines.append(json.dumps(heatmap, indent=2))
         lines.append("```")
+        lines.append("")
+        lines.append(self._heatmap_emoji_legend())
         
         return lines
 
@@ -362,6 +369,35 @@ class BenchmarkReporter:
             self.results["models"].get(model, {}).get(skill, {}).get("f1", 0.0)
             for skill in skills
         ]
+
+    def _heatmap_emoji_legend(self) -> str:
+        cells: List[str] = []
+        for skill in self.results.get("skills", []):
+            for model in self.results.get("models", {}).keys():
+                f1 = float(self.results["models"].get(model, {}).get(skill, {}).get("f1", 0.0))
+                cells.append(self._heatmap_emoji(f1))
+        return self._emoji_legend_text(cells)
+
+    @staticmethod
+    def _emoji_legend_text(cells: List[str]) -> str:
+        return " ".join(cells)
+
+    @staticmethod
+    def _heatmap_emoji(f1: float) -> str:
+        if f1 >= 0.90:
+            return "🟢"
+        if f1 >= 0.70:
+            return "🟡"
+        return "🔴"
+
+    @staticmethod
+    def _regressions_section(regressions: List[Dict[str, Any]]) -> List[str]:
+        lines = ["## Regressions", "", "| Model | Skill | F1 Drop | Latency Increase |", "|-------|-------|---------|------------------|"]
+        for row in regressions:
+            lines.append(
+                f"| {row['model']} | {row['skill']} | {row['f1_drop']:.3f} | {row['latency_increase_pct']:.1f}% |"
+            )
+        return lines
 
 
 def main():

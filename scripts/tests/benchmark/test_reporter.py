@@ -130,6 +130,41 @@ class TestBenchmarkReporter(unittest.TestCase):
             self.assertEqual(payload["outputs"]["regression_count"], 1)
             self.assertEqual(payload["exit_code"], 1)
 
+    def test_generate_report_includes_regressions_and_emoji_heatmap(self):
+        current = {
+            "timestamp": "2026-03-21T00:00:00Z",
+            "models": {
+                "model-a": {
+                    "security-injection": {"f1": 0.95, "pass_rate": 0.95, "mean_latency_ms": 900},
+                    "correctness": {"f1": 0.65, "pass_rate": 0.65, "mean_latency_ms": 1200},
+                }
+            },
+            "skills": ["security-injection", "correctness"],
+        }
+        baseline = {
+            "timestamp": "2026-03-20T00:00:00Z",
+            "models": {
+                "model-a": {
+                    "security-injection": {"f1": 0.98, "pass_rate": 0.98, "mean_latency_ms": 600},
+                    "correctness": {"f1": 0.80, "pass_rate": 0.80, "mean_latency_ms": 700},
+                }
+            },
+            "skills": ["security-injection", "correctness"],
+        }
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp = Path(tmp_dir)
+            current_path = tmp / "current.json"
+            baseline_path = tmp / "baseline.json"
+            current_path.write_text(json.dumps(current), encoding="utf-8")
+            baseline_path.write_text(json.dumps(baseline), encoding="utf-8")
+
+            reporter = BenchmarkReporter(current_path, compare_to=baseline_path)
+            report = reporter.generate_report()
+
+            self.assertIn("## Regressions", report)
+            self.assertIn("🟢", report)
+            self.assertIn("🔴", report)
+
 
 if __name__ == "__main__":
     unittest.main()
