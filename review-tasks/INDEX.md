@@ -4,6 +4,17 @@
 - ✅ Complete (has eval cases + counter-examples + assertions)
 - ✅ Planned (needs content)
 
+## Platform Organization Convention
+Every category follows a strict platform subfolder structure:
+- **android/** — Android-specific tasks
+- **ios/** — iOS-specific tasks
+- **web/** — Web-specific tasks (browser, frontend frameworks)
+- **microservices/** — Microservices/distributed systems tasks
+
+Tasks at the category root level are **truly universal** and apply across all platforms (e.g., null-deref, race-condition, n-plus-one for server APIs).
+
+Platform-specific tasks (even if just web-centric) belong in their respective subfolder for consistency.
+
 ## OWASP Coverage
 Every task in the Security section is mapped to one or more [OWASP Cheat Sheets](https://github.com/OWASP/CheatSheetSeries). The `[OWASP: ...]` tag shows the mapping.
 
@@ -184,10 +195,9 @@ These OWASP cheat sheets inform the review system's design but aren't discrete c
 
 ---
 
-## Correctness — General (6 tasks)
+## Correctness — General (5 tasks)
 - ✅ [null-deref](correctness/null-deref.md) — high — `[all platforms]`
 - ✅ [off-by-one](correctness/off-by-one.md) — medium — `[all platforms]`
-- ✅ [type-coercion](correctness/type-coercion.md) — medium — `[web (JS)]`
 - ✅ [integer-overflow](correctness/integer-overflow.md) — high — `[all platforms]`
 - ✅ [floating-point-comparison](correctness/floating-point-comparison.md) — medium — `[all platforms]`
 - ✅ [logic-inversion](correctness/logic-inversion.md) — medium — `[all platforms]`
@@ -201,6 +211,9 @@ These OWASP cheat sheets inform the review system's design but aren't discrete c
 - ✅ [ios-force-unwrap](correctness/ios/force-unwrap.md) — high — force unwrapping optionals (!) without guard, implicitly unwrapped optionals in production
 - ✅ [ios-retain-cycle](correctness/ios/retain-cycle.md) — high — strong reference cycles in closures (missing [weak self]), delegate not weak, NotificationCenter leaks
 - ✅ [ios-lifecycle-bugs](correctness/ios/lifecycle-bugs.md) — medium — UIKit access before viewDidLoad, state corruption across scene lifecycle, background task expiration
+
+## Correctness — Web (1 task)
+- ✅ [web-type-coercion](correctness/web/type-coercion.md) — medium — JavaScript type coercion bugs (==  vs ===, truthiness, NaN comparisons, string concatenation as addition)
 
 ## Correctness — Microservices (3 tasks)
 - ✅ [microservices-eventual-consistency](correctness/microservices/eventual-consistency.md) — high — reading stale data across services, missing saga compensation, split-brain state
@@ -234,13 +247,11 @@ These OWASP cheat sheets inform the review system's design but aren't discrete c
 
 ---
 
-## Performance — General (6 tasks)
+## Performance — General (4 tasks)
 - ✅ [n-plus-one](performance/n-plus-one.md) — high — `[web, api, microservices]`
 - ✅ [algorithmic-complexity](performance/algorithmic-complexity.md) — medium — `[all platforms]`
 - ✅ [memory-leak](performance/memory-leak.md) — high — `[all platforms]`
 - ✅ [unbounded-growth](performance/unbounded-growth.md) — medium — `[all platforms]`
-- ✅ [bundle-size](performance/bundle-size.md) — low — `[web]`
-- ✅ [unnecessary-rerender](performance/unnecessary-rerender.md) — medium — `[web (React/Vue)]`
 
 ## Performance — Android (3 tasks)
 - ✅ [android-overdraw](performance/android/overdraw.md) — medium — nested backgrounds, redundant draw passes, missing clipRect optimization
@@ -252,7 +263,9 @@ These OWASP cheat sheets inform the review system's design but aren't discrete c
 - ✅ [ios-autolayout-perf](performance/ios/autolayout-perf.md) — medium — deeply nested constraint hierarchies, excessive intrinsicContentSize calls, missing stackview optimization
 - ✅ [ios-large-asset-loading](performance/ios/large-asset-loading.md) — medium — loading full-res images without downsampling, missing NSCache, no progressive loading
 
-## Performance — Web (2 tasks)
+## Performance — Web (4 tasks)
+- ✅ [web-bundle-size](performance/web/bundle-size.md) — low — large bundles without tree-shaking, missing code splitting, unoptimized dependencies
+- ✅ [web-unnecessary-rerender](performance/web/unnecessary-rerender.md) — medium — React/Vue re-renders from missing memoization, incorrect dependencies, prop drilling
 - ✅ [web-core-web-vitals](performance/web/core-web-vitals.md) — medium — LCP/CLS/INP regressions: large images without lazy loading, layout shifts, long input delays
 - ✅ [web-hydration-mismatch](performance/web/hydration-mismatch.md) — medium — SSR/client hydration mismatches causing double renders, missing Suspense boundaries
 
@@ -346,12 +359,11 @@ These OWASP cheat sheets inform the review system's design but aren't discrete c
 
 ---
 
-## Code Quality — General (5 tasks)
+## Code Quality — General (4 tasks)
 - ✅ [dead-code](code-quality/dead-code.md) — low — `[all platforms]`
 - ✅ [naming-readability](code-quality/naming-readability.md) — low — `[all platforms]`
 - ✅ [dry-violations](code-quality/dry-violations.md) — low — `[all platforms]`
 - ✅ [missing-documentation](code-quality/missing-documentation.md) — low — `[all platforms]`
-- ✅ [accessibility](code-quality/accessibility.md) — medium — `[web]`
 
 ## Code Quality — Android (2 tasks)
 - ✅ [android-accessibility](code-quality/android/accessibility.md) — medium — missing contentDescription, insufficient touch targets (<48dp), no TalkBack support
@@ -360,6 +372,9 @@ These OWASP cheat sheets inform the review system's design but aren't discrete c
 ## Code Quality — iOS (2 tasks)
 - ✅ [ios-accessibility](code-quality/ios/accessibility.md) — medium — missing accessibilityLabel, no VoiceOver support, insufficient Dynamic Type scaling
 - ✅ [ios-deprecated-api](code-quality/ios/deprecated-api.md) — low — using deprecated UIKit/Foundation APIs without availability checks, missing #available guards
+
+## Code Quality — Web (1 task)
+- ✅ [web-accessibility](code-quality/web/accessibility.md) — medium — missing ARIA labels, insufficient keyboard navigation, color contrast issues, semantic HTML violations
 
 ## Code Quality — Microservices (2 tasks)
 - ✅ [microservices-api-documentation](code-quality/microservices/api-documentation.md) — medium — no OpenAPI spec, missing endpoint documentation, undocumented error codes
@@ -394,9 +409,10 @@ These OWASP cheat sheets inform the review system's design but aren't discrete c
 | Concurrency — Web | 0 | 2 | 2 |
 | Concurrency — Microservices | 0 | 3 | 3 |
 | **Concurrency Total** | **3** | **13** | **16** |
-| Correctness — General | 2 | 4 | 6 |
+| Correctness — General | 2 | 3 | 5 |
 | Correctness — Android | 0 | 3 | 3 |
 | Correctness — iOS | 0 | 3 | 3 |
+| Correctness — Web | 0 | 1 | 1 |
 | Correctness — Microservices | 0 | 3 | 3 |
 | **Correctness Total** | **2** | **13** | **15** |
 | Testing — General | 2 | 3 | 5 |
@@ -405,10 +421,10 @@ These OWASP cheat sheets inform the review system's design but aren't discrete c
 | Testing — Web | 0 | 2 | 2 |
 | Testing — Microservices | 0 | 2 | 2 |
 | **Testing Total** | **2** | **11** | **13** |
-| Performance — General | 3 | 3 | 6 |
+| Performance — General | 3 | 1 | 4 |
 | Performance — Android | 0 | 3 | 3 |
 | Performance — iOS | 0 | 3 | 3 |
-| Performance — Web | 0 | 2 | 2 |
+| Performance — Web | 0 | 4 | 4 |
 | Performance — Microservices | 0 | 3 | 3 |
 | **Performance Total** | **3** | **14** | **17** |
 | Reliability — General | 2 | 3 | 5 |
@@ -430,9 +446,10 @@ These OWASP cheat sheets inform the review system's design but aren't discrete c
 | Observability — iOS | 0 | 2 | 2 |
 | Observability — Microservices | 0 | 3 | 3 |
 | **Observability Total** | **1** | **9** | **10** |
-| Code Quality — General | 1 | 4 | 5 |
+| Code Quality — General | 1 | 3 | 4 |
 | Code Quality — Android | 0 | 2 | 2 |
 | Code Quality — iOS | 0 | 2 | 2 |
+| Code Quality — Web | 0 | 1 | 1 |
 | Code Quality — Microservices | 0 | 2 | 2 |
 | **Code Quality Total** | **1** | **10** | **11** |
 | | | | |
@@ -444,16 +461,18 @@ Plus 7 framework-specific security references mapped to language skills, and 12 
 
 ## Platform Coverage Matrix
 
+All categories now follow strict platform subfolder structure (android/, ios/, web/, microservices/).
+
 | Platform | Security | Concurrency | Correctness | Testing | Performance | Reliability | API Design | Data | Observability | Code Quality | **Total** |
 |----------|----------|-------------|-------------|---------|-------------|-------------|------------|------|---------------|--------------|-----------|
-| **Web** | 25 | 2 | — | 2 | 2 | — | — | — | — | — | **31+** |
+| **Web** | 25 | 2 | 1 | 2 | 4 | — | — | — | — | 1 | **35+** |
 | **Android** | 8 | 3 | 3 | 2 | 3 | 3 | — | 2 | 2 | 2 | **28** |
 | **iOS** | 8 | 3 | 3 | 2 | 3 | 3 | — | 2 | 2 | 2 | **28** |
 | **Mobile (shared)** | 5 | — | — | — | — | — | 3 | — | — | — | **8** |
 | **Microservices** | 7 | 3 | 3 | 2 | 3 | 3 | 3 | 3 | 3 | 2 | **32** |
 | **API** | 3 | — | — | — | — | — | — | — | — | — | **3+** |
 | **Infrastructure** | 5 | — | — | — | — | — | — | — | — | — | **5** |
-| **General (all)** | 19 | 5 | 6 | 5 | 6 | 5 | 4 | 4 | 3 | 5 | **62** |
+| **General (all)** | 19 | 5 | 5 | 5 | 4 | 5 | 4 | 4 | 3 | 4 | **58** |
 
 Counts show platform-dedicated tasks. General tasks apply across all platforms.
 
