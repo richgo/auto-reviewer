@@ -1,0 +1,5 @@
+max_rounds: 10
+convergence_rounds: 3
+min_f1_delta: 0.01
+max_fpr_regression: 0.02
+dry_run: false

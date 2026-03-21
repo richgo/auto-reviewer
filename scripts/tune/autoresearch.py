@@ -388,6 +388,7 @@ def parse_args(argv=None):
     parser.add_argument(
         "--config",
         type=Path,
+        default=Path(__file__).with_name("config.yaml"),
         help="Path to tuning policy config"
     )
     parser.add_argument(
