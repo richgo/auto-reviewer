@@ -31,6 +31,15 @@ class TestComposeVersioning(unittest.TestCase):
                 ref_value="v1.0.0",
             )
 
+    def test_apply_refs_requires_ref_value_for_sha_branch_and_tag(self):
+        for strategy in ("sha", "branch", "tag"):
+            with self.assertRaises(ValueError):
+                apply_refs(
+                    ["richgo/auto-reviewer/skills/core/review-orchestrator"],
+                    strategy=strategy,
+                    ref_value=None,
+                )
+
 
 if __name__ == "__main__":
     unittest.main()

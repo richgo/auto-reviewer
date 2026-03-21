@@ -76,6 +76,42 @@ auto-reviewer/
 
 Distributed as an [APM](https://github.com/microsoft/apm) package. Works with Claude Code, GitHub Copilot, Codex, or any agent CLI that supports `agents.md` and `skills.md`.
 
+## Composer workflow (Phase 4)
+
+The Composer Agent generates and updates `apm.yml` using repository signals and a deterministic composition policy.
+
+- Policy file: `scripts/compose/policy.yaml`
+- Agent entry: `agents/composer/agent.md`
+- Pipeline: detect signals -> select policy-mapped skills -> apply refs -> validate -> merge/write
+
+### Generate
+
+1. Run compose in generate mode for a repository.
+2. Composer writes `apm.yml` with composer-managed `dependencies.apm`.
+3. Generated dependencies default to stable tag pins (`#v1.0.0`) unless override strategy is used.
+
+### Update
+
+1. Re-run compose in update mode after repository stack changes.
+2. Only composer-managed `richgo/auto-reviewer/skills/*` dependencies are refreshed.
+3. Non-managed dependencies and other `apm.yml` sections remain preserved.
+
+### Pin overrides
+
+- `tag` (default): append a stable tag ref (for example `#v1.0.0`)
+- `sha`: append commit SHA
+- `branch`: append branch name
+- `none`: keep dependency path without ref
+
+### APM lifecycle
+
+After compose output is written and validated:
+
+1. `apm install` resolves dependencies and updates lock data.
+2. `apm compile` compiles agent artifacts for detected runtime profile.
+
+For multi-runtime repositories, composer writes distributed compilation defaults.
+
 ## License
 
 MIT

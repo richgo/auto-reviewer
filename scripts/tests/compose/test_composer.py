@@ -59,6 +59,84 @@ class TestComposer(unittest.TestCase):
             result["dependencies"]["apm"],
         )
 
+    def test_compose_manifest_update_preserves_non_managed_and_applies_fallback(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            repo = Path(tmp_dir) / "repo"
+            repo.mkdir()
+            (repo / "skills" / "core").mkdir(parents=True)
+            (repo / "skills" / "concerns").mkdir(parents=True)
+            (repo / "skills" / "core" / "review-orchestrator.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "concerns" / "correctness.md").write_text("skill", encoding="utf-8")
+
+            policy = repo / "policy.yaml"
+            policy.write_text(
+                yaml.safe_dump(
+                    {
+                        "core": ["richgo/auto-reviewer/skills/core/review-orchestrator"],
+                        "fallback": ["richgo/auto-reviewer/skills/concerns/correctness"],
+                        "signals": {},
+                    }
+                ),
+                encoding="utf-8",
+            )
+            apm = repo / "apm.yml"
+            apm.write_text(
+                yaml.safe_dump(
+                    {
+                        "name": "repo-review",
+                        "dependencies": {"apm": ["external-org/custom-skill#v2"]},
+                        "config": {"severity_threshold": "high"},
+                    },
+                    sort_keys=False,
+                ),
+                encoding="utf-8",
+            )
+
+            result = compose_manifest(
+                repo_root=repo,
+                policy_path=policy,
+                output_path=apm,
+                ref_strategy="none",
+                ref_value=None,
+                update=True,
+            )
+
+            written = yaml.safe_load(apm.read_text(encoding="utf-8"))
+
+        self.assertEqual(result["composer"]["detection_confidence"], "low")
+        self.assertIn("external-org/custom-skill#v2", written["dependencies"]["apm"])
+        self.assertIn("richgo/auto-reviewer/skills/core/review-orchestrator", written["dependencies"]["apm"])
+        self.assertIn("richgo/auto-reviewer/skills/concerns/correctness", written["dependencies"]["apm"])
+        self.assertEqual(written["config"]["severity_threshold"], "high")
+
+    def test_compose_manifest_default_tag_is_stable_and_deterministic(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            repo = Path(tmp_dir) / "repo"
+            repo.mkdir()
+            (repo / "requirements.txt").write_text("pyyaml", encoding="utf-8")
+            (repo / "skills" / "core").mkdir(parents=True)
+            (repo / "skills" / "languages").mkdir(parents=True)
+            (repo / "skills" / "core" / "review-orchestrator.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "languages" / "python.md").write_text("skill", encoding="utf-8")
+            policy = repo / "policy.yaml"
+            policy.write_text(
+                yaml.safe_dump(
+                    {
+                        "core": ["richgo/auto-reviewer/skills/core/review-orchestrator"],
+                        "fallback": [],
+                        "signals": {"python": {"dependencies": ["richgo/auto-reviewer/skills/languages/python"]}},
+                    }
+                ),
+                encoding="utf-8",
+            )
+            output = repo / "apm.yml"
+
+            first = compose_manifest(repo_root=repo, policy_path=policy, output_path=output)
+            second = compose_manifest(repo_root=repo, policy_path=policy, output_path=output)
+
+        self.assertEqual(first["dependencies"]["apm"], second["dependencies"]["apm"])
+        self.assertTrue(all(dep.endswith("#v1.0.0") for dep in first["dependencies"]["apm"]))
+
 
 if __name__ == "__main__":
     unittest.main()

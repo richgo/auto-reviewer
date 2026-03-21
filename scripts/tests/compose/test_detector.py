@@ -36,6 +36,15 @@ class TestComposeDetector(unittest.TestCase):
         self.assertIn("python", detected)
         self.assertIn("typescript", detected)
 
+    def test_detect_signals_uses_pyproject_as_python_signal(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "pyproject.toml").write_text("[project]\nname='demo'\n", encoding="utf-8")
+
+            detected = detect_signals(root)
+
+        self.assertIn("python", detected)
+
 
 if __name__ == "__main__":
     unittest.main()

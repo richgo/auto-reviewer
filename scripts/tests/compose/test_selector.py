@@ -82,6 +82,44 @@ class TestComposeSelector(unittest.TestCase):
             ],
         )
 
+    def test_select_dependencies_is_stable_across_repeated_calls(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            policy_path = Path(tmp_dir) / "policy.yaml"
+            policy_path.write_text(
+                yaml.safe_dump(
+                    {
+                        "core": [
+                            "richgo/auto-reviewer/skills/core/review-orchestrator",
+                        ],
+                        "fallback": [],
+                        "signals": {
+                            "python": {
+                                "dependencies": [
+                                    "richgo/auto-reviewer/skills/languages/python",
+                                ]
+                            },
+                            "ci_github_actions": {
+                                "dependencies": [
+                                    "richgo/auto-reviewer/skills/outputs/inline-comments",
+                                ]
+                            },
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            first = select_dependencies(
+                policy_path=policy_path,
+                detected_signals={"python", "ci_github_actions"},
+            )
+            second = select_dependencies(
+                policy_path=policy_path,
+                detected_signals={"ci_github_actions", "python"},
+            )
+
+        self.assertEqual(first, second)
+
 
 if __name__ == "__main__":
     unittest.main()

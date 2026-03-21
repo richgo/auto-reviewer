@@ -4,7 +4,11 @@ from typing import Set
 
 def detect_signals(repo_root: Path) -> Set[str]:
     detected: Set[str] = set()
-    if (repo_root / "requirements.txt").exists() or list(repo_root.rglob("*.py")):
+    if (
+        (repo_root / "requirements.txt").exists()
+        or (repo_root / "pyproject.toml").exists()
+        or list(repo_root.rglob("*.py"))
+    ):
         detected.add("python")
     if (repo_root / "package.json").exists() or list(repo_root.rglob("package.json")):
         if list(repo_root.rglob("*.ts")) or list(repo_root.rglob("*.tsx")):
