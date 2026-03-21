@@ -35,14 +35,14 @@
 
 ## Phase 3: Testing & Verification
 
-- [ ] **3.1** Write unit tests for adversarial agent contract and SQLite schema rules  
+- [x] **3.1** Write unit tests for adversarial agent contract and SQLite schema rules  
   Add tests under `scripts/tests/adversarial/` to validate required agent commands, round ordering, required SQL schema elements, confidence bucket definitions, and cleanup idempotency clauses.
 
-- [ ] **3.2** Write integration tests for run → resume → cleanup flow  
+- [x] **3.2** Write integration tests for run → resume → cleanup flow  
   Add fixture-driven integration tests using temporary SQLite DB/artifact paths to verify run creation, resume by `(repo, pr, commit_sha)`, deterministic verdict materialization, and post-merge purge/retention behavior.
 
-- [ ] **3.3** Write output compatibility tests for confidence rendering  
+- [x] **3.3** Write output compatibility tests for confidence rendering  
   Add tests asserting `review-report` and `inline-comments` render adversarial metadata (`confidence`, `consensus`, debate summary) while preserving existing legacy-required fields and ordering.
 
-- [ ] **3.4** Manual verification  
+- [x] **3.4** Manual verification  
   Run an adversarial review on a sample diff, inspect SQLite state transitions across rounds, re-run via resume to confirm non-duplication, simulate merge cleanup to confirm purge/prune/vacuum behavior, and validate degraded fallback output when quorum or provider checks fail.
