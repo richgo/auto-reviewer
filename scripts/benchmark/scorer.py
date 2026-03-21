@@ -151,3 +151,24 @@ def _skill_candidates(matrix: Dict[str, Dict[str, Dict[str, Any]]], skill: str):
             )
         )
     return candidates
+
+
+def estimate_costs(rows: List[Dict[str, Any]], pricing: Dict[str, Dict[str, float]]) -> Dict[str, Any]:
+    by_model: Dict[str, Dict[str, float]] = {}
+    total = 0.0
+    for row in rows:
+        model_id = row.get("model_id", "")
+        skill_name = row.get("skill_name", "")
+        model_pricing = pricing.get(model_id, {})
+        input_rate = float(model_pricing.get("input_per_1k", 0.0))
+        output_rate = float(model_pricing.get("output_per_1k", 0.0))
+        input_tokens = float(row.get("input_tokens", 0.0))
+        output_tokens = float(row.get("output_tokens", 0.0))
+        cost = (input_tokens / 1000.0) * input_rate + (output_tokens / 1000.0) * output_rate
+        by_model.setdefault(model_id, {})
+        by_model[model_id][skill_name] = by_model[model_id].get(skill_name, 0.0) + cost
+        total += cost
+    return {
+        "by_skill_model": by_model,
+        "total_cost": total,
+    }
