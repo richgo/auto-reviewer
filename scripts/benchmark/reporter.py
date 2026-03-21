@@ -12,14 +12,13 @@ Produces:
 import argparse
 import json
 from pathlib import Path
-from typing import Dict, List, Any, Tuple
-from collections import defaultdict
+from typing import Dict, List, Any, Tuple, Optional
 
 
 class BenchmarkReporter:
     """Generate reports from benchmark results."""
     
-    def __init__(self, results_path: Path):
+    def __init__(self, results_path: Path, compare_to: Optional[Path] = None):
         """
         Initialize reporter.
         
@@ -29,6 +28,10 @@ class BenchmarkReporter:
         self.results_path = results_path
         with open(results_path) as f:
             self.results = json.load(f)
+        self.baseline = None
+        if compare_to and compare_to.exists():
+            with open(compare_to) as f:
+                self.baseline = json.load(f)
     
     def generate_report(self) -> str:
         """
@@ -68,6 +71,15 @@ class BenchmarkReporter:
         lines.extend(self._heatmap_data())
         
         return "\n".join(lines)
+
+    def generate_json_report(self) -> Dict[str, Any]:
+        """Generate structured JSON report payload."""
+        return {
+            "timestamp": self.results.get("timestamp"),
+            "leaderboard": self._leaderboard_payload(),
+            "regressions": self._regressions(),
+            "model_scores": self.results.get("models", {}),
+        }
     
     def _model_leaderboard(self) -> List[str]:
         """Generate model leaderboard section."""
@@ -97,6 +109,50 @@ class BenchmarkReporter:
             lines.append(f"| {rank} {medal} | {model} | {avg:.1%} |")
         
         return lines
+
+    def _leaderboard_payload(self) -> List[Dict[str, Any]]:
+        model_avgs: List[Tuple[str, float]] = []
+        for model, skills in self.results.get("models", {}).items():
+            f1_scores = [data.get("f1", 0.0) for data in skills.values()]
+            avg = sum(f1_scores) / len(f1_scores) if f1_scores else 0.0
+            model_avgs.append((model, avg))
+        model_avgs.sort(key=lambda x: x[1], reverse=True)
+        payload = [
+            {"rank": idx, "model": model, "avg_f1": avg}
+            for idx, (model, avg) in enumerate(model_avgs, start=1)
+        ]
+        return payload
+
+    def _regressions(self) -> List[Dict[str, Any]]:
+        if not self.baseline:
+            return []
+        regressions: List[Dict[str, Any]] = []
+        for model_id, skill_scores in self.results.get("models", {}).items():
+            baseline_model = self.baseline.get("models", {}).get(model_id, {})
+            for skill, current in skill_scores.items():
+                previous = baseline_model.get(skill)
+                if not previous:
+                    continue
+                current_f1 = float(current.get("f1", 0.0))
+                previous_f1 = float(previous.get("f1", 0.0))
+                current_latency = float(current.get("mean_latency_ms", 0.0))
+                previous_latency = float(previous.get("mean_latency_ms", 0.0))
+                f1_drop = previous_f1 - current_f1
+                latency_increase = (
+                    (current_latency - previous_latency) / previous_latency
+                    if previous_latency > 0
+                    else 0.0
+                )
+                if f1_drop > 0.05 or latency_increase > 0.5:
+                    regressions.append(
+                        {
+                            "model": model_id,
+                            "skill": skill,
+                            "f1_drop": f1_drop,
+                            "latency_increase_pct": latency_increase * 100.0,
+                        }
+                    )
+        return regressions
     
     def _skill_difficulty_ranking(self) -> List[str]:
         """Generate skill difficulty ranking section."""
