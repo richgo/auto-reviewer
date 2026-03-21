@@ -113,3 +113,41 @@ class BenchmarkScorer:
     @staticmethod
     def _pass_count(rows: List[Dict[str, Any]]) -> int:
         return sum(1 for row in rows if row.get("status") == "pass")
+
+
+def select_best_models(matrix: Dict[str, Dict[str, Dict[str, Any]]]) -> Dict[str, Dict[str, Any]]:
+    skills = {
+        skill_name
+        for model_scores in matrix.values()
+        for skill_name in model_scores.keys()
+    }
+    selected: Dict[str, Dict[str, Any]] = {}
+    for skill in sorted(skills):
+        candidates = _skill_candidates(matrix, skill)
+        if not candidates:
+            continue
+        candidates.sort(key=lambda item: (item[0], item[1]), reverse=True)
+        best_f1, best_pass_rate, best_model = candidates[0]
+        selected[skill] = {
+            "model": best_model,
+            "f1": best_f1,
+            "pass_rate": best_pass_rate,
+            "needs_tuning": best_f1 <= 0.70,
+        }
+    return selected
+
+
+def _skill_candidates(matrix: Dict[str, Dict[str, Dict[str, Any]]], skill: str):
+    candidates = []
+    for model_id, model_scores in matrix.items():
+        if skill not in model_scores:
+            continue
+        skill_metrics = model_scores[skill]
+        candidates.append(
+            (
+                float(skill_metrics.get("f1", 0.0)),
+                float(skill_metrics.get("pass_rate", 0.0)),
+                model_id,
+            )
+        )
+    return candidates
