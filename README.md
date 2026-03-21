@@ -112,6 +112,31 @@ After compose output is written and validated:
 
 For multi-runtime repositories, composer writes distributed compilation defaults.
 
+## Adversarial workflow (Phase 5)
+
+The adversarial agent adds multi-model debate routing with local SQLite persistence.
+
+- Agent entry: `agents/adversarial/agent.md`
+- Cleanup contract: `agents/adversarial/cleanup.md`
+- Local state DB: `.auto-reviewer/adversarial.db`
+
+### Commands
+
+- `adversarial-review`: run detector/challenger/defender/judge debate for a run identity.
+- `adversarial-resume`: continue an existing run for `(repo, pr, commit_sha)`.
+- `adversarial-cleanup`: apply post-merge archive/purge/prune/vacuum steps.
+
+### Reliability and fallback
+
+- If model quorum checks fail or provider availability drops, mark the run as degraded.
+- In degraded mode, fallback to baseline review output while preserving explicit status metadata.
+
+### Retention and cleanup
+
+- Keep lightweight run summaries for audit.
+- Purge transient debate artifacts after merge.
+- Prune stale SQLite rows by retention policy and vacuum database storage.
+
 ## License
 
 MIT
