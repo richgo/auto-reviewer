@@ -1,0 +1,72 @@
+name: autoresearch-tuning
+
+"on":
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+    inputs:
+      skills:
+        description: Comma-separated skills to tune
+        required: false
+        type: string
+      models:
+        description: Comma-separated models to tune
+        required: false
+        type: string
+      run_id:
+        description: Optional run id override
+        required: false
+        type: string
+  push:
+    paths:
+      - evals/**
+      - skills/**
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install deps
+        run: pip install -r scripts/requirements.txt
+      - name: Generate matrix plan
+        run: |
+          python scripts/tune/orchestrator.py \
+            --trigger "${{ github.event_name }}" \
+            --run-id "${{ github.run_id }}" \
+            --skills "${{ github.event.inputs.skills }}" \
+            --models "${{ github.event.inputs.models }}"
+
+  tune_pair:
+    needs: plan
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - skill: security-injection
+            model: gpt-4.1
+    concurrency:
+      group: autoresearch-${{ matrix.skill }}-${{ matrix.model }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install deps
+        run: pip install -r scripts/requirements.txt
+      - name: Run pair tuning
+        run: |
+          python scripts/tune/autoresearch.py \
+            --skill "skills/concerns/${{ matrix.skill }}.md" \
+            --evals "evals/${{ matrix.skill }}.json" \
+            --model "${{ matrix.model }}" \
+            --history-file "tune-history/${{ matrix.skill }}/${{ matrix.model }}.jsonl"

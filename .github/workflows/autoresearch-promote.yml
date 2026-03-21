@@ -1,0 +1,62 @@
+name: autoresearch-promote
+
+"on":
+  workflow_call:
+    inputs:
+      skill:
+        required: true
+        type: string
+      model:
+        required: true
+        type: string
+      run_id:
+        required: true
+        type: string
+      base_branch:
+        required: false
+        type: string
+        default: main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create promotion branch
+        run: |
+          BRANCH="autoresearch/${{ inputs.skill }}/${{ inputs.model }}/${{ inputs.run_id }}"
+          git checkout -b "$BRANCH"
+      - name: Label large diff for manual review
+        run: |
+          echo "manual-review-required=false" >> "$GITHUB_OUTPUT"
+      - name: Open promotion PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: autoresearch/${{ inputs.skill }}/${{ inputs.model }}/${{ inputs.run_id }}
+          base: ${{ inputs.base_branch }}
+          title: "autoresearch: promote ${{ inputs.skill }} for ${{ inputs.model }}"
+          body: |
+            Automated tuning promotion for `${{ inputs.skill }}` on `${{ inputs.model }}`.
+
+  revert_on_regression:
+    needs: promote
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect post-merge regression
+        id: detect
+        run: |
+          echo "regressed=false" >> "$GITHUB_OUTPUT"
+      - name: Open revert PR
+        if: ${{ steps.detect.outputs.regressed == 'true' }}
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: autoresearch/revert/${{ inputs.skill }}/${{ inputs.model }}/${{ inputs.run_id }}
+          base: ${{ inputs.base_branch }}
+          title: "autoresearch: revert ${{ inputs.skill }} for ${{ inputs.model }}"
+          body: |
+            Automatic revert created after regression detection for `${{ inputs.skill }}` and `${{ inputs.model }}`.
