@@ -34,7 +34,8 @@ class TestBenchmarkRunner(unittest.TestCase):
             (skills_dir / "concerns").mkdir(parents=True)
             evals_dir.mkdir(parents=True)
 
-            (skills_dir / "concerns" / "security-injection.md").write_text(
+            (skills_dir / "concerns" / "security-injection").mkdir()
+            (skills_dir / "concerns" / "security-injection" / "SKILL.md").write_text(
                 "review skill", encoding="utf-8"
             )
             (evals_dir / "security-injection.json").write_text(
@@ -95,7 +96,8 @@ class TestBenchmarkRunner(unittest.TestCase):
             (skills_dir / "concerns").mkdir(parents=True)
             evals_dir.mkdir(parents=True)
 
-            (skills_dir / "concerns" / "api-design.md").write_text(
+            (skills_dir / "concerns" / "api-design").mkdir()
+            (skills_dir / "concerns" / "api-design" / "SKILL.md").write_text(
                 "api design skill", encoding="utf-8"
             )
             (evals_dir / "api-design.json").write_text(
@@ -201,7 +203,8 @@ class TestBenchmarkRunner(unittest.TestCase):
             (skills_dir / "concerns").mkdir(parents=True)
             evals_dir.mkdir(parents=True)
 
-            (skills_dir / "concerns" / "correctness.md").write_text(
+            (skills_dir / "concerns" / "correctness").mkdir()
+            (skills_dir / "concerns" / "correctness" / "SKILL.md").write_text(
                 "review skill", encoding="utf-8"
             )
             (evals_dir / "correctness.json").write_text(
@@ -252,7 +255,11 @@ class TestBenchmarkRunner(unittest.TestCase):
             (skills_dir / "concerns").mkdir(parents=True)
             evals_dir.mkdir(parents=True)
 
-            (skills_dir / "concerns" / "correctness.md").write_text("review skill", encoding="utf-8")
+            (skills_dir / "concerns" / "correctness").mkdir()
+            (skills_dir / "concerns" / "correctness" / "SKILL.md").write_text(
+                "review skill",
+                encoding="utf-8",
+            )
             (evals_dir / "correctness.json").write_text(
                 json.dumps({"skill": "correctness", "cases": []}), encoding="utf-8"
             )
@@ -297,6 +304,33 @@ class TestBenchmarkRunner(unittest.TestCase):
             pairs = runner.find_skill_eval_pairs()
 
         self.assertEqual([skill_name for _, _, skill_name in pairs], ["api-design"])
+
+    def test_find_skill_eval_pairs_ignores_legacy_md_skill_files(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp = Path(tmp_dir)
+            skills_dir = tmp / "skills"
+            evals_dir = tmp / "evals"
+            output_dir = tmp / "out"
+            (skills_dir / "concerns").mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+
+            (skills_dir / "concerns" / "api-design.md").write_text(
+                "review skill",
+                encoding="utf-8",
+            )
+            (evals_dir / "api-design.json").write_text(
+                json.dumps({"skill": "api-design", "cases": []}), encoding="utf-8"
+            )
+
+            runner = BenchmarkRunner(
+                skills_dir=skills_dir,
+                evals_dir=evals_dir,
+                models=["gpt-4.1"],
+                output_dir=output_dir,
+            )
+            pairs = runner.find_skill_eval_pairs()
+
+        self.assertEqual(pairs, [])
 
 
 class TestCopilotLLMClient(unittest.TestCase):

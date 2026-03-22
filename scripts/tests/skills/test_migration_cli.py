@@ -30,7 +30,8 @@ class TestMigrationCli(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
-            (skills / "api-design.md").write_text(
+            (skills / "api-design").mkdir()
+            (skills / "api-design" / "SKILL.md").write_text(
                 "\n".join(
                     [
                         "# API Design Review",
@@ -75,4 +76,3 @@ class TestMigrationCli(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

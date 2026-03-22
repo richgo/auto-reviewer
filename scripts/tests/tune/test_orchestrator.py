@@ -15,8 +15,10 @@ class TestOrchestrator(unittest.TestCase):
             evals_dir = root / "evals"
             skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
-            (skills_dir / "security-injection.md").write_text("skill", encoding="utf-8")
-            (skills_dir / "correctness.md").write_text("skill", encoding="utf-8")
+            (skills_dir / "security-injection").mkdir()
+            (skills_dir / "correctness").mkdir()
+            (skills_dir / "security-injection" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (skills_dir / "correctness" / "SKILL.md").write_text("skill", encoding="utf-8")
             (evals_dir / "security-injection.json").write_text("{}", encoding="utf-8")
             (evals_dir / "correctness.json").write_text("{}", encoding="utf-8")
 
@@ -78,7 +80,8 @@ class TestOrchestrator(unittest.TestCase):
             skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
             for name in ["security-injection", "correctness", "concurrency"]:
-                (skills_dir / f"{name}.md").write_text("skill", encoding="utf-8")
+                (skills_dir / name).mkdir()
+                (skills_dir / name / "SKILL.md").write_text("skill", encoding="utf-8")
                 (evals_dir / f"{name}.json").write_text("{}", encoding="utf-8")
             config = root / "config.yaml"
             config.write_text(yaml.safe_dump({"models": ["z-model", "a-model"]}), encoding="utf-8")
@@ -107,7 +110,8 @@ class TestOrchestrator(unittest.TestCase):
             evals_dir = root / "evals"
             skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
-            (skills_dir / "security-injection.md").write_text("skill", encoding="utf-8")
+            (skills_dir / "security-injection").mkdir()
+            (skills_dir / "security-injection" / "SKILL.md").write_text("skill", encoding="utf-8")
             (evals_dir / "security-injection.json").write_text("{}", encoding="utf-8")
             config = root / "config.yaml"
             config.write_text(yaml.safe_dump({}), encoding="utf-8")
@@ -142,7 +146,8 @@ class TestOrchestrator(unittest.TestCase):
             skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
             for name in ["security-injection", "security-auth", "correctness", "concurrency"]:
-                (skills_dir / f"{name}.md").write_text("skill", encoding="utf-8")
+                (skills_dir / name).mkdir()
+                (skills_dir / name / "SKILL.md").write_text("skill", encoding="utf-8")
                 (evals_dir / f"{name}.json").write_text("{}", encoding="utf-8")
             config = root / "config.yaml"
             config.write_text(yaml.safe_dump({"models": ["gpt-4.1"]}), encoding="utf-8")
@@ -172,7 +177,8 @@ class TestOrchestrator(unittest.TestCase):
             skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
             for name in ["security-injection", "correctness"]:
-                (skills_dir / f"{name}.md").write_text("skill", encoding="utf-8")
+                (skills_dir / name).mkdir()
+                (skills_dir / name / "SKILL.md").write_text("skill", encoding="utf-8")
                 (evals_dir / f"{name}.json").write_text("{}", encoding="utf-8")
             config = root / "config.yaml"
             config.write_text(yaml.safe_dump({"models": ["gpt-4.1"]}), encoding="utf-8")
@@ -208,7 +214,8 @@ class TestOrchestrator(unittest.TestCase):
             skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
             for name in ["security-injection", "security-auth", "correctness"]:
-                (skills_dir / f"{name}.md").write_text("skill", encoding="utf-8")
+                (skills_dir / name).mkdir()
+                (skills_dir / name / "SKILL.md").write_text("skill", encoding="utf-8")
                 (evals_dir / f"{name}.json").write_text("{}", encoding="utf-8")
             config = root / "config.yaml"
             config.write_text(
@@ -242,7 +249,8 @@ class TestOrchestrator(unittest.TestCase):
             evals_dir = root / "evals"
             skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
-            (skills_dir / "security-auth.md").write_text("skill", encoding="utf-8")
+            (skills_dir / "security-auth").mkdir()
+            (skills_dir / "security-auth" / "SKILL.md").write_text("skill", encoding="utf-8")
             (evals_dir / "security-auth.json").write_text(
                 '{"skill":"security-auth","review_task":"security/auth-bypass","cases":[]}',
                 encoding="utf-8",
@@ -280,6 +288,28 @@ class TestOrchestrator(unittest.TestCase):
             )
 
         self.assertEqual(pairs, [("security-injection", "gpt-4.1")])
+
+    def test_build_plan_ignores_legacy_md_skill_files(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            concerns_dir = root / "skills" / "concerns"
+            evals_dir = root / "evals"
+            concerns_dir.mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+            (concerns_dir / "security-injection.md").write_text("skill", encoding="utf-8")
+            (evals_dir / "security-injection.json").write_text("{}", encoding="utf-8")
+            config = root / "config.yaml"
+            config.write_text(yaml.safe_dump({"models": ["gpt-4.1"]}), encoding="utf-8")
+
+            pairs = build_plan(
+                skills_dir=root / "skills",
+                evals_dir=evals_dir,
+                config_path=config,
+                skills_filter=None,
+                models_filter=None,
+            )
+
+        self.assertEqual(pairs, [])
 
 
 if __name__ == "__main__":

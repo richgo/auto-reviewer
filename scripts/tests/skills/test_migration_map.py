@@ -13,9 +13,9 @@ class TestMigrationMap(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)
             review_tasks_dir = root / "review-tasks"
-            skills_dir = root / "skills" / "concerns"
+            concerns_dir = root / "skills" / "concerns"
             review_tasks_dir.mkdir(parents=True)
-            skills_dir.mkdir(parents=True)
+            concerns_dir.mkdir(parents=True)
 
             (review_tasks_dir / "security").mkdir()
             (review_tasks_dir / "security" / "xss.md").write_text(
@@ -71,12 +71,15 @@ class TestMigrationMap(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            (skills_dir / "security-client-side.md").write_text("skill", encoding="utf-8")
-            (skills_dir / "data-integrity.md").write_text("skill", encoding="utf-8")
-            (skills_dir / "testing.md").write_text("skill", encoding="utf-8")
+            (concerns_dir / "security-client-side").mkdir()
+            (concerns_dir / "data-integrity").mkdir()
+            (concerns_dir / "testing").mkdir()
+            (concerns_dir / "security-client-side" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (concerns_dir / "data-integrity" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (concerns_dir / "testing" / "SKILL.md").write_text("skill", encoding="utf-8")
 
             rows = build_review_task_skill_rows(
-                review_tasks_dir=review_tasks_dir, skills_dir=skills_dir.parent
+                review_tasks_dir=review_tasks_dir, skills_dir=concerns_dir.parent
             )
             csv_path = root / "migration-map.csv"
             write_migration_inventory(rows=rows, output_path=csv_path)
@@ -150,7 +153,8 @@ class TestMigrationMap(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
-            (concerns_dir / "testing.md").write_text("skill", encoding="utf-8")
+            (concerns_dir / "testing").mkdir()
+            (concerns_dir / "testing" / "SKILL.md").write_text("skill", encoding="utf-8")
 
             rows = build_review_task_skill_rows(
                 review_tasks_dir=review_tasks_dir,

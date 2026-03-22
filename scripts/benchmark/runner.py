@@ -70,12 +70,10 @@ class BenchmarkRunner:
     
     @staticmethod
     def _discover_concern_skills(*, concerns_dir: Path) -> List[tuple[Path, str]]:
-        discovered: List[tuple[Path, str]] = []
-        for skill_file in concerns_dir.glob("*/SKILL.md"):
-            discovered.append((skill_file, skill_file.parent.name))
-        for skill_file in concerns_dir.glob("*.md"):
-            discovered.append((skill_file, skill_file.stem))
-        return discovered
+        return [
+            (skill_file, skill_file.parent.name)
+            for skill_file in concerns_dir.glob("*/SKILL.md")
+        ]
 
     def find_skill_eval_pairs(self) -> List[tuple]:
         """

@@ -10,12 +10,12 @@ class TestEvalResolution(unittest.TestCase):
     def test_build_plan_uses_skill_mapped_eval_inputs_without_review_task_identifiers(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)
-            skills_dir = root / "skills" / "concerns"
+            skills_dir = root / "skills" / "concerns" / "security-auth"
             evals_dir = root / "evals"
             skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
 
-            (skills_dir / "security-auth.md").write_text("skill", encoding="utf-8")
+            (skills_dir / "SKILL.md").write_text("skill", encoding="utf-8")
             (evals_dir / "security-auth.json").write_text(
                 json.dumps(
                     {
@@ -41,4 +41,3 @@ class TestEvalResolution(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

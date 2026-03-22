@@ -7,12 +7,7 @@ import yaml
 
 
 def _discover_concern_skill_names(*, concerns_dir: Path) -> List[str]:
-    names: List[str] = []
-    for path in sorted(concerns_dir.glob("*/SKILL.md")):
-        names.append(path.parent.name)
-    for path in sorted(concerns_dir.glob("*.md")):
-        names.append(path.stem)
-    return names
+    return [path.parent.name for path in sorted(concerns_dir.glob("*/SKILL.md"))]
 
 
 def build_plan(
