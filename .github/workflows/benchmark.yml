@@ -25,9 +25,6 @@ jobs:
       - name: Install deps
         run: pip install -r scripts/requirements.txt
       - name: Run benchmark
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
           python scripts/benchmark/runner.py \
             --models "${{ github.event.inputs.models || 'gpt-4o-mini,gemini-2.0-flash' }}" \

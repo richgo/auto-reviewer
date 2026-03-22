@@ -19,7 +19,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 
 # Import from tune module
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from tune.llm_client import LLMClient
+from tune.llm_client import CopilotLLMClient
 from tune.scorer import Scorer
 
 
@@ -91,7 +91,7 @@ class BenchmarkRunner:
         Returns:
             Review output text
         """
-        llm = LLMClient(model)
+        llm = CopilotLLMClient(model)
         
         code_snippet = eval_case.get("code_snippet", eval_case.get("prompt", ""))
         language = eval_case.get("language", "python")

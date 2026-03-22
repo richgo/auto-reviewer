@@ -83,6 +83,18 @@ class TestAutoResearchWorkflows(unittest.TestCase):
         self.assertIn("Generate report", step_names)
         self.assertIn("Upload results", step_names)
 
+    def test_benchmark_workflow_uses_copilot_sdk_not_provider_api_keys(self):
+        workflow = self._load_workflow("benchmark.yml")
+        jobs = workflow["jobs"]
+        run_steps = jobs["run"]["steps"]
+        benchmark_step = next(
+            step for step in run_steps if step.get("name") == "Run benchmark"
+        )
+        env = benchmark_step.get("env") or {}
+        self.assertNotIn("OPENAI_API_KEY", env)
+        self.assertNotIn("GOOGLE_API_KEY", env)
+        self.assertNotIn("ANTHROPIC_API_KEY", env)
+
 
 if __name__ == "__main__":
     unittest.main()
