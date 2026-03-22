@@ -1,0 +1,54 @@
+import tempfile
+import unittest
+from pathlib import Path
+
+from skills.canonical_inventory import build_canonical_skill_inventory
+
+
+class TestCanonicalInventory(unittest.TestCase):
+    def test_build_inventory_flattens_review_task_folders(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            (skills_dir / "concerns").mkdir(parents=True)
+            (skills_dir / "review-tasks" / "api-design" / "mobile").mkdir(parents=True)
+
+            (skills_dir / "concerns" / "api-design.md").write_text("skill", encoding="utf-8")
+            (skills_dir / "review-tasks" / "api-design" / "input-validation.md").write_text(
+                "skill",
+                encoding="utf-8",
+            )
+            (
+                skills_dir
+                / "review-tasks"
+                / "api-design"
+                / "mobile"
+                / "api-versioning.md"
+            ).write_text("skill", encoding="utf-8")
+
+            rows = build_canonical_skill_inventory(skills_dir=skills_dir)
+
+        self.assertEqual(
+            rows,
+            [
+                {
+                    "canonical_skill": "api-design",
+                    "source_kind": "legacy-file",
+                    "source_path": "skills/concerns/api-design.md",
+                },
+                {
+                    "canonical_skill": "api-design",
+                    "source_kind": "review-task-folder",
+                    "source_path": "skills/review-tasks/api-design",
+                },
+                {
+                    "canonical_skill": "api-design-mobile",
+                    "source_kind": "review-task-folder",
+                    "source_path": "skills/review-tasks/api-design/mobile",
+                },
+            ],
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()
