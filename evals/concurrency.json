@@ -1,5 +1,6 @@
 {
   "description": "Eval cases for concurrency issues: race conditions, deadlocks, async misuse",
+  "source_of_truth": "skill-eval",
   "skill": "concurrency",
   "cases": [
     {

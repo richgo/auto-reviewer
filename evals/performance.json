@@ -1,5 +1,6 @@
 {
   "description": "Eval cases for performance issues: N+1 queries, algorithmic complexity, memory leaks",
+  "source_of_truth": "skill-eval",
   "skill": "performance",
   "cases": [
     {

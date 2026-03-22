@@ -23,8 +23,14 @@ def build_plan(
     concerns_dir = skills_dir / "concerns"
     for skill_path in sorted(concerns_dir.glob("*.md")):
         skill_name = skill_path.stem
-        if not (evals_dir / f"{skill_name}.json").exists():
+        eval_path = evals_dir / f"{skill_name}.json"
+        if not eval_path.exists():
             continue
+        eval_payload = json.loads(eval_path.read_text(encoding="utf-8"))
+        if "review_task" in eval_payload:
+            raise ValueError(
+                f"Eval payload '{eval_path}' includes review_task, but only skill-linked evals are allowed."
+            )
         if skills_filter and skill_name not in skills_filter:
             continue
         if skills_prefix and not skill_name.startswith(skills_prefix):

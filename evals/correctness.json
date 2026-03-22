@@ -1,5 +1,6 @@
 {
   "description": "Eval cases for correctness issues: null dereference, off-by-one, logic errors",
+  "source_of_truth": "skill-eval",
   "skill": "correctness",
   "cases": [
     {

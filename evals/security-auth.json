@@ -1,5 +1,6 @@
 {
   "description": "Eval cases for authentication and authorization vulnerabilities",
+  "source_of_truth": "skill-eval",
   "skill": "security-auth",
   "cases": [
     {

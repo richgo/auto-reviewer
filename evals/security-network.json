@@ -1,5 +1,6 @@
 {
   "description": "Eval cases for network security: SSRF, open redirect, missing security headers",
+  "source_of_truth": "skill-eval",
   "skill": "security-network",
   "cases": [
     {

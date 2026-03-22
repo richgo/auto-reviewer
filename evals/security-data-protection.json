@@ -1,5 +1,6 @@
 {
   "description": "Eval cases for data protection: secrets exposure, path traversal, insecure deserialization",
+  "source_of_truth": "skill-eval",
   "skill": "security-data-protection",
   "cases": [
     {

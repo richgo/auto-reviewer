@@ -8,7 +8,7 @@
 - [x] **1.2** Migrate review guidance from `review-tasks/` into skill artifacts
   Consolidate task-level guidance into canonical skill files (and skill-local references where needed) so active review behavior resolves through `skills/` only. Keep coverage complete across concerns/platforms and preserve security reference traceability. (Specs: `skills` Skill-Owned Review Guidance, Skill-Level Coverage Preservation, Skill-Level Security Reference Mapping)
 
-- [ ] **1.3** Align eval ownership to skill-linked source of truth
+- [x] **1.3** Align eval ownership to skill-linked source of truth
   Update eval/documentation surfaces so benchmark and tuning inputs are explicitly skill-mapped and do not depend on standalone task-local eval snippets. Touch `evals/` metadata and relevant docs/contracts only as needed for clarity. (Specs: `skills` Skill-Eval Ownership; `review-tasks` Eval Source of Truth; Design Data Flow steps 2-4)
 
 - [ ] **1.4** Retire active review-task architecture role
