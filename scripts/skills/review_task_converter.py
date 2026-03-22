@@ -9,6 +9,7 @@ _TASK_HEADING = re.compile(r"^#\s*Task:\s*(.+?)\s*$")
 _SECTION_HEADING = re.compile(r"^##\s+(.+?)\s*$")
 _SKIP_FILENAMES = {"INDEX.md", "TEMPLATE.md"}
 _DEFAULT_OUTPUT_LABEL = "skills/review-tasks"
+_CANONICAL_RENAMES = {"data": "data-integrity"}
 
 
 @dataclass(frozen=True)
@@ -212,7 +213,12 @@ def convert_all_review_tasks(
 
 
 def _flatten_path_to_skill_name(path: Path) -> str:
-    return "-".join(path.parts)
+    flat = "-".join(path.parts)
+    return _canonical_skill_name(flat)
+
+
+def _canonical_skill_name(flat_name: str) -> str:
+    return _CANONICAL_RENAMES.get(flat_name, flat_name)
 
 
 def _extract_front_matter_name(markdown: str) -> Optional[str]:

@@ -258,6 +258,21 @@ class TestReviewTaskConverter(unittest.TestCase):
             )
             self.assertTrue((skills_dir / "api-design" / "SKILL.md").exists())
 
+    def test_flatten_review_task_skills_maps_data_folder_to_data_integrity(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            (skills_dir / "review-tasks" / "data").mkdir(parents=True)
+            (skills_dir / "review-tasks" / "data" / "schema-validation.md").write_text(
+                "---\nname: review-task-data-schema-validation\ndescription: task\n---\n\n# Task\n",
+                encoding="utf-8",
+            )
+
+            flatten_review_task_skills(skills_dir=skills_dir)
+
+            self.assertTrue((skills_dir / "data-integrity" / "SKILL.md").exists())
+            self.assertFalse((skills_dir / "data" / "SKILL.md").exists())
+
 
 if __name__ == "__main__":
     unittest.main()
