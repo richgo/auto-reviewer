@@ -22,12 +22,10 @@ This infrastructure implements an autoresearch loop (inspired by [Claude Code au
 # Install dependencies
 pip install -r scripts/requirements.txt
 
-# Set API key (use the model you want to tune with)
-export ANTHROPIC_API_KEY=sk-...
-# OR
-export OPENAI_API_KEY=sk-...
-# OR
-export GOOGLE_API_KEY=...
+# Authenticate GitHub CLI so Copilot SDK can select models
+gh auth login
+# Optional override:
+# export GITHUB_TOKEN=ghp_...
 ```
 
 ### Tune a Single Skill
@@ -53,6 +51,33 @@ python scripts/benchmark/runner.py \
   --output benchmark-results/
 ```
 
+### Benchmark One Skill Across Multiple Models
+
+```bash
+SKILL=security-injection
+MODELS=claude-sonnet-4-20250514,gpt-4o,gemini-2.5-pro
+RUN_DIR=".tmp-benchmark-${SKILL}"
+
+mkdir -p "$RUN_DIR/skills/concerns" "$RUN_DIR/evals" "$RUN_DIR/output"
+cp "skills/concerns/${SKILL}.md" "$RUN_DIR/skills/concerns/${SKILL}.md"
+cp "evals/${SKILL}.json" "$RUN_DIR/evals/${SKILL}.json"
+
+python scripts/benchmark/runner.py \
+  --skills-dir "$RUN_DIR/skills" \
+  --evals-dir "$RUN_DIR/evals" \
+  --models "$MODELS" \
+  --output "$RUN_DIR/output"
+
+python scripts/benchmark/reporter.py \
+  "$RUN_DIR/output/model_scores.json" \
+  --output "$RUN_DIR/output/REPORT.md"
+
+cat "$RUN_DIR/output/REPORT.md"
+# optional cleanup: rm -rf "$RUN_DIR"
+```
+
+For a more detailed walkthrough, see `skills/tuning/benchmark-runner.md` (Workflow 4).
+
 ### Generate Report
 
 ```bash
@@ -67,15 +92,16 @@ python scripts/benchmark/reporter.py \
 scripts/
 ├── tune/
 │   ├── __init__.py
-│   ├── llm_client.py          # Generic LLM interface (Anthropic, OpenAI, Google)
+│   ├── llm_client.py          # LLM interface backed by Copilot SDK
 │   ├── scorer.py              # Binary assertion evaluator
 │   ├── mutator.py             # Skill mutation strategies
 │   └── autoresearch.py        # Main optimization loop (CLI)
 ├── benchmark/
 │   ├── __init__.py
+│   ├── copilot_client.py      # Copilot SDK wrapper
 │   ├── runner.py              # SWE-bench-style benchmark harness (CLI)
 │   └── reporter.py            # Markdown report generator (CLI)
-└── requirements.txt           # httpx, pyyaml, rich
+└── requirements.txt           # httpx, pyyaml, rich, github-copilot-sdk
 
 evals/
 ├── security-injection.json    # Eval cases for SQL injection, XSS, command injection
@@ -104,12 +130,8 @@ benchmark-results/             # Benchmark outputs (model_scores.json, REPORT.md
 
 ### `tune/llm_client.py`
 
-Generic LLM client supporting:
-- **Anthropic API** (Claude models)
-- **OpenAI API** (GPT models)
-- **Google Gemini API**
-
-Auto-detects provider from model name. Uses httpx (no heavy SDK dependencies).
+Unified LLM client backed by the **GitHub Copilot SDK**.
+Model selection happens via `--model`/`--models` strings passed to the SDK.
 
 **Usage:**
 ```python

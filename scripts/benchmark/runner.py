@@ -19,6 +19,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 
 # Import from tune module
 sys.path.insert(0, str(Path(__file__).parent.parent))
+from benchmark.scorer import select_best_models
 from tune.llm_client import LLMClient
 from tune.scorer import Scorer
 
@@ -52,6 +53,20 @@ class BenchmarkRunner:
         self.models = models
         self.output_dir = output_dir
         self.output_dir.mkdir(parents=True, exist_ok=True)
+
+    @staticmethod
+    def _write_json(path: Path, payload: Dict[str, Any]) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+    @staticmethod
+    def _mirror_file(source: Path, destinations: List[Path]) -> None:
+        content = source.read_text(encoding="utf-8")
+        for destination in destinations:
+            if destination == source:
+                continue
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(content, encoding="utf-8")
     
     def find_skill_eval_pairs(self) -> List[tuple]:
         """
@@ -194,14 +209,22 @@ Provide a code review following the skill's guidelines. Include:
         pairs = self.find_skill_eval_pairs()
         console.print(f"Found {len(pairs)} skill/eval pairs")
         console.print(f"Testing {len(self.models)} models\n")
-        
+
+        run_started_at = datetime.now()
+        run_id = f"run-{run_started_at.strftime('%Y%m%d-%H%M%S-%f')}"
+        run_dir = self.output_dir / run_id
+        latest_dir = self.output_dir / "latest"
+        run_dir.mkdir(parents=True, exist_ok=True)
+        latest_dir.mkdir(parents=True, exist_ok=True)
+
         # Results storage
         results = {
-            "timestamp": datetime.now().isoformat(),
+            "run_id": run_id,
+            "timestamp": run_started_at.isoformat(),
             "models": {},
             "skills": [pair[2] for pair in pairs]
         }
-        assertion_results_path = self.output_dir / "assertion_results.jsonl"
+        assertion_results_path = run_dir / "assertion_results.jsonl"
         assertion_results_path.write_text("", encoding="utf-8")
         
         for model in self.models:
@@ -250,13 +273,57 @@ Provide a code review following the skill's guidelines. Include:
                     progress.advance(task)
         
         # Save results
-        output_file = self.output_dir / "model_scores.json"
-        with open(output_file, "w") as f:
-            json.dump(results, f, indent=2)
-        
+        model_scores_path = run_dir / "model_scores.json"
+        best_models_path = run_dir / "best_models.json"
+        metadata_path = run_dir / "metadata.json"
+        best_models = select_best_models(results["models"])
+        metadata = {
+            "run_id": run_id,
+            "start_time": results["timestamp"],
+            "models": list(self.models),
+            "skills": list(results["skills"]),
+            "total_runs": total_runs,
+            "output_dir": str(run_dir),
+        }
+        self._write_json(model_scores_path, results)
+        self._write_json(best_models_path, best_models)
+        self._write_json(metadata_path, metadata)
+
+        # Stable, canonical copies for downstream tooling and backward compatibility.
+        self._mirror_file(
+            model_scores_path,
+            [
+                latest_dir / "model_scores.json",
+                self.output_dir / "model_scores.json",
+            ],
+        )
+        self._mirror_file(
+            best_models_path,
+            [
+                latest_dir / "best_models.json",
+                self.output_dir / "best_models.json",
+            ],
+        )
+        self._mirror_file(
+            metadata_path,
+            [
+                latest_dir / "metadata.json",
+                self.output_dir / "metadata.json",
+            ],
+        )
+        self._mirror_file(
+            assertion_results_path,
+            [
+                latest_dir / "assertion_results.jsonl",
+                self.output_dir / "assertion_results.jsonl",
+            ],
+        )
+
         console.print(f"\n[green]✓ Benchmark complete[/green]")
-        console.print(f"Results saved to: {output_file}\n")
-        
+        console.print(f"Run results saved to: {model_scores_path}")
+        console.print(f"Latest snapshot: {latest_dir / 'model_scores.json'}")
+        console.print(f"Best-model map: {latest_dir / 'best_models.json'}\n")
+
         # Print summary table
         self._print_summary(results)
         

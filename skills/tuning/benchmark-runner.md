@@ -38,16 +38,13 @@ Phase 3 workflows consume benchmark outputs during gated promotion:
 
 ### Model Identifiers
 
-Use these exact strings (detected by provider):
+Use model IDs available via Copilot SDK:
 
-- **Anthropic:** `claude-sonnet-4-20250514`, `claude-opus-4-20250514`
-- **OpenAI:** `gpt-4o`, `gpt-4-turbo`
-- **Google:** `gemini-2.5-pro`, `gemini-2.0-flash`
+- Examples: `gpt-4.1`, `gpt-5-mini`, `claude-sonnet-4`
 
-Make sure the corresponding API key is set:
-- `ANTHROPIC_API_KEY`
-- `OPENAI_API_KEY`
-- `GOOGLE_API_KEY`
+Authenticate with GitHub so SDK calls can run:
+- `gh auth login`
+- or set `GITHUB_TOKEN`
 
 ## Output Format
 
@@ -218,6 +215,50 @@ python scripts/benchmark/reporter.py \
 # Configure production to use ensemble on those skills:
 # - security-injection → Claude + GPT-4o
 # - concurrency → GPT-4o + Gemini
+```
+
+### Workflow 4: Benchmark One Skill Across Multiple Models
+
+**Goal:** Compare model performance for a single skill without running the full matrix.
+
+```bash
+# 1) Choose skill + model list
+SKILL=security-injection
+MODELS=claude-sonnet-4-20250514,gpt-4o,gemini-2.5-pro
+
+# 2) Create an isolated benchmark workspace
+RUN_DIR=".tmp-benchmark-${SKILL}"
+mkdir -p "$RUN_DIR/skills/concerns" "$RUN_DIR/evals" "$RUN_DIR/output"
+
+# 3) Copy only the target skill and matching eval set
+cp "skills/concerns/${SKILL}.md" "$RUN_DIR/skills/concerns/${SKILL}.md"
+cp "evals/${SKILL}.json" "$RUN_DIR/evals/${SKILL}.json"
+
+# 4) Run benchmark (single skill x multiple models)
+python scripts/benchmark/runner.py \
+  --skills-dir "$RUN_DIR/skills" \
+  --evals-dir "$RUN_DIR/evals" \
+  --models "$MODELS" \
+  --output "$RUN_DIR/output"
+
+# 5) Generate report
+python scripts/benchmark/reporter.py \
+  "$RUN_DIR/output/model_scores.json" \
+  --output "$RUN_DIR/output/REPORT.md"
+
+# 6) Review results
+cat "$RUN_DIR/output/REPORT.md"
+```
+
+Expected result:
+- `model_scores.json` contains exactly one skill in `skills[]`.
+- Each model has one score entry for that skill under `models.<model>.<skill>`.
+- `REPORT.md` ranks models by average pass rate for that single skill (effectively a direct per-skill comparison).
+
+Optional cleanup:
+
+```bash
+rm -rf "$RUN_DIR"
 ```
 
 ## Best Practices

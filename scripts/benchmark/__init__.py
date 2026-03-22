@@ -8,5 +8,14 @@ Modules:
 
 __all__ = ["BenchmarkRunner", "BenchmarkReporter"]
 
-from .runner import BenchmarkRunner
-from .reporter import BenchmarkReporter
+
+def __getattr__(name):
+    if name == "BenchmarkRunner":
+        from .runner import BenchmarkRunner
+
+        return BenchmarkRunner
+    if name == "BenchmarkReporter":
+        from .reporter import BenchmarkReporter
+
+        return BenchmarkReporter
+    raise AttributeError(name)
