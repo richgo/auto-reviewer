@@ -45,6 +45,13 @@ def _assert_task_completion(tasks_text: str, task_id: str, context: str) -> None
     ), f"Task {task_id} must be checked after {context}."
 
 
+def _assert_design_covers_task(task_id: str, required_fragments: list[str], context: str) -> None:
+    design = _read("design.md")
+    tasks = _read_tasks()
+    _assert_contains_all(design, required_fragments)
+    _assert_task_completion(tasks, task_id, context)
+
+
 def test_1_1_finalize_proposal_scope_and_risk_framing():
     proposal = _read("proposal.md")
     tasks = _read_tasks()
@@ -118,11 +125,8 @@ def test_1_3_add_copilot_runtime_alignment_capability_delta():
 
 
 def test_2_1_document_technical_decisions_and_alternatives():
-    design = _read("design.md")
-    tasks = _read_tasks()
-
-    _assert_contains_all(
-        design,
+    _assert_design_covers_task(
+        "2.1",
         [
             "## Technical Decisions",
             "**Alternatives considered:**",
@@ -130,9 +134,24 @@ def test_2_1_document_technical_decisions_and_alternatives():
             "Decision: Copilot SDK as Normative Default, Provider Examples as Labeled Alternatives",
             "Decision: Non-Normative Labeling for Historical Claude References",
         ],
-    )
-    _assert_task_completion(
-        tasks,
-        "2.1",
         "technical decisions and alternatives are documented",
+    )
+
+
+def test_2_2_map_data_flow_and_component_impact():
+    _assert_design_covers_task(
+        "2.2",
+        [
+            "## Architecture",
+            "### Components Affected",
+            "README.md",
+            "skills/tuning/skill-optimizer.md",
+            "skills/tuning/benchmark-runner.md",
+            "skills/tuning/local-calibration.md",
+            "agents/*/agent.md",
+            "## Data Flow",
+            "upstream `skill-creator` change",
+            "Copilot SDK defaults and examples are normalized",
+        ],
+        "data flow and component impact are mapped",
     )

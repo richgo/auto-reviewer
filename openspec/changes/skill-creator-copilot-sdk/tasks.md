@@ -24,7 +24,7 @@
   **Completion:** Each decision includes alternatives considered and rationale.  
   **Specs:** `skill-authoring-governance` (all scenarios), `copilot-sdk-runtime-alignment` (all scenarios).
 
-- [ ] **2.2** Map data flow and component impact  
+- [x] **2.2** Map data flow and component impact  
   Update `design.md` architecture/data-flow sections to show how upstream refresh and runtime-language normalization propagate across `README.md`, `skills/tuning/*.md`, and `agents/*/agent.md`.  
   **Completion:** Affected components and flow steps are explicit and non-contradictory with specs.  
   **Specs:** `skill-authoring-governance` / Skill Authoring Contract Review; `copilot-sdk-runtime-alignment` / Normative Runtime Guidance.
