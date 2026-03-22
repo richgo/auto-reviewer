@@ -1,0 +1,43 @@
+name: benchmark
+
+"on":
+  schedule:
+    - cron: "0 6 * * 0"
+  workflow_dispatch:
+    inputs:
+      models:
+        description: "Comma-separated model IDs to benchmark (default: gpt-4o-mini,gemini-2.0-flash)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install deps
+        run: pip install -r scripts/requirements.txt
+      - name: Run benchmark
+        run: |
+          python scripts/benchmark/runner.py \
+            --models "${{ github.event.inputs.models || 'gpt-4o-mini,gemini-2.0-flash' }}" \
+            --skills-dir skills/ \
+            --evals-dir evals/ \
+            --output benchmark-results/
+      - name: Generate report
+        run: |
+          python scripts/benchmark/reporter.py \
+            benchmark-results/model_scores.json \
+            --output benchmark-results/REPORT.md
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: benchmark-results/
