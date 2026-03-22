@@ -273,6 +273,76 @@ class TestReviewTaskConverter(unittest.TestCase):
             self.assertTrue((skills_dir / "data-integrity" / "SKILL.md").exists())
             self.assertFalse((skills_dir / "data" / "SKILL.md").exists())
 
+    def test_flatten_review_task_skills_surfaces_manual_fix_for_non_mergeable_front_matter_name_conflict(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            (skills_dir / "concerns").mkdir(parents=True)
+            (skills_dir / "review-tasks" / "api-design").mkdir(parents=True)
+
+            (skills_dir / "concerns" / "api-design.md").write_text(
+                "---\nname: api-design\ndescription: concern\n---\n\n# Concern\n",
+                encoding="utf-8",
+            )
+            (skills_dir / "review-tasks" / "api-design" / "input-validation.md").write_text(
+                "---\nname: api-design-alt\ndescription: task\n---\n\n# Task\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "manual-fix error.*api-design"):
+                flatten_review_task_skills(skills_dir=skills_dir)
+
+    def test_flatten_review_task_skills_surfaces_manual_fix_for_non_mergeable_title_conflict(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            (skills_dir / "concerns").mkdir(parents=True)
+            (skills_dir / "review-tasks" / "api-design").mkdir(parents=True)
+
+            (skills_dir / "concerns" / "api-design.md").write_text(
+                "---\nname: api-design\ndescription: concern\n---\n\n# Concern\n",
+                encoding="utf-8",
+            )
+            (skills_dir / "review-tasks" / "api-design" / "input-validation.md").write_text(
+                "---\nname: api-design\ndescription: task\n---\n\n# Task\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "manual-fix error.*api-design"):
+                flatten_review_task_skills(skills_dir=skills_dir)
+
+    def test_flatten_review_task_skills_reports_all_manual_conflicts_before_exiting(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            (skills_dir / "concerns").mkdir(parents=True)
+            (skills_dir / "review-tasks" / "api-design").mkdir(parents=True)
+            (skills_dir / "review-tasks" / "code-quality").mkdir(parents=True)
+
+            (skills_dir / "concerns" / "api-design.md").write_text(
+                "---\nname: api-design\ndescription: concern\n---\n\n# Concern\n",
+                encoding="utf-8",
+            )
+            (skills_dir / "review-tasks" / "api-design" / "input-validation.md").write_text(
+                "---\nname: api-design-alt\ndescription: task\n---\n\n# Task\n",
+                encoding="utf-8",
+            )
+            (skills_dir / "concerns" / "code-quality.md").write_text(
+                "---\nname: code-quality\ndescription: concern\n---\n\n# Quality\n",
+                encoding="utf-8",
+            )
+            (skills_dir / "review-tasks" / "code-quality" / "naming.md").write_text(
+                "---\nname: code-quality\ndescription: task\n---\n\n# Naming\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(
+                ValueError,
+                "(?s)manual-fix error.*api-design.*manual-fix error.*code-quality",
+            ):
+                flatten_review_task_skills(skills_dir=skills_dir)
+
+
 
 if __name__ == "__main__":
     unittest.main()

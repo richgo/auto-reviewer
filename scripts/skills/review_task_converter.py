@@ -7,6 +7,7 @@ from typing import Dict, List, Optional
 
 _TASK_HEADING = re.compile(r"^#\s*Task:\s*(.+?)\s*$")
 _SECTION_HEADING = re.compile(r"^##\s+(.+?)\s*$")
+_PRIMARY_HEADING = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
 _SKIP_FILENAMES = {"INDEX.md", "TEMPLATE.md"}
 _DEFAULT_OUTPUT_LABEL = "skills/review-tasks"
 _CANONICAL_RENAMES = {"data": "data-integrity"}
@@ -251,8 +252,49 @@ def _strip_front_matter(markdown: str) -> str:
     return re.sub(r"^---\n.*?\n---\n?", "", markdown, flags=re.DOTALL).strip()
 
 
+def _extract_primary_heading(markdown: str) -> Optional[str]:
+    body = _strip_front_matter(markdown)
+    match = _PRIMARY_HEADING.search(body)
+    if not match:
+        return None
+    return match.group(1).strip()
+
+
+def _validate_mergeable_sources(
+    *, canonical_name: str, source_contents: List[tuple[Path, str]]
+) -> List[str]:
+    conflicts: List[str] = []
+    canonical_titles: Dict[str, List[Path]] = {}
+    if len(source_contents) < 2:
+        return conflicts
+    for source_path, content in source_contents:
+        source_name = _extract_front_matter_name(content)
+        if (
+            source_name
+            and source_name != canonical_name
+            and not source_name.startswith("review-task-")
+        ):
+            conflicts.append(
+                "manual-fix error for canonical skill "
+                f"'{canonical_name}': non-mergeable front matter name "
+                f"'{source_name}' in {source_path.as_posix()}"
+            )
+        if source_name == canonical_name:
+            title = _extract_primary_heading(content) or "<missing-primary-heading>"
+            canonical_titles.setdefault(title, []).append(source_path)
+
+    if len(canonical_titles) > 1:
+        title_summary = ", ".join(sorted(canonical_titles))
+        conflicts.append(
+            "manual-fix error for canonical skill "
+            f"'{canonical_name}': non-mergeable canonical content titles ({title_summary})"
+        )
+    return conflicts
+
+
 def flatten_review_task_skills(*, skills_dir: Path) -> List[Path]:
     grouped_sources: Dict[str, List[Path]] = {}
+    merged_sources: List[tuple[str, List[tuple[Path, str]]]] = []
     created_paths: List[Path] = []
     all_sources: List[Path] = []
 
@@ -268,18 +310,33 @@ def flatten_review_task_skills(*, skills_dir: Path) -> List[Path]:
                 grouped_sources.setdefault(canonical_name, []).append(markdown_file)
                 all_sources.append(markdown_file)
 
+    conflicts: List[str] = []
     for canonical_name, source_paths in sorted(grouped_sources.items()):
+        source_contents = [
+            (source_path, source_path.read_text(encoding="utf-8"))
+            for source_path in source_paths
+        ]
+        merged_sources.append((canonical_name, source_contents))
+        conflicts.extend(
+            _validate_mergeable_sources(
+                canonical_name=canonical_name,
+                source_contents=source_contents,
+            )
+        )
+
+    if conflicts:
+        raise ValueError("\n".join(conflicts))
+
+    for canonical_name, source_contents in merged_sources:
         target_dir = skills_dir / canonical_name
         target_dir.mkdir(parents=True, exist_ok=True)
         target_path = target_dir / "SKILL.md"
 
         merged_bodies: List[str] = []
-        first_source = source_paths[0]
-        first_content = first_source.read_text(encoding="utf-8")
+        first_content = source_contents[0][1]
         merged_bodies.append(_rewrite_front_matter_name(first_content, canonical_name=canonical_name))
 
-        for extra_source in source_paths[1:]:
-            content = extra_source.read_text(encoding="utf-8")
+        for _, content in source_contents[1:]:
             merged_bodies.append(_strip_front_matter(content))
 
         target_path.write_text("\n\n".join(part.rstrip() for part in merged_bodies).rstrip() + "\n", encoding="utf-8")
