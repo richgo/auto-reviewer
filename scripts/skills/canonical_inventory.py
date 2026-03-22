@@ -10,12 +10,20 @@ def _flatten_review_task_folder(path: Path) -> str:
     return "-".join(parts[1:])
 
 
+def _iter_canonical_folder_entries(*, group_dir: Path):
+    return sorted(group_dir.glob("*/SKILL.md"))
+
+
+def _iter_legacy_skill_files(*, group_dir: Path):
+    return sorted(group_dir.glob("*.md"))
+
+
 def build_canonical_skill_inventory(*, skills_dir: Path) -> List[Dict[str, str]]:
     rows: List[Dict[str, str]] = []
 
     for group in _LEGACY_GROUPS:
         group_dir = skills_dir / group
-        for skill_file in sorted(group_dir.glob("*/SKILL.md")):
+        for skill_file in _iter_canonical_folder_entries(group_dir=group_dir):
             rows.append(
                 {
                     "canonical_skill": skill_file.parent.name,
@@ -23,7 +31,7 @@ def build_canonical_skill_inventory(*, skills_dir: Path) -> List[Dict[str, str]]
                     "source_path": f"skills/{group}/{skill_file.parent.name}/SKILL.md",
                 }
             )
-        for skill_file in sorted(group_dir.glob("*.md")):
+        for skill_file in _iter_legacy_skill_files(group_dir=group_dir):
             rows.append(
                 {
                     "canonical_skill": skill_file.stem,
@@ -46,3 +54,14 @@ def build_canonical_skill_inventory(*, skills_dir: Path) -> List[Dict[str, str]]
             )
 
     return rows
+
+
+def validate_canonical_folder_contract(*, skills_dir: Path) -> List[str]:
+    errors: List[str] = []
+    for group in _LEGACY_GROUPS:
+        group_dir = skills_dir / group
+        for skill_file in _iter_legacy_skill_files(group_dir=group_dir):
+            errors.append(
+                f"Legacy skill file requires canonical folder: skills/{group}/{skill_file.name}"
+            )
+    return errors

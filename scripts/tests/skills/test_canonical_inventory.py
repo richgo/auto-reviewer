@@ -2,7 +2,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from skills.canonical_inventory import build_canonical_skill_inventory
+from skills.canonical_inventory import (
+    build_canonical_skill_inventory,
+    validate_canonical_folder_contract,
+)
 
 
 class TestCanonicalInventory(unittest.TestCase):
@@ -101,6 +104,22 @@ class TestCanonicalInventory(unittest.TestCase):
                     "source_kind": "canonical-folder",
                     "source_path": "skills/concerns/api-design/SKILL.md",
                 }
+            ],
+        )
+
+    def test_validate_canonical_folder_contract_requires_skill_md_files_to_move(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            (skills_dir / "concerns").mkdir(parents=True)
+            (skills_dir / "concerns" / "api-design.md").write_text("skill", encoding="utf-8")
+
+            errors = validate_canonical_folder_contract(skills_dir=skills_dir)
+
+        self.assertEqual(
+            errors,
+            [
+                "Legacy skill file requires canonical folder: skills/concerns/api-design.md"
             ],
         )
 
