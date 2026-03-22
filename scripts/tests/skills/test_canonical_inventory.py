@@ -49,6 +49,31 @@ class TestCanonicalInventory(unittest.TestCase):
             ],
         )
 
+    def test_build_inventory_includes_folder_based_active_skills(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            (skills_dir / "concerns").mkdir(parents=True)
+            (skills_dir / "concerns" / "api-design").mkdir(parents=True)
+
+            (skills_dir / "concerns" / "api-design" / "SKILL.md").write_text(
+                "skill",
+                encoding="utf-8",
+            )
+
+            rows = build_canonical_skill_inventory(skills_dir=skills_dir)
+
+        self.assertEqual(
+            rows,
+            [
+                {
+                    "canonical_skill": "api-design",
+                    "source_kind": "canonical-folder",
+                    "source_path": "skills/concerns/api-design/SKILL.md",
+                }
+            ],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

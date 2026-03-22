@@ -11,6 +11,14 @@ def build_canonical_skill_inventory(*, skills_dir: Path) -> List[Dict[str, str]]
     rows: List[Dict[str, str]] = []
 
     concerns_dir = skills_dir / "concerns"
+    for skill_file in sorted(concerns_dir.glob("*/SKILL.md")):
+        rows.append(
+            {
+                "canonical_skill": skill_file.parent.name,
+                "source_kind": "canonical-folder",
+                "source_path": f"skills/concerns/{skill_file.parent.name}/SKILL.md",
+            }
+        )
     for skill_file in sorted(concerns_dir.glob("*.md")):
         rows.append(
             {
