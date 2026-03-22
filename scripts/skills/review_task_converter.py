@@ -248,9 +248,11 @@ def _strip_front_matter(markdown: str) -> str:
 def flatten_review_task_skills(*, skills_dir: Path) -> List[Path]:
     grouped_sources: Dict[str, List[Path]] = {}
     created_paths: List[Path] = []
+    all_sources: List[Path] = []
 
     for concern_file in sorted((skills_dir / "concerns").glob("*.md")):
         grouped_sources.setdefault(concern_file.stem, []).append(concern_file)
+        all_sources.append(concern_file)
 
     review_tasks_root = skills_dir / "review-tasks"
     for folder in sorted(path for path in review_tasks_root.rglob("*") if path.is_dir()):
@@ -258,6 +260,7 @@ def flatten_review_task_skills(*, skills_dir: Path) -> List[Path]:
             canonical_name = _flatten_path_to_skill_name(folder.relative_to(review_tasks_root))
             for markdown_file in sorted(folder.glob("*.md")):
                 grouped_sources.setdefault(canonical_name, []).append(markdown_file)
+                all_sources.append(markdown_file)
 
     for canonical_name, source_paths in sorted(grouped_sources.items()):
         target_dir = skills_dir / canonical_name
@@ -276,4 +279,20 @@ def flatten_review_task_skills(*, skills_dir: Path) -> List[Path]:
         target_path.write_text("\n\n".join(part.rstrip() for part in merged_bodies).rstrip() + "\n", encoding="utf-8")
         created_paths.append(target_path)
 
+    for source in _unique_paths(sorted(all_sources)):
+        if source.exists():
+            source.unlink()
+
     return created_paths
+
+
+def _unique_paths(paths: List[Path]) -> List[Path]:
+    unique: List[Path] = []
+    seen = set()
+    for path in paths:
+        key = path.as_posix()
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(path)
+    return unique

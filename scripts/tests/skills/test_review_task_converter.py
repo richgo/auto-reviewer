@@ -233,6 +233,31 @@ class TestReviewTaskConverter(unittest.TestCase):
             self.assertIn("# Concern", content)
             self.assertIn("# Task", content)
 
+    def test_flatten_review_task_skills_retires_competing_legacy_definitions(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            (skills_dir / "concerns").mkdir(parents=True)
+            (skills_dir / "review-tasks" / "api-design").mkdir(parents=True)
+            (skills_dir / "concerns" / "api-design.md").write_text(
+                "---\nname: api-design\ndescription: concern\n---\n\n# Concern\n",
+                encoding="utf-8",
+            )
+            (
+                skills_dir / "review-tasks" / "api-design" / "input-validation.md"
+            ).write_text(
+                "---\nname: review-task-api-design-input-validation\ndescription: task\n---\n\n# Task\n",
+                encoding="utf-8",
+            )
+
+            flatten_review_task_skills(skills_dir=skills_dir)
+
+            self.assertFalse((skills_dir / "concerns" / "api-design.md").exists())
+            self.assertFalse(
+                (skills_dir / "review-tasks" / "api-design" / "input-validation.md").exists()
+            )
+            self.assertTrue((skills_dir / "api-design" / "SKILL.md").exists())
+
 
 if __name__ == "__main__":
     unittest.main()
