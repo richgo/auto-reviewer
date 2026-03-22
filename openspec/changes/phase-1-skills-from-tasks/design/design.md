@@ -1,15 +1,17 @@
 # Design: Skills from Tasks
 
+> Historical note: This phase design is retained for audit continuity and is non-normative in the current skill-first architecture.
+
 ## Overview
 
-Phase 1 transforms 197 atomic review tasks into 40 composable skills organized by concern (19), language (11), output format (5), orchestration (2), and tuning (3). Skills follow the Anthropic format with progressive disclosure, reference review tasks for detail, and are validated via structured eval infrastructure.
+Phase 1 transforms 197 atomic review tasks into 40 composable skills organized by concern (19), language (11), output format (5), orchestration (2), and tuning (3). Skills follow the Anthropic format with progressive disclosure and are validated via structured eval infrastructure.
 
 ## Architecture
 
 ### Components Affected
 - `skills/` directory structure (new) — 5 subdirectories with 40 markdown files
 - `evals/` directory (new) — JSON test cases extracted from review tasks
-- `review-tasks/` (reference) — skills link to these for detailed detection logic
+- `review-tasks/` (historical, non-normative) — retained archive context
 
 ### New Components
 - **Concern skills** (`skills/concerns/`): 19 skills grouping related review tasks
@@ -58,7 +60,7 @@ Phase 1 transforms 197 atomic review tasks into 40 composable skills organized b
 - No size limit — rejected because large skills are hard to navigate and slow to load
 - Hard 500-line limit with truncation — rejected because some content (comprehensive OWASP mappings) is valuable but voluminous
 
-**Rationale:** Progressive disclosure balances readability (concise skills) with completeness (references available when needed). Skills reference review tasks for even deeper detail.
+**Rationale:** Progressive disclosure balances readability (concise skills) with completeness (references available when needed).
 
 ### Decision: Eval Infrastructure Format
 
@@ -85,7 +87,7 @@ Phase 1 transforms 197 atomic review tasks into 40 composable skills organized b
 1. **Review Request:** Developer opens PR → GitHub webhook fires
 2. **Diff Analysis:** diff-analysis skill parses PR diff, extracts changed files, detects languages/platforms
 3. **Skill Dispatch:** review-orchestrator routes to relevant concern/language skills based on diff analysis
-4. **Detection:** Each skill analyzes changed code sections, references review tasks for detection logic, emits findings
+4. **Detection:** Each skill analyzes changed code sections and emits findings
 5. **Aggregation:** Orchestrator collects findings, deduplicates (fingerprinting), ranks by severity
 6. **Output:** Output skill (review-report, inline-comments, etc.) formats findings for consumption
 7. **Delivery:** Findings posted as PR comment, inline comments, or notification
@@ -96,7 +98,7 @@ No API changes — this is skill content and infrastructure. Phase 2 will define
 
 ## Dependencies
 
-- Phase 0 review tasks (✅ complete) — skills reference these for detail
+- Phase 0 review tasks (✅ complete, historical/non-normative archive context)
 - OWASP CheatSheetSeries (external) — referenced in security skills
 - Anthropic skill format spec (external) — defines skill structure
 

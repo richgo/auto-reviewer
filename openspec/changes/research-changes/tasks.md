@@ -22,7 +22,7 @@
 - [x] **2.2** Align composition policy and docs to skill-only dependencies
   Confirm `scripts/compose/policy.yaml` and composition-facing docs/contracts are strictly skill-path based and contain no dependency expectations on standalone review-task artifacts. (Specs: `agent-composition` Signal-Driven Composition; Design: Keep Existing Runtime Entry Points)
 
-- [ ] **2.3** Normalize pipeline and architecture language across docs/specs
+- [x] **2.3** Normalize pipeline and architecture language across docs/specs
   Update `README.md`, `openspec/specs/review-tasks/spec.md`, and relevant active OpenSpec phase docs so architecture language consistently presents skills as atomic and agents as wrappers. Preserve historical context with explicit non-normative labeling where needed. (Specs: `review-tasks` modified/removed requirements + `skills` Skill Atomicity; Design: Legacy references handling)
 
 - [ ] **2.4** Add skill-attribution contract language for agent outputs

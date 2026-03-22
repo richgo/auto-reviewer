@@ -1,5 +1,7 @@
 # Proposal: Skills from Tasks
 
+> Historical note: This phase document is retained for audit continuity and is non-normative in the current skill-first architecture.
+
 ## Intent
 
 Transform the 197 atomic review tasks (Phase 0 deliverable) into composable, deployable **skills** that can be used by LLM-based code review agents. Skills group related tasks by concern area, language, output format, and orchestration needs, enabling modular and maintainable code review automation.
@@ -37,11 +39,11 @@ Transform the 197 atomic review tasks (Phase 0 deliverable) into composable, dep
 ### Affected Areas
 - `skills/` directory structure (new): concerns/, languages/, outputs/, core/, tuning/
 - `evals/` directory (new): JSON files with test cases for automated validation
-- `review-tasks/` (reference): skills reference task files for detailed detection logic
+- `review-tasks/` (historical, non-normative): retained Phase 0 archive context
 - Future Phase 2 runtime integration points
 
 ### Integration Points
-- Skills reference `review-tasks/` files for progressive disclosure
+- Historical migration context may cite `review-tasks/` files for traceability
 - Evals extract test cases from review task eval sections
 - Orchestrator dispatches skills based on diff analysis (language detection, changed files)
 - Output skills consume findings from concern/language skills and format for different consumers

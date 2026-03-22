@@ -36,7 +36,20 @@ class TestReviewTasksRetirement(unittest.TestCase):
         self.assertNotIn("review-tasks/", lowered)
         self.assertNotIn("review tasks", lowered)
 
+    def test_phase_one_docs_mark_review_tasks_as_historical_non_normative(self):
+        repo_root = Path(__file__).resolve().parents[3]
+        phase_one_docs = [
+            repo_root / "openspec" / "changes" / "phase-1-skills-from-tasks" / "proposal.md",
+            repo_root / "openspec" / "changes" / "phase-1-skills-from-tasks" / "design" / "design.md",
+        ]
+        for doc in phase_one_docs:
+            with self.subTest(doc=doc.name):
+                content = doc.read_text(encoding="utf-8").lower()
+                self.assertNotIn("skills reference review tasks", content)
+                self.assertNotIn("skills reference `review-tasks/", content)
+                self.assertIn("historical", content)
+                self.assertIn("non-normative", content)
+
 
 if __name__ == "__main__":
     unittest.main()
-
