@@ -302,13 +302,8 @@ except CircuitBreakerError:
     recommendations = get_cached_recommendations()
 ```
 
-## Related Review Tasks
-- `review-tasks/reliability/error-handling.md`
-- `review-tasks/reliability/resource-cleanup.md`
-- `review-tasks/reliability/timeout-handling.md`
-- `review-tasks/reliability/graceful-degradation.md`
-- `review-tasks/reliability/retry-without-backoff.md`
-- Platform-specific: `review-tasks/reliability/{android,ios,microservices}/*.md`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## Quick Checklist
 - [ ] All exceptions caught with specific types (not bare except)

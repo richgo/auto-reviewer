@@ -332,11 +332,8 @@ def call_other_service():
     return response.json()
 ```
 
-## Related Review Tasks
-- `review-tasks/observability/logging-gaps.md`
-- `review-tasks/observability/missing-metrics.md`
-- `review-tasks/observability/missing-tracing.md`
-- Platform-specific: `review-tasks/observability/{android,ios,microservices}/*.md`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)

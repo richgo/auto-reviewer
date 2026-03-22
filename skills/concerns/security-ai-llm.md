@@ -329,13 +329,8 @@ def read_document(filename: str) -> str:
 ```
 **Finding:** Critical — Path traversal in MCP tool. Agent could read /etc/passwd via filename="../../../etc/passwd".
 
-## Related Review Tasks
-Detailed detection guidance for each AI/LLM vulnerability class:
-- `review-tasks/security/prompt-injection.md`
-- `review-tasks/security/ai-agent-security.md`
-- `review-tasks/security/mcp-tool-poisoning.md`
-- `review-tasks/security/command-injection.md` (for agent tool execution)
-- `review-tasks/security/path-traversal.md` (for file-accessing tools)
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [LLM Prompt Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)

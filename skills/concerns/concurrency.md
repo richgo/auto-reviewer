@@ -172,13 +172,8 @@ viewModelScope.launch(Dispatchers.Main) {
 ```
 **Finding:** High — Network I/O on main thread causes ANR. Use `Dispatchers.IO`.
 
-## Related Review Tasks
-- `review-tasks/concurrency/race-condition.md`
-- `review-tasks/concurrency/deadlock.md`
-- `review-tasks/concurrency/async-misuse.md`
-- `review-tasks/concurrency/thread-unsafe-collection.md`
-- `review-tasks/concurrency/livelock.md`
-- Platform-specific tasks in `android/`, `ios/`, `web/`, `microservices/`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## Quick Checklist
 - [ ] Shared mutable state protected by locks or atomics

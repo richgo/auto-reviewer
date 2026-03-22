@@ -115,7 +115,16 @@ class TestMigrationMap(unittest.TestCase):
         )
         self.assertEqual(written_rows, rows)
 
+    def test_concern_skills_do_not_reference_review_task_files_after_migration(self):
+        repo_root = Path(__file__).resolve().parents[3]
+        offending = []
+        for skill_path in sorted((repo_root / "skills" / "concerns").glob("*.md")):
+            content = skill_path.read_text(encoding="utf-8")
+            if "review-tasks/" in content:
+                offending.append(skill_path.name)
+
+        self.assertEqual(offending, [])
+
 
 if __name__ == "__main__":
     unittest.main()
-

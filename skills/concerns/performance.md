@@ -128,12 +128,8 @@ See platform-specific guidance above
 - **Description:** Performance impact
 - **Fix:** Optimized code example
 
-## Related Review Tasks
-- `review-tasks/performance/n-plus-one.md`
-- `review-tasks/performance/algorithmic-complexity.md`
-- `review-tasks/performance/memory-leak.md`
-- `review-tasks/performance/unbounded-growth.md`
-- Platform-specific tasks in `android/`, `ios/`, `web/`, `microservices/`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## Quick Checklist
 - [ ] No N+1 queries (use eager loading)

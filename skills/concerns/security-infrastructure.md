@@ -310,12 +310,8 @@ iamRoleStatements:
 ```
 **Finding:** Critical — Lambda has full AWS account permissions. Apply least privilege.
 
-## Related Review Tasks
-- `review-tasks/security/docker-misconfiguration.md`
-- `review-tasks/security/iac-security.md`
-- `review-tasks/security/cicd-security.md`
-- `review-tasks/security/serverless-security.md`
-- `review-tasks/security/multi-tenant-isolation.md`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [Docker Security](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)

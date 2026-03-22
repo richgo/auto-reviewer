@@ -5,7 +5,7 @@
 - [x] **1.1** Create review-task to skill migration map
   Build a deterministic mapping inventory from `review-tasks/**/*.md` to owning skill artifacts in `skills/` (including concern/platform ownership and security reference lineage). Produce migration notes in this change folder as implementation artifacts. (Specs: `skills` Migrated Guidance Availability, Concern and Platform Continuity, Security Reference Traceability; Design: Migrate Review-Task Guidance into Skills)
 
-- [ ] **1.2** Migrate review guidance from `review-tasks/` into skill artifacts
+- [x] **1.2** Migrate review guidance from `review-tasks/` into skill artifacts
   Consolidate task-level guidance into canonical skill files (and skill-local references where needed) so active review behavior resolves through `skills/` only. Keep coverage complete across concerns/platforms and preserve security reference traceability. (Specs: `skills` Skill-Owned Review Guidance, Skill-Level Coverage Preservation, Skill-Level Security Reference Mapping)
 
 - [ ] **1.3** Align eval ownership to skill-linked source of truth

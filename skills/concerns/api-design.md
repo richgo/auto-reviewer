@@ -304,12 +304,8 @@ def create_order(order: OrderRequest, accept_version: Optional[str] = Header("1"
     return create_order_v1(order)
 ```
 
-## Related Review Tasks
-- `review-tasks/api-design/input-validation.md`
-- `review-tasks/api-design/missing-pagination.md`
-- `review-tasks/api-design/breaking-api-change.md`
-- `review-tasks/api-design/inconsistent-response-shape.md`
-- Platform-specific: `review-tasks/api-design/{mobile,microservices}/*.md`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [Input Validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)

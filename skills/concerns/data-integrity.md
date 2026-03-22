@@ -341,12 +341,8 @@ consumer = AvroConsumer({
 })
 ```
 
-## Related Review Tasks
-- `review-tasks/data/pii-exposure.md`
-- `review-tasks/data/migration-safety.md`
-- `review-tasks/data/schema-validation.md`
-- `review-tasks/data/serialization-mismatch.md`
-- Platform-specific: `review-tasks/data/{android,ios,microservices}/*.md`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [User Privacy Protection](https://cheatsheetseries.owasp.org/cheatsheets/User_Privacy_Protection_Cheat_Sheet.html)

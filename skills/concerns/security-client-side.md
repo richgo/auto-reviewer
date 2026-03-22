@@ -316,17 +316,8 @@ localStorage.setItem('authToken', jwt);
 ```
 **Finding:** High — JWT in localStorage. Accessible to XSS attacks. Use httpOnly cookie instead.
 
-## Related Review Tasks
-Detailed detection guidance for each vulnerability class:
-- `review-tasks/security/cookie-security.md`
-- `review-tasks/security/clickjacking.md`
-- `review-tasks/security/prototype-pollution.md`
-- `review-tasks/security/third-party-code.md`
-- `review-tasks/security/web/csp-bypass.md`
-- `review-tasks/security/web/postmessage-origin.md`
-- `review-tasks/security/web/client-side-storage.md`
-- `review-tasks/security/web/html-injection.md`
-- `review-tasks/security/web/subresource-integrity.md`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [Cookie Theft Mitigation](https://cheatsheetseries.owasp.org/cheatsheets/Cookie_Theft_Mitigation_Cheat_Sheet.html)

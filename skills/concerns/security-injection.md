@@ -161,14 +161,8 @@ exec(`ping -c 4 ${userInput}`, callback);
 ```
 **Finding:** Critical — Command injection. Attacker can inject `8.8.8.8; rm -rf /`.
 
-## Related Review Tasks
-Detailed detection guidance for each injection type:
-- `review-tasks/security/sql-injection.md`
-- `review-tasks/security/xss.md`
-- `review-tasks/security/dom-xss.md`
-- `review-tasks/security/command-injection.md`
-- `review-tasks/security/ldap-injection.md`
-- `review-tasks/security/nosql-injection.md`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [SQL Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)

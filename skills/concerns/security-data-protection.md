@@ -208,13 +208,8 @@ data = pickle.loads(user_input)
 ```
 **Finding:** Critical — Insecure deserialization. Pickle can execute arbitrary code. Use JSON.
 
-## Related Review Tasks
-- `review-tasks/security/secrets-exposure.md`
-- `review-tasks/security/path-traversal.md`
-- `review-tasks/security/mass-assignment.md`
-- `review-tasks/security/insecure-crypto.md`
-- `review-tasks/security/insecure-deserialization.md`
-- `review-tasks/security/file-upload.md`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [Secrets Management](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)

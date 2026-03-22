@@ -342,12 +342,8 @@ router.post('/users', validateEmail, (req, res) => { ... });
 router.put('/users/:id', validateEmail, (req, res) => { ... });
 ```
 
-## Related Review Tasks
-- `review-tasks/code-quality/dead-code.md`
-- `review-tasks/code-quality/naming-readability.md`
-- `review-tasks/code-quality/dry-violations.md`
-- `review-tasks/code-quality/missing-documentation.md`
-- Platform-specific: `review-tasks/code-quality/{android,ios,web,microservices}/*.md`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## Quick Checklist
 - [ ] No unreachable or commented-out code

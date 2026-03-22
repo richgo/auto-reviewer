@@ -200,15 +200,8 @@ db.session.commit()
 ```
 **Finding:** Critical — Plaintext password storage. Use bcrypt/scrypt/argon2.
 
-## Related Review Tasks
-- `review-tasks/security/auth-bypass.md`
-- `review-tasks/security/csrf.md`
-- `review-tasks/security/authentication-flaws.md`
-- `review-tasks/security/session-management.md`
-- `review-tasks/security/credential-stuffing.md`
-- `review-tasks/security/password-storage.md`
-- `review-tasks/security/password-reset-flaws.md`
-- `review-tasks/security/oauth-misconfiguration.md`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)

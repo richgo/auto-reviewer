@@ -170,13 +170,8 @@ let name = user!.name  // Crash if user is nil
 ```
 **Finding:** High — Force unwrap crash risk. Use `guard let` or `if let`.
 
-## Related Review Tasks
-- `review-tasks/correctness/null-deref.md`
-- `review-tasks/correctness/off-by-one.md`
-- `review-tasks/correctness/integer-overflow.md`
-- `review-tasks/correctness/floating-point-comparison.md`
-- `review-tasks/correctness/logic-inversion.md`
-- Platform-specific tasks in `android/`, `ios/`, `web/`, `microservices/`
+## Migration Coverage
+Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## Quick Checklist
 - [ ] All dereferences have null checks
