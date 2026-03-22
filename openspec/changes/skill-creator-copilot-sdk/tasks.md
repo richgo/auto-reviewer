@@ -58,7 +58,7 @@
   **Completion:** Written trace matrix (in review notes/PR description) shows complete mapping.  
   **Specs:** all scenarios in both capability deltas.
 
-- [ ] **4.2** Verify spec-to-design coverage  
+- [x] **4.2** Verify spec-to-design coverage  
   Confirm each spec requirement has a corresponding design decision, flow step, or testing strategy entry.  
   **Completion:** No requirement remains without design coverage.  
   **Specs:** all scenarios in both capability deltas.

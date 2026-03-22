@@ -264,3 +264,43 @@ def test_4_1_verify_proposal_to_spec_coverage():
 
 def _assert_requirement_present(spec_text: str, requirement_name: str) -> None:
     assert f"### Requirement: {requirement_name}" in spec_text
+
+
+def _assert_requirements_present(spec_text: str, requirements: list[str]) -> None:
+    for requirement in requirements:
+        _assert_requirement_present(spec_text, requirement)
+
+
+def test_4_2_verify_spec_to_design_coverage():
+    tasks = _read_tasks()
+    design = _read("design.md")
+    governance_spec = _read("specs/skill-authoring-governance/spec.md")
+    runtime_spec = _read("specs/copilot-sdk-runtime-alignment/spec.md")
+
+    governance_requirements = [
+        "Upstream Skill-Creator Provenance Contract",
+        "Controlled Upstream Refresh Workflow",
+        "Reuse Boundary Across Authoring Surfaces",
+    ]
+    runtime_requirements = [
+        "Copilot SDK-First Runtime Contract",
+        "Runtime Example Consistency",
+        "Historical Reference De-Emphasis",
+    ]
+
+    _assert_requirements_present(governance_spec, governance_requirements)
+    _assert_requirements_present(runtime_spec, runtime_requirements)
+
+    _assert_contains_all(
+        design,
+        [
+            "## Technical Decisions",
+            "## Data Flow",
+            "## Testing Strategy",
+        ],
+    )
+    _assert_task_completion(
+        tasks,
+        "4.2",
+        "spec-to-design coverage is verified",
+    )
