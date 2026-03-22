@@ -19,7 +19,7 @@
 
 ## Phase 2: Design and Traceability
 
-- [ ] **2.1** Document technical decisions and alternatives  
+- [x] **2.1** Document technical decisions and alternatives  
   Update `openspec/changes/skill-creator-copilot-sdk/design.md` with explicit decisions on baseline-and-adapt reuse model, default-runtime policy, and historical-reference handling.  
   **Completion:** Each decision includes alternatives considered and rationale.  
   **Specs:** `skill-authoring-governance` (all scenarios), `copilot-sdk-runtime-alignment` (all scenarios).

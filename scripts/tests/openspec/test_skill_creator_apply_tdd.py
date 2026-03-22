@@ -39,6 +39,12 @@ def _assert_delta_requirement(text: str, requirement: str, scenario: str) -> Non
     )
 
 
+def _assert_task_completion(tasks_text: str, task_id: str, context: str) -> None:
+    assert _task_is_checked(
+        tasks_text, task_id
+    ), f"Task {task_id} must be checked after {context}."
+
+
 def test_1_1_finalize_proposal_scope_and_risk_framing():
     proposal = _read("proposal.md")
     tasks = _read_tasks()
@@ -56,9 +62,7 @@ def test_1_1_finalize_proposal_scope_and_risk_framing():
             "skills/tuning/",
         ],
     )
-    assert _task_is_checked(
-        tasks, "1.1"
-    ), "Task 1.1 must be checked after proposal scope/risk framing is finalized."
+    _assert_task_completion(tasks, "1.1", "proposal scope/risk framing is finalized")
 
 
 def test_1_2_add_skill_authoring_governance_capability_delta():
@@ -80,9 +84,11 @@ def test_1_2_add_skill_authoring_governance_capability_delta():
         "Reuse Boundary Across Authoring Surfaces",
         "Skill Authoring Contract Review",
     )
-    assert _task_is_checked(
-        tasks, "1.2"
-    ), "Task 1.2 must be checked after skill-authoring governance spec delta is finalized."
+    _assert_task_completion(
+        tasks,
+        "1.2",
+        "skill-authoring governance spec delta is finalized",
+    )
 
 
 def test_1_3_add_copilot_runtime_alignment_capability_delta():
@@ -104,6 +110,29 @@ def test_1_3_add_copilot_runtime_alignment_capability_delta():
         "Historical Reference De-Emphasis",
         "Mixed Historical Documentation",
     )
-    assert _task_is_checked(
-        tasks, "1.3"
-    ), "Task 1.3 must be checked after Copilot runtime alignment spec delta is finalized."
+    _assert_task_completion(
+        tasks,
+        "1.3",
+        "Copilot runtime alignment spec delta is finalized",
+    )
+
+
+def test_2_1_document_technical_decisions_and_alternatives():
+    design = _read("design.md")
+    tasks = _read_tasks()
+
+    _assert_contains_all(
+        design,
+        [
+            "## Technical Decisions",
+            "**Alternatives considered:**",
+            "Decision: Baseline-and-Adapt Reuse Model",
+            "Decision: Copilot SDK as Normative Default, Provider Examples as Labeled Alternatives",
+            "Decision: Non-Normative Labeling for Historical Claude References",
+        ],
+    )
+    _assert_task_completion(
+        tasks,
+        "2.1",
+        "technical decisions and alternatives are documented",
+    )
