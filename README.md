@@ -27,8 +27,8 @@ For each concern, multiple models review independently, then challenge each othe
 
 ### Self-Tuning Pipeline
 
-1. **Review tasks** → atomic, testable bug detection units
-2. **Skills** → composed from tasks, with binary eval assertions
+1. **Skills** → atomic, testable bug detection units and canonical review guidance
+2. **Skill-linked evals** → benchmark/tuning inputs keyed directly by skill identifier
 3. **SWE-bench scoring** → score each model × skill × language
 4. **Autoresearch tuning** → overnight mutation loops improve skills
 5. **Local calibration** → adapt to repo conventions on install
@@ -38,18 +38,7 @@ For each concern, multiple models review independently, then challenge each othe
 ```
 auto-reviewer/
 ├── .github/agents/          # OpenSpec workflow agents
-├── review-tasks/            # Phase 0: atomic review task taxonomy
-│   ├── security/
-│   ├── concurrency/
-│   ├── correctness/
-│   ├── testing/
-│   ├── performance/
-│   ├── reliability/
-│   ├── api-design/
-│   ├── data/
-│   ├── observability/
-│   └── code-quality/
-├── skills/                  # Phase 1: composed from tasks
+├── skills/                  # Canonical atomic skill corpus
 │   ├── core/
 │   ├── languages/
 │   ├── concerns/
@@ -65,8 +54,7 @@ auto-reviewer/
 
 ## Build Phases
 
-- **Phase 0** — Review task taxonomy (current)
-- **Phase 1** — Skills from tasks
+- **Phase 1** — Skill-first atomic corpus
 - **Phase 2** — SWE-bench style scoring
 - **Phase 3** — Autoresearch tuning
 - **Phase 4** — Composer agent

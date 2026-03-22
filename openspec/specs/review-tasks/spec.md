@@ -1,77 +1,35 @@
 # Review Tasks Specification
 
-## Requirement: Review Task Format
+## Requirement: Transitional Migration Inputs Only
 
-The system SHALL define review tasks as standalone markdown files with a structured template.
+The system SHALL treat review-task artifacts as historical migration inputs and not as active runtime units.
 
-### Scenario: Task File Structure
+### Scenario: Runtime Independence
 
-- GIVEN a code review concern needs to be detected
-- WHEN creating a review task file
-- THEN it SHALL include: name, severity, description, detection heuristics, OWASP mapping (where applicable), eval cases (buggy code + expected finding), counter-examples (correct code that should not be flagged), fix guidance, and applicable platforms/languages
-- AND the file SHALL be under 500 lines with references/ subdirectory for additional detail
+- GIVEN benchmark, tuning, or composition workflows execute
+- WHEN runtime inputs are resolved
+- THEN execution SHALL use skills and skill-linked eval datasets
+- AND execution SHALL NOT require standalone review-task files.
 
-## Requirement: Taxonomy Structure
+## Requirement: Historical Taxonomy Context
 
-The system SHALL organize review tasks by concern category with platform subfolders.
+The system SHALL keep any retained review-task taxonomy as historical, non-normative context only.
 
-### Scenario: Platform Subfolder Convention
+### Scenario: Non-Normative Labeling
 
-- GIVEN a review task is platform-specific
-- WHEN organizing the task file
-- THEN it SHALL be placed under the category folder in a platform subdirectory (android/, ios/, web/, microservices/)
-- AND tasks at the category root level SHALL be truly universal (applicable across all platforms)
-- AND this convention SHALL apply consistently across all 10 concern categories
+- GIVEN archived review-task artifacts are present for audit
+- WHEN users inspect repository documentation or contracts
+- THEN those artifacts SHALL be clearly labeled historical/non-normative
+- AND active coverage guarantees SHALL be defined at the skill layer.
 
-### Scenario: Concern Categories
+## Requirement: Skill-Owned Eval Source
 
-- GIVEN the comprehensive taxonomy of code review concerns
-- WHEN organizing review tasks
-- THEN they SHALL be grouped into: Security, Concurrency, Correctness, Testing, Performance, Reliability, API Design, Data, Observability, Code Quality
-- AND Security SHALL be further subdivided into: Injection, Auth & Session, Data Protection, Network & Transport, Cookie & Client-Side, API & GraphQL, AI & LLM, Supply Chain, DoS, Infrastructure, Android, iOS, Mobile Shared, Web-Specific, Logging & Errors, Microservices
+The system SHALL define skill-linked eval datasets as the executable source of truth.
 
-## Requirement: OWASP Mapping
+### Scenario: Skill-Eval Resolution
 
-The system SHALL map every security task to relevant OWASP CheatSheetSeries documents.
+- GIVEN an eval case is selected for benchmark or tuning
+- WHEN the evaluator resolves execution inputs
+- THEN the eval case SHALL map to a skill identifier
+- AND task-local eval snippets SHALL not be required for execution.
 
-### Scenario: OWASP Tag Format
-
-- GIVEN a security-related review task
-- WHEN creating the task file
-- THEN it SHALL include `[OWASP: CheatSheetName, AnotherCheatSheet]` tags referencing the relevant OWASP cheat sheets
-- AND mobile security tasks SHALL additionally reference MASVS control groups where applicable
-
-## Requirement: Eval Case Format
-
-The system SHALL include testable eval cases and counter-examples in each review task.
-
-### Scenario: Eval Case Structure
-
-- GIVEN a review task needs to be independently testable
-- WHEN defining eval cases
-- THEN each task SHALL include 2-3 eval cases with buggy code snippets and expected findings
-- AND each task SHALL include 1-2 counter-examples showing similar but correct code that should NOT be flagged
-- AND eval cases SHALL be extractable for automated testing
-
-## Requirement: Platform Coverage
-
-The system SHALL provide comprehensive coverage across mobile, web, and distributed system platforms.
-
-### Scenario: Platform-Specific Tasks
-
-- GIVEN the taxonomy covers multiple platforms
-- WHEN reviewing the task inventory
-- THEN it SHALL include: 28 Android-specific tasks, 28 iOS-specific tasks, 35+ web-specific tasks, 32 microservices-specific tasks, 8 mobile-shared tasks
-- AND 58 general tasks SHALL apply across all platforms
-- AND total coverage SHALL include 197 tasks
-
-## Requirement: Severity Tagging
-
-The system SHALL classify each review task by severity.
-
-### Scenario: Severity Levels
-
-- GIVEN a review task is created
-- WHEN assigning severity
-- THEN it SHALL use one of: critical, high, medium, low
-- AND severity SHALL guide prioritization in review reports

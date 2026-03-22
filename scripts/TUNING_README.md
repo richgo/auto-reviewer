@@ -274,7 +274,7 @@ Eval JSON structure:
 - 5-8 cases per skill (enough signal for tuning)
 - Mix true positives (buggy code) and counter-examples (safe code)
 - Use `assertions` to define pass/fail criteria
-- Pull real-world examples from CVEs, production incidents, review-tasks/
+- Pull real-world examples from CVEs, production incidents, and skill-linked eval archives
 
 ## Typical Workflows
 
@@ -427,7 +427,7 @@ python scripts/tune/autoresearch.py \
 2. Create eval JSON in `evals/` (matching filename)
 3. Run baseline benchmark
 4. Tune to 85%+ pass rate
-5. Document in `review-tasks/INDEX.md`
+5. Document in `skills/concerns/` and relevant skill-linked eval metadata
 
 ### Improving Infrastructure
 
