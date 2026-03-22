@@ -53,7 +53,7 @@
 
 ## Phase 4: Coherence Verification
 
-- [ ] **4.1** Verify proposal-to-spec coverage  
+- [x] **4.1** Verify proposal-to-spec coverage  
   Confirm each scope item in `proposal.md` maps to one or more requirements in the two spec deltas.  
   **Completion:** Written trace matrix (in review notes/PR description) shows complete mapping.  
   **Specs:** all scenarios in both capability deltas.

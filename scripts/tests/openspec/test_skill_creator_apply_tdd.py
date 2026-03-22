@@ -226,3 +226,41 @@ def test_3_3_plan_historical_reference_de_emphasis_pass():
         ),
         "historical-reference de-emphasis audit is planned",
     )
+
+
+def test_4_1_verify_proposal_to_spec_coverage():
+    tasks = _read_tasks()
+    proposal = _read("proposal.md")
+    governance_spec = _read("specs/skill-authoring-governance/spec.md")
+    runtime_spec = _read("specs/copilot-sdk-runtime-alignment/spec.md")
+
+    _assert_contains_all(
+        proposal,
+        [
+            "Define repository requirements for importing and reusing upstream `skill-creator` guidance",
+            "Define Copilot SDK-first runtime expectations",
+        ],
+    )
+    _assert_contains_all(
+        governance_spec,
+        [
+            "### Requirement: Upstream Skill-Creator Provenance Contract",
+            "### Requirement: Controlled Upstream Refresh Workflow",
+        ],
+    )
+    _assert_contains_all(
+        runtime_spec,
+        [
+            "### Requirement: Copilot SDK-First Runtime Contract",
+            "### Requirement: Runtime Example Consistency",
+        ],
+    )
+    _assert_task_completion(
+        tasks,
+        "4.1",
+        "proposal-to-spec coverage is verified",
+    )
+
+
+def _assert_requirement_present(spec_text: str, requirement_name: str) -> None:
+    assert f"### Requirement: {requirement_name}" in spec_text
