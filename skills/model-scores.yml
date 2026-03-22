@@ -48,3 +48,28 @@ models:
     concurrency: {pass_rate: null, f1: null, last_run: null}
     correctness: {pass_rate: null, f1: null, last_run: null}
     performance: {pass_rate: null, f1: null, last_run: null}
+
+  # Free-tier models used by the benchmark workflow
+  gpt-4o-mini:
+    security-injection: {pass_rate: null, f1: null, last_run: null}
+    security-auth: {pass_rate: null, f1: null, last_run: null}
+    security-data-protection: {pass_rate: null, f1: null, last_run: null}
+    security-network: {pass_rate: null, f1: null, last_run: null}
+    security-ai-llm: {pass_rate: null, f1: null, last_run: null}
+    security-api: {pass_rate: null, f1: null, last_run: null}
+    security-client-side: {pass_rate: null, f1: null, last_run: null}
+    concurrency: {pass_rate: null, f1: null, last_run: null}
+    correctness: {pass_rate: null, f1: null, last_run: null}
+    performance: {pass_rate: null, f1: null, last_run: null}
+
+  gemini-2.0-flash:
+    security-injection: {pass_rate: null, f1: null, last_run: null}
+    security-auth: {pass_rate: null, f1: null, last_run: null}
+    security-data-protection: {pass_rate: null, f1: null, last_run: null}
+    security-network: {pass_rate: null, f1: null, last_run: null}
+    security-ai-llm: {pass_rate: null, f1: null, last_run: null}
+    security-api: {pass_rate: null, f1: null, last_run: null}
+    security-client-side: {pass_rate: null, f1: null, last_run: null}
+    concurrency: {pass_rate: null, f1: null, last_run: null}
+    correctness: {pass_rate: null, f1: null, last_run: null}
+    performance: {pass_rate: null, f1: null, last_run: null}

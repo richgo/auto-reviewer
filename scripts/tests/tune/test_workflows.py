@@ -89,6 +89,45 @@ class TestAutoResearchWorkflows(unittest.TestCase):
         self.assertEqual(detect_step.get("id"), "detect")
         self.assertEqual(open_revert_step.get("if"), "${{ steps.detect.outputs.regressed == 'true' }}")
 
+    def test_benchmark_workflow_has_schedule_and_dispatch_triggers(self):
+        workflow = self._load_workflow("benchmark.yml")
+        self.assertIn("on", workflow)
+        self.assertIn("schedule", workflow["on"])
+        self.assertIn("workflow_dispatch", workflow["on"])
+
+    def test_benchmark_workflow_defaults_to_free_models(self):
+        workflow = self._load_workflow("benchmark.yml")
+        jobs = workflow["jobs"]
+        self.assertIn("run", jobs)
+        run_steps = jobs["run"]["steps"]
+        benchmark_step = next(
+            step for step in run_steps if step.get("name") == "Run benchmark"
+        )
+        run_cmd = benchmark_step["run"]
+        self.assertIn("gpt-4o-mini", run_cmd)
+        self.assertIn("gemini-2.0-flash", run_cmd)
+
+    def test_benchmark_workflow_runs_runner_and_reporter(self):
+        workflow = self._load_workflow("benchmark.yml")
+        jobs = workflow["jobs"]
+        run_steps = jobs["run"]["steps"]
+        step_names = [step.get("name", "") for step in run_steps]
+        self.assertIn("Run benchmark", step_names)
+        self.assertIn("Generate report", step_names)
+        self.assertIn("Upload results", step_names)
+
+    def test_benchmark_workflow_uses_copilot_sdk_not_provider_api_keys(self):
+        workflow = self._load_workflow("benchmark.yml")
+        jobs = workflow["jobs"]
+        run_steps = jobs["run"]["steps"]
+        benchmark_step = next(
+            step for step in run_steps if step.get("name") == "Run benchmark"
+        )
+        env = benchmark_step.get("env") or {}
+        self.assertNotIn("OPENAI_API_KEY", env)
+        self.assertNotIn("GOOGLE_API_KEY", env)
+        self.assertNotIn("ANTHROPIC_API_KEY", env)
+
 
 if __name__ == "__main__":
     unittest.main()

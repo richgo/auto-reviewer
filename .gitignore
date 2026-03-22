@@ -1,4 +1,16 @@
 __pycache__/
 *.pyc
 *.pyo
-.pytest_cache/
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.env
+.venv
+env/
+venv/
+benchmark-results/
+tune-history/
