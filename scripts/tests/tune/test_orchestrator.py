@@ -134,6 +134,107 @@ class TestOrchestrator(unittest.TestCase):
             ],
         )
 
+    def test_build_plan_filters_by_skills_prefix(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills" / "concerns"
+            evals_dir = root / "evals"
+            skills_dir.mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+            for name in ["security-injection", "security-auth", "correctness", "concurrency"]:
+                (skills_dir / f"{name}.md").write_text("skill", encoding="utf-8")
+                (evals_dir / f"{name}.json").write_text("{}", encoding="utf-8")
+            config = root / "config.yaml"
+            config.write_text(yaml.safe_dump({"models": ["gpt-4.1"]}), encoding="utf-8")
+
+            pairs = build_plan(
+                skills_dir=root / "skills",
+                evals_dir=evals_dir,
+                config_path=config,
+                skills_filter=None,
+                models_filter=None,
+                skills_prefix="security-",
+            )
+
+        self.assertEqual(
+            pairs,
+            [
+                ("security-auth", "gpt-4.1"),
+                ("security-injection", "gpt-4.1"),
+            ],
+        )
+
+    def test_build_plan_skills_prefix_excludes_non_matching_skills(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills" / "concerns"
+            evals_dir = root / "evals"
+            skills_dir.mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+            for name in ["security-injection", "correctness"]:
+                (skills_dir / f"{name}.md").write_text("skill", encoding="utf-8")
+                (evals_dir / f"{name}.json").write_text("{}", encoding="utf-8")
+            config = root / "config.yaml"
+            config.write_text(yaml.safe_dump({"models": ["gpt-4.1"]}), encoding="utf-8")
+
+            pairs_with_prefix = build_plan(
+                skills_dir=root / "skills",
+                evals_dir=evals_dir,
+                config_path=config,
+                skills_filter=None,
+                models_filter=None,
+                skills_prefix="security-",
+            )
+            pairs_no_prefix = build_plan(
+                skills_dir=root / "skills",
+                evals_dir=evals_dir,
+                config_path=config,
+                skills_filter=None,
+                models_filter=None,
+                skills_prefix=None,
+            )
+
+        self.assertEqual(pairs_with_prefix, [("security-injection", "gpt-4.1")])
+        self.assertEqual(
+            pairs_no_prefix,
+            [("correctness", "gpt-4.1"), ("security-injection", "gpt-4.1")],
+        )
+
+    def test_compose_run_plan_skills_prefix_scopes_to_security_on_schedule(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills" / "concerns"
+            evals_dir = root / "evals"
+            skills_dir.mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+            for name in ["security-injection", "security-auth", "correctness"]:
+                (skills_dir / f"{name}.md").write_text("skill", encoding="utf-8")
+                (evals_dir / f"{name}.json").write_text("{}", encoding="utf-8")
+            config = root / "config.yaml"
+            config.write_text(
+                yaml.safe_dump(
+                    {"models": ["claude-sonnet-4-20250514", "gpt-4o", "gemini-2.5-pro"]}
+                ),
+                encoding="utf-8",
+            )
+
+            run_plan = compose_run_plan(
+                skills_dir=root / "skills",
+                evals_dir=evals_dir,
+                config_path=config,
+                skills_filter=None,
+                models_filter=None,
+                skills_prefix="security-",
+                trigger="schedule",
+                run_id="nightly-42",
+            )
+
+        skill_names = sorted({row["skill"] for row in run_plan})
+        self.assertEqual(skill_names, ["security-auth", "security-injection"])
+        self.assertNotIn("correctness", {row["skill"] for row in run_plan})
+        model_names = sorted({row["model"] for row in run_plan})
+        self.assertEqual(model_names, ["claude-sonnet-4-20250514", "gemini-2.5-pro", "gpt-4o"])
+
 
 if __name__ == "__main__":
     unittest.main()
