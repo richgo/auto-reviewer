@@ -12,7 +12,7 @@
   **Completion:** Spec includes Given/When/Then scenarios for each requirement.  
   **Specs:** `skill-authoring-governance` / Traceable Upstream Baseline, Upstream Guidance Changes, Skill Authoring Contract Review.
 
-- [ ] **1.3** Add Copilot runtime alignment capability delta  
+- [x] **1.3** Add Copilot runtime alignment capability delta  
   Create/confirm `openspec/changes/skill-creator-copilot-sdk/specs/copilot-sdk-runtime-alignment/spec.md` with SHALL requirements for Copilot SDK default guidance, runtime example consistency, and historical Claude reference labeling.  
   **Completion:** Spec includes Given/When/Then scenarios for each requirement.  
   **Specs:** `copilot-sdk-runtime-alignment` / Normative Runtime Guidance, Example Command Review, Mixed Historical Documentation.

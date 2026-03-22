@@ -10,6 +10,10 @@ def _read(relative_path: str) -> str:
     return (CHANGE_DIR / relative_path).read_text(encoding="utf-8")
 
 
+def _read_tasks() -> str:
+    return _read("tasks.md")
+
+
 def _task_is_checked(tasks_text: str, task_id: str) -> bool:
     pattern = rf"- \[x\] \*\*{re.escape(task_id)}\*\*"
     return re.search(pattern, tasks_text) is not None
@@ -37,7 +41,7 @@ def _assert_delta_requirement(text: str, requirement: str, scenario: str) -> Non
 
 def test_1_1_finalize_proposal_scope_and_risk_framing():
     proposal = _read("proposal.md")
-    tasks = _read("tasks.md")
+    tasks = _read_tasks()
 
     _assert_contains_all(
         proposal,
@@ -59,7 +63,7 @@ def test_1_1_finalize_proposal_scope_and_risk_framing():
 
 def test_1_2_add_skill_authoring_governance_capability_delta():
     spec = _read("specs/skill-authoring-governance/spec.md")
-    tasks = _read("tasks.md")
+    tasks = _read_tasks()
 
     _assert_delta_requirement(
         spec,
@@ -79,3 +83,27 @@ def test_1_2_add_skill_authoring_governance_capability_delta():
     assert _task_is_checked(
         tasks, "1.2"
     ), "Task 1.2 must be checked after skill-authoring governance spec delta is finalized."
+
+
+def test_1_3_add_copilot_runtime_alignment_capability_delta():
+    spec = _read("specs/copilot-sdk-runtime-alignment/spec.md")
+    tasks = _read_tasks()
+
+    _assert_delta_requirement(
+        spec,
+        "Copilot SDK-First Runtime Contract",
+        "Normative Runtime Guidance",
+    )
+    _assert_delta_requirement(
+        spec,
+        "Runtime Example Consistency",
+        "Example Command Review",
+    )
+    _assert_delta_requirement(
+        spec,
+        "Historical Reference De-Emphasis",
+        "Mixed Historical Documentation",
+    )
+    assert _task_is_checked(
+        tasks, "1.3"
+    ), "Task 1.3 must be checked after Copilot runtime alignment spec delta is finalized."
