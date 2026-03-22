@@ -62,6 +62,10 @@ def _task_header(task_id: str) -> str:
     return f"**{task_id}**"
 
 
+def _task_fragments(task_id: str, *fragments: str) -> list[str]:
+    return [_task_header(task_id), *fragments]
+
+
 def test_1_1_finalize_proposal_scope_and_risk_framing():
     proposal = _read("proposal.md")
     tasks = _read_tasks()
@@ -186,13 +190,13 @@ def test_2_3_map_tests_to_spec_scenarios():
 def test_3_1_plan_provenance_labeling_updates_in_tuning_docs():
     _assert_tasks_covers_task(
         "3.1",
-        [
-            _task_header("3.1"),
+        _task_fragments(
+            "3.1",
             "skills/tuning/skill-optimizer.md",
             "skills/tuning/benchmark-runner.md",
             "skills/tuning/local-calibration.md",
             "provenance/default-runtime edits",
-        ],
+        ),
         "provenance labeling updates are planned in tuning docs",
     )
 
@@ -200,12 +204,25 @@ def test_3_1_plan_provenance_labeling_updates_in_tuning_docs():
 def test_3_2_plan_runtime_default_normalization_in_top_level_docs():
     _assert_tasks_covers_task(
         "3.2",
-        [
-            _task_header("3.2"),
+        _task_fragments(
+            "3.2",
             "README.md",
             "relevant agent docs",
             "Copilot SDK-first defaults",
             "labeled provider alternatives",
-        ],
+        ),
         "runtime-default normalization is planned for top-level docs",
+    )
+
+
+def test_3_3_plan_historical_reference_de_emphasis_pass():
+    _assert_tasks_covers_task(
+        "3.3",
+        _task_fragments(
+            "3.3",
+            "unlabeled Claude CLI references",
+            "historical/non-default",
+            "detection criteria and pass/fail conditions",
+        ),
+        "historical-reference de-emphasis audit is planned",
     )

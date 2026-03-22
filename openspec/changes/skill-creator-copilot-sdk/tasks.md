@@ -46,7 +46,7 @@
   **Completion:** Checklist enumerates files and acceptance conditions for consistency review.  
   **Specs:** `copilot-sdk-runtime-alignment` / Example Command Review, Mixed Historical Documentation.
 
-- [ ] **3.3** Plan historical reference de-emphasis pass  
+- [x] **3.3** Plan historical reference de-emphasis pass  
   Prepare audit checklist for identifying unlabeled Claude CLI references in normative sections and marking them historical/non-default where retained.  
   **Completion:** Audit checklist includes detection criteria and pass/fail conditions.  
   **Specs:** `copilot-sdk-runtime-alignment` / Mixed Historical Documentation.
