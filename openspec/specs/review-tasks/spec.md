@@ -10,6 +10,7 @@ The system SHALL treat review-task artifacts as historical migration inputs and 
 - WHEN runtime inputs are resolved
 - THEN execution SHALL use skills and skill-linked eval datasets
 - AND execution SHALL NOT require standalone review-task files.
+- AND active behavior SHALL NOT support legacy skill-path aliases.
 
 ## Requirement: Historical Taxonomy Context
 
@@ -32,4 +33,3 @@ The system SHALL define skill-linked eval datasets as the executable source of t
 - WHEN the evaluator resolves execution inputs
 - THEN the eval case SHALL map to a skill identifier
 - AND task-local eval snippets SHALL not be required for execution.
-

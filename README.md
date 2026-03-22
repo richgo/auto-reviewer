@@ -52,6 +52,8 @@ auto-reviewer/
 └── openspec/                # OpenSpec change management
 ```
 
+Active skill identity is canonicalized to one folder per skill with a `SKILL.md` entry contract, with **no legacy skill path support** in active composition and routing flows.
+
 ## Build Phases
 
 - **Phase 1** — Skill-first atomic corpus

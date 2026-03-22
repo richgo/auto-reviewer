@@ -12,6 +12,7 @@ class TestReviewTasksRetirement(unittest.TestCase):
 
         self.assertIn("skills", lowered)
         self.assertIn("agents", lowered)
+        self.assertIn("no legacy skill path support", lowered)
         self.assertNotIn("review tasks", lowered)
         self.assertNotIn("review-tasks/", lowered)
 
