@@ -41,7 +41,23 @@ class TestMigrationCoverage(unittest.TestCase):
         mapped_skills = {row["skill"] for row in written_rows}
         self.assertSetEqual(mapped_skills - available_skills, set())
 
+    def test_migration_rows_preserve_platform_and_owasp_lineage_for_security_tasks(self):
+        repo_root = Path(__file__).resolve().parents[3]
+        rows = build_review_task_skill_rows(
+            review_tasks_dir=repo_root / "review-tasks",
+            skills_dir=repo_root / "skills",
+        )
+
+        security_rows = [row for row in rows if row["category"] == "security"]
+        self.assertGreater(len(security_rows), 0)
+        self.assertTrue(all(row["platform"] for row in security_rows))
+        security_skill_paths = sorted((repo_root / "skills" / "concerns").glob("security-*.md"))
+        self.assertGreater(len(security_skill_paths), 0)
+        for skill_path in security_skill_paths:
+            with self.subTest(skill=skill_path.name):
+                content = skill_path.read_text(encoding="utf-8").lower()
+                self.assertIn("owasp", content)
+
 
 if __name__ == "__main__":
     unittest.main()
-

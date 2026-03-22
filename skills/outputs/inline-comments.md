@@ -159,6 +159,7 @@ for comment in comments:
 
 - include finding confidence in each inline comment body.
 - include short debate rationale when a finding is challenged or contested.
+- include skill attribution in each inline comment so findings are traceable to the producing skills.
 
 ## Special Cases
 

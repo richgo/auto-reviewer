@@ -235,6 +235,30 @@ class TestOrchestrator(unittest.TestCase):
         model_names = sorted({row["model"] for row in run_plan})
         self.assertEqual(model_names, ["claude-sonnet-4-20250514", "gemini-2.5-pro", "gpt-4o"])
 
+    def test_build_plan_rejects_eval_payloads_with_review_task_identifier(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills" / "concerns"
+            evals_dir = root / "evals"
+            skills_dir.mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+            (skills_dir / "security-auth.md").write_text("skill", encoding="utf-8")
+            (evals_dir / "security-auth.json").write_text(
+                '{"skill":"security-auth","review_task":"security/auth-bypass","cases":[]}',
+                encoding="utf-8",
+            )
+            config = root / "config.yaml"
+            config.write_text(yaml.safe_dump({"models": ["gpt-4.1"]}), encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "review_task"):
+                build_plan(
+                    skills_dir=root / "skills",
+                    evals_dir=evals_dir,
+                    config_path=config,
+                    skills_filter=None,
+                    models_filter=None,
+                )
+
 
 if __name__ == "__main__":
     unittest.main()

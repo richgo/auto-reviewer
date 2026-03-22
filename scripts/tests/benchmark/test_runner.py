@@ -7,7 +7,8 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from benchmark.runner import BenchmarkRunner
+from benchmark.runner import BenchmarkRunner, main as benchmark_main
+from benchmark.scorer import select_best_models
 from tune.llm_client import CopilotLLMClient
 
 
@@ -241,6 +242,34 @@ class TestBenchmarkRunner(unittest.TestCase):
                 runner.run()
 
             self.assertEqual(instantiated_clients, ["gpt-4o-mini"])
+
+    def test_find_skill_eval_pairs_ignores_evals_not_mapped_to_existing_skills(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp = Path(tmp_dir)
+            skills_dir = tmp / "skills"
+            evals_dir = tmp / "evals"
+            output_dir = tmp / "out"
+            (skills_dir / "concerns").mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+
+            (skills_dir / "concerns" / "correctness.md").write_text("review skill", encoding="utf-8")
+            (evals_dir / "correctness.json").write_text(
+                json.dumps({"skill": "correctness", "cases": []}), encoding="utf-8"
+            )
+            (evals_dir / "legacy-review-task.json").write_text(
+                json.dumps({"review_task": "security/xss", "cases": []}), encoding="utf-8"
+            )
+
+            runner = BenchmarkRunner(
+                skills_dir=skills_dir,
+                evals_dir=evals_dir,
+                models=["gpt-4.1"],
+                output_dir=output_dir,
+            )
+            pairs = runner.find_skill_eval_pairs()
+
+        pair_names = [skill_name for _, _, skill_name in pairs]
+        self.assertEqual(pair_names, ["correctness"])
 
 
 class TestCopilotLLMClient(unittest.TestCase):

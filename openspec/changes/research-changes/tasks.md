@@ -30,14 +30,14 @@
 
 ## Phase 3: Testing & Verification
 
-- [ ] **3.1** Write unit/contract tests for skill-atomic tuning and benchmark discovery
+- [x] **3.1** Write unit/contract tests for skill-atomic tuning and benchmark discovery
   Add or update tests under `scripts/tests/tune/` and `scripts/tests/benchmark/` to verify planning/discovery remains skill-scoped and does not require review-task identifiers. (Covers specs: `skills` Skill-Scoped Tuning Targets, Skill-Scoped Benchmark Reporting, Eval Resolution by Skill; `review-tasks` Transitional Task Usage)
 
-- [ ] **3.2** Write integration tests for composition and agent traceability
+- [x] **3.2** Write integration tests for composition and agent traceability
   Add/extend tests under `scripts/tests/compose/` plus contract tests for `agents/*` docs to verify skill-path dependency selection, subagent delegation semantics, and skill-attributable output routing language remain intact. (Covers specs: `agent-composition` Signal-Driven Composition, Subagent Delegation, Review Output Attribution)
 
-- [ ] **3.3** Write migration integrity and coverage regression checks
+- [x] **3.3** Write migration integrity and coverage regression checks
   Add verification tests/fixtures that assert migrated guidance completeness from prior review-task corpus, including concern/platform continuity and security reference availability in skills. (Covers specs: `skills` Migrated Guidance Availability, Concern and Platform Continuity, Security Reference Traceability; `review-tasks` Taxonomy Resolution in Active Architecture)
 
-- [ ] **3.4** Manual verification
+- [x] **3.4** Manual verification
   Perform end-to-end verification: (1) inspect docs/specs for skill-first consistency, (2) run tune/benchmark planning to confirm skill-only targeting, (3) run compose path checks for skill-only dependencies, and (4) confirm no active runtime contract requires standalone `review-tasks/`.

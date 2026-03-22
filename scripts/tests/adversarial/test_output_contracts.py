@@ -20,6 +20,18 @@ class TestAdversarialOutputContracts(unittest.TestCase):
         self.assertIn("confidence", content)
         self.assertIn("debate", content)
 
+    def test_output_skills_define_skill_level_attribution_language(self):
+        repo_root = Path(__file__).resolve().parents[3]
+        report_path = repo_root / "skills" / "outputs" / "review-report.md"
+        inline_path = repo_root / "skills" / "outputs" / "inline-comments.md"
+        report_content = report_path.read_text(encoding="utf-8").lower()
+        inline_content = inline_path.read_text(encoding="utf-8").lower()
+
+        self.assertIn("attribution", report_content)
+        self.assertIn("skill", report_content)
+        self.assertIn("attribution", inline_content)
+        self.assertIn("skill", inline_content)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -69,6 +69,7 @@ Transform aggregated code review findings into a well-formatted, actionable Mark
 - Include a **confidence** class for each finding (`high-confidence`, `contested`, `debunked`).
 - Include a **consensus** score when available from adversarial routing.
 - Include a compact **debate summary** describing challenge/defense outcome for contested findings.
+- Include skill attribution metadata so each finding remains traceable to contributing skills.
 
 ### 1. Emoji Usage
 - 🔴 Critical severity
