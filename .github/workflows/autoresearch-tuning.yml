@@ -2,7 +2,7 @@ name: autoresearch-tuning
 
 "on":
   schedule:
-    - cron: "0 4 * * 1"
+    - cron: "0 2 * * *"
   workflow_dispatch:
     inputs:
       skills:
@@ -28,6 +28,8 @@ permissions:
 jobs:
   plan:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.generate.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
       - name: Install Python
@@ -37,21 +39,23 @@ jobs:
       - name: Install deps
         run: pip install -r scripts/requirements.txt
       - name: Generate matrix plan
+        id: generate
         run: |
-          python scripts/tune/orchestrator.py \
+          SKILLS_PREFIX=$([[ "${{ github.event_name }}" == "schedule" ]] && echo "--skills-prefix security-" || echo "")
+          MATRIX=$(python scripts/tune/orchestrator.py \
             --trigger "${{ github.event_name }}" \
             --run-id "${{ github.run_id }}" \
             --skills "${{ github.event.inputs.skills }}" \
-            --models "${{ github.event.inputs.models }}"
+            --models "${{ github.event.inputs.models }}" \
+            --output-format github-matrix \
+            $SKILLS_PREFIX)
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
 
   tune_pair:
     needs: plan
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        include:
-          - skill: security-injection
-            model: gpt-4.1
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
     concurrency:
       group: autoresearch-${{ matrix.skill }}-${{ matrix.model }}
       cancel-in-progress: false
@@ -72,10 +76,12 @@ jobs:
             --history-file "tune-history/${{ matrix.skill }}/${{ matrix.model }}.jsonl"
 
   promote:
-    needs: tune_pair
+    needs: [plan, tune_pair]
+    strategy:
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
     uses: ./.github/workflows/autoresearch-promote.yml
     with:
-      skill: security-injection
-      model: gpt-4.1
+      skill: ${{ matrix.skill }}
+      model: ${{ matrix.model }}
       run_id: ${{ github.run_id }}
       base_branch: main

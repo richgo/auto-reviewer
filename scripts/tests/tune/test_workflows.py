@@ -21,6 +21,39 @@ class TestAutoResearchWorkflows(unittest.TestCase):
         self.assertIn("push", workflow["on"])
         self.assertEqual(workflow["on"]["push"]["paths"], ["evals/**", "skills/**"])
 
+    def test_autoresearch_tuning_workflow_runs_nightly(self):
+        workflow = self._load_workflow("autoresearch-tuning.yml")
+        schedules = workflow["on"]["schedule"]
+        cron_expressions = [s["cron"] for s in schedules]
+        # Should include a daily cron (runs every day, not just weekly)
+        self.assertTrue(
+            any(expr.endswith("* * *") for expr in cron_expressions),
+            msg=f"Expected a nightly (daily) cron schedule but got: {cron_expressions}",
+        )
+
+    def test_autoresearch_tuning_workflow_plan_job_outputs_matrix(self):
+        workflow = self._load_workflow("autoresearch-tuning.yml")
+        plan_job = workflow["jobs"]["plan"]
+        self.assertIn("outputs", plan_job)
+        self.assertIn("matrix", plan_job["outputs"])
+
+    def test_autoresearch_tuning_workflow_tune_pair_uses_dynamic_matrix(self):
+        workflow = self._load_workflow("autoresearch-tuning.yml")
+        tune_pair_job = workflow["jobs"]["tune_pair"]
+        matrix_expr = tune_pair_job["strategy"]["matrix"]
+        self.assertIn("fromJSON", matrix_expr)
+        self.assertIn("needs.plan.outputs.matrix", matrix_expr)
+
+    def test_autoresearch_tuning_workflow_generate_step_passes_skills_prefix_on_schedule(self):
+        workflow = self._load_workflow("autoresearch-tuning.yml")
+        plan_job = workflow["jobs"]["plan"]
+        generate_step = next(
+            step for step in plan_job["steps"] if step.get("id") == "generate"
+        )
+        run_script = generate_step["run"]
+        self.assertIn("--skills-prefix security-", run_script)
+        self.assertIn("schedule", run_script)
+
     def test_autoresearch_tuning_workflow_serializes_runs_per_skill_model(self):
         workflow = self._load_workflow("autoresearch-tuning.yml")
         jobs = workflow["jobs"]
