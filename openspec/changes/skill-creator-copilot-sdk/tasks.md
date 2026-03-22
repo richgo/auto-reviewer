@@ -63,7 +63,7 @@
   **Completion:** No requirement remains without design coverage.  
   **Specs:** all scenarios in both capability deltas.
 
-- [ ] **4.3** Verify spec-to-task coverage and ordering  
+- [x] **4.3** Verify spec-to-task coverage and ordering  
   Confirm each spec scenario is covered by at least one task and tasks are ordered so later work does not unblock earlier dependencies.  
   **Completion:** Task list is dependency-safe and execution-ready.  
   **Specs:** all scenarios in both capability deltas.

@@ -58,6 +58,10 @@ def _assert_tasks_covers_task(task_id: str, required_fragments: list[str], conte
     _assert_task_completion(tasks, task_id, context)
 
 
+def _assert_task_checked(task_id: str, context: str) -> None:
+    _assert_task_completion(_read_tasks(), task_id, context)
+
+
 def _task_header(task_id: str) -> str:
     return f"**{task_id}**"
 
@@ -304,3 +308,21 @@ def test_4_2_verify_spec_to_design_coverage():
         "4.2",
         "spec-to-design coverage is verified",
     )
+
+
+def test_4_3_verify_spec_to_task_coverage_and_ordering():
+    tasks = _read_tasks()
+
+    _assert_contains_all(
+        tasks,
+        [
+            "## Phase 1: OpenSpec Contract Foundation",
+            "## Phase 2: Design and Traceability",
+            "## Phase 3: Implementation Planning Checklist (No Code Changes)",
+            "## Phase 4: Coherence Verification",
+            "**Specs:** `skill-authoring-governance` / Traceable Upstream Baseline, Upstream Guidance Changes, Skill Authoring Contract Review.",
+            "**Specs:** `copilot-sdk-runtime-alignment` / Normative Runtime Guidance, Example Command Review, Mixed Historical Documentation.",
+            "**Specs:** all scenarios in both capability deltas.",
+        ],
+    )
+    _assert_task_checked("4.3", "spec-to-task coverage and ordering are verified")
