@@ -151,6 +151,10 @@ def _resolve_skill_name(
     return _category_fallback_skill(split["category"])
 
 
+def _canonical_skill_path(skill_name: str) -> str:
+    return f"skills/{skill_name}/SKILL.md"
+
+
 def _collect_related_task_mappings(skills_dir: Path) -> Dict[str, str]:
     mappings: Dict[str, str] = {}
     concerns_dir = skills_dir / "concerns"
@@ -195,7 +199,7 @@ def build_review_task_skill_rows(*, review_tasks_dir: Path, skills_dir: Path) ->
                 "category": category_value,
                 "platform": platforms,
                 "skill": skill_name,
-                "skill_path": f"skills/concerns/{skill_name}.md",
+                "skill_path": _canonical_skill_path(skill_name),
                 "owasp_refs": "|".join(owasp_refs),
             }
         )

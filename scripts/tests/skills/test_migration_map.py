@@ -92,7 +92,7 @@ class TestMigrationMap(unittest.TestCase):
                     "category": "data",
                     "platform": "api,microservices",
                     "skill": "data-integrity",
-                    "skill_path": "skills/concerns/data-integrity.md",
+                    "skill_path": "skills/data-integrity/SKILL.md",
                     "owasp_refs": "Input_Validation",
                 },
                 {
@@ -100,7 +100,7 @@ class TestMigrationMap(unittest.TestCase):
                     "category": "security",
                     "platform": "web",
                     "skill": "security-client-side",
-                    "skill_path": "skills/concerns/security-client-side.md",
+                    "skill_path": "skills/security-client-side/SKILL.md",
                     "owasp_refs": "Cross_Site_Scripting_Prevention|DOM_based_XSS_Prevention",
                 },
                 {
@@ -108,7 +108,7 @@ class TestMigrationMap(unittest.TestCase):
                     "category": "testing",
                     "platform": "all",
                     "skill": "testing",
-                    "skill_path": "skills/concerns/testing.md",
+                    "skill_path": "skills/testing/SKILL.md",
                     "owasp_refs": "",
                 },
             ],
@@ -124,6 +124,40 @@ class TestMigrationMap(unittest.TestCase):
                 offending.append(skill_path.name)
 
         self.assertEqual(offending, [])
+
+    def test_migration_map_emits_canonical_skill_folder_paths(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            review_tasks_dir = root / "review-tasks"
+            concerns_dir = root / "skills" / "concerns"
+            review_tasks_dir.mkdir(parents=True)
+            concerns_dir.mkdir(parents=True)
+
+            (review_tasks_dir / "testing").mkdir()
+            (review_tasks_dir / "testing" / "mock-overuse.md").write_text(
+                "\n".join(
+                    [
+                        "# Task: Mock Overuse",
+                        "## Category",
+                        "testing",
+                        "## Severity",
+                        "low",
+                        "## Platforms",
+                        "all",
+                        "## Description",
+                        "Tests rely only on mocks.",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            (concerns_dir / "testing.md").write_text("skill", encoding="utf-8")
+
+            rows = build_review_task_skill_rows(
+                review_tasks_dir=review_tasks_dir,
+                skills_dir=concerns_dir.parent,
+            )
+
+        self.assertEqual(rows[0]["skill_path"], "skills/testing/SKILL.md")
 
 
 if __name__ == "__main__":
