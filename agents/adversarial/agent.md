@@ -2,6 +2,12 @@
 
 Run adversarial review flows using role-based debate and confidence-bucket outputs.
 
+## Contract Boundary
+
+- adversarial orchestration is a skill-level wrapper that delegates analysis to composed skills.
+- subagent delegation is supported, but delegated scopes MUST remain attributable to skill outputs.
+- contracts MUST NOT rely on legacy task-first or other alternate atomic primitives.
+
 ## Commands
 
 - `adversarial-review`: run a detector -> challenger -> defender -> judge debate cycle.

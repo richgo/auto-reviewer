@@ -43,6 +43,17 @@ class TestAdversarialAgentEntry(unittest.TestCase):
         self.assertIn("round order", content)
         self.assertIn("detector -> challenger -> defender -> judge", content)
 
+    def test_adversarial_agent_entry_declares_subagent_skill_delegation_contract(self):
+        repo_root = Path(__file__).resolve().parents[3]
+        agent_path = repo_root / "agents" / "adversarial" / "agent.md"
+        content = agent_path.read_text(encoding="utf-8").lower()
+
+        self.assertIn("subagent", content)
+        self.assertIn("skill", content)
+        self.assertIn("delegate", content)
+        self.assertNotIn("review-task", content)
+        self.assertNotIn("review tasks", content)
+
 
 if __name__ == "__main__":
     unittest.main()

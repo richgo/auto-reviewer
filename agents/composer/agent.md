@@ -2,6 +2,12 @@
 
 Generate and update `apm.yml` for a repository using deterministic, policy-constrained dependency selection.
 
+## Contract Boundary
+
+- composer is a **skill-group** orchestration layer and does not introduce any primitive below skills.
+- composition decisions MUST delegate execution to selected skills and emitted skill paths.
+- contracts MUST NOT depend on legacy task-first or alternate atomic unit semantics.
+
 ## Commands
 
 - `compose`: analyze the target repository and generate composer-managed entries in `apm.yml`.

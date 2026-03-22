@@ -16,7 +16,7 @@
 
 ## Phase 2: Agent Composition and Contract Alignment
 
-- [ ] **2.1** Update agent contracts to explicit skill-group semantics
+- [x] **2.1** Update agent contracts to explicit skill-group semantics
   Revise agent-facing contracts in `agents/composer/agent.md`, `agents/adversarial/agent.md`, and related orchestration docs to make skill grouping/delegation explicit and prohibit alternate atomic primitives. (Specs: `agent-composition` Agent Composition Declaration, Subagent Delegation)
 
 - [ ] **2.2** Align composition policy and docs to skill-only dependencies
