@@ -6,6 +6,15 @@ from typing import Any, Dict, List, Optional, Tuple
 import yaml
 
 
+def _discover_concern_skill_names(*, concerns_dir: Path) -> List[str]:
+    names: List[str] = []
+    for path in sorted(concerns_dir.glob("*/SKILL.md")):
+        names.append(path.parent.name)
+    for path in sorted(concerns_dir.glob("*.md")):
+        names.append(path.stem)
+    return names
+
+
 def build_plan(
     *,
     skills_dir: Path,
@@ -21,8 +30,7 @@ def build_plan(
 
     skill_names = []
     concerns_dir = skills_dir / "concerns"
-    for skill_path in sorted(concerns_dir.glob("*.md")):
-        skill_name = skill_path.stem
+    for skill_name in _discover_concern_skill_names(concerns_dir=concerns_dir):
         eval_path = evals_dir / f"{skill_name}.json"
         if not eval_path.exists():
             continue

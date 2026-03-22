@@ -68,6 +68,15 @@ class BenchmarkRunner:
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_text(content, encoding="utf-8")
     
+    @staticmethod
+    def _discover_concern_skills(*, concerns_dir: Path) -> List[tuple[Path, str]]:
+        discovered: List[tuple[Path, str]] = []
+        for skill_file in concerns_dir.glob("*/SKILL.md"):
+            discovered.append((skill_file, skill_file.parent.name))
+        for skill_file in concerns_dir.glob("*.md"):
+            discovered.append((skill_file, skill_file.stem))
+        return discovered
+
     def find_skill_eval_pairs(self) -> List[tuple]:
         """
         Find matching skill/eval pairs.
@@ -76,14 +85,13 @@ class BenchmarkRunner:
             List of (skill_path, eval_path, skill_name) tuples
         """
         pairs = []
-        
+
         # Look in skills/concerns/ for concern skills
         concerns_dir = self.skills_dir / "concerns"
         if concerns_dir.exists():
-            for skill_file in concerns_dir.glob("*.md"):
-                skill_name = skill_file.stem
+            for skill_file, skill_name in self._discover_concern_skills(concerns_dir=concerns_dir):
                 eval_file = self.evals_dir / f"{skill_name}.json"
-                
+
                 if eval_file.exists():
                     pairs.append((skill_file, eval_file, skill_name))
         

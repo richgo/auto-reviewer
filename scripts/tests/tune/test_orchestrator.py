@@ -259,6 +259,28 @@ class TestOrchestrator(unittest.TestCase):
                     models_filter=None,
                 )
 
+    def test_build_plan_discovers_canonical_folder_skills(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            concerns_dir = root / "skills" / "concerns" / "security-injection"
+            evals_dir = root / "evals"
+            concerns_dir.mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+            (concerns_dir / "SKILL.md").write_text("skill", encoding="utf-8")
+            (evals_dir / "security-injection.json").write_text("{}", encoding="utf-8")
+            config = root / "config.yaml"
+            config.write_text(yaml.safe_dump({"models": ["gpt-4.1"]}), encoding="utf-8")
+
+            pairs = build_plan(
+                skills_dir=root / "skills",
+                evals_dir=evals_dir,
+                config_path=config,
+                skills_filter=None,
+                models_filter=None,
+            )
+
+        self.assertEqual(pairs, [("security-injection", "gpt-4.1")])
+
 
 if __name__ == "__main__":
     unittest.main()

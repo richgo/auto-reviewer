@@ -271,6 +271,33 @@ class TestBenchmarkRunner(unittest.TestCase):
         pair_names = [skill_name for _, _, skill_name in pairs]
         self.assertEqual(pair_names, ["correctness"])
 
+    def test_find_skill_eval_pairs_discovers_canonical_folder_skills(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp = Path(tmp_dir)
+            skills_dir = tmp / "skills"
+            evals_dir = tmp / "evals"
+            output_dir = tmp / "out"
+            (skills_dir / "concerns" / "api-design").mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+
+            (skills_dir / "concerns" / "api-design" / "SKILL.md").write_text(
+                "review skill",
+                encoding="utf-8",
+            )
+            (evals_dir / "api-design.json").write_text(
+                json.dumps({"skill": "api-design", "cases": []}), encoding="utf-8"
+            )
+
+            runner = BenchmarkRunner(
+                skills_dir=skills_dir,
+                evals_dir=evals_dir,
+                models=["gpt-4.1"],
+                output_dir=output_dir,
+            )
+            pairs = runner.find_skill_eval_pairs()
+
+        self.assertEqual([skill_name for _, _, skill_name in pairs], ["api-design"])
+
 
 class TestCopilotLLMClient(unittest.TestCase):
     def test_complete_calls_copilot_sdk_and_returns_content(self):
