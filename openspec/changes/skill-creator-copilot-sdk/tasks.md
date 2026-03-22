@@ -41,7 +41,7 @@
   **Completion:** Checklist identifies exact sections requiring provenance/default-runtime edits.  
   **Specs:** `skill-authoring-governance` / Traceable Upstream Baseline; `copilot-sdk-runtime-alignment` / Normative Runtime Guidance.
 
-- [ ] **3.2** Plan runtime-default normalization in top-level docs  
+- [x] **3.2** Plan runtime-default normalization in top-level docs  
   Prepare checklist for `README.md` and relevant agent docs to ensure Copilot SDK-first defaults and labeled provider alternatives.  
   **Completion:** Checklist enumerates files and acceptance conditions for consistency review.  
   **Specs:** `copilot-sdk-runtime-alignment` / Example Command Review, Mixed Historical Documentation.

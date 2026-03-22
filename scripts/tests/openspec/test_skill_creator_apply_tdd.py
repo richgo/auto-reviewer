@@ -58,6 +58,10 @@ def _assert_tasks_covers_task(task_id: str, required_fragments: list[str], conte
     _assert_task_completion(tasks, task_id, context)
 
 
+def _task_header(task_id: str) -> str:
+    return f"**{task_id}**"
+
+
 def test_1_1_finalize_proposal_scope_and_risk_framing():
     proposal = _read("proposal.md")
     tasks = _read_tasks()
@@ -183,11 +187,25 @@ def test_3_1_plan_provenance_labeling_updates_in_tuning_docs():
     _assert_tasks_covers_task(
         "3.1",
         [
-            "**3.1**",
+            _task_header("3.1"),
             "skills/tuning/skill-optimizer.md",
             "skills/tuning/benchmark-runner.md",
             "skills/tuning/local-calibration.md",
             "provenance/default-runtime edits",
         ],
         "provenance labeling updates are planned in tuning docs",
+    )
+
+
+def test_3_2_plan_runtime_default_normalization_in_top_level_docs():
+    _assert_tasks_covers_task(
+        "3.2",
+        [
+            _task_header("3.2"),
+            "README.md",
+            "relevant agent docs",
+            "Copilot SDK-first defaults",
+            "labeled provider alternatives",
+        ],
+        "runtime-default normalization is planned for top-level docs",
     )
