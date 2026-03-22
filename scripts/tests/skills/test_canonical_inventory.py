@@ -49,6 +49,36 @@ class TestCanonicalInventory(unittest.TestCase):
             ],
         )
 
+    def test_build_inventory_includes_all_active_skill_groups(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            (skills_dir / "concerns").mkdir(parents=True)
+            (skills_dir / "core").mkdir(parents=True)
+            (skills_dir / "languages").mkdir(parents=True)
+            (skills_dir / "outputs").mkdir(parents=True)
+            (skills_dir / "tuning").mkdir(parents=True)
+
+            (skills_dir / "concerns" / "api-design.md").write_text("skill", encoding="utf-8")
+            (skills_dir / "core" / "review-orchestrator.md").write_text("skill", encoding="utf-8")
+            (skills_dir / "languages" / "python.md").write_text("skill", encoding="utf-8")
+            (skills_dir / "outputs" / "inline-comments.md").write_text("skill", encoding="utf-8")
+            (skills_dir / "tuning" / "skill-optimizer.md").write_text("skill", encoding="utf-8")
+
+            rows = build_canonical_skill_inventory(skills_dir=skills_dir)
+
+        canonical_names = {row["canonical_skill"] for row in rows}
+        self.assertEqual(
+            canonical_names,
+            {
+                "api-design",
+                "review-orchestrator",
+                "python",
+                "inline-comments",
+                "skill-optimizer",
+            },
+        )
+
     def test_build_inventory_includes_folder_based_active_skills(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)

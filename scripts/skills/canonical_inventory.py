@@ -2,6 +2,9 @@ from pathlib import Path
 from typing import Dict, List
 
 
+_LEGACY_GROUPS = ("concerns", "core", "languages", "outputs", "tuning")
+
+
 def _flatten_review_task_folder(path: Path) -> str:
     parts = list(path.parts)
     return "-".join(parts[1:])
@@ -10,23 +13,24 @@ def _flatten_review_task_folder(path: Path) -> str:
 def build_canonical_skill_inventory(*, skills_dir: Path) -> List[Dict[str, str]]:
     rows: List[Dict[str, str]] = []
 
-    concerns_dir = skills_dir / "concerns"
-    for skill_file in sorted(concerns_dir.glob("*/SKILL.md")):
-        rows.append(
-            {
-                "canonical_skill": skill_file.parent.name,
-                "source_kind": "canonical-folder",
-                "source_path": f"skills/concerns/{skill_file.parent.name}/SKILL.md",
-            }
-        )
-    for skill_file in sorted(concerns_dir.glob("*.md")):
-        rows.append(
-            {
-                "canonical_skill": skill_file.stem,
-                "source_kind": "legacy-file",
-                "source_path": f"skills/concerns/{skill_file.name}",
-            }
-        )
+    for group in _LEGACY_GROUPS:
+        group_dir = skills_dir / group
+        for skill_file in sorted(group_dir.glob("*/SKILL.md")):
+            rows.append(
+                {
+                    "canonical_skill": skill_file.parent.name,
+                    "source_kind": "canonical-folder",
+                    "source_path": f"skills/{group}/{skill_file.parent.name}/SKILL.md",
+                }
+            )
+        for skill_file in sorted(group_dir.glob("*.md")):
+            rows.append(
+                {
+                    "canonical_skill": skill_file.stem,
+                    "source_kind": "legacy-file",
+                    "source_path": f"skills/{group}/{skill_file.name}",
+                }
+            )
 
     review_tasks_dir = skills_dir / "review-tasks"
     for folder in sorted(path for path in review_tasks_dir.rglob("*") if path.is_dir()):
