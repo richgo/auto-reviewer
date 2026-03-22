@@ -1,3 +1,5 @@
+atomic_primitive: skills
+
 core:
   - richgo/auto-reviewer/skills/core/review-orchestrator
   - richgo/auto-reviewer/skills/core/diff-analysis

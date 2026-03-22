@@ -19,7 +19,7 @@
 - [x] **2.1** Update agent contracts to explicit skill-group semantics
   Revise agent-facing contracts in `agents/composer/agent.md`, `agents/adversarial/agent.md`, and related orchestration docs to make skill grouping/delegation explicit and prohibit alternate atomic primitives. (Specs: `agent-composition` Agent Composition Declaration, Subagent Delegation)
 
-- [ ] **2.2** Align composition policy and docs to skill-only dependencies
+- [x] **2.2** Align composition policy and docs to skill-only dependencies
   Confirm `scripts/compose/policy.yaml` and composition-facing docs/contracts are strictly skill-path based and contain no dependency expectations on standalone review-task artifacts. (Specs: `agent-composition` Signal-Driven Composition; Design: Keep Existing Runtime Entry Points)
 
 - [ ] **2.3** Normalize pipeline and architecture language across docs/specs
