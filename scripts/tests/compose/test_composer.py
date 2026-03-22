@@ -19,11 +19,16 @@ class TestComposer(unittest.TestCase):
             (repo / "skills" / "core").mkdir(parents=True)
             (repo / "skills" / "languages").mkdir(parents=True)
             (repo / "skills" / "outputs").mkdir(parents=True)
-            (repo / "skills" / "core" / "review-orchestrator.md").write_text("skill", encoding="utf-8")
-            (repo / "skills" / "core" / "diff-analysis.md").write_text("skill", encoding="utf-8")
-            (repo / "skills" / "languages" / "python.md").write_text("skill", encoding="utf-8")
-            (repo / "skills" / "languages" / "typescript.md").write_text("skill", encoding="utf-8")
-            (repo / "skills" / "outputs" / "inline-comments.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "core" / "review-orchestrator").mkdir()
+            (repo / "skills" / "core" / "diff-analysis").mkdir()
+            (repo / "skills" / "languages" / "python").mkdir()
+            (repo / "skills" / "languages" / "typescript").mkdir()
+            (repo / "skills" / "outputs" / "inline-comments").mkdir()
+            (repo / "skills" / "core" / "review-orchestrator" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "core" / "diff-analysis" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "languages" / "python" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "languages" / "typescript" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "outputs" / "inline-comments" / "SKILL.md").write_text("skill", encoding="utf-8")
 
             policy = repo / "policy.yaml"
             policy.write_text(
@@ -65,8 +70,10 @@ class TestComposer(unittest.TestCase):
             repo.mkdir()
             (repo / "skills" / "core").mkdir(parents=True)
             (repo / "skills" / "concerns").mkdir(parents=True)
-            (repo / "skills" / "core" / "review-orchestrator.md").write_text("skill", encoding="utf-8")
-            (repo / "skills" / "concerns" / "correctness.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "core" / "review-orchestrator").mkdir()
+            (repo / "skills" / "concerns" / "correctness").mkdir()
+            (repo / "skills" / "core" / "review-orchestrator" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "concerns" / "correctness" / "SKILL.md").write_text("skill", encoding="utf-8")
 
             policy = repo / "policy.yaml"
             policy.write_text(
@@ -116,8 +123,10 @@ class TestComposer(unittest.TestCase):
             (repo / "requirements.txt").write_text("pyyaml", encoding="utf-8")
             (repo / "skills" / "core").mkdir(parents=True)
             (repo / "skills" / "languages").mkdir(parents=True)
-            (repo / "skills" / "core" / "review-orchestrator.md").write_text("skill", encoding="utf-8")
-            (repo / "skills" / "languages" / "python.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "core" / "review-orchestrator").mkdir()
+            (repo / "skills" / "languages" / "python").mkdir()
+            (repo / "skills" / "core" / "review-orchestrator" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "languages" / "python" / "SKILL.md").write_text("skill", encoding="utf-8")
             policy = repo / "policy.yaml"
             policy.write_text(
                 yaml.safe_dump(

@@ -12,11 +12,16 @@ class TestComposeApmCompatibility(unittest.TestCase):
         (root / "skills" / "core").mkdir(parents=True)
         (root / "skills" / "languages").mkdir(parents=True)
         (root / "skills" / "outputs").mkdir(parents=True)
-        (root / "skills" / "core" / "review-orchestrator.md").write_text("skill", encoding="utf-8")
-        (root / "skills" / "core" / "diff-analysis.md").write_text("skill", encoding="utf-8")
-        (root / "skills" / "languages" / "python.md").write_text("skill", encoding="utf-8")
-        (root / "skills" / "languages" / "typescript.md").write_text("skill", encoding="utf-8")
-        (root / "skills" / "outputs" / "inline-comments.md").write_text("skill", encoding="utf-8")
+        (root / "skills" / "core" / "review-orchestrator").mkdir()
+        (root / "skills" / "core" / "diff-analysis").mkdir()
+        (root / "skills" / "languages" / "python").mkdir()
+        (root / "skills" / "languages" / "typescript").mkdir()
+        (root / "skills" / "outputs" / "inline-comments").mkdir()
+        (root / "skills" / "core" / "review-orchestrator" / "SKILL.md").write_text("skill", encoding="utf-8")
+        (root / "skills" / "core" / "diff-analysis" / "SKILL.md").write_text("skill", encoding="utf-8")
+        (root / "skills" / "languages" / "python" / "SKILL.md").write_text("skill", encoding="utf-8")
+        (root / "skills" / "languages" / "typescript" / "SKILL.md").write_text("skill", encoding="utf-8")
+        (root / "skills" / "outputs" / "inline-comments" / "SKILL.md").write_text("skill", encoding="utf-8")
         policy = root / "policy.yaml"
         policy.write_text(
             yaml.safe_dump(

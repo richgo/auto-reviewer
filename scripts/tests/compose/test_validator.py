@@ -26,8 +26,11 @@ class TestComposeValidator(unittest.TestCase):
     def test_validate_manifest_rejects_invalid_ref_format(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)
-            (root / "skills" / "core").mkdir(parents=True)
-            (root / "skills" / "core" / "review-orchestrator.md").write_text("skill", encoding="utf-8")
+            (root / "skills" / "core" / "review-orchestrator").mkdir(parents=True)
+            (root / "skills" / "core" / "review-orchestrator" / "SKILL.md").write_text(
+                "skill",
+                encoding="utf-8",
+            )
             manifest = {
                 "name": "repo",
                 "dependencies": {
@@ -71,6 +74,26 @@ class TestComposeValidator(unittest.TestCase):
             errors = validate_manifest(manifest, repo_root=root)
 
         self.assertTrue(any("must be a string" in error for error in errors))
+
+    def test_validate_manifest_rejects_legacy_skill_path_aliases(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "skills" / "core" / "review-orchestrator").mkdir(parents=True)
+            (root / "skills" / "core" / "review-orchestrator" / "SKILL.md").write_text(
+                "skill",
+                encoding="utf-8",
+            )
+            manifest = {
+                "name": "repo",
+                "dependencies": {
+                    "apm": [
+                        "richgo/auto-reviewer/skills/core/review-orchestrator.md#v1.0.0",
+                    ]
+                },
+            }
+            errors = validate_manifest(manifest, repo_root=root)
+
+        self.assertTrue(any("Legacy skill path alias" in error for error in errors))
 
 
 if __name__ == "__main__":
