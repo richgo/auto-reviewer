@@ -7,7 +7,7 @@
   **Completion:** Proposal text clearly separates in-scope/out-of-scope and identifies affected repository surfaces.  
   **Specs:** `skill-authoring-governance` (all scenarios), `copilot-sdk-runtime-alignment` (all scenarios).
 
-- [ ] **1.2** Add skill-authoring governance capability delta  
+- [x] **1.2** Add skill-authoring governance capability delta  
   Create/confirm `openspec/changes/skill-creator-copilot-sdk/specs/skill-authoring-governance/spec.md` with SHALL requirements for provenance, upstream refresh control, and cross-surface reuse consistency.  
   **Completion:** Spec includes Given/When/Then scenarios for each requirement.  
   **Specs:** `skill-authoring-governance` / Traceable Upstream Baseline, Upstream Guidance Changes, Skill Authoring Contract Review.

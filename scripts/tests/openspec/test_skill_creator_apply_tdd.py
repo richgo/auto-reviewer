@@ -20,6 +20,21 @@ def _assert_contains_all(text: str, fragments: list[str]) -> None:
         assert fragment in text
 
 
+def _assert_delta_requirement(text: str, requirement: str, scenario: str) -> None:
+    _assert_contains_all(
+        text,
+        [
+            "## ADDED Requirements",
+            f"### Requirement: {requirement}",
+            f"#### Scenario: {scenario}",
+            "SHALL",
+            "GIVEN",
+            "WHEN",
+            "THEN",
+        ],
+    )
+
+
 def test_1_1_finalize_proposal_scope_and_risk_framing():
     proposal = _read("proposal.md")
     tasks = _read("tasks.md")
@@ -40,3 +55,27 @@ def test_1_1_finalize_proposal_scope_and_risk_framing():
     assert _task_is_checked(
         tasks, "1.1"
     ), "Task 1.1 must be checked after proposal scope/risk framing is finalized."
+
+
+def test_1_2_add_skill_authoring_governance_capability_delta():
+    spec = _read("specs/skill-authoring-governance/spec.md")
+    tasks = _read("tasks.md")
+
+    _assert_delta_requirement(
+        spec,
+        "Upstream Skill-Creator Provenance Contract",
+        "Traceable Upstream Baseline",
+    )
+    _assert_delta_requirement(
+        spec,
+        "Controlled Upstream Refresh Workflow",
+        "Upstream Guidance Changes",
+    )
+    _assert_delta_requirement(
+        spec,
+        "Reuse Boundary Across Authoring Surfaces",
+        "Skill Authoring Contract Review",
+    )
+    assert _task_is_checked(
+        tasks, "1.2"
+    ), "Task 1.2 must be checked after skill-authoring governance spec delta is finalized."
