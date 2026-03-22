@@ -123,6 +123,25 @@ class TestCanonicalInventory(unittest.TestCase):
             ],
         )
 
+    def test_validate_canonical_folder_contract_rejects_non_standard_entry_filename(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            (skills_dir / "concerns" / "api-design").mkdir(parents=True)
+            (skills_dir / "concerns" / "api-design" / "skill.md").write_text(
+                "skill",
+                encoding="utf-8",
+            )
+
+            errors = validate_canonical_folder_contract(skills_dir=skills_dir)
+
+        self.assertEqual(
+            errors,
+            [
+                "Canonical skill folder must use SKILL.md: skills/concerns/api-design/skill.md"
+            ],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

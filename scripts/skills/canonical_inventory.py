@@ -64,4 +64,11 @@ def validate_canonical_folder_contract(*, skills_dir: Path) -> List[str]:
             errors.append(
                 f"Legacy skill file requires canonical folder: skills/{group}/{skill_file.name}"
             )
+        for skill_file in sorted(group_dir.glob("*/*.md")):
+            if skill_file.name == "SKILL.md":
+                continue
+            errors.append(
+                "Canonical skill folder must use SKILL.md: "
+                f"skills/{group}/{skill_file.parent.name}/{skill_file.name}"
+            )
     return errors
