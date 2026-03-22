@@ -36,7 +36,7 @@
 
 ## Phase 3: Implementation Planning Checklist (No Code Changes)
 
-- [ ] **3.1** Plan provenance labeling updates in tuning docs  
+- [x] **3.1** Plan provenance labeling updates in tuning docs  
   Prepare documentation update checklist for `skills/tuning/skill-optimizer.md`, `skills/tuning/benchmark-runner.md`, and `skills/tuning/local-calibration.md` to reflect upstream provenance boundaries and runtime-default language.  
   **Completion:** Checklist identifies exact sections requiring provenance/default-runtime edits.  
   **Specs:** `skill-authoring-governance` / Traceable Upstream Baseline; `copilot-sdk-runtime-alignment` / Normative Runtime Guidance.

@@ -52,6 +52,12 @@ def _assert_design_covers_task(task_id: str, required_fragments: list[str], cont
     _assert_task_completion(tasks, task_id, context)
 
 
+def _assert_tasks_covers_task(task_id: str, required_fragments: list[str], context: str) -> None:
+    tasks = _read_tasks()
+    _assert_contains_all(tasks, required_fragments)
+    _assert_task_completion(tasks, task_id, context)
+
+
 def test_1_1_finalize_proposal_scope_and_risk_framing():
     proposal = _read("proposal.md")
     tasks = _read_tasks()
@@ -170,4 +176,18 @@ def test_2_3_map_tests_to_spec_scenarios():
             "Copilot Runtime / Historical Reference De-Emphasis",
         ],
         "testing strategy maps to all spec scenarios",
+    )
+
+
+def test_3_1_plan_provenance_labeling_updates_in_tuning_docs():
+    _assert_tasks_covers_task(
+        "3.1",
+        [
+            "**3.1**",
+            "skills/tuning/skill-optimizer.md",
+            "skills/tuning/benchmark-runner.md",
+            "skills/tuning/local-calibration.md",
+            "provenance/default-runtime edits",
+        ],
+        "provenance labeling updates are planned in tuning docs",
     )
