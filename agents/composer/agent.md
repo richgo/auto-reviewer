@@ -23,6 +23,7 @@ Generate and update `apm.yml` for a repository using deterministic, policy-const
 
 - generated or updated `apm.yml`
 - composer-managed dependency list for auto-reviewer skills
+- output attribution is required: each managed dependency must include skill-path attribution
 - explicit validation errors when output violates policy/schema constraints
 
 ## Guardrails

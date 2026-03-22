@@ -30,6 +30,7 @@ Run adversarial review flows using role-based debate and confidence-bucket outpu
 - `high-confidence`: findings with strong consensus.
 - `contested`: findings requiring human review.
 - `debunked`: findings rejected by adversarial debate.
+- output attribution is required: each finding must include contributing skill attribution.
 
 ## SQLite Persistence Contract
 

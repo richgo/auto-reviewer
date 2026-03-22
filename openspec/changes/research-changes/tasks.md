@@ -25,7 +25,7 @@
 - [x] **2.3** Normalize pipeline and architecture language across docs/specs
   Update `README.md`, `openspec/specs/review-tasks/spec.md`, and relevant active OpenSpec phase docs so architecture language consistently presents skills as atomic and agents as wrappers. Preserve historical context with explicit non-normative labeling where needed. (Specs: `review-tasks` modified/removed requirements + `skills` Skill Atomicity; Design: Legacy references handling)
 
-- [ ] **2.4** Add skill-attribution contract language for agent outputs
+- [x] **2.4** Add skill-attribution contract language for agent outputs
   Update orchestration/output contract docs so review outputs are attributable to participating skills and delegation remains traceable at skill level. (Specs: `agent-composition` Review Output Attribution; Design Data Flow step 7)
 
 ## Phase 3: Testing & Verification

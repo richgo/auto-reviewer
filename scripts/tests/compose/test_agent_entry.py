@@ -26,6 +26,15 @@ class TestComposerAgentEntry(unittest.TestCase):
         self.assertNotIn("review tasks", content)
         self.assertNotIn("review-task", content)
 
+    def test_composer_agent_entry_requires_skill_attribution_for_outputs(self):
+        repo_root = Path(__file__).resolve().parents[3]
+        agent_path = repo_root / "agents" / "composer" / "agent.md"
+        content = agent_path.read_text(encoding="utf-8").lower()
+
+        self.assertIn("output", content)
+        self.assertIn("attribution", content)
+        self.assertIn("skill", content)
+
 
 if __name__ == "__main__":
     unittest.main()
