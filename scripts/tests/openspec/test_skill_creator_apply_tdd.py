@@ -155,3 +155,19 @@ def test_2_2_map_data_flow_and_component_impact():
         ],
         "data flow and component impact are mapped",
     )
+
+
+def test_2_3_map_tests_to_spec_scenarios():
+    _assert_design_covers_task(
+        "2.3",
+        [
+            "## Testing Strategy",
+            "Skill-Authoring Governance / Traceable Upstream Baseline",
+            "Skill-Authoring Governance / Upstream Refresh Workflow",
+            "Skill-Authoring Governance / Reuse Boundary Across Surfaces",
+            "Copilot Runtime / Normative Runtime Guidance",
+            "Copilot Runtime / Example Command Review",
+            "Copilot Runtime / Historical Reference De-Emphasis",
+        ],
+        "testing strategy maps to all spec scenarios",
+    )

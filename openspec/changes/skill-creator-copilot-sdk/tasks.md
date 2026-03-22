@@ -29,7 +29,7 @@
   **Completion:** Affected components and flow steps are explicit and non-contradictory with specs.  
   **Specs:** `skill-authoring-governance` / Skill Authoring Contract Review; `copilot-sdk-runtime-alignment` / Normative Runtime Guidance.
 
-- [ ] **2.3** Map tests to spec scenarios  
+- [x] **2.3** Map tests to spec scenarios  
   Update `design.md` testing strategy so every scenario in both spec files has a corresponding verification approach.  
   **Completion:** Scenario-to-test mapping is complete and reviewable.  
   **Specs:** all scenarios in both capability deltas.
