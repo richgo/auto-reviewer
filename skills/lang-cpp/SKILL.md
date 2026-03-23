@@ -1,5 +1,5 @@
 ---
-name: lang-cpp
+name: lang cpp
 description: >
   C++ code review: memory management, RAII, undefined behavior, smart pointers, buffer overflows.
   Trigger when reviewing C++ (.cpp, .h) files, especially manual memory management, raw pointers,

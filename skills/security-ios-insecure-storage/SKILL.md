@@ -1,5 +1,5 @@
 ---
-name: review-task-security-ios-insecure-storage
+name: security ios insecure storage
 description: >
   Migrated review-task skill for iOS Insecure Storage. Use this skill whenever diffs may
   introduce security issues on mobile, especially in Swift, Objective-C. Actively look

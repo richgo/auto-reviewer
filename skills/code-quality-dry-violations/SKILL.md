@@ -1,5 +1,5 @@
 ---
-name: review-task-code-quality-dry-violations
+name: code quality dry violations
 description: >
   Migrated review-task skill for DRY Violations. Use this skill whenever diffs may
   introduce code-quality issues on all, especially in all. Actively look for: Duplicated

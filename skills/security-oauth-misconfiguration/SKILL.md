@@ -1,5 +1,5 @@
 ---
-name: review-task-security-oauth-misconfiguration
+name: security oauth misconfiguration
 description: >
   Migrated review-task skill for OAuth/SAML Misconfiguration. Use this skill whenever
   diffs may introduce security issues on web, api, especially in all. Actively look for:

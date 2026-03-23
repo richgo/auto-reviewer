@@ -1,5 +1,5 @@
 ---
-name: fix-pr
+name: fix pr
 description: >
   Generate an automated fix PR from code review findings. Creates branch, applies fixes, writes
   PR description with findings summary, and links to original PR. Used when findings have clear,

@@ -1,5 +1,5 @@
 ---
-name: review-task-api-design-mobile-api-versioning
+name: api design mobile api versioning
 description: >
   Migrated review-task skill for Mobile API Versioning. Use this skill whenever diffs
   may introduce api-design issues on mobile, especially in Swift, Kotlin. Actively look

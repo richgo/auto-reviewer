@@ -1,5 +1,5 @@
 ---
-name: review-task-security-denial-of-service
+name: security denial of service
 description: >
   Migrated review-task skill for Denial of Service Vulnerabilities. Use this skill
   whenever diffs may introduce security issues on all, especially in all. Actively look

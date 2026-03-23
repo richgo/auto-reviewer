@@ -1,5 +1,5 @@
 ---
-name: lang-go
+name: lang go
 description: >
   Go-specific code review: goroutine leaks, error handling patterns, nil interfaces, defer pitfalls,
   context cancellation. Trigger when reviewing Go (.go) files, microservices, or backend services

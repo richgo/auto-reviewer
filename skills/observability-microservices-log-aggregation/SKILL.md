@@ -1,5 +1,5 @@
 ---
-name: review-task-observability-microservices-log-aggregation
+name: observability microservices log aggregation
 description: >
   Migrated review-task skill for Log Aggregation Issues. Use this skill whenever diffs
   may introduce observability issues on microservices, especially in all. Actively look

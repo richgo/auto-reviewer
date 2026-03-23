@@ -1,5 +1,5 @@
 ---
-name: api-design
+name: api design
 description: >
   Detect API design flaws: missing or inadequate input validation, pagination missing for large
   result sets, breaking API changes without versioning, and inconsistent response shapes. Trigger

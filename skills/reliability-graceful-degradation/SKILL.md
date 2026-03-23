@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-graceful-degradation
+name: reliability graceful degradation
 description: >
   Migrated review-task skill for Graceful Degradation Missing. Use this skill whenever
   diffs may introduce reliability issues on web, microservices, especially in all.

@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-web-core-web-vitals
+name: performance web core web vitals
 description: >
   Migrated review-task skill for Core Web Vitals Issues. Use this skill whenever diffs
   may introduce performance issues on web, especially in JavaScript, TypeScript, HTML.

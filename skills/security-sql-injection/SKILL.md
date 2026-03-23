@@ -1,5 +1,5 @@
 ---
-name: review-task-security-sql-injection
+name: security sql injection
 description: >
   Migrated review-task skill for SQL Injection. Use this skill whenever diffs may
   introduce security issues on web, api, especially in all. Actively look for: User-

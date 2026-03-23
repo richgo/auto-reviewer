@@ -1,5 +1,5 @@
 ---
-name: security-data-protection
+name: security data protection
 description: >
   Detect data protection vulnerabilities: secrets exposure in logs/code/repos, path traversal,
   mass assignment, insecure cryptography, insecure deserialization, and file upload bypasses.

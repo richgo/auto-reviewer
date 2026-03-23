@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-ios-main-thread-work
+name: performance ios main thread work
 description: >
   Migrated review-task skill for iOS Main Thread Work. Use this skill whenever diffs may
   introduce performance issues on mobile, especially in Swift, Objective-C. Actively

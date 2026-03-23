@@ -1,5 +1,5 @@
 ---
-name: review-task-code-quality-android-accessibility
+name: code quality android accessibility
 description: >
   Migrated review-task skill for Android Accessibility. Use this skill whenever diffs
   may introduce code-quality issues on mobile, especially in Kotlin, Java, XML. Actively

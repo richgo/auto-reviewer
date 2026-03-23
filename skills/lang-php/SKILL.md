@@ -1,5 +1,5 @@
 ---
-name: lang-php
+name: lang php
 description: >
   PHP-specific code review: Laravel/Symfony security, SQL injection patterns, file inclusion, type
   juggling, OWASP PHP cheat sheets. Trigger when reviewing PHP (.php) files, especially Laravel,

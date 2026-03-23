@@ -1,5 +1,5 @@
 ---
-name: review-task-security-regex-dos
+name: security regex dos
 description: >
   Migrated review-task skill for Regular Expression Denial of Service (ReDoS). Use this
   skill whenever diffs may introduce security issues on all, especially in all. Actively

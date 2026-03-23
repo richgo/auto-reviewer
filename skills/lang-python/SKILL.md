@@ -1,5 +1,5 @@
 ---
-name: lang-python
+name: lang python
 description: >
   Python-specific code review guidance: Django/Flask security, common pitfalls (mutable defaults,
   GIL misunderstanding, exception handling), idioms (context managers, comprehensions), and

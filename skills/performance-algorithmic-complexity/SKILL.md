@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-algorithmic-complexity
+name: performance algorithmic complexity
 description: >
   Migrated review-task skill for Algorithmic Complexity. Use this skill whenever diffs
   may introduce performance issues on all, especially in all. Actively look for:

@@ -1,5 +1,5 @@
 ---
-name: review-task-observability-logging-gaps
+name: observability logging gaps
 description: >
   Migrated review-task skill for Logging & Observability Gaps. Use this skill whenever
   diffs may introduce observability issues on all, especially in all. Actively look for:

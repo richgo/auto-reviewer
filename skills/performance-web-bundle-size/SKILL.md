@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-web-bundle-size
+name: performance web bundle size
 description: >
   Migrated review-task skill for Bundle Size Bloat. Use this skill whenever diffs may
   introduce performance issues on web, especially in JavaScript, TypeScript. Actively

@@ -1,5 +1,5 @@
 ---
-name: review-task-security-cookie-security
+name: security cookie security
 description: >
   Migrated review-task skill for Cookie Security Flaws. Use this skill whenever diffs
   may introduce security issues on web, especially in all. Actively look for: Cookie

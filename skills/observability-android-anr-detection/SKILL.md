@@ -1,5 +1,5 @@
 ---
-name: review-task-observability-android-anr-detection
+name: observability android anr detection
 description: >
   Migrated review-task skill for ANR Detection Missing. Use this skill whenever diffs
   may introduce observability issues on mobile, especially in Kotlin, Java. Actively

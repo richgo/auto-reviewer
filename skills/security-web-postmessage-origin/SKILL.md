@@ -1,5 +1,5 @@
 ---
-name: review-task-security-web-postmessage-origin
+name: security web postmessage origin
 description: >
   Migrated review-task skill for postMessage Origin Validation. Use this skill whenever
   diffs may introduce security issues on web, especially in JavaScript, TypeScript.

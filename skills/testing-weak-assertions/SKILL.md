@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-weak-assertions
+name: testing weak assertions
 description: >
   Migrated review-task skill for Weak Test Assertions. Use this skill whenever diffs may
   introduce testing issues on all, especially in all. Actively look for: Tests that pass

@@ -1,5 +1,5 @@
 ---
-name: create-issues
+name: create issues
 description: >
   Create GitHub/GitLab issues from code review findings. Groups related findings, sets appropriate
   labels and severity, includes reproduction steps and fix guidance. Used for tracking non-blocking

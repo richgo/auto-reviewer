@@ -1,5 +1,5 @@
 ---
-name: review-task-api-design-microservices-api-contract
+name: api design microservices api contract
 description: >
   Migrated review-task skill for API Contract Issues. Use this skill whenever diffs may
   introduce api-design issues on microservices, especially in all. Actively look for: No

@@ -1,5 +1,5 @@
 ---
-name: review-task-observability-microservices-slo-monitoring
+name: observability microservices slo monitoring
 description: >
   Migrated review-task skill for SLO Monitoring Missing. Use this skill whenever diffs
   may introduce observability issues on microservices, especially in all. Actively look

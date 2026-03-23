@@ -1,5 +1,5 @@
 ---
-name: security-supply-chain
+name: security supply chain
 description: >
   Detect supply chain security vulnerabilities: dependency vulnerabilities, certificate pinning
   bypass, and XXE (XML External Entity) attacks. Trigger when reviewing dependency updates,

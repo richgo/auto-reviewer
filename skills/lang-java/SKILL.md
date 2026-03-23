@@ -1,5 +1,5 @@
 ---
-name: lang-java
+name: lang java
 description: >
   Java-specific code review guidance: Spring Boot security, JPA/Hibernate pitfalls, null handling,
   checked exceptions anti-patterns, thread safety issues, OWASP Java cheat sheets. Trigger when

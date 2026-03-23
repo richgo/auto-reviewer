@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-web-hydration-mismatch
+name: performance web hydration mismatch
 description: >
   Migrated review-task skill for Hydration Mismatch. Use this skill whenever diffs may
   introduce performance issues on web, especially in JavaScript, TypeScript. Actively

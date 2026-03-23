@@ -1,5 +1,5 @@
 ---
-name: review-task-observability-ios-metrickit-gaps
+name: observability ios metrickit gaps
 description: >
   Migrated review-task skill for MetricKit Collection Gaps. Use this skill whenever
   diffs may introduce observability issues on mobile, especially in Swift, Objective-C.

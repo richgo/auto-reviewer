@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-integer-overflow
+name: correctness integer overflow
 description: >
   Migrated review-task skill for Integer Overflow. Use this skill whenever diffs may
   introduce correctness issues on all, especially in all. Actively look for: Arithmetic

@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-android-coroutine-misuse
+name: concurrency android coroutine misuse
 description: >
   Migrated review-task skill for Android Coroutine Misuse. Use this skill whenever diffs
   may introduce concurrency issues on mobile, especially in Kotlin. Actively look for:

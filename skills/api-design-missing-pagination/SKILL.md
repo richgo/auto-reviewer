@@ -1,5 +1,5 @@
 ---
-name: review-task-api-design-missing-pagination
+name: api design missing pagination
 description: >
   Migrated review-task skill for Missing Pagination. Use this skill whenever diffs may
   introduce api-design issues on web, api, microservices, especially in all. Actively

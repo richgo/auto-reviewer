@@ -1,5 +1,5 @@
 ---
-name: slack-summary
+name: slack summary
 description: >
   Format code review findings as a Slack message using Blocks API. Severity-grouped, collapsible
   sections, action buttons, and links to code. Used for notifying teams of code review results

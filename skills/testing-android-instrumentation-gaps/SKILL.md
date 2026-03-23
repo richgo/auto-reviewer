@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-android-instrumentation-gaps
+name: testing android instrumentation gaps
 description: >
   Migrated review-task skill for Android Instrumentation Gaps. Use this skill whenever
   diffs may introduce testing issues on mobile, especially in Kotlin, Java. Actively

@@ -1,5 +1,5 @@
 ---
-name: review-task-security-microservices-distributed-session
+name: security microservices distributed session
 description: >
   Migrated review-task skill for Distributed Session Management. Use this skill whenever
   diffs may introduce security issues on microservices, especially in all. Actively look

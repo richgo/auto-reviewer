@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-ios-network-resilience
+name: reliability ios network resilience
 description: >
   Migrated review-task skill for iOS Network Resilience. Use this skill whenever diffs
   may introduce reliability issues on mobile, especially in Swift, Objective-C. Actively

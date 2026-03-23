@@ -1,5 +1,5 @@
 ---
-name: local-calibration
+name: local calibration
 description: >
   Auto-reviewer skill guidance for local-calibration.
 ---

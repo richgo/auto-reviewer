@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-missing-test-coverage
+name: testing missing test coverage
 description: >
   Migrated review-task skill for Missing Test Coverage. Use this skill whenever diffs
   may introduce testing issues on all, especially in all. Actively look for: New code

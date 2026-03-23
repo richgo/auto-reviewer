@@ -1,5 +1,5 @@
 ---
-name: review-task-observability-missing-metrics
+name: observability missing metrics
 description: >
   Migrated review-task skill for Missing Metrics. Use this skill whenever diffs may
   introduce observability issues on web, api, microservices, especially in all. Actively

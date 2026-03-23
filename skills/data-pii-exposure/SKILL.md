@@ -1,5 +1,5 @@
 ---
-name: review-task-data-pii-exposure
+name: data pii exposure
 description: >
   Migrated review-task skill for PII / Sensitive Data Exposure. Use this skill whenever
   diffs may introduce data issues on all, especially in all. Actively look for: Personal

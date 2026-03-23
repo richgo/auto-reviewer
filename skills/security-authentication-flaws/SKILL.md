@@ -1,5 +1,5 @@
 ---
-name: review-task-security-authentication-flaws
+name: security authentication flaws
 description: >
   Migrated review-task skill for Authentication Flaws. Use this skill whenever diffs may
   introduce security issues on all, especially in all. Actively look for: Authentication

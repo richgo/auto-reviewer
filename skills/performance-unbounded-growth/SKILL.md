@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-unbounded-growth
+name: performance unbounded growth
 description: >
   Migrated review-task skill for Unbounded Growth. Use this skill whenever diffs may
   introduce performance issues on all, especially in all. Actively look for: Collections

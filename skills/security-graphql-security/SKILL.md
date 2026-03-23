@@ -1,5 +1,5 @@
 ---
-name: review-task-security-graphql-security
+name: security graphql security
 description: >
   Migrated review-task skill for GraphQL Security Issues. Use this skill whenever diffs
   may introduce security issues on web, api, especially in JavaScript, TypeScript,

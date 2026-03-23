@@ -1,5 +1,5 @@
 ---
-name: lang-ruby
+name: lang ruby
 description: >
   Ruby-specific code review: Rails security (mass assignment, CSRF), ActiveRecord N+1, Ruby patterns.
   Trigger when reviewing Ruby (.rb) files, especially Rails applications, ActiveRecord models, or

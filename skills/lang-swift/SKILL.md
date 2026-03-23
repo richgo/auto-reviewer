@@ -1,5 +1,5 @@
 ---
-name: lang-swift
+name: lang swift
 description: >
   Swift-specific code review for iOS: optionals, ARC/retain cycles, Combine/async-await pitfalls,
   SwiftUI lifecycle, memory management. Trigger when reviewing Swift (.swift) files, especially

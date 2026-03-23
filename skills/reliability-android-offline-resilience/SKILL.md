@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-android-offline-resilience
+name: reliability android offline resilience
 description: >
   Migrated review-task skill for Android Offline Resilience. Use this skill whenever
   diffs may introduce reliability issues on mobile, especially in Kotlin, Java. Actively

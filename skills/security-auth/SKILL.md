@@ -1,5 +1,5 @@
 ---
-name: security-auth
+name: security auth
 description: >
   Detect authentication and authorization vulnerabilities: auth bypass, CSRF, broken authentication,
   session management flaws, credential stuffing weaknesses, insecure password storage/reset, and

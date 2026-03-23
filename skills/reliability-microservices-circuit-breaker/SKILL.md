@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-microservices-circuit-breaker
+name: reliability microservices circuit breaker
 description: >
   Migrated review-task skill for Circuit Breaker Missing. Use this skill whenever diffs
   may introduce reliability issues on microservices, especially in all. Actively look

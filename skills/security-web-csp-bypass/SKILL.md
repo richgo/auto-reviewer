@@ -1,5 +1,5 @@
 ---
-name: review-task-security-web-csp-bypass
+name: security web csp bypass
 description: >
   Migrated review-task skill for Content Security Policy Bypass. Use this skill whenever
   diffs may introduce security issues on web, especially in JavaScript, TypeScript,

@@ -1,5 +1,5 @@
 ---
-name: lang-kotlin
+name: lang kotlin
 description: >
   Kotlin-specific code review for Android: coroutines pitfalls, null safety issues, data class misuse,
   sealed classes, Jetpack Compose patterns. Trigger when reviewing Kotlin (.kt) files, especially

@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-ios-autolayout-perf
+name: performance ios autolayout perf
 description: >
   Migrated review-task skill for iOS AutoLayout Performance. Use this skill whenever
   diffs may introduce performance issues on mobile, especially in Swift, Objective-C.

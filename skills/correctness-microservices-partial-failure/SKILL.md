@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-microservices-partial-failure
+name: correctness microservices partial failure
 description: >
   Migrated review-task skill for Partial Failure Handling. Use this skill whenever diffs
   may introduce correctness issues on microservices, especially in all. Actively look

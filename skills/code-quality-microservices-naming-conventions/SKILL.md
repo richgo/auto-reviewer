@@ -1,5 +1,5 @@
 ---
-name: review-task-code-quality-microservices-naming-conventions
+name: code quality microservices naming conventions
 description: >
   Migrated review-task skill for Naming Convention Inconsistency. Use this skill
   whenever diffs may introduce code-quality issues on microservices, especially in all.

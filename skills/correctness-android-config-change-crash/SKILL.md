@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-android-config-change-crash
+name: correctness android config change crash
 description: >
   Migrated review-task skill for Android Configuration Change Crashes. Use this skill
   whenever diffs may introduce correctness issues on mobile, especially in Kotlin, Java.

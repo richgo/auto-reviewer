@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-ios-force-unwrap
+name: correctness ios force unwrap
 description: >
   Migrated review-task skill for iOS Force Unwrap. Use this skill whenever diffs may
   introduce correctness issues on mobile, especially in Swift. Actively look for: Force

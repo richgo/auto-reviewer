@@ -1,5 +1,5 @@
 ---
-name: review-task-data-ios-coredata-threading
+name: data ios coredata threading
 description: >
   Migrated review-task skill for Core Data Threading Issues. Use this skill whenever
   diffs may introduce data issues on mobile, especially in Swift, Objective-C. Actively

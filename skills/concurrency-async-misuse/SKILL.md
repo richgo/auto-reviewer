@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-async-misuse
+name: concurrency async misuse
 description: >
   Migrated review-task skill for Async/Await Misuse. Use this skill whenever diffs may
   introduce concurrency issues on all, especially in javascript, typescript, python,

@@ -1,5 +1,5 @@
 ---
-name: review-task-security-csrf
+name: security csrf
 description: >
   Migrated review-task skill for Cross-Site Request Forgery (CSRF). Use this skill
   whenever diffs may introduce security issues on web, especially in all. Actively look

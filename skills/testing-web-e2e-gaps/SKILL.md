@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-web-e2e-gaps
+name: testing web e2e gaps
 description: >
   Migrated review-task skill for Web E2E Test Gaps. Use this skill whenever diffs may
   introduce testing issues on web, especially in JavaScript, TypeScript. Actively look

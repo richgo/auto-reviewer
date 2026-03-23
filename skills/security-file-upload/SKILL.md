@@ -1,5 +1,5 @@
 ---
-name: review-task-security-file-upload
+name: security file upload
 description: >
   Migrated review-task skill for Insecure File Upload. Use this skill whenever diffs may
   introduce security issues on web, api, especially in all. Actively look for: Insecure

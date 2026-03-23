@@ -1,5 +1,5 @@
 ---
-name: security-client-side
+name: security client side
 description: >
   Detect client-side security vulnerabilities: cookie security issues, clickjacking, prototype
   pollution, third-party code risks, CSP bypass, postMessage validation, client-side storage

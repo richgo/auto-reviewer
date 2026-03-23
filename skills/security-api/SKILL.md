@@ -1,5 +1,5 @@
 ---
-name: security-api
+name: security api
 description: >
   Detect API-specific security vulnerabilities: GraphQL injection and DoS, REST API authentication/
   authorization flaws, rate limiting gaps, and transaction authorization bypass. Trigger when

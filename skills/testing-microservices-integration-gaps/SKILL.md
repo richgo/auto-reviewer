@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-microservices-integration-gaps
+name: testing microservices integration gaps
 description: >
   Migrated review-task skill for Integration Test Gaps. Use this skill whenever diffs
   may introduce testing issues on microservices, especially in all. Actively look for:

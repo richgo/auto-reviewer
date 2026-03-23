@@ -1,5 +1,5 @@
 ---
-name: review-task-api-design-microservices-error-propagation
+name: api design microservices error propagation
 description: >
   Migrated review-task skill for Error Propagation Issues. Use this skill whenever diffs
   may introduce api-design issues on microservices, especially in all. Actively look

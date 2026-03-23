@@ -1,5 +1,5 @@
 ---
-name: review-task-data-microservices-distributed-transaction
+name: data microservices distributed transaction
 description: >
   Migrated review-task skill for Distributed Transaction Issues. Use this skill whenever
   diffs may introduce data issues on microservices, especially in all. Actively look

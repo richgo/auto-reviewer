@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-n-plus-one
+name: performance n plus one
 description: >
   Migrated review-task skill for N+1 Query. Use this skill whenever diffs may introduce
   performance issues on web, api, especially in all. Actively look for: Loading a

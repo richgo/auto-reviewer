@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-off-by-one
+name: correctness off by one
 description: >
   Migrated review-task skill for Off-by-One Error. Use this skill whenever diffs may
   introduce correctness issues on all, especially in all. Actively look for: Boundary

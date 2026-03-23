@@ -1,5 +1,5 @@
 ---
-name: review-task-security-open-redirect
+name: security open redirect
 description: >
   Migrated review-task skill for Open Redirect. Use this skill whenever diffs may
   introduce security issues on web, api, especially in all. Actively look for: Open

@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-ios-main-thread-blocking
+name: concurrency ios main thread blocking
 description: >
   Migrated review-task skill for iOS Main Thread Blocking. Use this skill whenever diffs
   may introduce concurrency issues on mobile, especially in Swift, Objective-C. Actively

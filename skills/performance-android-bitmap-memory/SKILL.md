@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-android-bitmap-memory
+name: performance android bitmap memory
 description: >
   Migrated review-task skill for Android Bitmap Memory. Use this skill whenever diffs
   may introduce performance issues on mobile, especially in Kotlin, Java. Actively look

@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-ios-retain-cycle
+name: correctness ios retain cycle
 description: >
   Migrated review-task skill for iOS Retain Cycles. Use this skill whenever diffs may
   introduce correctness issues on mobile, especially in Swift, Objective-C. Actively

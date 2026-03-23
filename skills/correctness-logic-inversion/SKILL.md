@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-logic-inversion
+name: correctness logic inversion
 description: >
   Migrated review-task skill for Logic Inversion. Use this skill whenever diffs may
   introduce correctness issues on all, especially in all. Actively look for: Boolean

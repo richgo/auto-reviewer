@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-ios-gcd-misuse
+name: concurrency ios gcd misuse
 description: >
   Migrated review-task skill for iOS GCD Misuse. Use this skill whenever diffs may
   introduce concurrency issues on mobile, especially in Swift, Objective-C. Actively

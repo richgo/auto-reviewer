@@ -1,5 +1,5 @@
 ---
-name: review-task-security-web-client-side-storage
+name: security web client side storage
 description: >
   Migrated review-task skill for Client-Side Storage Security. Use this skill whenever
   diffs may introduce security issues on web, especially in JavaScript, TypeScript.

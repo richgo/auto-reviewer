@@ -1,5 +1,5 @@
 ---
-name: review-task-observability-ios-crash-symbolication
+name: observability ios crash symbolication
 description: >
   Migrated review-task skill for Crash Symbolication Missing. Use this skill whenever
   diffs may introduce observability issues on mobile, especially in Swift, Objective-C.

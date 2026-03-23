@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-deadlock
+name: concurrency deadlock
 description: >
   Migrated review-task skill for Deadlock. Use this skill whenever diffs may introduce
   concurrency issues on all, especially in java, python, go, csharp, cpp, rust. Actively

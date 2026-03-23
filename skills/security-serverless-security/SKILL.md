@@ -1,5 +1,5 @@
 ---
-name: review-task-security-serverless-security
+name: security serverless security
 description: >
   Migrated review-task skill for Serverless Security Issues. Use this skill whenever
   diffs may introduce security issues on all, especially in all. Actively look for:

@@ -1,5 +1,5 @@
 ---
-name: review-task-security-missing-security-headers
+name: security missing security headers
 description: >
   Migrated review-task skill for Missing Security Headers. Use this skill whenever diffs
   may introduce security issues on web, especially in all. Actively look for: Missing

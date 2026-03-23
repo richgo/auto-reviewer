@@ -1,5 +1,5 @@
 ---
-name: skill-optimizer
+name: skill optimizer
 description: >
   Auto-reviewer skill guidance for skill-optimizer.
 ---

@@ -1,5 +1,5 @@
 ---
-name: review-task-security-ios-keychain-misuse
+name: security ios keychain misuse
 description: >
   Migrated review-task skill for iOS Keychain Misuse. Use this skill whenever diffs may
   introduce security issues on mobile, especially in Swift, Objective-C. Actively look

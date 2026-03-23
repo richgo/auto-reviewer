@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-microservices-health-checks
+name: reliability microservices health checks
 description: >
   Migrated review-task skill for Health Check Misconfiguration. Use this skill whenever
   diffs may introduce reliability issues on microservices, especially in all. Actively

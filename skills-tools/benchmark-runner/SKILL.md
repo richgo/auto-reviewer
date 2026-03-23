@@ -1,5 +1,5 @@
 ---
-name: benchmark-runner
+name: benchmark runner
 description: >
   Auto-reviewer skill guidance for benchmark-runner.
 ---

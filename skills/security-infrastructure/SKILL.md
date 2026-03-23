@@ -1,5 +1,5 @@
 ---
-name: security-infrastructure
+name: security infrastructure
 description: >
   Detect infrastructure security issues in code: Docker misconfigurations, IaC/Kubernetes security
   flaws, CI/CD pipeline vulnerabilities, serverless security gaps, and multi-tenant isolation

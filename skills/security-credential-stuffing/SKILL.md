@@ -1,5 +1,5 @@
 ---
-name: review-task-security-credential-stuffing
+name: security credential stuffing
 description: >
   Migrated review-task skill for Credential Stuffing Prevention. Use this skill whenever
   diffs may introduce security issues on web, api, especially in all. Actively look for:

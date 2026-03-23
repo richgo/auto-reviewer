@@ -1,5 +1,5 @@
 ---
-name: review-task-api-design-inconsistent-response-shape
+name: api design inconsistent response shape
 description: >
   Migrated review-task skill for Inconsistent Response Shape. Use this skill whenever
   diffs may introduce api-design issues on web, api, microservices, especially in all.

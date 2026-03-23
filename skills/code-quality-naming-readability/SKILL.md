@@ -1,5 +1,5 @@
 ---
-name: review-task-code-quality-naming-readability
+name: code quality naming readability
 description: >
   Migrated review-task skill for Naming and Readability. Use this skill whenever diffs
   may introduce code-quality issues on all, especially in all. Actively look for:

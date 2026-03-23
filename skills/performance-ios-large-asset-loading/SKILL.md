@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-ios-large-asset-loading
+name: performance ios large asset loading
 description: >
   Migrated review-task skill for iOS Large Asset Loading. Use this skill whenever diffs
   may introduce performance issues on mobile, especially in Swift, Objective-C. Actively

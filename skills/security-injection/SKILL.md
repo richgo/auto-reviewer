@@ -1,5 +1,5 @@
 ---
-name: security-injection
+name: security injection
 description: >
   Detect injection vulnerabilities in code review: SQL injection, XSS, command injection,
   LDAP injection, NoSQL injection, and DOM-based XSS. Trigger this skill when reviewing

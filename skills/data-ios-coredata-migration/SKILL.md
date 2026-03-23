@@ -1,5 +1,5 @@
 ---
-name: review-task-data-ios-coredata-migration
+name: data ios coredata migration
 description: >
   Migrated review-task skill for Core Data Migration Failures. Use this skill whenever
   diffs may introduce data issues on mobile, especially in Swift, Objective-C. Actively

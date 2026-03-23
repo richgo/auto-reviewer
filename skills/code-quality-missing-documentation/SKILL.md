@@ -1,5 +1,5 @@
 ---
-name: review-task-code-quality-missing-documentation
+name: code quality missing documentation
 description: >
   Migrated review-task skill for Missing Documentation. Use this skill whenever diffs
   may introduce code-quality issues on all, especially in all. Actively look for: Public

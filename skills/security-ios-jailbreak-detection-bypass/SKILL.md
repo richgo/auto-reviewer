@@ -1,5 +1,5 @@
 ---
-name: review-task-security-ios-jailbreak-detection-bypass
+name: security ios jailbreak detection bypass
 description: >
   Migrated review-task skill for iOS Jailbreak Detection Bypass. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Swift, Objective-C.

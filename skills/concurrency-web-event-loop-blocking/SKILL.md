@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-web-event-loop-blocking
+name: concurrency web event loop blocking
 description: >
   Migrated review-task skill for Event Loop Blocking. Use this skill whenever diffs may
   introduce concurrency issues on web, especially in JavaScript, TypeScript. Actively

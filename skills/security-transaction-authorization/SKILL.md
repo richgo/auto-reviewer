@@ -1,5 +1,5 @@
 ---
-name: review-task-security-transaction-authorization
+name: security transaction authorization
 description: >
   Migrated review-task skill for Transaction Authorization Flaws. Use this skill
   whenever diffs may introduce security issues on web, api, especially in all. Actively

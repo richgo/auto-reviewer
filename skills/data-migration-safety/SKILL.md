@@ -1,5 +1,5 @@
 ---
-name: review-task-data-migration-safety
+name: data migration safety
 description: >
   Migrated review-task skill for Migration Safety. Use this skill whenever diffs may
   introduce data issues on web, api, especially in all. Actively look for: Database

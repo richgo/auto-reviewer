@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-ios-lifecycle-bugs
+name: correctness ios lifecycle bugs
 description: >
   Migrated review-task skill for iOS Lifecycle Bugs. Use this skill whenever diffs may
   introduce correctness issues on mobile, especially in Swift, Objective-C. Actively

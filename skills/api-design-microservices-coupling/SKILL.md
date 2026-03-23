@@ -1,5 +1,5 @@
 ---
-name: review-task-api-design-microservices-coupling
+name: api design microservices coupling
 description: >
   Migrated review-task skill for Tight Coupling. Use this skill whenever diffs may
   introduce api-design issues on microservices, especially in all. Actively look for:

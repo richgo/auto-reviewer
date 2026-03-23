@@ -1,5 +1,5 @@
 ---
-name: review-task-security-cicd-security
+name: security cicd security
 description: >
   Migrated review-task skill for CI/CD Security Issues. Use this skill whenever diffs
   may introduce security issues on all, especially in YAML, Groovy, all. Actively look

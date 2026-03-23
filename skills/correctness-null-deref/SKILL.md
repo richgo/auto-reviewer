@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-null-deref
+name: correctness null deref
 description: >
   Migrated review-task skill for Null/Undefined Dereference. Use this skill whenever
   diffs may introduce correctness issues on all, especially in all. Actively look for:

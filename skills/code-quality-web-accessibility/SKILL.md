@@ -1,5 +1,5 @@
 ---
-name: review-task-code-quality-web-accessibility
+name: code quality web accessibility
 description: >
   Migrated review-task skill for Accessibility Issues. Use this skill whenever diffs may
   introduce code-quality issues on web, especially in HTML, JavaScript, TypeScript.

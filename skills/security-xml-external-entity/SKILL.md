@@ -1,5 +1,5 @@
 ---
-name: review-task-security-xml-external-entity
+name: security xml external entity
 description: >
   Migrated review-task skill for XML External Entity (XXE) Injection. Use this skill
   whenever diffs may introduce security issues on all, especially in Java, Python, PHP,

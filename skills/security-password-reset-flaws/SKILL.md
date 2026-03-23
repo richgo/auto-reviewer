@@ -1,5 +1,5 @@
 ---
-name: review-task-security-password-reset-flaws
+name: security password reset flaws
 description: >
   Migrated review-task skill for Password Reset Flaws. Use this skill whenever diffs may
   introduce security issues on web, api, especially in all. Actively look for: Password

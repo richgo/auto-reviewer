@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-flaky-test-patterns
+name: testing flaky test patterns
 description: >
   Migrated review-task skill for Flaky Test Patterns. Use this skill whenever diffs may
   introduce testing issues on all, especially in all. Actively look for: Tests with race

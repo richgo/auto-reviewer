@@ -1,5 +1,5 @@
 ---
-name: review-task-security-android-webview-security
+name: security android webview security
 description: >
   Migrated review-task skill for Android WebView Security. Use this skill whenever diffs
   may introduce security issues on mobile, especially in Kotlin, Java. Actively look

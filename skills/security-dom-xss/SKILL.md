@@ -1,5 +1,5 @@
 ---
-name: review-task-security-dom-xss
+name: security dom xss
 description: >
   Migrated review-task skill for DOM-based XSS. Use this skill whenever diffs may
   introduce security issues on web, especially in JavaScript, TypeScript. Actively look

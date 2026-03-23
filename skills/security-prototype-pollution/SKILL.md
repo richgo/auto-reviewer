@@ -1,5 +1,5 @@
 ---
-name: review-task-security-prototype-pollution
+name: security prototype pollution
 description: >
   Migrated review-task skill for Prototype Pollution. Use this skill whenever diffs may
   introduce security issues on web, api, especially in JavaScript, TypeScript. Actively

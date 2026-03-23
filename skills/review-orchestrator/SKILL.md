@@ -1,5 +1,5 @@
 ---
-name: review-orchestrator
+name: review orchestrator
 description: >
   Main orchestration skill for code review. Analyzes PR diffs, identifies languages and platforms,
   dispatches to appropriate concern and language skills, deduplicates findings, ranks by severity,

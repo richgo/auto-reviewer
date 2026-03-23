@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-ios-xctest-gaps
+name: testing ios xctest gaps
 description: >
   Migrated review-task skill for iOS XCTest Coverage Gaps. Use this skill whenever diffs
   may introduce testing issues on mobile, especially in Swift. Actively look for:

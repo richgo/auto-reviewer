@@ -1,5 +1,5 @@
 ---
-name: review-task-observability-microservices-correlation-id
+name: observability microservices correlation id
 description: >
   Migrated review-task skill for Correlation ID Missing. Use this skill whenever diffs
   may introduce observability issues on microservices, especially in all. Actively look

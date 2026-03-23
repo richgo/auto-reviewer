@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-microservices-latency-chain
+name: performance microservices latency chain
 description: >
   Migrated review-task skill for Latency Chain. Use this skill whenever diffs may
   introduce performance issues on microservices, especially in all. Actively look for:

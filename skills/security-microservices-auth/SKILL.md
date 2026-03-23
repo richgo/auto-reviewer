@@ -1,5 +1,5 @@
 ---
-name: review-task-security-microservices-auth
+name: security microservices auth
 description: >
   Migrated review-task skill for Microservices Authentication. Use this skill whenever
   diffs may introduce security issues on microservices, especially in all. Actively look

@@ -1,5 +1,5 @@
 ---
-name: review-task-security-android-insecure-storage
+name: security android insecure storage
 description: >
   Migrated review-task skill for Android Insecure Storage. Use this skill whenever diffs
   may introduce security issues on mobile, especially in Kotlin, Java. Actively look

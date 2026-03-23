@@ -1,5 +1,5 @@
 ---
-name: review-task-security-android-logging-sensitive-data
+name: security android logging sensitive data
 description: >
   Migrated review-task skill for Android Logging Sensitive Data. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Kotlin, Java. Actively

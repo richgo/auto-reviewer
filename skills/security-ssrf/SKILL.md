@@ -1,5 +1,5 @@
 ---
-name: review-task-security-ssrf
+name: security ssrf
 description: >
   Migrated review-task skill for Server-Side Request Forgery (SSRF). Use this skill
   whenever diffs may introduce security issues on web, api, especially in all. Actively

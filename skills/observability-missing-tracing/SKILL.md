@@ -1,5 +1,5 @@
 ---
-name: review-task-observability-missing-tracing
+name: observability missing tracing
 description: >
   Migrated review-task skill for Missing Distributed Tracing. Use this skill whenever
   diffs may introduce observability issues on microservices, especially in all. Actively

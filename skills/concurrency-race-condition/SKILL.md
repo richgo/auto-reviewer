@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-race-condition
+name: concurrency race condition
 description: >
   Migrated review-task skill for Race Condition. Use this skill whenever diffs may
   introduce concurrency issues on all, especially in all. Actively look for: Multiple

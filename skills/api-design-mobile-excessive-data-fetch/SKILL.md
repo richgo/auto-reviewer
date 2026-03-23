@@ -1,5 +1,5 @@
 ---
-name: review-task-api-design-mobile-excessive-data-fetch
+name: api design mobile excessive data fetch
 description: >
   Migrated review-task skill for Excessive Data Fetch. Use this skill whenever diffs may
   introduce api-design issues on mobile, especially in Swift, Kotlin. Actively look for:

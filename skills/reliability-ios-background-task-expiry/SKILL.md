@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-ios-background-task-expiry
+name: reliability ios background task expiry
 description: >
   Migrated review-task skill for iOS Background Task Expiry. Use this skill whenever
   diffs may introduce reliability issues on mobile, especially in Swift, Objective-C.

@@ -1,5 +1,5 @@
 ---
-name: review-task-security-prompt-injection
+name: security prompt injection
 description: >
   Migrated review-task skill for Prompt Injection (LLM). Use this skill whenever diffs
   may introduce security issues on all, especially in all. Actively look for: Prompt

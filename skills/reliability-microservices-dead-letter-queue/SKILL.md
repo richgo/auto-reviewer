@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-microservices-dead-letter-queue
+name: reliability microservices dead letter queue
 description: >
   Migrated review-task skill for Dead Letter Queue Missing. Use this skill whenever
   diffs may introduce reliability issues on microservices, especially in all. Actively

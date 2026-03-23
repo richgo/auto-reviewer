@@ -1,5 +1,5 @@
 ---
-name: review-task-security-nosql-injection
+name: security nosql injection
 description: >
   Migrated review-task skill for NoSQL Injection. Use this skill whenever diffs may
   introduce security issues on all, especially in JavaScript, TypeScript, Python, Java.

@@ -1,5 +1,5 @@
 ---
-name: data-integrity
+name: data integrity
 description: >
   Detect data integrity issues: PII exposure in logs/responses/errors, unsafe database migrations,
   schema drift between services, missing backup validation, and serialization mismatches. Trigger

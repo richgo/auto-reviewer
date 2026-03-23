@@ -1,5 +1,5 @@
 ---
-name: review-task-security-mobile-cert-pinning
+name: security mobile cert pinning
 description: >
   Migrated review-task skill for Mobile Certificate Pinning. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Swift, Kotlin,

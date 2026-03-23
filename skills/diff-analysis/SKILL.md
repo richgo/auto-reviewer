@@ -1,5 +1,5 @@
 ---
-name: diff-analysis
+name: diff analysis
 description: >
   Core skill for parsing and understanding PR diffs. Detects what changed, understands context,
   identifies files needing review, ignores generated code, distinguishes rename/move from actual

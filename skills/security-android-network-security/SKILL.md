@@ -1,5 +1,5 @@
 ---
-name: review-task-security-android-network-security
+name: security android network security
 description: >
   Migrated review-task skill for Android Network Security Config. Use this skill
   whenever diffs may introduce security issues on mobile, especially in Kotlin, Java,

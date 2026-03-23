@@ -1,5 +1,5 @@
 ---
-name: review-task-data-schema-validation
+name: data schema validation
 description: >
   Migrated review-task skill for Schema Validation Missing. Use this skill whenever
   diffs may introduce data issues on web, api, microservices, especially in all.

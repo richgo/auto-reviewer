@@ -1,5 +1,5 @@
 ---
-name: security-network
+name: security network
 description: >
   Detect network security vulnerabilities: SSRF, insufficient transport security, missing security
   headers, CORS misconfiguration, and open redirects. Trigger when reviewing HTTP request handling,

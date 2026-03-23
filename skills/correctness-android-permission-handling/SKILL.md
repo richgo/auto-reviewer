@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-android-permission-handling
+name: correctness android permission handling
 description: >
   Migrated review-task skill for Android Permission Handling. Use this skill whenever
   diffs may introduce correctness issues on mobile, especially in Kotlin, Java. Actively

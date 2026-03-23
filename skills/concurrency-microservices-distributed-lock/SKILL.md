@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-microservices-distributed-lock
+name: concurrency microservices distributed lock
 description: >
   Migrated review-task skill for Distributed Lock Issues. Use this skill whenever diffs
   may introduce concurrency issues on microservices, especially in all. Actively look

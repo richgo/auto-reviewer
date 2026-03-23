@@ -1,5 +1,5 @@
 ---
-name: review-task-security-security-logging
+name: security security logging
 description: >
   Migrated review-task skill for Security Logging Gaps. Use this skill whenever diffs
   may introduce security issues on all, especially in all. Actively look for: Missing

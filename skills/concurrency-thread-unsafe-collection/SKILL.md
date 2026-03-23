@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-thread-unsafe-collection
+name: concurrency thread unsafe collection
 description: >
   Migrated review-task skill for Thread-Unsafe Collections. Use this skill whenever
   diffs may introduce concurrency issues on all, especially in all. Actively look for:

@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-android-handler-looper
+name: concurrency android handler looper
 description: >
   Migrated review-task skill for Android Handler/Looper Issues. Use this skill whenever
   diffs may introduce concurrency issues on mobile, especially in Kotlin, Java. Actively

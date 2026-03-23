@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-web-unnecessary-rerender
+name: performance web unnecessary rerender
 description: >
   Migrated review-task skill for Unnecessary Re-renders. Use this skill whenever diffs
   may introduce performance issues on web, especially in JavaScript, TypeScript.

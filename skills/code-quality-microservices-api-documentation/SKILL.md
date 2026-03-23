@@ -1,5 +1,5 @@
 ---
-name: review-task-code-quality-microservices-api-documentation
+name: code quality microservices api documentation
 description: >
   Migrated review-task skill for API Documentation Missing. Use this skill whenever
   diffs may introduce code-quality issues on microservices, especially in all. Actively

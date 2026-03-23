@@ -1,5 +1,5 @@
 ---
-name: security-ai-llm
+name: security ai llm
 description: >
   Detect AI and LLM security vulnerabilities: prompt injection attacks, AI agent security flaws,
   and MCP (Model Context Protocol) tool poisoning. Trigger when reviewing LLM integrations,

@@ -1,5 +1,5 @@
 ---
-name: review-task-data-microservices-schema-evolution
+name: data microservices schema evolution
 description: >
   Migrated review-task skill for Schema Evolution Problems. Use this skill whenever
   diffs may introduce data issues on microservices, especially in all. Actively look

@@ -1,5 +1,5 @@
 ---
-name: review-task-code-quality-android-deprecated-api
+name: code quality android deprecated api
 description: >
   Migrated review-task skill for Android Deprecated API Usage. Use this skill whenever
   diffs may introduce code-quality issues on mobile, especially in Kotlin, Java.

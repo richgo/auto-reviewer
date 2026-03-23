@@ -1,5 +1,5 @@
 ---
-name: inline-comments
+name: inline comments
 description: >
   Format code review findings as inline PR comments (GitHub, GitLab, Bitbucket). Each comment
   includes file path, line number, severity emoji, finding description, evidence snippet, and

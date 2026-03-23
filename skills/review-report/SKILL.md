@@ -1,5 +1,5 @@
 ---
-name: review-report
+name: review report
 description: >
   Format code review findings as a comprehensive Markdown report for PR comments. Groups findings
   by severity, provides summaries, includes code snippets and fix suggestions, and adds OWASP/

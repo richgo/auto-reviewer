@@ -1,5 +1,5 @@
 ---
-name: review-task-security-path-traversal
+name: security path traversal
 description: >
   Migrated review-task skill for Path Traversal. Use this skill whenever diffs may
   introduce security issues on web, api, especially in all. Actively look for: User

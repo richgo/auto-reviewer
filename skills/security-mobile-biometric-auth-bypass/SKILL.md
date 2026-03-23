@@ -1,5 +1,5 @@
 ---
-name: review-task-security-mobile-biometric-auth-bypass
+name: security mobile biometric auth bypass
 description: >
   Migrated review-task skill for Mobile Biometric Authentication Bypass. Use this skill
   whenever diffs may introduce security issues on mobile, especially in Swift, Kotlin.

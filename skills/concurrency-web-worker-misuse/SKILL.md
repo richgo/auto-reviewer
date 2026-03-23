@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-web-worker-misuse
+name: concurrency web worker misuse
 description: >
   Migrated review-task skill for Web Worker Misuse. Use this skill whenever diffs may
   introduce concurrency issues on web, especially in JavaScript, TypeScript. Actively

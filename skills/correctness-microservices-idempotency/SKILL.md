@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-microservices-idempotency
+name: correctness microservices idempotency
 description: >
   Migrated review-task skill for Missing Idempotency. Use this skill whenever diffs may
   introduce correctness issues on microservices, especially in all. Actively look for:

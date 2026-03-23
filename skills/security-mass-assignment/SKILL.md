@@ -1,5 +1,5 @@
 ---
-name: review-task-security-mass-assignment
+name: security mass assignment
 description: >
   Migrated review-task skill for Mass Assignment. Use this skill whenever diffs may
   introduce security issues on web, api, especially in all. Actively look for: Accepting

@@ -1,5 +1,5 @@
 ---
-name: review-task-data-android-room-migration
+name: data android room migration
 description: >
   Migrated review-task skill for Android Room Migration Issues. Use this skill whenever
   diffs may introduce data issues on mobile, especially in Kotlin, Java. Actively look

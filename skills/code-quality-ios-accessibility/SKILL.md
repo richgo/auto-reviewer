@@ -1,5 +1,5 @@
 ---
-name: review-task-code-quality-ios-accessibility
+name: code quality ios accessibility
 description: >
   Migrated review-task skill for iOS Accessibility. Use this skill whenever diffs may
   introduce code-quality issues on mobile, especially in Swift, Objective-C. Actively

@@ -1,5 +1,5 @@
 ---
-name: review-task-security-ios-url-scheme-hijack
+name: security ios url scheme hijack
 description: >
   Migrated review-task skill for iOS URL Scheme Hijacking. Use this skill whenever diffs
   may introduce security issues on mobile, especially in Swift, Objective-C. Actively

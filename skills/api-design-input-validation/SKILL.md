@@ -1,5 +1,5 @@
 ---
-name: review-task-api-design-input-validation
+name: api design input validation
 description: >
   Migrated review-task skill for Missing Input Validation. Use this skill whenever diffs
   may introduce api-design issues on web, api, mobile, especially in all. Actively look

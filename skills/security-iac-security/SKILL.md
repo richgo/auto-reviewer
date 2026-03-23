@@ -1,5 +1,5 @@
 ---
-name: review-task-security-iac-security
+name: security iac security
 description: >
   Migrated review-task skill for Infrastructure as Code Security. Use this skill
   whenever diffs may introduce security issues on all, especially in Terraform,

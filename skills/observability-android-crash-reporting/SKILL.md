@@ -1,5 +1,5 @@
 ---
-name: review-task-observability-android-crash-reporting
+name: observability android crash reporting
 description: >
   Migrated review-task skill for Android Crash Reporting Gaps. Use this skill whenever
   diffs may introduce observability issues on mobile, especially in Kotlin, Java.

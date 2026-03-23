@@ -1,5 +1,5 @@
 ---
-name: review-task-security-web-subresource-integrity
+name: security web subresource integrity
 description: >
   Migrated review-task skill for Subresource Integrity Missing. Use this skill whenever
   diffs may introduce security issues on web, especially in HTML, JavaScript. Actively

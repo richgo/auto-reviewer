@@ -1,5 +1,5 @@
 ---
-name: review-task-security-microservices-cascading-failure
+name: security microservices cascading failure
 description: >
   Migrated review-task skill for Cascading Failure Prevention. Use this skill whenever
   diffs may introduce security issues on microservices, especially in all. Actively look

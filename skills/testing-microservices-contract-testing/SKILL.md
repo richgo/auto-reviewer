@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-microservices-contract-testing
+name: testing microservices contract testing
 description: >
   Migrated review-task skill for Contract Testing Gaps. Use this skill whenever diffs
   may introduce testing issues on microservices, especially in all. Actively look for:

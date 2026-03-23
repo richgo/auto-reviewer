@@ -1,5 +1,5 @@
 ---
-name: review-task-data-android-content-provider-exposure
+name: data android content provider exposure
 description: >
   Migrated review-task skill for ContentProvider Data Exposure. Use this skill whenever
   diffs may introduce data issues on mobile, especially in Kotlin, Java. Actively look

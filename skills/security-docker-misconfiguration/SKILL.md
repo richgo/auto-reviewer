@@ -1,5 +1,5 @@
 ---
-name: review-task-security-docker-misconfiguration
+name: security docker misconfiguration
 description: >
   Migrated review-task skill for Docker Misconfiguration. Use this skill whenever diffs
   may introduce security issues on all, especially in Dockerfile, all. Actively look

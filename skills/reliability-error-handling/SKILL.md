@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-error-handling
+name: reliability error handling
 description: >
   Migrated review-task skill for Swallowed Errors / Missing Error Handling. Use this
   skill whenever diffs may introduce reliability issues on all, especially in all.

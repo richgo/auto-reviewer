@@ -1,5 +1,5 @@
 ---
-name: review-task-security-ios-ats-bypass
+name: security ios ats bypass
 description: >
   Migrated review-task skill for iOS ATS Bypass. Use this skill whenever diffs may
   introduce security issues on mobile, especially in Swift, Objective-C. Actively look

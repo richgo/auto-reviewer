@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-android-main-thread-blocking
+name: concurrency android main thread blocking
 description: >
   Migrated review-task skill for Android Main Thread Blocking. Use this skill whenever
   diffs may introduce concurrency issues on mobile, especially in Kotlin, Java. Actively

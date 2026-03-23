@@ -1,5 +1,5 @@
 ---
-name: code-quality
+name: code quality
 description: >
   Detect code quality issues: dead/unreachable code, DRY violations with duplicated logic, poor
   naming and readability, missing or inadequate documentation, and excessive complexity (cyclomatic,

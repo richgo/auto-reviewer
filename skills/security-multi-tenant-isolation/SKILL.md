@@ -1,5 +1,5 @@
 ---
-name: review-task-security-multi-tenant-isolation
+name: security multi tenant isolation
 description: >
   Migrated review-task skill for Multi-Tenant Isolation Failures. Use this skill
   whenever diffs may introduce security issues on all, especially in all. Actively look

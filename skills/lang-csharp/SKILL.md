@@ -1,5 +1,5 @@
 ---
-name: lang-csharp
+name: lang csharp
 description: >
   C#-specific code review: .NET/ASP.NET Core security, async/await pitfalls, LINQ issues, Entity
   Framework, OWASP .NET cheat sheets. Trigger when reviewing C# (.cs) files, ASP.NET applications,

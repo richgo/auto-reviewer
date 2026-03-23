@@ -1,5 +1,5 @@
 ---
-name: review-task-security-android-backup-exposure
+name: security android backup exposure
 description: >
   Migrated review-task skill for Android Backup Data Exposure. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Kotlin, Java, XML.

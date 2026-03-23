@@ -1,5 +1,5 @@
 ---
-name: review-task-security-insufficient-transport-security
+name: security insufficient transport security
 description: >
   Migrated review-task skill for Insufficient Transport Layer Security. Use this skill
   whenever diffs may introduce security issues on web, api, mobile, especially in all.

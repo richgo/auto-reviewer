@@ -1,5 +1,5 @@
 ---
-name: review-task-security-pinning-bypass
+name: security pinning bypass
 description: >
   Migrated review-task skill for Certificate Pinning Bypass. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Java, Kotlin, Swift,

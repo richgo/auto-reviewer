@@ -1,5 +1,5 @@
 ---
-name: review-task-security-third-party-code
+name: security third party code
 description: >
   Migrated review-task skill for Third-Party Code Security. Use this skill whenever
   diffs may introduce security issues on web, especially in JavaScript, TypeScript,

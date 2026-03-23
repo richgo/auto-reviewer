@@ -1,5 +1,5 @@
 ---
-name: review-task-api-design-mobile-offline-sync
+name: api design mobile offline sync
 description: >
   Migrated review-task skill for Mobile Offline Sync Issues. Use this skill whenever
   diffs may introduce api-design issues on mobile, especially in Swift, Kotlin. Actively

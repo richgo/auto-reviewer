@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-mock-overuse
+name: testing mock overuse
 description: >
   Migrated review-task skill for Mock Overuse. Use this skill whenever diffs may
   introduce testing issues on all, especially in all. Actively look for: Excessive

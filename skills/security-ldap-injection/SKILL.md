@@ -1,5 +1,5 @@
 ---
-name: review-task-security-ldap-injection
+name: security ldap injection
 description: >
   Migrated review-task skill for LDAP Injection. Use this skill whenever diffs may
   introduce security issues on all, especially in Java, C#, Python, PHP. Actively look

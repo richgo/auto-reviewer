@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-memory-leak
+name: performance memory leak
 description: >
   Migrated review-task skill for Memory Leak. Use this skill whenever diffs may
   introduce performance issues on all, especially in all. Actively look for: Unbounded

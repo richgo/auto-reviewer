@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-ios-actor-isolation
+name: concurrency ios actor isolation
 description: >
   Migrated review-task skill for Swift Actor Isolation. Use this skill whenever diffs
   may introduce concurrency issues on mobile, especially in Swift. Actively look for:

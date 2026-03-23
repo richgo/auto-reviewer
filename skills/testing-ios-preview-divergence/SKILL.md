@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-ios-preview-divergence
+name: testing ios preview divergence
 description: >
   Migrated review-task skill for SwiftUI Preview Divergence. Use this skill whenever
   diffs may introduce testing issues on mobile, especially in Swift. Actively look for:

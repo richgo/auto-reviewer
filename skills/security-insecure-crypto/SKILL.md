@@ -1,5 +1,5 @@
 ---
-name: review-task-security-insecure-crypto
+name: security insecure crypto
 description: >
   Migrated review-task skill for Insecure Cryptography. Use this skill whenever diffs
   may introduce security issues on all, especially in all. Actively look for: Insecure

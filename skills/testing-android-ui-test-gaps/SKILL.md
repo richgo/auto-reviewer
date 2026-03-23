@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-android-ui-test-gaps
+name: testing android ui test gaps
 description: >
   Migrated review-task skill for Android UI Test Coverage Gaps. Use this skill whenever
   diffs may introduce testing issues on mobile, especially in Kotlin, Java. Actively

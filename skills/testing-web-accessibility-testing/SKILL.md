@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-web-accessibility-testing
+name: testing web accessibility testing
 description: >
   Migrated review-task skill for Accessibility Testing Gaps. Use this skill whenever
   diffs may introduce testing issues on web, especially in JavaScript, TypeScript.

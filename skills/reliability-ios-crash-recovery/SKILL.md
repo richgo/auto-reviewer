@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-ios-crash-recovery
+name: reliability ios crash recovery
 description: >
   Migrated review-task skill for iOS Crash Recovery. Use this skill whenever diffs may
   introduce reliability issues on mobile, especially in Swift, Objective-C. Actively

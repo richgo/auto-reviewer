@@ -1,5 +1,5 @@
 ---
-name: security-mobile
+name: security mobile
 description: >
   Comprehensive mobile security review covering Android MASVS (exported components, Intent injection,
   WebView, insecure storage, Keystore, network_security_config, logging, backup) and iOS MASVS

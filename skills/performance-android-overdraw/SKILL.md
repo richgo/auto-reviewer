@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-android-overdraw
+name: performance android overdraw
 description: >
   Migrated review-task skill for Android Overdraw. Use this skill whenever diffs may
   introduce performance issues on mobile, especially in Kotlin, Java, XML. Actively look

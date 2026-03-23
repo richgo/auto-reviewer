@@ -1,5 +1,5 @@
 ---
-name: review-task-security-command-injection
+name: security command injection
 description: >
   Migrated review-task skill for Command Injection. Use this skill whenever diffs may
   introduce security issues on all, especially in all. Actively look for: Command

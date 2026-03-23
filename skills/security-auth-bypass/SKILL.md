@@ -1,5 +1,5 @@
 ---
-name: review-task-security-auth-bypass
+name: security auth bypass
 description: >
   Migrated review-task skill for Authentication/Authorization Bypass. Use this skill
   whenever diffs may introduce security issues on web, api, mobile, especially in all.

@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-web-type-coercion
+name: correctness web type coercion
 description: >
   Migrated review-task skill for Type Coercion Bugs. Use this skill whenever diffs may
   introduce correctness issues on web, especially in JavaScript, TypeScript. Actively

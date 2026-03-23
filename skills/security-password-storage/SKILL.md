@@ -1,5 +1,5 @@
 ---
-name: review-task-security-password-storage
+name: security password storage
 description: >
   Migrated review-task skill for Insecure Password Storage. Use this skill whenever
   diffs may introduce security issues on all, especially in all. Actively look for:

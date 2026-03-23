@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-android-crash-handling
+name: reliability android crash handling
 description: >
   Migrated review-task skill for Android Crash Handling. Use this skill whenever diffs
   may introduce reliability issues on mobile, especially in Kotlin, Java. Actively look

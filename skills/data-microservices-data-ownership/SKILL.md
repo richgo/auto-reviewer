@@ -1,5 +1,5 @@
 ---
-name: review-task-data-microservices-data-ownership
+name: data microservices data ownership
 description: >
   Migrated review-task skill for Data Ownership Violations. Use this skill whenever
   diffs may introduce data issues on microservices, especially in all. Actively look

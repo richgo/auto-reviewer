@@ -1,5 +1,5 @@
 ---
-name: review-task-security-android-exported-components
+name: security android exported components
 description: >
   Migrated review-task skill for Android Exported Components. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Kotlin, Java, XML.

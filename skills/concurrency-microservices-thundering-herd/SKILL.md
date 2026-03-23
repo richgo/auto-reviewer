@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-microservices-thundering-herd
+name: concurrency microservices thundering herd
 description: >
   Migrated review-task skill for Thundering Herd Problem. Use this skill whenever diffs
   may introduce concurrency issues on microservices, especially in all. Actively look

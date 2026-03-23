@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-android-process-death
+name: reliability android process death
 description: >
   Migrated review-task skill for Android Process Death. Use this skill whenever diffs
   may introduce reliability issues on mobile, especially in Kotlin, Java. Actively look

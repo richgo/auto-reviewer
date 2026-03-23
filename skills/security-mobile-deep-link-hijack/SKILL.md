@@ -1,5 +1,5 @@
 ---
-name: review-task-security-mobile-deep-link-hijack
+name: security mobile deep link hijack
 description: >
   Migrated review-task skill for Mobile Deep Link Hijacking. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Swift, Kotlin. Actively

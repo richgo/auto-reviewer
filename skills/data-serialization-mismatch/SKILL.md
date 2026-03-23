@@ -1,5 +1,5 @@
 ---
-name: review-task-data-serialization-mismatch
+name: data serialization mismatch
 description: >
   Migrated review-task skill for Serialization Mismatch. Use this skill whenever diffs
   may introduce data issues on all, especially in all. Actively look for: Type changes

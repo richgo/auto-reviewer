@@ -1,5 +1,5 @@
 ---
-name: review-task-security-mobile-binary-hardening
+name: security mobile binary hardening
 description: >
   Migrated review-task skill for Mobile Binary Hardening. Use this skill whenever diffs
   may introduce security issues on mobile, especially in Swift, Kotlin, Java. Actively

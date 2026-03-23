@@ -1,5 +1,5 @@
 ---
-name: review-task-security-web-html-injection
+name: security web html injection
 description: >
   Migrated review-task skill for HTML Injection. Use this skill whenever diffs may
   introduce security issues on web, especially in all. Actively look for: User content

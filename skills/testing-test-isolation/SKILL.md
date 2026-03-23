@@ -1,5 +1,5 @@
 ---
-name: review-task-testing-test-isolation
+name: testing test isolation
 description: >
   Migrated review-task skill for Test Isolation Failures. Use this skill whenever diffs
   may introduce testing issues on all, especially in all. Actively look for: Tests

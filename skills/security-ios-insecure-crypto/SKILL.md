@@ -1,5 +1,5 @@
 ---
-name: review-task-security-ios-insecure-crypto
+name: security ios insecure crypto
 description: >
   Migrated review-task skill for iOS Insecure Cryptography. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Swift, Objective-C.

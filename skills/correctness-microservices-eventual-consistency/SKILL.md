@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-microservices-eventual-consistency
+name: correctness microservices eventual consistency
 description: >
   Migrated review-task skill for Eventual Consistency Issues. Use this skill whenever
   diffs may introduce correctness issues on microservices, especially in all. Actively

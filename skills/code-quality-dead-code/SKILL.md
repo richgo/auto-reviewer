@@ -1,5 +1,5 @@
 ---
-name: review-task-code-quality-dead-code
+name: code quality dead code
 description: >
   Migrated review-task skill for Dead Code / Unused Imports. Use this skill whenever
   diffs may introduce code-quality issues on all, especially in all. Actively look for:

@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-android-startup-time
+name: performance android startup time
 description: >
   Migrated review-task skill for Android App Startup Time. Use this skill whenever diffs
   may introduce performance issues on mobile, especially in Kotlin, Java. Actively look

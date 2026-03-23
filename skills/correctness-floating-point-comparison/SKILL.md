@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-floating-point-comparison
+name: correctness floating point comparison
 description: >
   Migrated review-task skill for Floating Point Comparison. Use this skill whenever
   diffs may introduce correctness issues on all, especially in all. Actively look for:

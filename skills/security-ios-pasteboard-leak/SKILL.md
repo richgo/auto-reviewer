@@ -1,5 +1,5 @@
 ---
-name: review-task-security-ios-pasteboard-leak
+name: security ios pasteboard leak
 description: >
   Migrated review-task skill for iOS Pasteboard Data Leakage. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Swift, Objective-C.

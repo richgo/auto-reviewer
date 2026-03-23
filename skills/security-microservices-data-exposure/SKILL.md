@@ -1,5 +1,5 @@
 ---
-name: review-task-security-microservices-data-exposure
+name: security microservices data exposure
 description: >
   Migrated review-task skill for Microservices Data Exposure. Use this skill whenever
   diffs may introduce security issues on microservices, especially in all. Actively look

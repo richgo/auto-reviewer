@@ -1,5 +1,5 @@
 ---
-name: lang-typescript
+name: lang typescript
 description: >
   TypeScript and Node.js code review guidance: Express/NestJS security, async/await patterns,
   type safety, prototype pollution, package vulnerabilities. Trigger when reviewing .ts, .tsx,

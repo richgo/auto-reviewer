@@ -1,5 +1,5 @@
 ---
-name: review-task-security-mcp-tool-poisoning
+name: security mcp tool poisoning
 description: >
   Migrated review-task skill for MCP Tool Poisoning. Use this skill whenever diffs may
   introduce security issues on all, especially in all. Actively look for: Model Context

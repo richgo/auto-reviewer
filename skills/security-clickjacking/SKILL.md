@@ -1,5 +1,5 @@
 ---
-name: review-task-security-clickjacking
+name: security clickjacking
 description: >
   Migrated review-task skill for Clickjacking Vulnerabilities. Use this skill whenever
   diffs may introduce security issues on web, especially in all. Actively look for:

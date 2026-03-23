@@ -1,5 +1,5 @@
 ---
-name: review-task-security-secrets-exposure
+name: security secrets exposure
 description: >
   Migrated review-task skill for Secrets/Credentials Exposure. Use this skill whenever
   diffs may introduce security issues on all, especially in all. Actively look for:

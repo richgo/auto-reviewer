@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-microservices-event-ordering
+name: concurrency microservices event ordering
 description: >
   Migrated review-task skill for Event Ordering Assumptions. Use this skill whenever
   diffs may introduce concurrency issues on microservices, especially in all. Actively

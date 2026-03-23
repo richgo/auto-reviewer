@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-retry-without-backoff
+name: reliability retry without backoff
 description: >
   Migrated review-task skill for Retry Without Backoff. Use this skill whenever diffs
   may introduce reliability issues on all, especially in all. Actively look for:

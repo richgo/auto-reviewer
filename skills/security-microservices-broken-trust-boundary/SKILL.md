@@ -1,5 +1,5 @@
 ---
-name: review-task-security-microservices-broken-trust-boundary
+name: security microservices broken trust boundary
 description: >
   Migrated review-task skill for Broken Trust Boundary. Use this skill whenever diffs
   may introduce security issues on microservices, especially in all. Actively look for:

@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-microservices-payload-bloat
+name: performance microservices payload bloat
 description: >
   Migrated review-task skill for Payload Bloat. Use this skill whenever diffs may
   introduce performance issues on microservices, especially in all. Actively look for:

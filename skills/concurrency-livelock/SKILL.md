@@ -1,5 +1,5 @@
 ---
-name: review-task-concurrency-livelock
+name: concurrency livelock
 description: >
   Migrated review-task skill for Livelock. Use this skill whenever diffs may introduce
   concurrency issues on all, especially in all. Actively look for: Threads continuously

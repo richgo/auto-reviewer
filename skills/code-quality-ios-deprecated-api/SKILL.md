@@ -1,5 +1,5 @@
 ---
-name: review-task-code-quality-ios-deprecated-api
+name: code quality ios deprecated api
 description: >
   Migrated review-task skill for iOS Deprecated API Usage. Use this skill whenever diffs
   may introduce code-quality issues on mobile, especially in Swift, Objective-C.

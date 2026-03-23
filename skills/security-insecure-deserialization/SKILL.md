@@ -1,5 +1,5 @@
 ---
-name: review-task-security-insecure-deserialization
+name: security insecure deserialization
 description: >
   Migrated review-task skill for Insecure Deserialization. Use this skill whenever diffs
   may introduce security issues on all, especially in Java, Python, PHP, .NET,

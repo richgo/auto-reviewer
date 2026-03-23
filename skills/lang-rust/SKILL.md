@@ -1,5 +1,5 @@
 ---
-name: lang-rust
+name: lang rust
 description: >
   Rust-specific code review: unsafe blocks, lifetime issues, Send/Sync violations, error handling,
   async pitfalls. Trigger when reviewing Rust (.rs) files, especially unsafe code, FFI, async/await,

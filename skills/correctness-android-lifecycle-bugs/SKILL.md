@@ -1,5 +1,5 @@
 ---
-name: review-task-correctness-android-lifecycle-bugs
+name: correctness android lifecycle bugs
 description: >
   Migrated review-task skill for Android Lifecycle Bugs. Use this skill whenever diffs
   may introduce correctness issues on mobile, especially in Kotlin, Java. Actively look

@@ -1,5 +1,5 @@
 ---
-name: review-task-security-android-intent-injection
+name: security android intent injection
 description: >
   Migrated review-task skill for Android Intent Injection. Use this skill whenever diffs
   may introduce security issues on mobile, especially in Kotlin, Java. Actively look

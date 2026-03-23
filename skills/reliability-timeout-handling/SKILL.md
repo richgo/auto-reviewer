@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-timeout-handling
+name: reliability timeout handling
 description: >
   Migrated review-task skill for Missing Timeout Handling. Use this skill whenever diffs
   may introduce reliability issues on all, especially in all. Actively look for:

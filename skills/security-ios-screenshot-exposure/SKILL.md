@@ -1,5 +1,5 @@
 ---
-name: review-task-security-ios-screenshot-exposure
+name: security ios screenshot exposure
 description: >
   Migrated review-task skill for iOS Screenshot Exposure. Use this skill whenever diffs
   may introduce security issues on mobile, especially in Swift, Objective-C. Actively

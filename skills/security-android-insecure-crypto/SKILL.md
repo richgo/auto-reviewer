@@ -1,5 +1,5 @@
 ---
-name: review-task-security-android-insecure-crypto
+name: security android insecure crypto
 description: >
   Migrated review-task skill for Android Insecure Cryptography. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Kotlin, Java. Actively

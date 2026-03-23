@@ -1,5 +1,5 @@
 ---
-name: review-task-security-rest-security
+name: security rest security
 description: >
   Migrated review-task skill for REST API Security Issues. Use this skill whenever diffs
   may introduce security issues on web, api, especially in all. Actively look for: REST

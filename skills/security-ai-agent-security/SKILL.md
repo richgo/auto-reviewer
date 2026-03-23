@@ -1,5 +1,5 @@
 ---
-name: review-task-security-ai-agent-security
+name: security ai agent security
 description: >
   Migrated review-task skill for AI Agent Security. Use this skill whenever diffs may
   introduce security issues on all, especially in all. Actively look for: AI agents with

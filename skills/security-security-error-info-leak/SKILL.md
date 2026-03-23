@@ -1,5 +1,5 @@
 ---
-name: review-task-security-security-error-info-leak
+name: security security error info leak
 description: >
   Migrated review-task skill for Security Error Information Leakage. Use this skill
   whenever diffs may introduce security issues on all, especially in all. Actively look

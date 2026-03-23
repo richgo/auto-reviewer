@@ -1,5 +1,5 @@
 ---
-name: review-task-performance-microservices-connection-pool
+name: performance microservices connection pool
 description: >
   Migrated review-task skill for Connection Pool Exhaustion. Use this skill whenever
   diffs may introduce performance issues on microservices, especially in all. Actively

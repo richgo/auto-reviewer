@@ -1,5 +1,5 @@
 ---
-name: review-task-security-mobile-privacy-data-collection
+name: security mobile privacy data collection
 description: >
   Migrated review-task skill for Mobile Privacy Data Collection. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Swift, Kotlin. Actively

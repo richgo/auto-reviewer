@@ -1,5 +1,5 @@
 ---
-name: review-task-security-session-management
+name: security session management
 description: >
   Migrated review-task skill for Session Management Flaws. Use this skill whenever diffs
   may introduce security issues on web, api, especially in all. Actively look for:

@@ -1,5 +1,5 @@
 ---
-name: review-task-reliability-resource-cleanup
+name: reliability resource cleanup
 description: >
   Migrated review-task skill for Resource Cleanup. Use this skill whenever diffs may
   introduce reliability issues on all, especially in all. Actively look for: File

@@ -1,5 +1,5 @@
 ---
-name: review-task-security-cors-misconfiguration
+name: security cors misconfiguration
 description: >
   Migrated review-task skill for CORS Misconfiguration. Use this skill whenever diffs
   may introduce security issues on web, api, especially in all. Actively look for: CORS
