@@ -304,6 +304,121 @@ def create_order(order: OrderRequest, accept_version: Optional[str] = Header("1"
     return create_order_v1(order)
 ```
 
+## Counter-Examples (Safe Code — Do NOT Flag)
+
+### Safe Cursor Pagination with Pydantic-Constrained Cursor
+
+When a cursor field carries a `ge=1` (or similar) Pydantic constraint, the value `0` is **impossible** — Pydantic rejects it before the handler runs. The `or 0` fallback is therefore a safe default for "no cursor" and must **not** be flagged as a falsy-zero bug.
+
+```python
+# ✅ SAFE: cursor ge=1 makes `req.cursor or 0` correct
+from pydantic import BaseModel, Field
+from typing import Optional
+
+class ProductsRequest(BaseModel):
+    cursor: Optional[int] = Field(default=None, ge=1)  # 0 is impossible; None means "start"
+    limit: int = Field(default=20, ge=1, le=100)
+
+@app.get('/products')
+def get_products(req: ProductsRequest = Depends()):
+    after_id = req.cursor or 0  # Safe: 0 means "from the beginning"; cursor=0 is rejected by Pydantic
+    rows = db.query(
+        "SELECT * FROM products WHERE id > ? ORDER BY id LIMIT ?",
+        after_id, req.limit + 1
+    )
+    has_more = len(rows) > req.limit
+    items = rows[:req.limit]
+    return {
+        "items": items,
+        "next_cursor": items[-1]["id"] if has_more else None,
+        "has_more": has_more,
+    }
+```
+
+**Why this is safe — do not raise findings for:**
+- **`req.cursor or 0`** — `cursor` is declared `ge=1`, so Pydantic will reject any request that supplies `cursor=0` with a 422 before this code runs. The `or 0` branch is only reached when `cursor` is `None` (omitted), making `0` a safe sentinel for "fetch from the beginning".
+- **`has_more` presence** — the field is always present in the response; its value is a boolean derived from the fetch-one-extra pattern. This is a well-established pagination idiom, not a bug.
+
+**Key principle:** When Pydantic (or any schema validator) enforces a lower bound that excludes a falsy value, `field or default` patterns that rely on that exclusion are valid. Flag only cases where no such constraint exists.
+
+### Null/Non-Null `next_cursor` as Pagination Signal (No `has_more` Required)
+
+A cursor pagination response that omits a separate `has_more` field and relies solely on `next_cursor` being `null` vs. a value is a **well-established, correct pattern**. Do not flag the absence of `has_more` as a bug or "fragile" design.
+
+```python
+# ✅ SAFE: null/non-null next_cursor is a complete and correct pagination signal
+@app.get('/items')
+def get_items(cursor: Optional[str] = None, limit: int = 20):
+    rows = db.query(
+        "SELECT * FROM items WHERE id > ? ORDER BY id LIMIT ?",
+        cursor or 0, limit + 1
+    )
+    items = rows[:limit]
+    return {
+        "items": items,
+        "next_cursor": items[-1]["id"] if len(rows) > limit else None,
+        # No has_more field — next_cursor being non-null IS has_more
+    }
+```
+
+**Why this is safe — do not raise findings for:**
+- **Missing `has_more` field** — `next_cursor: null` unambiguously signals no more pages; `next_cursor: <id>` signals more pages exist. This is a standard industry pattern (GitHub API, Stripe API, etc.) and is not fragile or incomplete.
+
+### Cursor Without Lower-Bound Constraint Is Not a Security Issue
+
+A cursor parameter with no `ge=0` lower-bound constraint is **not** a security vulnerability when the query uses parameterized statements. Negative cursor values with `id > -5` simply return rows from the beginning — same as `id > 0` — which is harmless. Do not flag the absence of `ge=0` as a medium or security issue.
+
+```python
+# ✅ SAFE: No ge=0 on cursor — parameterized query makes negative values harmless
+class ItemsRequest(BaseModel):
+    cursor: Optional[int] = None  # No ge constraint; negative values are safe
+    limit: int = Field(default=20, ge=1, le=100)
+
+@app.get('/items')
+def get_items(req: ItemsRequest = Depends()):
+    rows = db.query(
+        "SELECT * FROM items WHERE id > ? ORDER BY id LIMIT ?",
+        req.cursor or 0, req.limit + 1  # Parameterized — no injection risk
+    )
+    items = rows[:req.limit]
+    return {"items": items, "next_cursor": items[-1]["id"] if len(rows) > req.limit else None}
+```
+
+**Why this is safe — do not raise findings for:**
+- **No `ge=0` on cursor** — with a parameterized query there is no injection risk. A negative cursor returns rows with `id > -N`, which behaves identically to starting from the beginning. This is a correctness non-issue, not a security issue. Only flag cursor validation if the cursor is interpolated directly into a query string.
+
+### Correct Keyset Pagination Cursor and FastAPI Pydantic GET Parameters
+
+The `rows[-1]` index used as the next cursor in keyset pagination is correct, and FastAPI GET handlers that accept a Pydantic model directly (without `Depends()`) are valid. Do not flag either pattern.
+
+```python
+# ✅ SAFE: correct cursor index and valid FastAPI Pydantic GET parameter binding
+from pydantic import BaseModel, Field
+from typing import Optional
+
+class ProductsRequest(BaseModel):
+    cursor: Optional[int] = None
+    limit: int = Field(default=20, ge=1, le=100)
+
+@app.get('/products')
+def get_products(req: ProductsRequest):  # No Depends() — FastAPI accepts Pydantic models as query params in GET handlers
+    rows = db.query(
+        "SELECT * FROM products WHERE id > ? ORDER BY id LIMIT ?",
+        req.cursor or 0, req.limit + 1  # fetch one extra to detect has_more
+    )
+    has_more = len(rows) > req.limit
+    items = rows[:req.limit]
+    return {
+        "items": items,
+        # rows[-1] here is rows[req.limit] — the probe row's ID, correctly excluded from items
+        "next_cursor": rows[-1]["id"] if has_more else None,
+    }
+```
+
+**Why this is safe — do not raise findings for:**
+- **`rows[-1]` as next cursor** — when `has_more` is true, `rows` contains `req.limit + 1` elements, so `rows[-1]` is `rows[req.limit]`, the probe row. That row is excluded from `items` (sliced to `[:req.limit]`) and its ID is used as the cursor. The next query's `WHERE id > cursor` then correctly starts after it. This is standard keyset/cursor pagination and is not a bug.
+- **Pydantic model parameter without `Depends()`** — FastAPI automatically treats fields of a Pydantic `BaseModel` parameter as query parameters in GET route handlers. `Depends()` is optional; omitting it is valid and documented FastAPI behavior. Do not flag its absence as an error.
+
 ## Migration Coverage
 Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 

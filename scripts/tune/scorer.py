@@ -4,7 +4,7 @@ Judges whether a review output satisfies specific assertions using LLM.
 """
 
 import json
-from typing import Dict, List, Any, Tuple
+from typing import Dict, List, Any, Tuple, Optional
 from dataclasses import dataclass
 from .llm_client import LLMClient
 
@@ -47,12 +47,12 @@ class Scorer:
         "evidence_cited": "The review must cite specific code lines or patterns as evidence."
     }
     
-    def __init__(self, model: str = "claude-sonnet-4-20250514"):
+    def __init__(self, model: Optional[str] = None):
         """
         Initialize scorer.
         
         Args:
-            model: LLM model to use for assertion evaluation
+            model: Optional LLM model to use for assertion evaluation
         """
         self.llm = LLMClient(model)
     

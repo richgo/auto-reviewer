@@ -41,7 +41,7 @@ class CopilotSDKClient:
     def complete(
         self,
         *,
-        model: str,
+        model: Optional[str],
         prompt: str,
         system: Optional[str] = None,
         max_tokens: int = 4096,
@@ -67,14 +67,16 @@ class CopilotSDKClient:
     async def _complete_once_async(
         self,
         *,
-        model: str,
+        model: Optional[str],
         prompt: str,
         system: Optional[str],
     ) -> str:
         client = CopilotClient(self._client_options())
         await client.start()
         try:
-            session_config: dict[str, Any] = {"model": model}
+            session_config: dict[str, Any] = {}
+            if model:
+                session_config["model"] = model
             if system:
                 session_config["system_message"] = {"mode": "append", "content": system}
 

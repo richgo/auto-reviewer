@@ -34,7 +34,7 @@ gh auth login
 python scripts/tune/autoresearch.py \
   --skill skills/security-injection/SKILL.md \
   --evals evals/security-injection.json \
-  --model claude-sonnet-4-20250514 \
+  --model gpt-4o-mini \
   --max-iterations 30 \
   --target-pass-rate 0.95 \
   --output skills/security-injection/SKILL.md \
@@ -47,7 +47,7 @@ python scripts/tune/autoresearch.py \
 python scripts/benchmark/runner.py \
   --skills-dir skills/ \
   --evals-dir evals/ \
-  --models claude-sonnet-4-20250514,gpt-4o \
+  --models gpt-4o-mini,gemini-2.0-flash \
   --output benchmark-results/
 ```
 
@@ -55,7 +55,7 @@ python scripts/benchmark/runner.py \
 
 ```bash
 SKILL=security-injection
-MODELS=claude-sonnet-4-20250514,gpt-4o,gemini-2.5-pro
+MODELS=gpt-4o-mini,gemini-2.0-flash
 RUN_DIR=".tmp-benchmark-${SKILL}"
 
 mkdir -p "$RUN_DIR/skills/${SKILL}" "$RUN_DIR/evals" "$RUN_DIR/output"
@@ -135,7 +135,7 @@ Model selection happens via `--model`/`--models` strings passed to the SDK.
 ```python
 from tune.llm_client import LLMClient
 
-llm = LLMClient("claude-sonnet-4-20250514")
+llm = LLMClient()
 response = llm.complete("Review this code...", system="You are a reviewer.")
 ```
 
@@ -154,7 +154,7 @@ Binary assertion scorer that evaluates review quality using LLM.
 ```python
 from tune.scorer import Scorer
 
-scorer = Scorer("claude-sonnet-4-20250514")
+scorer = Scorer()
 score = scorer.score_review(review_output, eval_case)
 print(score.pass_rate)  # 0.0-1.0
 ```
@@ -172,7 +172,7 @@ Skill mutation strategies:
 ```python
 from tune.mutator import Mutator
 
-mutator = Mutator("claude-sonnet-4-20250514")
+mutator = Mutator()
 patterns = mutator.analyze_failures([(eval_case, score), ...])
 mutation = mutator.generate_mutation(skill_content, patterns, "add_detection_heuristic")
 ```
@@ -313,7 +313,7 @@ git commit -m "Add my-new-skill (90% pass rate)"
 ```bash
 # Run benchmark
 python scripts/benchmark/runner.py \
-  --models claude-sonnet-4-20250514,gpt-4o,gemini-2.5-pro
+  --models gpt-4o-mini,gemini-2.0-flash
 
 # Generate report
 python scripts/benchmark/reporter.py \

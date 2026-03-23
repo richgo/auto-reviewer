@@ -381,7 +381,7 @@ def parse_args(argv=None):
     )
     parser.add_argument(
         "--model",
-        default="claude-sonnet-4-20250514",
+        default=None,
         help="LLM model to use"
     )
     parser.add_argument(

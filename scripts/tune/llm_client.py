@@ -21,12 +21,12 @@ class CopilotLLMClient:
     Uses GitHub Copilot auth — no provider-specific API keys required.
     """
 
-    def __init__(self, model: str, timeout: float = 120.0):
+    def __init__(self, model: Optional[str] = None, timeout: float = 120.0):
         """
         Initialize Copilot SDK client.
 
         Args:
-            model: Copilot model identifier (e.g., "gpt-4o-mini", "gemini-2.0-flash")
+            model: Optional Copilot model identifier. When unset, the SDK default is used.
             timeout: Seconds to wait for the session to become idle
         """
         self.model = model
@@ -62,16 +62,19 @@ class CopilotLLMClient:
             {"mode": "replace", "content": system} if system else None
         )
         client = CopilotClient()
-        session = await client.create_session(
-            model=self.model,
-            on_permission_request=PermissionHandler.approve_all,
-            system_message=system_msg,  # type: ignore[arg-type]
-        )
+        session_kwargs: Dict[str, Any] = {
+            "on_permission_request": PermissionHandler.approve_all,
+            "system_message": system_msg,  # type: ignore[arg-type]
+        }
+        if self.model:
+            session_kwargs["model"] = self.model
+        session = await client.create_session(**session_kwargs)
         try:
             response = await session.send_and_wait(prompt, timeout=self.timeout)
             if response is None or response.data is None:
                 raise RuntimeError(
-                    f"Copilot SDK returned no response for model '{self.model}'"
+                    "Copilot SDK returned no response for model "
+                    f"'{self.model or 'configured default'}'"
                 )
             return str(response.data.content)
         finally:
@@ -82,7 +85,7 @@ class CopilotLLMClient:
 class LLMClient:
     """Sync interface expected by tune/benchmark modules."""
 
-    def __init__(self, model: str, timeout: int = 120):
+    def __init__(self, model: Optional[str] = None, timeout: int = 120):
         self.model = model
         self.timeout = timeout
         self._copilot = CopilotSDKClient(timeout=timeout)

@@ -62,7 +62,29 @@ app.get('/api/user/:id', (req, res) => {
 });
 ```
 
-### 3. Transaction Authorization Red Flags
+### 3. API Versioning Red Flags
+- **No version segment in route path** — routes like `/orders/<id>` or `/users` with no `/v1/`, `/v2/` (or header/query versioning) signal absent versioning strategy
+- **Mutation endpoints on unversioned paths** — `PUT`/`POST`/`DELETE` handlers without versioning are especially risky because callers cannot pin to a stable contract
+- **No deprecation or backward-compatibility indication** — changing an existing unversioned endpoint (adding required fields, removing fields, changing types) is a silent breaking change for all clients
+
+**High-risk pattern:**
+```python
+# ❌ MISSING VERSIONING: No /v1/ prefix; any contract change silently breaks clients
+@app.put('/orders/<id>')
+def update_order(id):
+    payload = request.get_json()
+    return save_order(id, payload)
+
+# ✅ VERSIONED: Contract changes can be introduced under /v2/ without breaking /v1/ consumers
+@app.put('/v1/orders/<id>')
+def update_order_v1(id):
+    payload = request.get_json()
+    return save_order(id, payload)
+```
+
+**Detection rule:** Flag any route decorator (`@app.route`, `@app.get/put/post/delete/patch`, `@router.*`, `router.add_route`, etc.) whose path string does **not** contain a version token matching `/(v\d+)/` (path versioning) and where no `Accept` / `API-Version` header versioning middleware is registered at the app or blueprint level.
+
+### 4. Transaction Authorization Red Flags
 - **Amount not re-validated server-side** — client can manipulate
 - **Missing additional auth for high-value transactions**
 - **Payment amount in client-side request without HMAC**
@@ -350,6 +372,8 @@ Review guidance from the legacy review-task corpus is now consolidated in this s
 - [Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html)
 
 ## Quick Checklist
+- [ ] All route paths include an explicit version segment (e.g. `/v1/`) or app-level header versioning middleware is present
+- [ ] Mutation endpoints (`PUT`/`POST`/`DELETE`/`PATCH`) on unversioned paths flagged for versioning
 - [ ] GraphQL introspection disabled in production
 - [ ] GraphQL query depth and complexity limits enforced
 - [ ] All resolvers include authorization checks

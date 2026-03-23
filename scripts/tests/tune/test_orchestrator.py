@@ -7,6 +7,11 @@ import yaml
 from tune.orchestrator import build_plan, build_run_plan, compose_run_plan
 
 
+PRIMARY_MODEL = "gpt-4.1"
+SECONDARY_MODEL = "gemini-2.5-pro"
+TERTIARY_MODEL = "gpt-4o"
+
+
 class TestOrchestrator(unittest.TestCase):
     def test_build_plan_generates_skill_model_pairs_from_config(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -24,7 +29,7 @@ class TestOrchestrator(unittest.TestCase):
 
             config = root / "config.yaml"
             config.write_text(
-                yaml.safe_dump({"models": ["gpt-4.1", "claude-sonnet-4-20250514"]}),
+                yaml.safe_dump({"models": [PRIMARY_MODEL, SECONDARY_MODEL]}),
                 encoding="utf-8",
             )
 
@@ -39,24 +44,24 @@ class TestOrchestrator(unittest.TestCase):
         self.assertEqual(
             pairs,
             [
-                ("correctness", "claude-sonnet-4-20250514"),
-                ("correctness", "gpt-4.1"),
-                ("security-injection", "claude-sonnet-4-20250514"),
-                ("security-injection", "gpt-4.1"),
+                ("correctness", SECONDARY_MODEL),
+                ("correctness", PRIMARY_MODEL),
+                ("security-injection", SECONDARY_MODEL),
+                ("security-injection", PRIMARY_MODEL),
             ],
         )
 
     def test_build_run_plan_applies_filters_trigger_and_run_id(self):
         pairs = [
-            ("correctness", "claude-sonnet-4-20250514"),
-            ("correctness", "gpt-4.1"),
-            ("security-injection", "claude-sonnet-4-20250514"),
-            ("security-injection", "gpt-4.1"),
+            ("correctness", SECONDARY_MODEL),
+            ("correctness", PRIMARY_MODEL),
+            ("security-injection", SECONDARY_MODEL),
+            ("security-injection", PRIMARY_MODEL),
         ]
         run_plan = build_run_plan(
             pairs=pairs,
             skills_filter=["security-injection"],
-            models_filter=["gpt-4.1"],
+            models_filter=[PRIMARY_MODEL],
             trigger="schedule",
             run_id="run-123",
         )
@@ -67,7 +72,7 @@ class TestOrchestrator(unittest.TestCase):
                     "run_id": "run-123",
                     "trigger": "schedule",
                     "skill": "security-injection",
-                    "model": "gpt-4.1",
+                    "model": PRIMARY_MODEL,
                 }
             ],
         )
@@ -220,7 +225,7 @@ class TestOrchestrator(unittest.TestCase):
             config = root / "config.yaml"
             config.write_text(
                 yaml.safe_dump(
-                    {"models": ["claude-sonnet-4-20250514", "gpt-4o", "gemini-2.5-pro"]}
+                    {"models": [SECONDARY_MODEL, TERTIARY_MODEL, PRIMARY_MODEL]}
                 ),
                 encoding="utf-8",
             )
@@ -240,7 +245,7 @@ class TestOrchestrator(unittest.TestCase):
         self.assertEqual(skill_names, ["security-auth", "security-injection"])
         self.assertNotIn("correctness", {row["skill"] for row in run_plan})
         model_names = sorted({row["model"] for row in run_plan})
-        self.assertEqual(model_names, ["claude-sonnet-4-20250514", "gemini-2.5-pro", "gpt-4o"])
+        self.assertEqual(model_names, ["gemini-2.5-pro", "gpt-4.1", "gpt-4o"])
 
     def test_build_plan_rejects_eval_payloads_with_review_task_identifier(self):
         with tempfile.TemporaryDirectory() as tmp_dir:

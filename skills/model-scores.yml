@@ -2,7 +2,7 @@
 # Tracks per-skill, per-model performance over time
 # 
 # Usage:
-#   python scripts/benchmark/runner.py --models claude-sonnet-4-20250514,gpt-4o
+#   python scripts/benchmark/runner.py --models gpt-4o-mini,gemini-2.0-flash
 #   (automatically updates this file)
 #
 # Metrics:
@@ -13,18 +13,6 @@
 last_updated: null
 
 models:
-  claude-sonnet-4-20250514:
-    security-injection: {pass_rate: null, f1: null, last_run: null}
-    security-auth: {pass_rate: null, f1: null, last_run: null}
-    security-data-protection: {pass_rate: null, f1: null, last_run: null}
-    security-network: {pass_rate: null, f1: null, last_run: null}
-    security-ai-llm: {pass_rate: null, f1: null, last_run: null}
-    security-api: {pass_rate: null, f1: null, last_run: null}
-    security-client-side: {pass_rate: null, f1: null, last_run: null}
-    concurrency: {pass_rate: null, f1: null, last_run: null}
-    correctness: {pass_rate: null, f1: null, last_run: null}
-    performance: {pass_rate: null, f1: null, last_run: null}
-
   gpt-4o:
     security-injection: {pass_rate: null, f1: null, last_run: null}
     security-auth: {pass_rate: null, f1: null, last_run: null}

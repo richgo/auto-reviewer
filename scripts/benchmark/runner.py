@@ -392,7 +392,7 @@ def main():
     )
     parser.add_argument(
         "--models",
-        default="claude-sonnet-4-20250514",
+        default=None,
         help="Comma-separated list of models to test"
     )
     parser.add_argument(
@@ -404,7 +404,7 @@ def main():
     
     args = parser.parse_args()
     
-    models = [m.strip() for m in args.models.split(",")]
+    models = [m.strip() for m in args.models.split(",")] if args.models else [None]
     
     runner = BenchmarkRunner(
         skills_dir=args.skills_dir,

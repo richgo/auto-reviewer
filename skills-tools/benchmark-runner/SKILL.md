@@ -14,10 +14,12 @@ Run SWE-bench-style benchmarks across all skills and models, producing a score m
 ### Basic Usage
 
 ```bash
+MODELS="${MODELS:-gpt-4o-mini,gemini-2.0-flash}"
+
 python scripts/benchmark/runner.py \
   --skills-dir skills/ \
   --evals-dir evals/ \
-  --models claude-sonnet-4-20250514,gpt-4o,gemini-2.5-pro \
+  --models "$MODELS" \
   --output benchmark-results/
 ```
 
@@ -46,7 +48,7 @@ Phase 3 workflows consume benchmark outputs during gated promotion:
 
 Use model IDs available via Copilot SDK:
 
-- Examples: `gpt-4.1`, `gpt-5-mini`, `claude-sonnet-4`
+- Examples: `gpt-4.1`, `gpt-5-mini`, `gemini-2.0-flash`
 
 Authenticate with GitHub so SDK calls can run:
 - `gh auth login`
@@ -60,7 +62,7 @@ Authenticate with GitHub so SDK calls can run:
 {
   "timestamp": "2025-03-21T12:00:00Z",
   "models": {
-    "claude-sonnet-4-20250514": {
+    "gpt-4o-mini": {
       "security-injection": {
         "pass_rate": 0.89,
         "f1": 0.89,
@@ -167,8 +169,10 @@ The reporter identifies skills where models have different strengths. Use multip
 
 ```bash
 # Run benchmark on candidate models
+MODELS="${MODELS:-gpt-4o-mini,gemini-2.0-flash,gpt-4.1}"
+
 python scripts/benchmark/runner.py \
-  --models claude-sonnet-4-20250514,gpt-4o,gemini-2.5-pro
+  --models "$MODELS"
 
 # Generate report
 python scripts/benchmark/reporter.py \
@@ -185,8 +189,10 @@ cat REPORT.md
 
 ```bash
 # Run benchmark with your production model
+MODEL="${MODEL:-gpt-4o-mini}"
+
 python scripts/benchmark/runner.py \
-  --models claude-sonnet-4-20250514
+  --models "$MODEL"
 
 # Generate report
 python scripts/benchmark/reporter.py \
@@ -208,8 +214,10 @@ python scripts/tune/autoresearch.py \
 
 ```bash
 # Run benchmark on all available models
+MODELS="${MODELS:-gpt-4o-mini,gemini-2.0-flash,gpt-4.1}"
+
 python scripts/benchmark/runner.py \
-  --models claude-sonnet-4-20250514,gpt-4o,gemini-2.5-pro
+  --models "$MODELS"
 
 # Generate report
 python scripts/benchmark/reporter.py \
@@ -219,8 +227,8 @@ python scripts/benchmark/reporter.py \
 # Identify high-variance skills
 
 # Configure production to use ensemble on those skills:
-# - security-injection → Claude + GPT-4o
-# - concurrency → GPT-4o + Gemini
+# - security-injection → gpt-4.1 + gpt-4o
+# - concurrency → gpt-4o + Gemini
 ```
 
 ### Workflow 4: Benchmark One Skill Across Multiple Models
@@ -230,7 +238,7 @@ python scripts/benchmark/reporter.py \
 ```bash
 # 1) Choose skill + model list
 SKILL=security-injection
-MODELS=claude-sonnet-4-20250514,gpt-4o,gemini-2.5-pro
+MODELS="${MODELS:-gpt-4o-mini,gemini-2.0-flash,gpt-4.1}"
 
 # 2) Create an isolated benchmark workspace
 RUN_DIR=".tmp-benchmark-${SKILL}"

@@ -299,6 +299,8 @@ jq -s '.[0].cases + .[1].cases | {cases: .}' \
   > merged.json
 
 # 4. Tune
+MODEL="${MODEL:-gpt-4o-mini}"
+
 python scripts/tune/autoresearch.py \
   --skill skills/security-injection/SKILL.md \
   --evals merged.json \
@@ -309,7 +311,7 @@ python scripts/tune/autoresearch.py \
 python scripts/benchmark/runner.py \
   --skills-dir .auto-reviewer/ \
   --evals-dir .auto-reviewer/ \
-  --models claude-sonnet-4-20250514
+  --models "$MODEL"
 # Check: no_false_positive assertions pass
 
 # 6. Deploy

@@ -28,10 +28,12 @@ Guide for using the autoresearch tuning loop to optimize code review skills. Thi
 ### Basic Usage
 
 ```bash
+MODEL="${MODEL:-gpt-4o-mini}"
+
 python scripts/tune/autoresearch.py \
   --skill skills/security-injection/SKILL.md \
   --evals evals/security-injection.json \
-  --model claude-sonnet-4-20250514 \
+  --model "$MODEL" \
   --max-iterations 30 \
   --target-pass-rate 0.95 \
   --output skills/security-injection/SKILL.md \

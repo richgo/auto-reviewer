@@ -4,7 +4,7 @@ Analyzes failure patterns and generates skill improvements.
 """
 
 import json
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 from dataclasses import dataclass
 from .llm_client import LLMClient
 from .scorer import EvalScore
@@ -38,12 +38,12 @@ class Mutator:
         "remove_noise"
     ]
     
-    def __init__(self, model: str = "claude-sonnet-4-20250514"):
+    def __init__(self, model: Optional[str] = None):
         """
         Initialize mutator.
         
         Args:
-            model: LLM model to use for mutation generation
+            model: Optional LLM model to use for mutation generation
         """
         self.llm = LLMClient(model)
     

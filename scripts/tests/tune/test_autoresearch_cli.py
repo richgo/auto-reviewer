@@ -70,6 +70,25 @@ class TestAutoResearchCLI(unittest.TestCase):
 
         self.assertTrue(str(args.config).endswith("scripts/tune/config.yaml"))
 
+    def test_parse_args_leaves_model_unset_when_not_provided(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skill = root / "skill.md"
+            evals = root / "evals.json"
+            skill.write_text("skill", encoding="utf-8")
+            evals.write_text('{"cases":[]}', encoding="utf-8")
+
+            args = parse_args(
+                [
+                    "--skill",
+                    str(skill),
+                    "--evals",
+                    str(evals),
+                ]
+            )
+
+        self.assertIsNone(args.model)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,12 +1,15 @@
+import asyncio
 import json
 import sys
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from types import SimpleNamespace
+from unittest.mock import AsyncMock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
+from benchmark.copilot_client import CopilotSDKClient
 from benchmark.runner import BenchmarkRunner, main as benchmark_main
 from benchmark.scorer import select_best_models
 from tune.llm_client import CopilotLLMClient
@@ -25,6 +28,44 @@ class _FakeScorer:
 
 
 class TestBenchmarkRunner(unittest.TestCase):
+    def test_cli_leaves_models_unset_when_not_provided(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp = Path(tmp_dir)
+            skills_dir = tmp / "skills"
+            evals_dir = tmp / "evals"
+            output_dir = tmp / "out"
+            skills_dir.mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+
+            captured = {}
+
+            class _CapturingRunner:
+                def __init__(self, *, skills_dir, evals_dir, models, output_dir):
+                    captured["skills_dir"] = skills_dir
+                    captured["evals_dir"] = evals_dir
+                    captured["models"] = models
+                    captured["output_dir"] = output_dir
+
+                def run(self):
+                    captured["ran"] = True
+
+            argv = [
+                "runner.py",
+                "--skills-dir",
+                str(skills_dir),
+                "--evals-dir",
+                str(evals_dir),
+                "--output",
+                str(output_dir),
+            ]
+            with patch("benchmark.runner.BenchmarkRunner", _CapturingRunner), patch.object(
+                sys, "argv", argv
+            ):
+                benchmark_main()
+
+        self.assertEqual(captured["models"], [None])
+        self.assertTrue(captured["ran"])
+
     def test_run_writes_assertion_results_jsonl(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             tmp = Path(tmp_dir)
@@ -334,6 +375,10 @@ class TestBenchmarkRunner(unittest.TestCase):
 
 
 class TestCopilotLLMClient(unittest.TestCase):
+    def test_constructor_defaults_to_configured_model(self):
+        client = CopilotLLMClient()
+        self.assertIsNone(client.model)
+
     def test_complete_calls_copilot_sdk_and_returns_content(self):
         with patch("tune.llm_client.CopilotLLMClient._complete_async") as mock_async:
             mock_async.return_value = "mocked review"
@@ -351,6 +396,46 @@ class TestCopilotLLMClient(unittest.TestCase):
             client = CopilotLLMClient("gpt-4o-mini")
             with self.assertRaises(RuntimeError, msg="no response"):
                 client.complete("test prompt")
+
+    def test_complete_async_omits_model_when_unset(self):
+        session = AsyncMock()
+        session.send_and_wait.return_value = SimpleNamespace(
+            data=SimpleNamespace(content="mocked review")
+        )
+        client_impl = AsyncMock()
+        client_impl.create_session.return_value = session
+
+        with patch("copilot.CopilotClient", return_value=client_impl), patch(
+            "copilot.PermissionHandler", new=SimpleNamespace(approve_all=object())
+        ):
+            client = CopilotLLMClient(None)
+            result = asyncio.run(client._complete_async("test prompt", "sys"))
+
+        self.assertEqual(result, "mocked review")
+        _, kwargs = client_impl.create_session.call_args
+        self.assertNotIn("model", kwargs)
+
+
+class TestCopilotSDKClient(unittest.TestCase):
+    def test_complete_once_async_omits_model_when_unset(self):
+        session = AsyncMock()
+        session.send_and_wait.return_value = SimpleNamespace(
+            data=SimpleNamespace(content="mocked review")
+        )
+        client_impl = AsyncMock()
+        client_impl.create_session.return_value = session
+
+        with patch(
+            "benchmark.copilot_client.CopilotClient", return_value=client_impl
+        ), patch.object(CopilotSDKClient, "_client_options", return_value={}):
+            client = CopilotSDKClient(timeout=30)
+            result = asyncio.run(
+                client._complete_once_async(model=None, prompt="test prompt", system="sys")
+            )
+
+        self.assertEqual(result, "mocked review")
+        session_config = client_impl.create_session.call_args.args[0]
+        self.assertNotIn("model", session_config)
 
 
 if __name__ == "__main__":
