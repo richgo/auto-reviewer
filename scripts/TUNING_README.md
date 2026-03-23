@@ -32,12 +32,12 @@ gh auth login
 
 ```bash
 python scripts/tune/autoresearch.py \
-  --skill skills/concerns/security-injection.md \
+  --skill skills/security-injection/SKILL.md \
   --evals evals/security-injection.json \
   --model claude-sonnet-4-20250514 \
   --max-iterations 30 \
   --target-pass-rate 0.95 \
-  --output skills/concerns/security-injection.md \
+  --output skills/security-injection/SKILL.md \
   --log tune-logs/security-injection.jsonl
 ```
 
@@ -58,8 +58,8 @@ SKILL=security-injection
 MODELS=claude-sonnet-4-20250514,gpt-4o,gemini-2.5-pro
 RUN_DIR=".tmp-benchmark-${SKILL}"
 
-mkdir -p "$RUN_DIR/skills/concerns" "$RUN_DIR/evals" "$RUN_DIR/output"
-cp "skills/concerns/${SKILL}.md" "$RUN_DIR/skills/concerns/${SKILL}.md"
+mkdir -p "$RUN_DIR/skills/${SKILL}" "$RUN_DIR/evals" "$RUN_DIR/output"
+cp "skills/${SKILL}/SKILL.md" "$RUN_DIR/skills/${SKILL}/SKILL.md"
 cp "evals/${SKILL}.json" "$RUN_DIR/evals/${SKILL}.json"
 
 python scripts/benchmark/runner.py \
@@ -76,7 +76,7 @@ cat "$RUN_DIR/output/REPORT.md"
 # optional cleanup: rm -rf "$RUN_DIR"
 ```
 
-For a more detailed walkthrough, see `skills/tuning/benchmark-runner.md` (Workflow 4).
+For a more detailed walkthrough, see `skills-tools/benchmark-runner/SKILL.md` (Workflow 4).
 
 ### Generate Report
 
@@ -113,14 +113,12 @@ evals/
 └── performance.json           # N+1 queries, memory leaks, algorithmic complexity
 
 skills/
-├── concerns/                  # Skills to optimize
-│   ├── security-injection.md
-│   ├── security-auth.md
-│   └── ...
-└── tuning/                    # Documentation skills
-    ├── skill-optimizer.md     # How to use autoresearch
-    ├── benchmark-runner.md    # How to run benchmarks
-    └── local-calibration.md   # How to adapt skills to repo-specific patterns
+├── security-injection/
+│   └── SKILL.md
+├── security-auth/
+│   └── SKILL.md
+└── benchmark-runner/
+    └── SKILL.md
 
 tune-logs/                     # JSONL logs from autoresearch runs
 benchmark-results/             # Benchmark outputs (model_scores.json, REPORT.md)
@@ -282,31 +280,31 @@ Eval JSON structure:
 
 ```bash
 # 1. Create skill markdown
-vi skills/concerns/my-new-skill.md
+vi skills/my-new-skill/SKILL.md
 
 # 2. Create eval cases
 vi evals/my-new-skill.json  # 5-8 cases
 
 # 3. Baseline evaluation
 python scripts/tune/autoresearch.py \
-  --skill skills/concerns/my-new-skill.md \
+  --skill skills/my-new-skill/SKILL.md \
   --evals evals/my-new-skill.json \
   --max-iterations 1
 # Output: Initial pass rate: 65%
 
 # 4. Optimize
 python scripts/tune/autoresearch.py \
-  --skill skills/concerns/my-new-skill.md \
+  --skill skills/my-new-skill/SKILL.md \
   --evals evals/my-new-skill.json \
   --max-iterations 30 \
   --target-pass-rate 0.90
 # Output: Target 90% reached! (iteration 22)
 
 # 5. Review changes
-git diff skills/concerns/my-new-skill.md
+git diff skills/my-new-skill/SKILL.md
 
 # 6. Commit
-git add skills/concerns/my-new-skill.md evals/my-new-skill.json
+git add skills/my-new-skill/SKILL.md evals/my-new-skill.json
 git commit -m "Add my-new-skill (90% pass rate)"
 ```
 
@@ -355,7 +353,7 @@ jq -s '.[0].cases + .[1].cases | {cases: .}' \
 
 # 4. Re-tune
 python scripts/tune/autoresearch.py \
-  --skill skills/concerns/security-injection.md \
+  --skill skills/security-injection/SKILL.md \
   --evals merged.json \
   --max-iterations 10 \
   --output .auto-reviewer/security-injection-local.md
@@ -423,11 +421,11 @@ python scripts/tune/autoresearch.py \
 
 ### Adding New Skills
 
-1. Create skill markdown in `skills/concerns/`
+1. Create `skills/<skill>/SKILL.md`
 2. Create eval JSON in `evals/` (matching filename)
 3. Run baseline benchmark
 4. Tune to 85%+ pass rate
-5. Document in `skills/concerns/` and relevant skill-linked eval metadata
+5. Document in the corresponding `skills/<skill>/SKILL.md` and relevant skill-linked eval metadata
 
 ### Improving Infrastructure
 

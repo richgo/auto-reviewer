@@ -1,12 +1,12 @@
 atomic_primitive: skills
 
 core:
-  - richgo/auto-reviewer/skills/core/review-orchestrator
-  - richgo/auto-reviewer/skills/core/diff-analysis
+  - richgo/auto-reviewer/skills/review-orchestrator
+  - richgo/auto-reviewer/skills/diff-analysis
 
 fallback:
-  - richgo/auto-reviewer/skills/concerns/correctness
-  - richgo/auto-reviewer/skills/concerns/code-quality
+  - richgo/auto-reviewer/skills/correctness
+  - richgo/auto-reviewer/skills/code-quality
 
 signals:
   python:
@@ -15,16 +15,16 @@ signals:
       - "requirements.txt"
       - "pyproject.toml"
     dependencies:
-      - richgo/auto-reviewer/skills/languages/python
+      - richgo/auto-reviewer/skills/lang-python
   typescript:
     patterns:
       - "*.ts"
       - "*.tsx"
       - "package.json"
     dependencies:
-      - richgo/auto-reviewer/skills/languages/typescript
+      - richgo/auto-reviewer/skills/lang-typescript
   ci_github_actions:
     patterns:
       - ".github/workflows/"
     dependencies:
-      - richgo/auto-reviewer/skills/outputs/inline-comments
+      - richgo/auto-reviewer/skills/inline-comments

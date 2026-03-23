@@ -9,32 +9,29 @@ from compose.composer import compose_manifest
 
 class TestComposeApmCompatibility(unittest.TestCase):
     def _prepare_repo_with_skills(self, root: Path) -> Path:
-        (root / "skills" / "core").mkdir(parents=True)
-        (root / "skills" / "languages").mkdir(parents=True)
-        (root / "skills" / "outputs").mkdir(parents=True)
-        (root / "skills" / "core" / "review-orchestrator").mkdir()
-        (root / "skills" / "core" / "diff-analysis").mkdir()
-        (root / "skills" / "languages" / "python").mkdir()
-        (root / "skills" / "languages" / "typescript").mkdir()
-        (root / "skills" / "outputs" / "inline-comments").mkdir()
-        (root / "skills" / "core" / "review-orchestrator" / "SKILL.md").write_text("skill", encoding="utf-8")
-        (root / "skills" / "core" / "diff-analysis" / "SKILL.md").write_text("skill", encoding="utf-8")
-        (root / "skills" / "languages" / "python" / "SKILL.md").write_text("skill", encoding="utf-8")
-        (root / "skills" / "languages" / "typescript" / "SKILL.md").write_text("skill", encoding="utf-8")
-        (root / "skills" / "outputs" / "inline-comments" / "SKILL.md").write_text("skill", encoding="utf-8")
+        (root / "skills" / "review-orchestrator").mkdir(parents=True)
+        (root / "skills" / "diff-analysis").mkdir(parents=True)
+        (root / "skills" / "lang-python").mkdir(parents=True)
+        (root / "skills" / "lang-typescript").mkdir(parents=True)
+        (root / "skills" / "inline-comments").mkdir(parents=True)
+        (root / "skills" / "review-orchestrator" / "SKILL.md").write_text("skill", encoding="utf-8")
+        (root / "skills" / "diff-analysis" / "SKILL.md").write_text("skill", encoding="utf-8")
+        (root / "skills" / "lang-python" / "SKILL.md").write_text("skill", encoding="utf-8")
+        (root / "skills" / "lang-typescript" / "SKILL.md").write_text("skill", encoding="utf-8")
+        (root / "skills" / "inline-comments" / "SKILL.md").write_text("skill", encoding="utf-8")
         policy = root / "policy.yaml"
         policy.write_text(
             yaml.safe_dump(
                 {
                     "core": [
-                        "richgo/auto-reviewer/skills/core/review-orchestrator",
-                        "richgo/auto-reviewer/skills/core/diff-analysis",
+                        "richgo/auto-reviewer/skills/review-orchestrator",
+                        "richgo/auto-reviewer/skills/diff-analysis",
                     ],
                     "fallback": [],
                     "signals": {
-                        "python": {"dependencies": ["richgo/auto-reviewer/skills/languages/python"]},
-                        "typescript": {"dependencies": ["richgo/auto-reviewer/skills/languages/typescript"]},
-                        "ci_github_actions": {"dependencies": ["richgo/auto-reviewer/skills/outputs/inline-comments"]},
+                        "python": {"dependencies": ["richgo/auto-reviewer/skills/lang-python"]},
+                        "typescript": {"dependencies": ["richgo/auto-reviewer/skills/lang-typescript"]},
+                        "ci_github_actions": {"dependencies": ["richgo/auto-reviewer/skills/inline-comments"]},
                     },
                 }
             ),

@@ -39,11 +39,13 @@ For each concern, multiple models review independently, then challenge each othe
 auto-reviewer/
 ├── .github/agents/          # OpenSpec workflow agents
 ├── skills/                  # Canonical atomic skill corpus
-│   ├── core/
-│   ├── languages/
-│   ├── concerns/
-│   ├── outputs/
-│   └── tuning/
+│   ├── review-orchestrator/
+│   │   └── SKILL.md
+│   ├── security-injection/
+│   │   └── SKILL.md
+│   ├── lang-python/
+│   │   └── SKILL.md
+│   └── ... (one folder per skill)
 ├── agents/                  # Orchestrator + composer agents
 ├── evals/                   # Eval datasets + assertions
 ├── config/                  # Default configs + model scores

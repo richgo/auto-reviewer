@@ -16,33 +16,30 @@ class TestComposer(unittest.TestCase):
             (repo / "app.py").write_text("print('x')", encoding="utf-8")
             (repo / "package.json").write_text('{"name":"web"}', encoding="utf-8")
             (repo / "ui.ts").write_text("export const x = 1;", encoding="utf-8")
-            (repo / "skills" / "core").mkdir(parents=True)
-            (repo / "skills" / "languages").mkdir(parents=True)
-            (repo / "skills" / "outputs").mkdir(parents=True)
-            (repo / "skills" / "core" / "review-orchestrator").mkdir()
-            (repo / "skills" / "core" / "diff-analysis").mkdir()
-            (repo / "skills" / "languages" / "python").mkdir()
-            (repo / "skills" / "languages" / "typescript").mkdir()
-            (repo / "skills" / "outputs" / "inline-comments").mkdir()
-            (repo / "skills" / "core" / "review-orchestrator" / "SKILL.md").write_text("skill", encoding="utf-8")
-            (repo / "skills" / "core" / "diff-analysis" / "SKILL.md").write_text("skill", encoding="utf-8")
-            (repo / "skills" / "languages" / "python" / "SKILL.md").write_text("skill", encoding="utf-8")
-            (repo / "skills" / "languages" / "typescript" / "SKILL.md").write_text("skill", encoding="utf-8")
-            (repo / "skills" / "outputs" / "inline-comments" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "review-orchestrator").mkdir(parents=True)
+            (repo / "skills" / "diff-analysis").mkdir(parents=True)
+            (repo / "skills" / "lang-python").mkdir(parents=True)
+            (repo / "skills" / "lang-typescript").mkdir(parents=True)
+            (repo / "skills" / "inline-comments").mkdir(parents=True)
+            (repo / "skills" / "review-orchestrator" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "diff-analysis" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "lang-python" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "lang-typescript" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "inline-comments" / "SKILL.md").write_text("skill", encoding="utf-8")
 
             policy = repo / "policy.yaml"
             policy.write_text(
                 yaml.safe_dump(
                     {
                         "core": [
-                            "richgo/auto-reviewer/skills/core/review-orchestrator",
-                            "richgo/auto-reviewer/skills/core/diff-analysis",
+                            "richgo/auto-reviewer/skills/review-orchestrator",
+                            "richgo/auto-reviewer/skills/diff-analysis",
                         ],
                         "fallback": [],
                         "signals": {
-                            "python": {"dependencies": ["richgo/auto-reviewer/skills/languages/python"]},
-                            "typescript": {"dependencies": ["richgo/auto-reviewer/skills/languages/typescript"]},
-                            "ci_github_actions": {"dependencies": ["richgo/auto-reviewer/skills/outputs/inline-comments"]},
+                            "python": {"dependencies": ["richgo/auto-reviewer/skills/lang-python"]},
+                            "typescript": {"dependencies": ["richgo/auto-reviewer/skills/lang-typescript"]},
+                            "ci_github_actions": {"dependencies": ["richgo/auto-reviewer/skills/inline-comments"]},
                         },
                     }
                 ),
@@ -60,7 +57,7 @@ class TestComposer(unittest.TestCase):
         self.assertIn("dependencies", result)
         self.assertEqual(result["compilation"]["strategy"], "distributed")
         self.assertIn(
-            "richgo/auto-reviewer/skills/languages/python#v1.0.0",
+            "richgo/auto-reviewer/skills/lang-python#v1.0.0",
             result["dependencies"]["apm"],
         )
 
@@ -68,19 +65,17 @@ class TestComposer(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             repo = Path(tmp_dir) / "repo"
             repo.mkdir()
-            (repo / "skills" / "core").mkdir(parents=True)
-            (repo / "skills" / "concerns").mkdir(parents=True)
-            (repo / "skills" / "core" / "review-orchestrator").mkdir()
-            (repo / "skills" / "concerns" / "correctness").mkdir()
-            (repo / "skills" / "core" / "review-orchestrator" / "SKILL.md").write_text("skill", encoding="utf-8")
-            (repo / "skills" / "concerns" / "correctness" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "review-orchestrator").mkdir(parents=True)
+            (repo / "skills" / "correctness").mkdir(parents=True)
+            (repo / "skills" / "review-orchestrator" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "correctness" / "SKILL.md").write_text("skill", encoding="utf-8")
 
             policy = repo / "policy.yaml"
             policy.write_text(
                 yaml.safe_dump(
                     {
-                        "core": ["richgo/auto-reviewer/skills/core/review-orchestrator"],
-                        "fallback": ["richgo/auto-reviewer/skills/concerns/correctness"],
+                        "core": ["richgo/auto-reviewer/skills/review-orchestrator"],
+                        "fallback": ["richgo/auto-reviewer/skills/correctness"],
                         "signals": {},
                     }
                 ),
@@ -112,8 +107,8 @@ class TestComposer(unittest.TestCase):
 
         self.assertEqual(result["composer"]["detection_confidence"], "low")
         self.assertIn("external-org/custom-skill#v2", written["dependencies"]["apm"])
-        self.assertIn("richgo/auto-reviewer/skills/core/review-orchestrator", written["dependencies"]["apm"])
-        self.assertIn("richgo/auto-reviewer/skills/concerns/correctness", written["dependencies"]["apm"])
+        self.assertIn("richgo/auto-reviewer/skills/review-orchestrator", written["dependencies"]["apm"])
+        self.assertIn("richgo/auto-reviewer/skills/correctness", written["dependencies"]["apm"])
         self.assertEqual(written["config"]["severity_threshold"], "high")
 
     def test_compose_manifest_default_tag_is_stable_and_deterministic(self):
@@ -121,19 +116,17 @@ class TestComposer(unittest.TestCase):
             repo = Path(tmp_dir) / "repo"
             repo.mkdir()
             (repo / "requirements.txt").write_text("pyyaml", encoding="utf-8")
-            (repo / "skills" / "core").mkdir(parents=True)
-            (repo / "skills" / "languages").mkdir(parents=True)
-            (repo / "skills" / "core" / "review-orchestrator").mkdir()
-            (repo / "skills" / "languages" / "python").mkdir()
-            (repo / "skills" / "core" / "review-orchestrator" / "SKILL.md").write_text("skill", encoding="utf-8")
-            (repo / "skills" / "languages" / "python" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "review-orchestrator").mkdir(parents=True)
+            (repo / "skills" / "lang-python").mkdir(parents=True)
+            (repo / "skills" / "review-orchestrator" / "SKILL.md").write_text("skill", encoding="utf-8")
+            (repo / "skills" / "lang-python" / "SKILL.md").write_text("skill", encoding="utf-8")
             policy = repo / "policy.yaml"
             policy.write_text(
                 yaml.safe_dump(
                     {
-                        "core": ["richgo/auto-reviewer/skills/core/review-orchestrator"],
+                        "core": ["richgo/auto-reviewer/skills/review-orchestrator"],
                         "fallback": [],
-                        "signals": {"python": {"dependencies": ["richgo/auto-reviewer/skills/languages/python"]}},
+                        "signals": {"python": {"dependencies": ["richgo/auto-reviewer/skills/lang-python"]}},
                     }
                 ),
                 encoding="utf-8",

@@ -37,9 +37,7 @@ class TestMigrationCoverage(unittest.TestCase):
         self.assertSetEqual(mapped_tasks, expected_tasks)
 
         available_skills = {
-            path.parent.name for path in (repo_root / "skills" / "concerns").glob("*/SKILL.md")
-        } | {
-            path.stem for path in (repo_root / "skills" / "concerns").glob("*.md")
+            path.parent.name for path in (repo_root / "skills").glob("*/SKILL.md")
         }
         mapped_skills = {row["skill"] for row in written_rows}
         self.assertSetEqual(mapped_skills - available_skills, set())
@@ -54,9 +52,7 @@ class TestMigrationCoverage(unittest.TestCase):
         security_rows = [row for row in rows if row["category"] == "security"]
         self.assertGreater(len(security_rows), 0)
         self.assertTrue(all(row["platform"] for row in security_rows))
-        security_skill_paths = sorted(
-            (repo_root / "skills" / "concerns").glob("security-*/SKILL.md")
-        ) + sorted((repo_root / "skills" / "concerns").glob("security-*.md"))
+        security_skill_paths = sorted((repo_root / "skills").glob("security-*/SKILL.md"))
         self.assertGreater(len(security_skill_paths), 0)
         for skill_path in security_skill_paths:
             with self.subTest(skill=skill_path.name):

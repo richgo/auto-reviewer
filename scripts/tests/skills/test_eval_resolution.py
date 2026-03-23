@@ -10,7 +10,7 @@ class TestEvalResolution(unittest.TestCase):
     def test_build_plan_uses_skill_mapped_eval_inputs_without_review_task_identifiers(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)
-            skills_dir = root / "skills" / "concerns" / "security-auth"
+            skills_dir = root / "skills" / "security-auth"
             evals_dir = root / "evals"
             skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)

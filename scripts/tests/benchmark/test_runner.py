@@ -31,11 +31,11 @@ class TestBenchmarkRunner(unittest.TestCase):
             skills_dir = tmp / "skills"
             evals_dir = tmp / "evals"
             output_dir = tmp / "out"
-            (skills_dir / "concerns").mkdir(parents=True)
+            skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
 
-            (skills_dir / "concerns" / "security-injection").mkdir()
-            (skills_dir / "concerns" / "security-injection" / "SKILL.md").write_text(
+            (skills_dir / "security-injection").mkdir()
+            (skills_dir / "security-injection" / "SKILL.md").write_text(
                 "review skill", encoding="utf-8"
             )
             (evals_dir / "security-injection.json").write_text(
@@ -93,11 +93,11 @@ class TestBenchmarkRunner(unittest.TestCase):
             skills_dir = tmp / "skills"
             evals_dir = tmp / "evals"
             output_dir = tmp / "out"
-            (skills_dir / "concerns").mkdir(parents=True)
+            skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
 
-            (skills_dir / "concerns" / "api-design").mkdir()
-            (skills_dir / "concerns" / "api-design" / "SKILL.md").write_text(
+            (skills_dir / "api-design").mkdir()
+            (skills_dir / "api-design" / "SKILL.md").write_text(
                 "api design skill", encoding="utf-8"
             )
             (evals_dir / "api-design.json").write_text(
@@ -200,11 +200,11 @@ class TestBenchmarkRunner(unittest.TestCase):
             skills_dir = tmp / "skills"
             evals_dir = tmp / "evals"
             output_dir = tmp / "out"
-            (skills_dir / "concerns").mkdir(parents=True)
+            skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
 
-            (skills_dir / "concerns" / "correctness").mkdir()
-            (skills_dir / "concerns" / "correctness" / "SKILL.md").write_text(
+            (skills_dir / "correctness").mkdir()
+            (skills_dir / "correctness" / "SKILL.md").write_text(
                 "review skill", encoding="utf-8"
             )
             (evals_dir / "correctness.json").write_text(
@@ -252,11 +252,11 @@ class TestBenchmarkRunner(unittest.TestCase):
             skills_dir = tmp / "skills"
             evals_dir = tmp / "evals"
             output_dir = tmp / "out"
-            (skills_dir / "concerns").mkdir(parents=True)
+            skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
 
-            (skills_dir / "concerns" / "correctness").mkdir()
-            (skills_dir / "concerns" / "correctness" / "SKILL.md").write_text(
+            (skills_dir / "correctness").mkdir()
+            (skills_dir / "correctness" / "SKILL.md").write_text(
                 "review skill",
                 encoding="utf-8",
             )
@@ -284,10 +284,10 @@ class TestBenchmarkRunner(unittest.TestCase):
             skills_dir = tmp / "skills"
             evals_dir = tmp / "evals"
             output_dir = tmp / "out"
-            (skills_dir / "concerns" / "api-design").mkdir(parents=True)
+            (skills_dir / "api-design").mkdir(parents=True)
             evals_dir.mkdir(parents=True)
 
-            (skills_dir / "concerns" / "api-design" / "SKILL.md").write_text(
+            (skills_dir / "api-design" / "SKILL.md").write_text(
                 "review skill",
                 encoding="utf-8",
             )
@@ -311,10 +311,10 @@ class TestBenchmarkRunner(unittest.TestCase):
             skills_dir = tmp / "skills"
             evals_dir = tmp / "evals"
             output_dir = tmp / "out"
-            (skills_dir / "concerns").mkdir(parents=True)
+            skills_dir.mkdir(parents=True)
             evals_dir.mkdir(parents=True)
 
-            (skills_dir / "concerns" / "api-design.md").write_text(
+            (skills_dir / "api-design.md").write_text(
                 "review skill",
                 encoding="utf-8",
             )

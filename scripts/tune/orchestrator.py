@@ -6,8 +6,11 @@ from typing import Any, Dict, List, Optional, Tuple
 import yaml
 
 
-def _discover_concern_skill_names(*, concerns_dir: Path) -> List[str]:
-    return [path.parent.name for path in sorted(concerns_dir.glob("*/SKILL.md"))]
+def _discover_flat_skill_names(*, skills_dir: Path) -> List[str]:
+    return [
+        path.parent.name
+        for path in sorted(skills_dir.glob("*/SKILL.md"))
+    ]
 
 
 def build_plan(
@@ -24,8 +27,8 @@ def build_plan(
     models = sorted(models_filter or configured_models)
 
     skill_names = []
-    concerns_dir = skills_dir / "concerns"
-    for skill_name in _discover_concern_skill_names(concerns_dir=concerns_dir):
+    discovered_skills = _discover_flat_skill_names(skills_dir=skills_dir)
+    for skill_name in discovered_skills:
         eval_path = evals_dir / f"{skill_name}.json"
         if not eval_path.exists():
             continue

@@ -1,0 +1,143 @@
+{
+  "description": "Eval cases for API design issues: input validation, pagination, breaking changes, response consistency, and versioning",
+  "source_of_truth": "skill-eval",
+  "skill": "api-design",
+  "cases": [
+    {
+      "id": "input-validation-001",
+      "name": "Missing request validation in create user endpoint",
+      "description": "Request body fields are trusted without schema validation or constraints",
+      "code_snippet": "@app.post('/users')\ndef create_user():\n    payload = request.get_json()\n    email = payload['email']\n    age = int(payload['age'])\n    db.insert_user(email=email, age=age)\n    return {'ok': True}, 201",
+      "language": "python",
+      "expected_findings": [
+        {
+          "type": "input-validation",
+          "line": 3,
+          "description_contains": [
+            "validation",
+            "schema",
+            "type",
+            "constraints"
+          ]
+        }
+      ],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "missing-pagination-001",
+      "name": "Unbounded list endpoint without pagination",
+      "description": "Orders endpoint fetches full table and returns all records in one response",
+      "code_snippet": "@app.get('/orders')\ndef list_orders():\n    rows = db.query('SELECT * FROM orders ORDER BY created_at DESC')\n    return {'items': rows}",
+      "language": "python",
+      "expected_findings": [
+        {
+          "type": "missing-pagination",
+          "line": 3,
+          "description_contains": [
+            "pagination",
+            "limit",
+            "cursor",
+            "unbounded"
+          ]
+        }
+      ],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "breaking-change-001",
+      "name": "Response contract changed without compatibility path",
+      "description": "Endpoint renamed and removed response fields used by existing clients",
+      "code_snippet": "# Previous response: {'id': 7, 'status': 'paid', 'total_cents': 1099}\n@app.get('/invoice/<id>')\ndef get_invoice(id):\n    row = db.get_invoice(id)\n    return {'id': row.id, 'state': row.status}",
+      "language": "python",
+      "expected_findings": [
+        {
+          "type": "breaking-api-change",
+          "line": 4,
+          "description_contains": [
+            "breaking",
+            "compatibility",
+            "deprecation",
+            "version"
+          ]
+        }
+      ],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "response-shape-001",
+      "name": "Inconsistent response shape for the same endpoint",
+      "description": "Search endpoint returns object for multi-result and bare object for single-result",
+      "code_snippet": "@app.get('/search')\ndef search():\n    results = run_search(request.args['q'])\n    if len(results) == 1:\n        return results[0]\n    return {'items': results}",
+      "language": "python",
+      "expected_findings": [
+        {
+          "type": "inconsistent-response-shape",
+          "line": 4,
+          "description_contains": [
+            "consistent",
+            "response shape",
+            "schema",
+            "contract"
+          ]
+        }
+      ],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "versioning-001",
+      "name": "Breaking request requirements on unversioned endpoint",
+      "description": "New required field introduced without API version bump",
+      "code_snippet": "@app.put('/orders/<id>')\ndef update_order(id):\n    payload = request.get_json()\n    if 'currency' not in payload:\n        return {'error': 'currency required'}, 400\n    return save_order(id, payload)",
+      "language": "python",
+      "expected_findings": [
+        {
+          "type": "api-versioning",
+          "line": 1,
+          "description_contains": [
+            "version",
+            "backward compatibility",
+            "deprecation",
+            "contract"
+          ]
+        }
+      ],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "safe-api-001",
+      "name": "Versioned and paginated endpoint with validation",
+      "description": "Well-designed endpoint should not produce API design findings",
+      "code_snippet": "from pydantic import BaseModel, Field\n\nclass ListUsersRequest(BaseModel):\n    limit: int = Field(default=20, ge=1, le=100)\n    cursor: int | None = None\n\n@app.get('/v2/users')\ndef list_users(req: ListUsersRequest):\n    rows = db.query(\n        'SELECT id, email FROM users WHERE id > %s ORDER BY id LIMIT %s',\n        (req.cursor or 0, req.limit + 1),\n    )\n    return {\n        'items': rows[:req.limit],\n        'next_cursor': rows[-1]['id'] if len(rows) > req.limit else None,\n    }",
+      "language": "python",
+      "expected_findings": [],
+      "assertions": {
+        "no_false_positive": true
+      }
+    }
+  ]
+}

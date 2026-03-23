@@ -15,20 +15,20 @@ class TestComposeSelector(unittest.TestCase):
                 yaml.safe_dump(
                     {
                         "core": [
-                            "richgo/auto-reviewer/skills/core/review-orchestrator",
-                            "richgo/auto-reviewer/skills/core/diff-analysis",
+                            "richgo/auto-reviewer/skills/review-orchestrator",
+                            "richgo/auto-reviewer/skills/diff-analysis",
                         ],
-                        "fallback": ["richgo/auto-reviewer/skills/concerns/correctness"],
+                        "fallback": ["richgo/auto-reviewer/skills/correctness"],
                         "signals": {
                             "python": {
                                 "dependencies": [
-                                    "richgo/auto-reviewer/skills/languages/python",
-                                    "richgo/auto-reviewer/skills/core/review-orchestrator",
+                                    "richgo/auto-reviewer/skills/lang-python",
+                                    "richgo/auto-reviewer/skills/review-orchestrator",
                                 ]
                             },
                             "ci_github_actions": {
                                 "dependencies": [
-                                    "richgo/auto-reviewer/skills/outputs/inline-comments"
+                                    "richgo/auto-reviewer/skills/inline-comments"
                                 ]
                             },
                         },
@@ -45,10 +45,10 @@ class TestComposeSelector(unittest.TestCase):
         self.assertEqual(
             selected,
             [
-                "richgo/auto-reviewer/skills/core/diff-analysis",
-                "richgo/auto-reviewer/skills/core/review-orchestrator",
-                "richgo/auto-reviewer/skills/languages/python",
-                "richgo/auto-reviewer/skills/outputs/inline-comments",
+                "richgo/auto-reviewer/skills/diff-analysis",
+                "richgo/auto-reviewer/skills/inline-comments",
+                "richgo/auto-reviewer/skills/lang-python",
+                "richgo/auto-reviewer/skills/review-orchestrator",
             ],
         )
 
@@ -59,10 +59,10 @@ class TestComposeSelector(unittest.TestCase):
                 yaml.safe_dump(
                     {
                         "core": [
-                            "richgo/auto-reviewer/skills/core/review-orchestrator",
+                            "richgo/auto-reviewer/skills/review-orchestrator",
                         ],
                         "fallback": [
-                            "richgo/auto-reviewer/skills/concerns/correctness",
+                            "richgo/auto-reviewer/skills/correctness",
                         ],
                         "signals": {},
                     }
@@ -77,8 +77,8 @@ class TestComposeSelector(unittest.TestCase):
         self.assertEqual(
             selected,
             [
-                "richgo/auto-reviewer/skills/concerns/correctness",
-                "richgo/auto-reviewer/skills/core/review-orchestrator",
+                "richgo/auto-reviewer/skills/correctness",
+                "richgo/auto-reviewer/skills/review-orchestrator",
             ],
         )
 
@@ -89,18 +89,18 @@ class TestComposeSelector(unittest.TestCase):
                 yaml.safe_dump(
                     {
                         "core": [
-                            "richgo/auto-reviewer/skills/core/review-orchestrator",
+                            "richgo/auto-reviewer/skills/review-orchestrator",
                         ],
                         "fallback": [],
                         "signals": {
                             "python": {
                                 "dependencies": [
-                                    "richgo/auto-reviewer/skills/languages/python",
+                                    "richgo/auto-reviewer/skills/lang-python",
                                 ]
                             },
                             "ci_github_actions": {
                                 "dependencies": [
-                                    "richgo/auto-reviewer/skills/outputs/inline-comments",
+                                    "richgo/auto-reviewer/skills/inline-comments",
                                 ]
                             },
                         },

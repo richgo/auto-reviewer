@@ -1,5 +1,6 @@
 import unittest
 from pathlib import Path
+import re
 
 
 class TestSkillCreatorContract(unittest.TestCase):
@@ -7,6 +8,7 @@ class TestSkillCreatorContract(unittest.TestCase):
         "eval-viewer/generate_review.py",
         "scripts/__init__.py",
         "scripts/aggregate_benchmark.py",
+        "scripts/copilot_sdk.py",
         "scripts/generate_report.py",
         "scripts/improve_description.py",
         "scripts/package_skill.py",
@@ -19,7 +21,7 @@ class TestSkillCreatorContract(unittest.TestCase):
     @staticmethod
     def _skill_root() -> Path:
         repo_root = Path(__file__).resolve().parents[3]
-        return repo_root / "skills" / "skill-creator"
+        return repo_root / "skills-tools" / "skill-creator"
 
     def _assert_skill_file_exists(self, relative_path: str, *, message: str) -> None:
         self.assertTrue(
@@ -31,7 +33,7 @@ class TestSkillCreatorContract(unittest.TestCase):
         skill_path = self._skill_root() / "SKILL.md"
         self._assert_skill_file_exists(
             "SKILL.md",
-            message="skills/skill-creator/SKILL.md must exist.",
+            message="skills-tools/skill-creator/SKILL.md must exist.",
         )
 
         content = skill_path.read_text(encoding="utf-8")
@@ -44,7 +46,7 @@ class TestSkillCreatorContract(unittest.TestCase):
         license_path = self._skill_root() / "LICENSE.txt"
         self._assert_skill_file_exists(
             "LICENSE.txt",
-            message="skills/skill-creator/LICENSE.txt must exist when importing from upstream.",
+            message="skills-tools/skill-creator/LICENSE.txt must exist when importing from upstream.",
         )
 
         license_text = license_path.read_text(encoding="utf-8")
@@ -60,6 +62,30 @@ class TestSkillCreatorContract(unittest.TestCase):
             missing_files,
             [],
             "All upstream skill-creator Python app files should be copied locally.",
+        )
+
+    def test_skill_creator_python_app_removes_claude_references_and_uses_copilot_sdk(self):
+        python_files = sorted(self._skill_root().rglob("*.py"))
+        forbidden_pattern = re.compile(r"claude|\.claude", re.IGNORECASE)
+        offenders = []
+        copilot_mentions = 0
+
+        for path in python_files:
+            text = path.read_text(encoding="utf-8")
+            if forbidden_pattern.search(text):
+                offenders.append(str(path.relative_to(self._skill_root())))
+            if re.search(r"copilot|github_token|github token", text, re.IGNORECASE):
+                copilot_mentions += 1
+
+        self.assertEqual(
+            offenders,
+            [],
+            "Skill-creator Python app should not contain Claude-specific references.",
+        )
+        self.assertGreater(
+            copilot_mentions,
+            0,
+            "Skill-creator Python app should include Copilot SDK runtime references.",
         )
 
 

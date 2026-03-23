@@ -16,3 +16,4 @@ env/
 venv/
 benchmark-results/
 tune-history/
+.tmp*
