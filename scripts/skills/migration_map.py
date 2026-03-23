@@ -24,7 +24,7 @@ _CATEGORY_TO_SKILL = {
 }
 
 _SECURITY_SUBCATEGORY_TO_SKILL = {
-    "android": "security-mobile",
+    "android": "security-mobile-android",
     "ai-agent-security": "security-ai-llm",
     "auth-bypass": "security-auth",
     "authentication-flaws": "security-auth",
@@ -44,7 +44,7 @@ _SECURITY_SUBCATEGORY_TO_SKILL = {
     "insecure-crypto": "security-data-protection",
     "insecure-deserialization": "security-data-protection",
     "insufficient-transport-security": "security-network",
-    "ios": "security-mobile",
+    "ios": "security-mobile-ios",
     "iac-security": "security-infrastructure",
     "ldap-injection": "security-injection",
     "mass-assignment": "security-data-protection",
@@ -157,12 +157,11 @@ def _canonical_skill_path(skill_name: str) -> str:
 
 def _collect_related_task_mappings(skills_dir: Path) -> Dict[str, str]:
     mappings: Dict[str, str] = {}
-    concerns_dir = skills_dir / "concerns"
-    if not concerns_dir.exists():
+    if not skills_dir.exists():
         return mappings
 
-    for skill_path in sorted(concerns_dir.glob("*.md")):
-        skill_name = skill_path.stem
+    for skill_path in sorted(skills_dir.glob("*/SKILL.md")):
+        skill_name = skill_path.parent.name
         content = skill_path.read_text(encoding="utf-8")
         seen_for_skill: Set[str] = set()
         for relative_path in _REFERENCE_PATH.findall(content):

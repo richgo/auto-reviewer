@@ -160,8 +160,58 @@ class TestMigrationMap(unittest.TestCase):
                 review_tasks_dir=review_tasks_dir,
                 skills_dir=concerns_dir.parent,
             )
-
         self.assertEqual(rows[0]["skill_path"], "skills/testing/SKILL.md")
+
+    def test_security_android_and_ios_subcategories_map_to_split_mobile_skills(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            review_tasks_dir = root / "review-tasks"
+            skills_dir = root / "skills"
+            review_tasks_dir.mkdir(parents=True)
+            skills_dir.mkdir(parents=True)
+
+            (review_tasks_dir / "security" / "android").mkdir(parents=True)
+            (review_tasks_dir / "security" / "ios").mkdir(parents=True)
+
+            (review_tasks_dir / "security" / "android" / "network-security.md").write_text(
+                "\n".join(
+                    [
+                        "# Task: Android Network Security",
+                        "## Category",
+                        "security",
+                        "## Platforms",
+                        "mobile",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            (review_tasks_dir / "security" / "ios" / "keychain-misuse.md").write_text(
+                "\n".join(
+                    [
+                        "# Task: iOS Keychain Misuse",
+                        "## Category",
+                        "security",
+                        "## Platforms",
+                        "mobile",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+
+            rows = build_review_task_skill_rows(
+                review_tasks_dir=review_tasks_dir,
+                skills_dir=skills_dir,
+            )
+
+        row_by_task = {row["review_task"]: row for row in rows}
+        self.assertEqual(
+            row_by_task["security/android/network-security"]["skill"],
+            "security-mobile-android",
+        )
+        self.assertEqual(
+            row_by_task["security/ios/keychain-misuse"]["skill"],
+            "security-mobile-ios",
+        )
 
 
 if __name__ == "__main__":
