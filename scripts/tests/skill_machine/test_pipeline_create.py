@@ -114,6 +114,33 @@ class TestPipelineCreateStage(unittest.TestCase):
             self.assertIn('"skill": "security-injection"', content)
             self.assertIn('"cases": []', content)
 
+    def test_create_stage_persists_not_ready_status_when_eval_stub_fails_readiness(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            evals_dir = root / "evals"
+            state_dir = root / ".skill-machine" / "workflow"
+            (skills_dir / "security-injection").mkdir(parents=True)
+            (skills_dir / "security-injection" / "SKILL.md").write_text(
+                "skill",
+                encoding="utf-8",
+            )
+            evals_dir.mkdir(parents=True)
+
+            result = run_create_stage(
+                skill_name="security-injection",
+                skills_dir=skills_dir,
+                evals_dir=evals_dir,
+                state_dir=state_dir,
+                persist_state=True,
+                generate_eval_stub=True,
+                validate_eval_readiness=True,
+            )
+
+            self.assertFalse(result["eval_ready"])
+            state_payload = Path(result["state_path"]).read_text(encoding="utf-8")
+            self.assertIn('"status": "create_eval_not_ready"', state_payload)
+
 
 if __name__ == "__main__":
     unittest.main()
