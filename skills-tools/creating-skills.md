@@ -13,6 +13,12 @@ User-facing workflow should collapse into **one tool with two primary modes**:
 
 Benchmarking still matters, but it should be a **stage inside the pipeline**, not a separate product the author has to mentally stitch together.
 
+## Canonical Entrypoint
+
+The canonical unified lifecycle entrypoint is `scripts/skill_machine/pipeline.py`.
+
+Use that entrypoint for `create` and `tune` orchestration so authors follow one unified lifecycle instead of stitching together separate tools.
+
 ## The Workflow
 
 ### Mode 1: Create
