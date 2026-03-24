@@ -13,7 +13,7 @@
 
 ## Phase 2: Create Stage
 
-- [ ] **2.1** Build the pipeline `create` stage entrypoint
+- [x] **2.1** Build the pipeline `create` stage entrypoint
   Add a pipeline orchestration entry module that accepts a canonical skill target and coordinates draft/update flow using existing authoring helpers from `skills-tools/skill-creator/scripts/`. Touch the new pipeline entry module and minimal adapters around authoring scripts. Covers `skills` **Unified Skill Authoring Workflow**.
 
 - [ ] **2.2** Wire create-stage eval generation
