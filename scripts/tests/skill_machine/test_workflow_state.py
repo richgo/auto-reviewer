@@ -91,6 +91,23 @@ class TestWorkflowState(unittest.TestCase):
                     state_dir=state_dir,
                 )
 
+    def test_resolve_skill_state_rejects_blank_skill_identifier(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            evals_dir = root / "evals"
+            state_dir = root / "state"
+            skills_dir.mkdir(parents=True)
+            evals_dir.mkdir(parents=True)
+
+            with self.assertRaisesRegex(ValueError, "Invalid skill name"):
+                resolve_skill_state(
+                    skill_name="",
+                    skills_dir=skills_dir,
+                    evals_dir=evals_dir,
+                    state_dir=state_dir,
+                )
+
 
 if __name__ == "__main__":
     unittest.main()

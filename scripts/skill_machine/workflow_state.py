@@ -19,7 +19,7 @@ def resolve_skill_state(
     evals_dir: Path,
     state_dir: Path,
 ) -> SkillWorkflowState:
-    if "/" in skill_name or "\\" in skill_name or ".." in skill_name:
+    if not skill_name or "/" in skill_name or "\\" in skill_name or ".." in skill_name:
         raise ValueError(f"Invalid skill name: {skill_name}")
     skill_path = skills_dir / skill_name / "SKILL.md"
     if not skill_path.exists():
