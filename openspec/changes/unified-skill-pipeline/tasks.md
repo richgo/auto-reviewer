@@ -19,7 +19,7 @@
 - [x] **2.2** Wire create-stage eval generation
   Integrate eval creation/update into the `create` stage so every created or revised skill produces a linked `evals/<skill>.json` artifact. Touch create-stage orchestration plus eval generation/resolution helpers. Covers `evals` **Create-Stage Eval Generation** and **Eval File Lifecycle Ownership**.
 
-- [ ] **2.3** Add eval readiness validation
+- [x] **2.3** Add eval readiness validation
   Implement readiness checks for generated evals, including explicit failure reporting for empty or unbalanced datasets before tuning can start. Touch new eval validation logic and create-stage workflow state updates. Covers `evals` **Eval Quality Gate for Authoring**.
 
 - [ ] **2.4** Emit create-stage validation artifacts
