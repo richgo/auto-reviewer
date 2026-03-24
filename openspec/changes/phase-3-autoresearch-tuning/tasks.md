@@ -65,5 +65,5 @@
 - [x] **4.4** Add cascade configuration and policy controls
    Extend `scripts/tune/config.yaml` with cascade sequence definition (models, iteration limits, threshold targets); add `--cascade-enabled`, `--cascade-models`, and `--max-stages` CLI overrides for testing and workflow dispatch control.
 
-- [ ] **4.5** Test cascade orchestration end-to-end
+- [x] **4.5** Test cascade orchestration end-to-end
    Write integration tests for Stage 1 → Stage 2 transition logic, convergence-failure detection, needs-review list generation, and idempotent needs-review updates. Add workflow-level tests for cascade stage concurrency and multi-stage artifact chaining.
