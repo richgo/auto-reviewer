@@ -59,7 +59,7 @@
 - [x] **4.2** Wire cascade into orchestrator and workflow
    Update `scripts/tune/orchestrator.py` to invoke cascade handler on convergence failures; wire cascade models and iteration limits into `scripts/tune/config.yaml`; update `.github/workflows/autoresearch-tuning.yml` to handle cascade stages and pass cascade metadata through promotion workflow.
 
-- [ ] **4.3** Implement needs-review tracking and generation
+- [x] **4.3** Implement needs-review tracking and generation
    Create `scripts/tune/needs_review.py` to generate and maintain `skills-tools/needs-review.md` with skills that failed cascade; track skill name, best model attempted, final pass rate, and tuning history link. Format as sortable checklist for manual intervention workflow.
 
 - [ ] **4.4** Add cascade configuration and policy controls
