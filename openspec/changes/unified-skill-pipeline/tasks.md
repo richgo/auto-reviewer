@@ -33,7 +33,7 @@
 - [x] **3.2** Refactor autoresearch and cascade behind pipeline contracts
   Adapt `scripts/tune/autoresearch.py`, `scripts/tune/cascade.py`, and related modules to use the shared workflow state and provider transport interfaces rather than direct provider/session assumptions. Covers `tuning` **Unified Tuning Entry** and **Provider-Agnostic Model Interaction**.
 
-- [ ] **3.3** Integrate benchmark as a tune-stage validation gate
+- [x] **3.3** Integrate benchmark as a tune-stage validation gate
   Update tune-stage orchestration so benchmark execution can run as an explicit validation step and feed promotion decisions while preserving independently inspectable benchmark artifacts. Touch `scripts/benchmark/runner.py`, tune orchestration, and outcome recording. Covers `tuning` **Benchmark as Lifecycle Validation**.
 
 - [ ] **3.4** Preserve the local-calibration boundary
