@@ -108,9 +108,16 @@ def run_tune_stage(
     )
     if not state.eval_path.exists():
         raise FileNotFoundError(f"Eval file not found: {state.eval_path}")
+    tune_models = []
+    if state.state_path.exists():
+        payload = json.loads(state.state_path.read_text(encoding="utf-8"))
+        models = payload.get("tune_models", [])
+        if isinstance(models, list):
+            tune_models = [str(model) for model in models]
     return {
         "skill": state.skill_name,
         "skill_path": str(state.skill_path),
         "eval_path": str(state.eval_path),
         "state_path": str(state.state_path),
+        "tune_models": tune_models,
     }
