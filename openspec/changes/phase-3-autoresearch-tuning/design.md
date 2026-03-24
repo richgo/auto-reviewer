@@ -19,20 +19,28 @@ Phase 3 adds an automated tuning control plane around the existing benchmark and
 - `.github/workflows/autoresearch-tuning.yml` — primary scheduled/dispatch workflow for orchestration.
 - `.github/workflows/autoresearch-promote.yml` — reusable workflow for gated commit/PR creation and rollback handling.
 - `scripts/tune/orchestrator.py` — matrix planner and loop coordinator for skill × model runs.
+- `scripts/tune/cascade.py` — **NEW:** multi-model escalation handler for skills failing to reach 95% threshold.
 - `scripts/tune/history.py` — append-only trajectory writer/reader.
-- `scripts/tune/config.yaml` — tuning policy (targets, max rounds, convergence, mutation budget, promotion thresholds).
+- `scripts/tune/config.yaml` — tuning policy (targets, max rounds, convergence, mutation budget, promotion thresholds, **cascade models**).
 - `tune-history/<skill>/<model>.jsonl` — immutable run history (baseline metrics, candidate metrics, acceptance decision, commit/PR refs).
+- `skills-tools/needs-review.md` — **NEW:** generated list of skills that failed cascade sequence and require manual review.
 
 ## Technical Decisions
 
-### Decision: Use GitHub Agentic Workflows as the Run Scheduler
+### Decision: Multi-Model Tuning Cascade with Escalation
 
-**Chosen:** Trigger autoresearch via GitHub workflows (`schedule`, `workflow_dispatch`, and path-based triggers on `evals/**` and `skills/**`) and execute tuning in CI.
+**Chosen:** When a skill fails to reach 95% pass rate in fast-model tuning, automatically escalate to progressively more capable models before marking as unresolved.
+
+**Cascade sequence:**
+1. **Stage 1 (gpt-5-mini):** 5 iterations max or 95% pass rate
+2. **Stage 2 (claude-haiku-4.5):** 3 iterations max or 95% pass rate  
+3. **Stage 3 (Unresolved):** Add to `skills-tools/needs-review.md` for manual intervention
+
 **Alternatives considered:**
-- Local cron on a maintainer machine — rejected because it is not reproducible, not auditable, and not resilient to maintainer downtime.
-- External orchestrator (Airflow/Temporal) — rejected because it adds operational overhead without additional value at current scale.
+- Single model tuning with manual escalation — rejected because it requires human gatekeeping and delays resolution
+- Always use capable model — rejected because it's expensive and unnecessary for most skills
 
-**Rationale:** Repository-native workflows give auditable runs, branch protections, deterministic artifacts, and direct integration with PR-based promotion while matching the existing `.github/agents` operating model.
+**Rationale:** Cascade optimization balances cost, capability, and auditability. Most skills improve quickly with fast models; difficult skills are escalated systematically and tracked explicitly. Decision logic is deterministic and reproducible in tuning history.
 
 ### Decision: Optimize at Skill × Model Granularity
 
@@ -109,6 +117,7 @@ CLI/interface extensions (non-breaking) are introduced for tuning orchestration:
 
 - **Autoresearch Tuning Approach:** integration test validating benchmark → mutate → re-benchmark → gated promote sequence, plus idempotent rerun with unchanged inputs.
 - **Skill Optimizer:** unit tests for failure-pattern clustering, strategy selection, and deterministic candidate ranking.
+- **Multi-Model Cascade:** integration tests for stage transitions at 95% threshold, escalation decision logic, and `needs-review.md` generation for unresolved skills.
 - **Benchmark Runner + Assertion Checking:** contract tests ensuring filtered execution and assertion-level logs remain authoritative for gating.
 - **Local Calibration:** integration test verifying local eval overlays alter acceptance outcomes only for targeted repo patterns.
 - **Performance Reporting:** reporter tests asserting trajectory tables and delta summaries map to stored history records.

@@ -50,3 +50,20 @@
 
 - [x] **3.4** Manual verification  
   Run one dry-run and one real skill × model tuning execution; verify artifacts/history output, accepted-only `skills/model-scores.yml` updates, PR-based promotion behavior, and automatic revert PR creation under simulated regression.
+
+## Phase 4: Multi-Model Tuning Cascade (Amendment)
+
+- [ ] **4.1** Implement cascade orchestration handler
+   Create `scripts/tune/cascade.py` to coordinate multi-model escalation: run Stage 1 (gpt-5-mini, 5 iterations, 95% target), detect convergence failure, escalate to Stage 2 (claude-haiku-4.5, 3 iterations, 95% target), and route unresolved skills to needs-review workflow. (Design: Decision: Multi-Model Tuning Cascade with Escalation; Data Flow step 10+)
+
+- [ ] **4.2** Wire cascade into orchestrator and workflow
+   Update `scripts/tune/orchestrator.py` to invoke cascade handler on convergence failures; wire cascade models and iteration limits into `scripts/tune/config.yaml`; update `.github/workflows/autoresearch-tuning.yml` to handle cascade stages and pass cascade metadata through promotion workflow.
+
+- [ ] **4.3** Implement needs-review tracking and generation
+   Create `scripts/tune/needs_review.py` to generate and maintain `skills-tools/needs-review.md` with skills that failed cascade; track skill name, best model attempted, final pass rate, and tuning history link. Format as sortable checklist for manual intervention workflow.
+
+- [ ] **4.4** Add cascade configuration and policy controls
+   Extend `scripts/tune/config.yaml` with cascade sequence definition (models, iteration limits, threshold targets); add `--cascade-enabled`, `--cascade-models`, and `--max-stages` CLI overrides for testing and workflow dispatch control.
+
+- [ ] **4.5** Test cascade orchestration end-to-end
+   Write integration tests for Stage 1 → Stage 2 transition logic, convergence-failure detection, needs-review list generation, and idempotent needs-review updates. Add workflow-level tests for cascade stage concurrency and multi-stage artifact chaining.

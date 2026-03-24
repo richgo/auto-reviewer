@@ -43,9 +43,35 @@ Implement continuous improvement loops that automatically optimize each skill ×
 3. **Degradation:** Mutations may accidentally worsen performance → Mitigation: Require metric improvement before commit, automated rollback
 4. **Compute Cost:** Autoresearch loops are expensive (many LLM calls) → Mitigation: Run weekly, cache results, use cheaper models for initial screening
 
+## Amendment: Multi-Model Tuning Cascade
+
+### Feature: Staged Model Progression with Escalation
+
+**New capability:** When a skill fails to reach 95% benchmark pass rate, automatically escalate to a more capable model before marking as unresolved.
+
+**Cascade sequence:**
+1. **Stage 1 (Fast/Cheap):** Run tuning with `gpt-5-mini` for up to 5 iterations or until 95% pass rate
+2. **Stage 2 (Mid-Tier):** If not at 95%, escalate to `claude-haiku-4.5` for up to 3 iterations or until 95%
+3. **Stage 3 (Unresolved):** If still below 95%, add skill to `skills-tools/needs-review.md` for manual review
+
+**Benefits:**
+- Cost-effective initial tuning with fast models
+- Automatic escalation for difficult skills
+- Explicit tracking of skills requiring human attention
+- Reproducible decision trail in tuning history
+
+**Configuration:**
+- Cascade models configurable in `scripts/tune/config.yaml`
+- Per-stage iteration limits and threshold targets
+- Automatic needs-review list generation and maintenance
+
 ## Open Questions
 
 1. What's the stopping criteria for tuning loops (convergence threshold)?
+   - **Answer:** 95% benchmark pass rate or iteration limit, whichever comes first
 2. Should tuning be per-skill or per-skill-model combination?
+   - **Answer:** Per-skill-model combination, with cascade per skill
 3. How to handle conflicting objectives (high recall but acceptable FPR)?
 4. Should mutations be constrained to preserve skill readability?
+5. Should cascade be mandatory or optional per skill?
+   - **Answer:** Mandatory; driven by convergence failure detection
