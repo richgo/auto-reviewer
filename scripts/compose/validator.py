@@ -2,13 +2,13 @@ from pathlib import Path
 from typing import Dict, List
 
 
-_AUTO_REVIEWER_SKILLS_PREFIX = "richgo/auto-reviewer/skills/"
+_AUTO_REVIEWER_SKILLS_PREFIX = "richgo/skill-machine/skills/"
 
 
 def _resolve_skill_dependency_error(*, dep_path: str, repo_root: Path) -> str | None:
     if dep_path.endswith(".md"):
         return f"Legacy skill path alias not allowed: {dep_path}"
-    relative = dep_path.replace("richgo/auto-reviewer/", "", 1)
+    relative = dep_path.replace("richgo/skill-machine/", "", 1)
     canonical_entry = repo_root / relative / "SKILL.md"
     if not canonical_entry.exists():
         return f"Unknown skill path: {dep_path}"

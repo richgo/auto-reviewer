@@ -1,4 +1,4 @@
-name: auto-reviewer
+name: skill-machine
 version: 0.1.0
 description: Adversarial, multi-model code review — APM-packaged, self-tuning
 
@@ -19,5 +19,5 @@ config:
     cross_examination: true
     panel_size: 3
     max_rounds: 4
-    db_path: .auto-reviewer/adversarial.db
+    db_path: .skill-machine/adversarial.db
     retention_days: 14

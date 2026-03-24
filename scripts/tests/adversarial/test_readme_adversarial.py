@@ -12,7 +12,7 @@ class TestReadmeAdversarialLifecycle(unittest.TestCase):
         self.assertIn("adversarial-resume", content)
         self.assertIn("adversarial-cleanup", content)
         self.assertIn("sqlite", content)
-        self.assertIn(".auto-reviewer/adversarial.db", content)
+        self.assertIn(".skill-machine/adversarial.db", content)
         self.assertIn("quorum", content)
         self.assertIn("fallback", content)
 

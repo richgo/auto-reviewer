@@ -333,7 +333,7 @@ cat REPORT.md
 grep "FALSE_POSITIVE" logs/*.json | jq -r '.code_snippet' > fp.txt
 
 # 2. Add to local eval set
-cat > .auto-reviewer/local-evals.json <<EOF
+cat > .skill-machine/local-evals.json <<EOF
 {
   "cases": [
     {
@@ -349,17 +349,17 @@ EOF
 # 3. Merge with global evals
 jq -s '.[0].cases + .[1].cases | {cases: .}' \
   evals/security-injection.json \
-  .auto-reviewer/local-evals.json > merged.json
+  .skill-machine/local-evals.json > merged.json
 
 # 4. Re-tune
 python scripts/tune/autoresearch.py \
   --skill skills/security-injection/SKILL.md \
   --evals merged.json \
   --max-iterations 10 \
-  --output .auto-reviewer/security-injection-local.md
+  --output .skill-machine/security-injection-local.md
 
 # 5. Deploy local skill
-# (configure auto-reviewer to use .auto-reviewer/security-injection-local.md)
+# (configure skill-machine to use .skill-machine/security-injection-local.md)
 ```
 
 ## Best Practices

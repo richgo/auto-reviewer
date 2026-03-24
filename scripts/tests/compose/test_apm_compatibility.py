@@ -24,14 +24,14 @@ class TestComposeApmCompatibility(unittest.TestCase):
             yaml.safe_dump(
                 {
                     "core": [
-                        "richgo/auto-reviewer/skills/review-orchestrator",
-                        "richgo/auto-reviewer/skills/diff-analysis",
+                        "richgo/skill-machine/skills/review-orchestrator",
+                        "richgo/skill-machine/skills/diff-analysis",
                     ],
                     "fallback": [],
                     "signals": {
-                        "python": {"dependencies": ["richgo/auto-reviewer/skills/lang-python"]},
-                        "typescript": {"dependencies": ["richgo/auto-reviewer/skills/lang-typescript"]},
-                        "ci_github_actions": {"dependencies": ["richgo/auto-reviewer/skills/inline-comments"]},
+                        "python": {"dependencies": ["richgo/skill-machine/skills/lang-python"]},
+                        "typescript": {"dependencies": ["richgo/skill-machine/skills/lang-typescript"]},
+                        "ci_github_actions": {"dependencies": ["richgo/skill-machine/skills/inline-comments"]},
                     },
                 }
             ),

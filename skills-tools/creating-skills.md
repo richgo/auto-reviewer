@@ -1,6 +1,6 @@
 # Creating and Improving Skills
 
-This document describes the target workflow for authoring skills in `auto-reviewer`.
+This document describes the target workflow for authoring skills in `skill-machine`.
 
 The main rethink is simple: this should feel like **one skill pipeline**, not three or four separate tools that happen to live next to each other.
 

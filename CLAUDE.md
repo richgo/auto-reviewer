@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Repo Is
 
-`auto-reviewer` is an adversarial, multi-model code review system distributed as an APM package. Multiple LLMs independently review code using atomic **skills**, then cross-examine each other's findings through a debate protocol (detector → challenger → defender → judge). Skills are self-tuning via autoresearch loops scored with SWE-bench-style benchmarks.
+`skill-machine` is an adversarial, multi-model code review system distributed as an APM package. Multiple LLMs independently review code using atomic **skills**, then cross-examine each other's findings through a debate protocol (detector → challenger → defender → judge). Skills are self-tuning via autoresearch loops scored with SWE-bench-style benchmarks.
 
 ## Commands
 
@@ -84,8 +84,8 @@ JSON files keyed by skill ID (e.g., `evals/security-injection.json`). Each file 
 
 ### Agents (`agents/`)
 
-- **`adversarial/agent.md`** — Debate protocol: detector→challenger→defender→judge. Stores state in SQLite at `.auto-reviewer/adversarial.db` (tables: `runs`, `findings`, `stances`, `verdicts`, `cleanup_events`). Resume key: `(repo, pr, commit_sha)`.
-- **`composer/agent.md`** — Generates/updates `apm.yml` using repo signals + policy. Commands: `compose` and `compose-update`. Only modifies composer-managed `richgo/auto-reviewer/skills/*` dependencies; preserves all other `apm.yml` sections.
+- **`adversarial/agent.md`** — Debate protocol: detector→challenger→defender→judge. Stores state in SQLite at `.skill-machine/adversarial.db` (tables: `runs`, `findings`, `stances`, `verdicts`, `cleanup_events`). Resume key: `(repo, pr, commit_sha)`.
+- **`composer/agent.md`** — Generates/updates `apm.yml` using repo signals + policy. Commands: `compose` and `compose-update`. Only modifies composer-managed `richgo/skill-machine/skills/*` dependencies; preserves all other `apm.yml` sections.
 
 ### OpenSpec Agents (`.github/agents/`)
 

@@ -15,8 +15,8 @@ class TestComposeValidator(unittest.TestCase):
                 "name": "repo",
                 "dependencies": {
                     "apm": [
-                        "richgo/auto-reviewer/skills/review-orchestrator#v1.0.0",
-                        "richgo/auto-reviewer/skills/not-a-real-skill#v1.0.0",
+                        "richgo/skill-machine/skills/review-orchestrator#v1.0.0",
+                        "richgo/skill-machine/skills/not-a-real-skill#v1.0.0",
                     ]
                 },
             }
@@ -35,7 +35,7 @@ class TestComposeValidator(unittest.TestCase):
                 "name": "repo",
                 "dependencies": {
                     "apm": [
-                        "richgo/auto-reviewer/skills/review-orchestrator#",
+                        "richgo/skill-machine/skills/review-orchestrator#",
                     ]
                 },
             }
@@ -54,7 +54,7 @@ class TestComposeValidator(unittest.TestCase):
             root = Path(tmp_dir)
             manifest = {
                 "name": "repo",
-                "dependencies": {"apm": "richgo/auto-reviewer/skills/review-orchestrator#v1.0.0"},
+                "dependencies": {"apm": "richgo/skill-machine/skills/review-orchestrator#v1.0.0"},
             }
             errors = validate_manifest(manifest, repo_root=root)
 
@@ -87,7 +87,7 @@ class TestComposeValidator(unittest.TestCase):
                 "name": "repo",
                 "dependencies": {
                     "apm": [
-                        "richgo/auto-reviewer/skills/review-orchestrator.md#v1.0.0",
+                        "richgo/skill-machine/skills/review-orchestrator.md#v1.0.0",
                     ]
                 },
             }

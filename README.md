@@ -1,4 +1,4 @@
-# auto-reviewer
+# skill-machine
 
 Adversarial, multi-model code review system — APM-packaged, self-tuning, community-extensible.
 
@@ -36,7 +36,7 @@ For each concern, multiple models review independently, then challenge each othe
 ## Project Structure
 
 ```
-auto-reviewer/
+skill-machine/
 ├── .github/agents/          # OpenSpec workflow agents
 ├── skills/                  # Canonical atomic skill corpus
 │   ├── review-orchestrator/
@@ -85,7 +85,7 @@ The Composer Agent generates and updates `apm.yml` using repository signals and 
 ### Update
 
 1. Re-run compose in update mode after repository stack changes.
-2. Only composer-managed `richgo/auto-reviewer/skills/*` dependencies are refreshed.
+2. Only composer-managed `richgo/skill-machine/skills/*` dependencies are refreshed.
 3. Non-managed dependencies and other `apm.yml` sections remain preserved.
 
 ### Pin overrides
@@ -110,7 +110,7 @@ The adversarial agent adds multi-model debate routing with local SQLite persiste
 
 - Agent entry: `agents/adversarial/agent.md`
 - Cleanup contract: `agents/adversarial/cleanup.md`
-- Local state DB: `.auto-reviewer/adversarial.db`
+- Local state DB: `.skill-machine/adversarial.db`
 
 ### Commands
 

@@ -32,14 +32,14 @@ class TestComposer(unittest.TestCase):
                 yaml.safe_dump(
                     {
                         "core": [
-                            "richgo/auto-reviewer/skills/review-orchestrator",
-                            "richgo/auto-reviewer/skills/diff-analysis",
+                            "richgo/skill-machine/skills/review-orchestrator",
+                            "richgo/skill-machine/skills/diff-analysis",
                         ],
                         "fallback": [],
                         "signals": {
-                            "python": {"dependencies": ["richgo/auto-reviewer/skills/lang-python"]},
-                            "typescript": {"dependencies": ["richgo/auto-reviewer/skills/lang-typescript"]},
-                            "ci_github_actions": {"dependencies": ["richgo/auto-reviewer/skills/inline-comments"]},
+                            "python": {"dependencies": ["richgo/skill-machine/skills/lang-python"]},
+                            "typescript": {"dependencies": ["richgo/skill-machine/skills/lang-typescript"]},
+                            "ci_github_actions": {"dependencies": ["richgo/skill-machine/skills/inline-comments"]},
                         },
                     }
                 ),
@@ -57,7 +57,7 @@ class TestComposer(unittest.TestCase):
         self.assertIn("dependencies", result)
         self.assertEqual(result["compilation"]["strategy"], "distributed")
         self.assertIn(
-            "richgo/auto-reviewer/skills/lang-python#v1.0.0",
+            "richgo/skill-machine/skills/lang-python#v1.0.0",
             result["dependencies"]["apm"],
         )
 
@@ -74,8 +74,8 @@ class TestComposer(unittest.TestCase):
             policy.write_text(
                 yaml.safe_dump(
                     {
-                        "core": ["richgo/auto-reviewer/skills/review-orchestrator"],
-                        "fallback": ["richgo/auto-reviewer/skills/correctness"],
+                        "core": ["richgo/skill-machine/skills/review-orchestrator"],
+                        "fallback": ["richgo/skill-machine/skills/correctness"],
                         "signals": {},
                     }
                 ),
@@ -107,8 +107,8 @@ class TestComposer(unittest.TestCase):
 
         self.assertEqual(result["composer"]["detection_confidence"], "low")
         self.assertIn("external-org/custom-skill#v2", written["dependencies"]["apm"])
-        self.assertIn("richgo/auto-reviewer/skills/review-orchestrator", written["dependencies"]["apm"])
-        self.assertIn("richgo/auto-reviewer/skills/correctness", written["dependencies"]["apm"])
+        self.assertIn("richgo/skill-machine/skills/review-orchestrator", written["dependencies"]["apm"])
+        self.assertIn("richgo/skill-machine/skills/correctness", written["dependencies"]["apm"])
         self.assertEqual(written["config"]["severity_threshold"], "high")
 
     def test_compose_manifest_default_tag_is_stable_and_deterministic(self):
@@ -124,9 +124,9 @@ class TestComposer(unittest.TestCase):
             policy.write_text(
                 yaml.safe_dump(
                     {
-                        "core": ["richgo/auto-reviewer/skills/review-orchestrator"],
+                        "core": ["richgo/skill-machine/skills/review-orchestrator"],
                         "fallback": [],
-                        "signals": {"python": {"dependencies": ["richgo/auto-reviewer/skills/lang-python"]}},
+                        "signals": {"python": {"dependencies": ["richgo/skill-machine/skills/lang-python"]}},
                     }
                 ),
                 encoding="utf-8",

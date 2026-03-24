@@ -81,7 +81,7 @@ Combine global evals (from `evals/`) with local evals:
 
 ```bash
 # Create local eval file
-cat > /path/to/repo/.auto-reviewer/local-evals.json <<EOF
+cat > /path/to/repo/.skill-machine/local-evals.json <<EOF
 {
   "description": "Local calibration evals",
   "cases": [...]
@@ -91,7 +91,7 @@ EOF
 # Merge global + local evals
 jq -s '.[0].cases + .[1].cases | {cases: .}' \
   evals/security-injection.json \
-  /path/to/repo/.auto-reviewer/local-evals.json \
+  /path/to/repo/.skill-machine/local-evals.json \
   > merged-evals.json
 ```
 
@@ -105,7 +105,7 @@ python scripts/tune/autoresearch.py \
   --evals merged-evals.json \
   --max-iterations 20 \
   --target-pass-rate 0.95 \
-  --output /path/to/repo/.auto-reviewer/security-injection-local.md
+  --output /path/to/repo/.skill-machine/security-injection-local.md
 ```
 
 This produces a **locally calibrated skill** that:
@@ -114,13 +114,13 @@ This produces a **locally calibrated skill** that:
 
 ### 5. Use Local Skill in Production
 
-Configure auto-reviewer to use local skill for your repo:
+Configure skill-machine to use local skill for your repo:
 
 ```yaml
-# .auto-reviewer/config.yml
+# .skill-machine/config.yml
 skills:
   security-injection:
-    path: .auto-reviewer/security-injection-local.md
+    path: .skill-machine/security-injection-local.md
     override: true  # Use local instead of global
 ```
 
@@ -180,15 +180,15 @@ SafeSQL.execute("SELECT * FROM %s WHERE id = %s" % (table, user_id))
 **Solution:**
 - Create separate local eval sets per service
 - Tune separate skill variants
-- Configure auto-reviewer to use service-specific skills
+- Configure skill-machine to use service-specific skills
 
 ```yaml
-# .auto-reviewer/config.yml
+# .skill-machine/config.yml
 skills:
   security-injection:
     path_mapping:
-      services/api-python/: .auto-reviewer/skills/security-injection-python.md
-      services/api-node/: .auto-reviewer/skills/security-injection-node.md
+      services/api-python/: .skill-machine/skills/security-injection-python.md
+      services/api-node/: .skill-machine/skills/security-injection-node.md
 ```
 
 ## Validation
@@ -199,7 +199,7 @@ skills:
    ```bash
    # Original skill should still pass global evals
    python scripts/benchmark/runner.py \
-     --skills-dir .auto-reviewer/ \
+     --skills-dir .skill-machine/ \
      --evals-dir evals/
    ```
 
@@ -207,7 +207,7 @@ skills:
    ```bash
    # Check that calibration fixed false positives
    python scripts/tune/autoresearch.py \
-     --skill .auto-reviewer/security-injection-local.md \
+     --skill .skill-machine/security-injection-local.md \
      --evals local-evals.json \
      --max-iterations 1
    # Should show 100% pass rate on no_false_positive assertions
@@ -241,11 +241,11 @@ If GitHub Actions lacks `contents: write` or `pull-requests: write`, tuning runs
 ```bash
 # Update local skill with global changes
 git diff upstream/main skills/security-injection/SKILL.md \
-  | patch .auto-reviewer/security-injection-local.md
+  | patch .skill-machine/security-injection-local.md
 
 # Re-tune
 python scripts/tune/autoresearch.py \
-  --skill .auto-reviewer/security-injection-local.md \
+  --skill .skill-machine/security-injection-local.md \
   --evals merged-evals.json \
   --max-iterations 10
 ```
@@ -277,7 +277,7 @@ grep "SQL injection" production-reviews.json \
   | jq -r '.code_snippet' > fps.txt
 
 # 2. Create local eval
-cat > .auto-reviewer/local-evals.json <<EOF
+cat > .skill-machine/local-evals.json <<EOF
 {
   "cases": [
     {
@@ -295,7 +295,7 @@ EOF
 # 3. Merge evals
 jq -s '.[0].cases + .[1].cases | {cases: .}' \
   evals/security-injection.json \
-  .auto-reviewer/local-evals.json \
+  .skill-machine/local-evals.json \
   > merged.json
 
 # 4. Tune
@@ -305,17 +305,17 @@ python scripts/tune/autoresearch.py \
   --skill skills/security-injection/SKILL.md \
   --evals merged.json \
   --max-iterations 20 \
-  --output .auto-reviewer/security-injection-local.md
+  --output .skill-machine/security-injection-local.md
 
 # 5. Validate
 python scripts/benchmark/runner.py \
-  --skills-dir .auto-reviewer/ \
-  --evals-dir .auto-reviewer/ \
+  --skills-dir .skill-machine/ \
+  --evals-dir .skill-machine/ \
   --models "$MODEL"
 # Check: no_false_positive assertions pass
 
 # 6. Deploy
-# Configure auto-reviewer to use .auto-reviewer/security-injection-local.md
+# Configure skill-machine to use .skill-machine/security-injection-local.md
 
 # 7. Monitor
 # Track FP rate over next week

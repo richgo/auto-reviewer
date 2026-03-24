@@ -26,7 +26,7 @@ class TestAdversarialAgentEntry(unittest.TestCase):
         agent_path = repo_root / "agents" / "adversarial" / "agent.md"
         content = agent_path.read_text(encoding="utf-8").lower()
 
-        self.assertIn(".auto-reviewer/adversarial.db", content)
+        self.assertIn(".skill-machine/adversarial.db", content)
         self.assertIn("runs", content)
         self.assertIn("findings", content)
         self.assertIn("stances", content)

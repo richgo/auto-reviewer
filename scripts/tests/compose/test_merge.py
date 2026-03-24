@@ -18,7 +18,7 @@ class TestComposeMerge(unittest.TestCase):
                         "dependencies": {
                             "apm": [
                                 "other-org/other-package#v2",
-                                "richgo/auto-reviewer/skills/review-orchestrator#v0.9.0",
+                                "richgo/skill-machine/skills/review-orchestrator#v0.9.0",
                             ]
                         },
                         "config": {"severity_threshold": "high"},
@@ -30,13 +30,13 @@ class TestComposeMerge(unittest.TestCase):
             merged = merge_managed_dependencies(
                 manifest_path=manifest_path,
                 managed_dependencies=[
-                    "richgo/auto-reviewer/skills/review-orchestrator#v1.0.0",
-                    "richgo/auto-reviewer/skills/diff-analysis#v1.0.0",
+                    "richgo/skill-machine/skills/review-orchestrator#v1.0.0",
+                    "richgo/skill-machine/skills/diff-analysis#v1.0.0",
                 ],
             )
 
         self.assertIn("other-org/other-package#v2", merged["dependencies"]["apm"])
-        self.assertIn("richgo/auto-reviewer/skills/diff-analysis#v1.0.0", merged["dependencies"]["apm"])
+        self.assertIn("richgo/skill-machine/skills/diff-analysis#v1.0.0", merged["dependencies"]["apm"])
         self.assertEqual(merged["config"]["severity_threshold"], "high")
 
     def test_merge_managed_dependencies_creates_manifest_dependencies_when_missing(self):
@@ -46,12 +46,12 @@ class TestComposeMerge(unittest.TestCase):
             merged = merge_managed_dependencies(
                 manifest_path=manifest_path,
                 managed_dependencies=[
-                    "richgo/auto-reviewer/skills/review-orchestrator#v1.0.0",
+                    "richgo/skill-machine/skills/review-orchestrator#v1.0.0",
                 ],
             )
         self.assertEqual(
             merged["dependencies"]["apm"],
-            ["richgo/auto-reviewer/skills/review-orchestrator#v1.0.0"],
+            ["richgo/skill-machine/skills/review-orchestrator#v1.0.0"],
         )
 
 

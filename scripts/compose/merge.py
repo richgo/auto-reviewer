@@ -10,6 +10,6 @@ def merge_managed_dependencies(*, manifest_path: Path, managed_dependencies: Lis
         payload = yaml.safe_load(manifest_path.read_text(encoding="utf-8")) or {}
     payload.setdefault("dependencies", {})
     current_apm = payload["dependencies"].get("apm", [])
-    unmanaged = [dep for dep in current_apm if not dep.startswith("richgo/auto-reviewer/skills/")]
+    unmanaged = [dep for dep in current_apm if not dep.startswith("richgo/skill-machine/skills/")]
     payload["dependencies"]["apm"] = unmanaged + sorted(managed_dependencies)
     return payload
