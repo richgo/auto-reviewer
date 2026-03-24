@@ -53,7 +53,7 @@
 
 ## Phase 4: Multi-Model Tuning Cascade (Amendment)
 
-- [ ] **4.1** Implement cascade orchestration handler
+- [x] **4.1** Implement cascade orchestration handler
    Create `scripts/tune/cascade.py` to coordinate multi-model escalation: run Stage 1 (gpt-5-mini, 5 iterations, 95% target), detect convergence failure, escalate to Stage 2 (claude-haiku-4.5, 3 iterations, 95% target), and route unresolved skills to needs-review workflow. (Design: Decision: Multi-Model Tuning Cascade with Escalation; Data Flow step 10+)
 
 - [ ] **4.2** Wire cascade into orchestrator and workflow

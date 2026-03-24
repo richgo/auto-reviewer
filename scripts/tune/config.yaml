@@ -6,3 +6,14 @@ dry_run: false
 models:
   - gpt-4o-mini
   - gemini-2.0-flash
+
+# Multi-model cascade configuration
+cascade:
+  enabled: true
+  stages:
+    - model: gpt-5-mini
+      max_iterations: 5
+      target_pass_rate: 0.95
+    - model: claude-haiku-4.5
+      max_iterations: 3
+      target_pass_rate: 0.95
