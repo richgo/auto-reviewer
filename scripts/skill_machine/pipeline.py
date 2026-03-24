@@ -141,6 +141,11 @@ def run_tune_stage(
         benchmark_ran=benchmark_ran,
         benchmark_passed=benchmark_passed,
     )
+    if state.state_path.exists():
+        state_payload["benchmark_artifact_path"] = benchmark_artifact_path
+        state_payload["benchmark_passed"] = benchmark_passed
+        state_payload["outcome_status"] = outcome.status.value
+        state.state_path.write_text(json.dumps(state_payload, indent=2), encoding="utf-8")
     return {
         "skill": state.skill_name,
         "skill_path": str(state.skill_path),
