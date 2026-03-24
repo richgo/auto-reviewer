@@ -41,7 +41,7 @@
 
 ## Phase 4: Documentation and Migration
 
-- [ ] **4.1** Update skill authoring documentation to pipeline-first language
+- [x] **4.1** Update skill authoring documentation to pipeline-first language
   Revise `skills-tools/creating-skills.md` and related human-facing docs so they point authors to the unified lifecycle rather than separate creator/optimizer/benchmark products. Covers `skills` **Unified Skill Authoring Workflow** and the design migration plan.
 
 - [ ] **4.2** Add transition guidance for legacy entrypoints
