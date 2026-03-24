@@ -9,7 +9,7 @@ from unittest.mock import AsyncMock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from benchmark.copilot_client import CopilotSDKClient
+from benchmark.copilot_client import CopilotSDKClient, CopilotTransport
 from benchmark.runner import BenchmarkRunner, main as benchmark_main
 from benchmark.scorer import select_best_models
 from tune.llm_client import CopilotLLMClient
@@ -287,6 +287,31 @@ class TestBenchmarkRunner(unittest.TestCase):
 
             self.assertEqual(instantiated_clients, ["gpt-4o-mini"])
 
+    def test_copilot_llm_client_uses_shared_transport(self):
+        captured = {}
+
+        class FakeTransport:
+            def complete(self, request):
+                captured["request"] = request
+                return SimpleNamespace(text="from-transport")
+
+        client = CopilotLLMClient(model="gpt-4.1", transport=FakeTransport())
+        result = client.complete(
+            "review me",
+            system="sys",
+            max_tokens=11,
+            temperature=0.2,
+        )
+
+        self.assertEqual("from-transport", result)
+        self.assertEqual("review me", captured["request"].prompt)
+        self.assertEqual("sys", captured["request"].system)
+        self.assertEqual("gpt-4.1", captured["request"].model)
+
+    def test_copilot_llm_client_default_transport_is_copilot_transport(self):
+        client = CopilotLLMClient(model="gpt-4.1")
+        self.assertIsInstance(client._transport, CopilotTransport)
+
     def test_find_skill_eval_pairs_ignores_evals_not_mapped_to_existing_skills(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             tmp = Path(tmp_dir)
@@ -379,41 +404,44 @@ class TestCopilotLLMClient(unittest.TestCase):
         client = CopilotLLMClient()
         self.assertIsNone(client.model)
 
-    def test_complete_calls_copilot_sdk_and_returns_content(self):
-        with patch("tune.llm_client.CopilotLLMClient._complete_async") as mock_async:
-            mock_async.return_value = "mocked review"
-            client = CopilotLLMClient("gpt-4o-mini")
-            result = client.complete("test prompt", system="sys")
+    def test_complete_calls_transport_and_returns_content(self):
+        captured = {}
+
+        class _FakeTransport:
+            def complete(self, request):
+                captured["request"] = request
+                return SimpleNamespace(text="mocked review")
+
+        client = CopilotLLMClient("gpt-4o-mini", transport=_FakeTransport())
+        result = client.complete("test prompt", system="sys")
 
         self.assertEqual(result, "mocked review")
-        mock_async.assert_called_once_with("test prompt", "sys")
+        self.assertEqual(captured["request"].prompt, "test prompt")
+        self.assertEqual(captured["request"].system, "sys")
+        self.assertEqual(captured["request"].model, "gpt-4o-mini")
 
-    def test_complete_raises_on_empty_sdk_response(self):
-        async def _fail(self_inner, prompt, system):
-            raise RuntimeError("Copilot SDK returned no response for model 'gpt-4o-mini'")
+    def test_complete_raises_when_transport_errors(self):
+        class _FailTransport:
+            def complete(self, request):
+                raise RuntimeError("Copilot SDK returned no response for model 'gpt-4o-mini'")
 
-        with patch.object(CopilotLLMClient, "_complete_async", _fail):
-            client = CopilotLLMClient("gpt-4o-mini")
-            with self.assertRaises(RuntimeError, msg="no response"):
-                client.complete("test prompt")
+        client = CopilotLLMClient("gpt-4o-mini", transport=_FailTransport())
+        with self.assertRaises(RuntimeError, msg="no response"):
+            client.complete("test prompt")
 
-    def test_complete_async_omits_model_when_unset(self):
-        session = AsyncMock()
-        session.send_and_wait.return_value = SimpleNamespace(
-            data=SimpleNamespace(content="mocked review")
-        )
-        client_impl = AsyncMock()
-        client_impl.create_session.return_value = session
+    def test_complete_omits_model_when_unset(self):
+        captured = {}
 
-        with patch("copilot.CopilotClient", return_value=client_impl), patch(
-            "copilot.PermissionHandler", new=SimpleNamespace(approve_all=object())
-        ):
-            client = CopilotLLMClient(None)
-            result = asyncio.run(client._complete_async("test prompt", "sys"))
+        class _FakeTransport:
+            def complete(self, request):
+                captured["request"] = request
+                return SimpleNamespace(text="mocked review")
+
+        client = CopilotLLMClient(None, transport=_FakeTransport())
+        result = client.complete("test prompt", system="sys")
 
         self.assertEqual(result, "mocked review")
-        _, kwargs = client_impl.create_session.call_args
-        self.assertNotIn("model", kwargs)
+        self.assertIsNone(captured["request"].model)
 
 
 class TestCopilotSDKClient(unittest.TestCase):

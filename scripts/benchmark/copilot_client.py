@@ -13,6 +13,8 @@ from typing import Any, List, Optional
 import yaml
 from copilot import CopilotClient
 
+from llm.transport import CompletionRequest, CompletionResponse
+
 
 class CopilotSDKClient:
     """Minimal sync wrapper around the async Copilot Python SDK."""
@@ -152,3 +154,26 @@ class CopilotSDKClient:
             return raw.get("github.com", {}).get("oauth_token")
         except Exception:
             return None
+
+
+class CopilotTransport:
+    """Provider-neutral transport adapter backed by CopilotSDKClient."""
+
+    def __init__(self, client: Optional[CopilotSDKClient] = None, timeout: int = 120):
+        self._client = client or CopilotSDKClient(timeout=timeout)
+
+    def complete(self, request: CompletionRequest) -> CompletionResponse:
+        text = self._client.complete(
+            model=request.model,
+            prompt=request.prompt,
+            system=request.system,
+            max_tokens=request.max_tokens,
+            temperature=request.temperature,
+        )
+        return CompletionResponse(
+            text=text,
+            model=request.model,
+            provider="copilot",
+            usage={},
+            raw=None,
+        )
