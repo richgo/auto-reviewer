@@ -44,7 +44,7 @@
 - [x] **4.1** Update skill authoring documentation to pipeline-first language
   Revise `skills-tools/creating-skills.md` and related human-facing docs so they point authors to the unified lifecycle rather than separate creator/optimizer/benchmark products. Covers `skills` **Unified Skill Authoring Workflow** and the design migration plan.
 
-- [ ] **4.2** Add transition guidance for legacy entrypoints
+- [x] **4.2** Add transition guidance for legacy entrypoints
   Document which existing scripts remain supported as internal building blocks during migration and which new pipeline entrypoint is canonical. Touch docs near `skills-tools/` and any README/help text associated with the new entry module. Supports backward compatibility decisions in the design.
 
 ## Phase 5: Testing & Verification
