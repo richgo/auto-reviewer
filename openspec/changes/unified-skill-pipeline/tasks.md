@@ -2,7 +2,7 @@
 
 ## Phase 1: Shared Foundations
 
-- [ ] **1.1** Introduce shared provider transport interfaces
+- [x] **1.1** Introduce shared provider transport interfaces
   Add a shared model transport module under `scripts/` for provider-neutral request/response handling, and refactor existing Copilot-specific wrappers in `scripts/tune/llm_client.py`, `scripts/benchmark/copilot_client.py`, and `skills-tools/skill-creator/scripts/copilot_sdk.py` to align behind it. Covers `tuning` spec requirement **Provider-Agnostic Model Interaction**.
 
 - [ ] **1.2** Add canonical workflow-state support for skills

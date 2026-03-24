@@ -8,12 +8,18 @@ import os
 from pathlib import Path
 from typing import Any
 
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "scripts"))
+from llm.transport import CompletionRequest, CompletionResponse, LLMTransport
+
 
 class CopilotSDKClient:
     """Sync helper around the async GitHub Copilot SDK."""
 
-    def __init__(self, timeout: int = 120):
+    def __init__(self, timeout: int = 120, transport: LLMTransport | None = None):
         self.timeout = timeout
+        self._transport = transport
 
     def complete(
         self,
@@ -22,6 +28,15 @@ class CopilotSDKClient:
         model: str | None = None,
         system: str | None = None,
     ) -> str:
+        if self._transport is not None:
+            response = self._transport.complete(
+                CompletionRequest(
+                    prompt=prompt,
+                    model=model,
+                    system=system,
+                )
+            )
+            return response.text
         return asyncio.run(self._complete_async(prompt=prompt, model=model, system=system))
 
     async def _complete_async(self, *, prompt: str, model: str | None, system: str | None) -> str:
