@@ -141,6 +141,70 @@ class TestPipelineCreateStage(unittest.TestCase):
             state_payload = Path(result["state_path"]).read_text(encoding="utf-8")
             self.assertIn('"status": "create_eval_not_ready"', state_payload)
 
+    def test_create_stage_emits_validation_artifact(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            evals_dir = root / "evals"
+            state_dir = root / ".skill-machine" / "workflow"
+            reports_dir = root / ".skill-machine" / "reports"
+            (skills_dir / "security-injection").mkdir(parents=True)
+            (skills_dir / "security-injection" / "SKILL.md").write_text(
+                "skill",
+                encoding="utf-8",
+            )
+            evals_dir.mkdir(parents=True)
+            (evals_dir / "security-injection.json").write_text(
+                '{"skill":"security-injection","cases":[{"assertions":{"must_detect":true}},{"assertions":{"must_not_detect":true}}]}',
+                encoding="utf-8",
+            )
+
+            result = run_create_stage(
+                skill_name="security-injection",
+                skills_dir=skills_dir,
+                evals_dir=evals_dir,
+                state_dir=state_dir,
+                validate_eval_readiness=True,
+                validation_reports_dir=reports_dir,
+            )
+
+            artifact_path = Path(result["validation_artifact_path"])
+            self.assertTrue(artifact_path.exists())
+            artifact = artifact_path.read_text(encoding="utf-8")
+            self.assertIn('"skill": "security-injection"', artifact)
+            self.assertIn('"eval_ready": true', artifact)
+
+    def test_create_stage_persists_validation_artifact_path_in_workflow_state(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            evals_dir = root / "evals"
+            state_dir = root / ".skill-machine" / "workflow"
+            reports_dir = root / ".skill-machine" / "reports"
+            (skills_dir / "security-injection").mkdir(parents=True)
+            (skills_dir / "security-injection" / "SKILL.md").write_text(
+                "skill",
+                encoding="utf-8",
+            )
+            evals_dir.mkdir(parents=True)
+            (evals_dir / "security-injection.json").write_text(
+                '{"skill":"security-injection","cases":[{"assertions":{"must_detect":true}},{"assertions":{"must_not_detect":true}}]}',
+                encoding="utf-8",
+            )
+
+            result = run_create_stage(
+                skill_name="security-injection",
+                skills_dir=skills_dir,
+                evals_dir=evals_dir,
+                state_dir=state_dir,
+                persist_state=True,
+                validate_eval_readiness=True,
+                validation_reports_dir=reports_dir,
+            )
+
+            state_payload = Path(result["state_path"]).read_text(encoding="utf-8")
+            self.assertIn('"validation_artifact_path"', state_payload)
+
 
 if __name__ == "__main__":
     unittest.main()

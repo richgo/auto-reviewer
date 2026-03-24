@@ -18,6 +18,7 @@ def run_create_stage(
     persist_state: bool = False,
     generate_eval_stub: bool = False,
     validate_eval_readiness: bool = False,
+    validation_reports_dir: Path | None = None,
 ) -> Dict[str, str]:
     state = resolve_skill_state(
         skill_name=skill_name,
@@ -46,6 +47,23 @@ def run_create_stage(
         readiness_reasons = list(readiness["reasons"])
         if not eval_ready:
             status = "create_eval_not_ready"
+    validation_artifact_path = ""
+    if validation_reports_dir is not None:
+        validation_artifact_path = str(validation_reports_dir / f"{state.skill_name}.json")
+        artifact_path = Path(validation_artifact_path)
+        artifact_path.parent.mkdir(parents=True, exist_ok=True)
+        artifact_path.write_text(
+            json.dumps(
+                {
+                    "skill": state.skill_name,
+                    "eval_path": str(state.eval_path),
+                    "eval_ready": eval_ready,
+                    "reasons": readiness_reasons,
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
     if persist_state:
         timestamp = datetime.utcnow().isoformat() + "Z"
         state.state_path.parent.mkdir(parents=True, exist_ok=True)
@@ -59,6 +77,7 @@ def run_create_stage(
                     "updated_at": timestamp,
                     "eval_ready": eval_ready,
                     "eval_readiness_reasons": readiness_reasons,
+                    "validation_artifact_path": validation_artifact_path,
                 },
                 indent=2,
             ),
@@ -70,4 +89,5 @@ def run_create_stage(
         "eval_path": str(state.eval_path),
         "state_path": str(state.state_path),
         "eval_ready": eval_ready,
+        "validation_artifact_path": validation_artifact_path,
     }

@@ -22,7 +22,7 @@
 - [x] **2.3** Add eval readiness validation
   Implement readiness checks for generated evals, including explicit failure reporting for empty or unbalanced datasets before tuning can start. Touch new eval validation logic and create-stage workflow state updates. Covers `evals` **Eval Quality Gate for Authoring**.
 
-- [ ] **2.4** Emit create-stage validation artifacts
+- [x] **2.4** Emit create-stage validation artifacts
   Reuse the existing quick eval/report path to produce a lightweight validation artifact from `create`, and record the readiness result in workflow state. Touch create-stage orchestration plus report-writing adapters in `skills-tools/skill-creator/scripts/run_loop.py` or adjacent helpers. Supports `skills` **Skill Workflow State Association** and `evals` lifecycle requirements.
 
 ## Phase 3: Tune Stage
