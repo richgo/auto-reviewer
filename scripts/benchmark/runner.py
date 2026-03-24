@@ -19,8 +19,8 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 
 # Import from tune module
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from tune.llm_client import CopilotLLMClient
-from tune.scorer import Scorer
+from skill_machine.llm_client import CopilotLLMClient
+from skill_machine.scorer import Scorer
 from benchmark.scorer import select_best_models
 
 

@@ -42,7 +42,7 @@ jobs:
         id: generate
         run: |
           SKILLS_PREFIX=$([[ "${{ github.event_name }}" == "schedule" ]] && echo "--skills-prefix security-" || echo "")
-          MATRIX=$(python scripts/tune/orchestrator.py \
+          MATRIX=$(python scripts/skill_machine/orchestrator.py \
             --trigger "${{ github.event_name }}" \
             --run-id "${{ github.run_id }}" \
             --skills "${{ github.event.inputs.skills }}" \
@@ -69,7 +69,7 @@ jobs:
         run: pip install -r scripts/requirements.txt
       - name: Run pair tuning
         run: |
-          python scripts/tune/autoresearch.py \
+          python scripts/skill_machine/autoresearch.py \
             --skill "skills/${{ matrix.skill }}/SKILL.md" \
             --evals "evals/${{ matrix.skill }}.json" \
             --model "${{ matrix.model }}" \

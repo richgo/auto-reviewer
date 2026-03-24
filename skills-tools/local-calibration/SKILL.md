@@ -100,7 +100,7 @@ jq -s '.[0].cases + .[1].cases | {cases: .}' \
 Run autoresearch with merged evals:
 
 ```bash
-python scripts/tune/autoresearch.py \
+python scripts/skill_machine/autoresearch.py \
   --skill skills/security-injection/SKILL.md \
   --evals merged-evals.json \
   --max-iterations 20 \
@@ -206,7 +206,7 @@ skills:
 2. **False positive test:** Run on known false positive cases
    ```bash
    # Check that calibration fixed false positives
-   python scripts/tune/autoresearch.py \
+   python scripts/skill_machine/autoresearch.py \
      --skill .skill-machine/security-injection-local.md \
      --evals local-evals.json \
      --max-iterations 1
@@ -244,7 +244,7 @@ git diff upstream/main skills/security-injection/SKILL.md \
   | patch .skill-machine/security-injection-local.md
 
 # Re-tune
-python scripts/tune/autoresearch.py \
+python scripts/skill_machine/autoresearch.py \
   --skill .skill-machine/security-injection-local.md \
   --evals merged-evals.json \
   --max-iterations 10
@@ -301,7 +301,7 @@ jq -s '.[0].cases + .[1].cases | {cases: .}' \
 # 4. Tune
 MODEL="${MODEL:-gpt-4o-mini}"
 
-python scripts/tune/autoresearch.py \
+python scripts/skill_machine/autoresearch.py \
   --skill skills/security-injection/SKILL.md \
   --evals merged.json \
   --max-iterations 20 \

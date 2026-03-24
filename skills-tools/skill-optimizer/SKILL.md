@@ -30,7 +30,7 @@ Guide for using the autoresearch tuning loop to optimize code review skills. Thi
 ```bash
 MODEL="${MODEL:-gpt-4o-mini}"
 
-python scripts/tune/autoresearch.py \
+python scripts/skill_machine/autoresearch.py \
   --skill skills/security-injection/SKILL.md \
   --evals evals/security-injection.json \
   --model "$MODEL" \
@@ -48,7 +48,7 @@ Autoresearch runs are now expected to execute via GitHub workflows:
 - `.github/workflows/autoresearch-promote.yml` handles branch-first promotion PR creation.
 - `tune-history/<skill>/<model>.jsonl` stores append-only decision history per pair.
 
-Promotion is gate-driven. Candidates must satisfy minimum F1 improvement and maximum FPR regression constraints from `scripts/tune/config.yaml`.
+Promotion is gate-driven. Candidates must satisfy minimum F1 improvement and maximum FPR regression constraints from `scripts/skill_machine/config.yaml`.
 Large diffs are labeled for manual review before merge.
 
 ### Parameters Explained
@@ -162,14 +162,14 @@ The tuner uses these strategies based on failure patterns:
 
 ```bash
 # 1. Check current skill performance
-python scripts/tune/autoresearch.py \
+python scripts/skill_machine/autoresearch.py \
   --skill skills/security-injection/SKILL.md \
   --evals evals/security-injection.json \
   --max-iterations 1
 # Output: Initial pass rate: 72.5%
 
 # 2. Run optimization
-python scripts/tune/autoresearch.py \
+python scripts/skill_machine/autoresearch.py \
   --skill skills/security-injection/SKILL.md \
   --evals evals/security-injection.json \
   --max-iterations 30 \

@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from benchmark.copilot_client import CopilotSDKClient, CopilotTransport
 from benchmark.runner import BenchmarkRunner, main as benchmark_main
 from benchmark.scorer import select_best_models
-from tune.llm_client import CopilotLLMClient
+from skill_machine.llm_client import CopilotLLMClient
 
 
 class _FakeScore:

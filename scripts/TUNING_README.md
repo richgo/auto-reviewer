@@ -31,7 +31,7 @@ gh auth login
 ### Tune a Single Skill
 
 ```bash
-python scripts/tune/autoresearch.py \
+python scripts/skill_machine/autoresearch.py \
   --skill skills/security-injection/SKILL.md \
   --evals evals/security-injection.json \
   --model gpt-4o-mini \
@@ -90,7 +90,7 @@ python scripts/benchmark/reporter.py \
 
 ```
 scripts/
-├── tune/
+├── skill_machine/
 │   ├── __init__.py
 │   ├── llm_client.py          # LLM interface backed by Copilot SDK
 │   ├── scorer.py              # Binary assertion evaluator
@@ -126,20 +126,20 @@ benchmark-results/             # Benchmark outputs (model_scores.json, REPORT.md
 
 ## Modules
 
-### `tune/llm_client.py`
+### `skill_machine/llm_client.py`
 
 Unified LLM client backed by the **GitHub Copilot SDK**.
 Model selection happens via `--model`/`--models` strings passed to the SDK.
 
 **Usage:**
 ```python
-from tune.llm_client import LLMClient
+from skill_machine.llm_client import LLMClient
 
 llm = LLMClient()
 response = llm.complete("Review this code...", system="You are a reviewer.")
 ```
 
-### `tune/scorer.py`
+### `skill_machine/scorer.py`
 
 Binary assertion scorer that evaluates review quality using LLM.
 
@@ -152,14 +152,14 @@ Binary assertion scorer that evaluates review quality using LLM.
 
 **Usage:**
 ```python
-from tune.scorer import Scorer
+from skill_machine.scorer import Scorer
 
 scorer = Scorer()
 score = scorer.score_review(review_output, eval_case)
 print(score.pass_rate)  # 0.0-1.0
 ```
 
-### `tune/mutator.py`
+### `skill_machine/mutator.py`
 
 Skill mutation strategies:
 1. **add_detection_heuristic** — Add pattern to catch missed bugs
@@ -170,14 +170,14 @@ Skill mutation strategies:
 
 **Usage:**
 ```python
-from tune.mutator import Mutator
+from skill_machine.mutator import Mutator
 
 mutator = Mutator()
 patterns = mutator.analyze_failures([(eval_case, score), ...])
 mutation = mutator.generate_mutation(skill_content, patterns, "add_detection_heuristic")
 ```
 
-### `tune/autoresearch.py`
+### `skill_machine/autoresearch.py`
 
 Main optimization loop. CLI tool.
 
@@ -194,7 +194,7 @@ Main optimization loop. CLI tool.
 
 **CLI:**
 ```bash
-python scripts/tune/autoresearch.py --help
+python scripts/skill_machine/autoresearch.py --help
 ```
 
 ### `benchmark/runner.py`
@@ -286,14 +286,14 @@ vi skills/my-new-skill/SKILL.md
 vi evals/my-new-skill.json  # 5-8 cases
 
 # 3. Baseline evaluation
-python scripts/tune/autoresearch.py \
+python scripts/skill_machine/autoresearch.py \
   --skill skills/my-new-skill/SKILL.md \
   --evals evals/my-new-skill.json \
   --max-iterations 1
 # Output: Initial pass rate: 65%
 
 # 4. Optimize
-python scripts/tune/autoresearch.py \
+python scripts/skill_machine/autoresearch.py \
   --skill skills/my-new-skill/SKILL.md \
   --evals evals/my-new-skill.json \
   --max-iterations 30 \
@@ -352,7 +352,7 @@ jq -s '.[0].cases + .[1].cases | {cases: .}' \
   .skill-machine/local-evals.json > merged.json
 
 # 4. Re-tune
-python scripts/tune/autoresearch.py \
+python scripts/skill_machine/autoresearch.py \
   --skill skills/security-injection/SKILL.md \
   --evals merged.json \
   --max-iterations 10 \

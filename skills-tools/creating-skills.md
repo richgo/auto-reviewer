@@ -78,8 +78,8 @@ In practice, that means:
 Today the code already hints at this consolidation:
 
 - `skills-tools/skill-creator/scripts/run_loop.py` already combines eval + improve into a loop
-- `scripts/tune/autoresearch.py` already owns mutation and acceptance logic
-- `scripts/tune/cascade.py` adds staged escalation
+- `scripts/skill_machine/autoresearch.py` already owns mutation and acceptance logic
+- `scripts/skill_machine/cascade.py` adds staged escalation
 - `scripts/benchmark/runner.py` is a downstream validation stage
 
 The bigger problem is that model access and pipeline orchestration are still fragmented.
@@ -90,7 +90,7 @@ Right now the repo has duplicated Copilot SDK wrappers:
 
 - `skills-tools/skill-creator/scripts/copilot_sdk.py`
 - `scripts/benchmark/copilot_client.py`
-- `scripts/tune/llm_client.py` wrapping benchmark transport
+- `scripts/skill_machine/llm_client.py` wrapping benchmark transport
 
 That duplication is the clearest sign that the next architectural step is not "more workflow docs" but a shared model layer.
 
@@ -304,7 +304,7 @@ Beyond the transport abstraction and unified CLI, the next useful moves would be
   - benchmark should be invocable from `tune` as a gate, not treated as a disconnected tool
 
 - **Introduce artifact directories per skill**
-  - for example `artifacts/<skill>/create/`, `artifacts/<skill>/tune/`, `artifacts/<skill>/benchmark/`
+  - for example `artifacts/<skill>/create/`, `artifacts/<skill>/skill_machine/`, `artifacts/<skill>/benchmark/`
 
 ## Quick Reference
 
@@ -320,14 +320,14 @@ python scripts/skill_pipeline.py tune --skill weak-jwt-validation
 - `scripts/skill_pipeline.py` - orchestration entrypoint
 - `scripts/llm/` - provider transports and shared request/response types
 - `scripts/evals/` - eval generation, loading, validation
-- `scripts/tune/` - mutation, scoring, cascade, promotion
+- `scripts/skill_machine/` - mutation, scoring, cascade, promotion
 - `scripts/benchmark/` - final benchmark execution and reporting
 
 ## Helpful References
 
 - `skills-tools/skill-creator/SKILL.md` - current authoring guidance
 - `skills-tools/skill-creator/scripts/run_loop.py` - existing eval/improve loop
-- `scripts/tune/autoresearch.py` - current tuning loop
-- `scripts/tune/cascade.py` - staged escalation logic
-- `scripts/tune/llm_client.py` - current tune-side model interface
+- `scripts/skill_machine/autoresearch.py` - current tuning loop
+- `scripts/skill_machine/cascade.py` - staged escalation logic
+- `scripts/skill_machine/llm_client.py` - current tune-side model interface
 - `scripts/benchmark/copilot_client.py` - current benchmark-side transport

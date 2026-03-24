@@ -202,7 +202,7 @@ python scripts/benchmark/reporter.py \
 cat REPORT.md | grep "Hard\|Very Hard"
 
 # Tune weak skills
-python scripts/tune/autoresearch.py \
+python scripts/skill_machine/autoresearch.py \
   --skill skills/concurrency/SKILL.md \
   --evals evals/concurrency.json \
   --max-iterations 30

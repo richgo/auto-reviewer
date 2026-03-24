@@ -22,12 +22,12 @@ pytest scripts/tests/
 ### Run a specific test file
 ```bash
 pytest scripts/tests/benchmark/test_runner.py
-pytest scripts/tests/tune/test_autoresearch_loop.py
+pytest scripts/tests/skill_machine/test_autoresearch_loop.py
 ```
 
 ### Tune a skill (autoresearch loop)
 ```bash
-python scripts/tune/autoresearch.py \
+python scripts/skill_machine/autoresearch.py \
   --skill skills/<skill-id>/SKILL.md \
   --evals evals/<skill-id>.json \
   --model gpt-4o-mini \
@@ -77,7 +77,7 @@ JSON files keyed by skill ID (e.g., `evals/security-injection.json`). Each file 
 
 ### Scripts Architecture (`scripts/`)
 
-- **`tune/`** — Autoresearch loop: `llm_client.py` (Copilot SDK wrapper), `scorer.py` (binary assertion evaluator), `mutator.py` (skill mutation strategies), `autoresearch.py` (CLI entry), `orchestrator.py` (matrix planning for CI)
+- **`skill_machine/`** — Autoresearch loop: `llm_client.py` (Copilot SDK wrapper), `scorer.py` (binary assertion evaluator), `mutator.py` (skill mutation strategies), `autoresearch.py` (CLI entry), `orchestrator.py` (matrix planning for CI)
 - **`benchmark/`** — SWE-bench harness: `runner.py` (multi-model evaluation), `reporter.py` (markdown report), `copilot_client.py` (SDK wrapper), `judge.py` (assertion judgment), `scorer.py`
 - **`compose/`** — Composer pipeline: `detector.py` (repo signal detection), `selector.py` (policy-mapped skill selection), `composer.py`, `merge.py`, `validator.py`, `versioning.py`; policy config at `scripts/compose/policy.yaml`
 - **`skills/`** — Skill utilities: `canonical_inventory.py` (enumerate canonical skill identifiers)

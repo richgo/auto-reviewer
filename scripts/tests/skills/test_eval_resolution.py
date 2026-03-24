@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tune.orchestrator import build_plan
+from skill_machine.orchestrator import build_plan
 
 
 class TestEvalResolution(unittest.TestCase):
