@@ -36,7 +36,7 @@
 - [x] **3.3** Integrate benchmark as a tune-stage validation gate
   Update tune-stage orchestration so benchmark execution can run as an explicit validation step and feed promotion decisions while preserving independently inspectable benchmark artifacts. Touch `scripts/benchmark/runner.py`, tune orchestration, and outcome recording. Covers `tuning` **Benchmark as Lifecycle Validation**.
 
-- [ ] **3.4** Preserve the local-calibration boundary
+- [x] **3.4** Preserve the local-calibration boundary
   Update documentation and orchestration boundaries so `local-calibration` remains outside canonical create/tune promotion flow and its outputs remain distinguishable from canonical skill artifacts. Touch pipeline docs and any tuning/orchestration boundary code that currently blurs this separation. Covers `tuning` **Local Calibration**.
 
 ## Phase 4: Documentation and Migration
