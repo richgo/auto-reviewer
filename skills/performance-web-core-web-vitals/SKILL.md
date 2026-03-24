@@ -1,7 +1,7 @@
 ---
 name: performance web core web vitals
 description: >
-  Migrated review-task skill for Core Web Vitals Issues. Use this skill whenever diffs
+  Core Web Vitals Issues. Use this skill whenever diffs
   may introduce performance issues on web, especially in JavaScript, TypeScript, HTML.
   Actively look for: LCP/CLS/INP regressions: large images without lazy loading, layout
   shifts, long input delays. and report findings with medium severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Core Web Vitals Issues
-
-## Source Lineage
-- Original review task: `review-tasks/performance/web/core-web-vitals.md`
-- Migrated skill artifact: `skills/review-task-performance-web-core-web-vitals/SKILL.md`
-
 ## Task Metadata
 - Category: `performance`
 - Severity: `medium`
@@ -53,8 +48,3 @@ LCP/CLS/INP regressions: large images without lazy loading, layout shifts, long 
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific improvements
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

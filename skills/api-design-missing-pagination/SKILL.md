@@ -1,7 +1,7 @@
 ---
 name: api design missing pagination
 description: >
-  Migrated review-task skill for Missing Pagination. Use this skill whenever diffs may
+  Missing Pagination. Use this skill whenever diffs may
   introduce api-design issues on web, api, microservices, especially in all. Actively
   look for: List endpoints returning unbounded results, no limit/offset or cursor
   pagination. and report findings with medium severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Missing Pagination
-
-## Source Lineage
-- Original review task: `review-tasks/api-design/missing-pagination.md`
-- Migrated skill artifact: `skills/review-task-api-design-missing-pagination/SKILL.md`
-
 ## Task Metadata
 - Category: `api-design`
 - Severity: `medium`
@@ -53,8 +48,3 @@ List endpoints returning unbounded results, no limit/offset or cursor pagination
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Provides actionable recommendation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

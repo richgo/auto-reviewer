@@ -2,10 +2,10 @@
 
 ## Phase 1: Canonical Skill Identity and Layout
 
-- [x] **1.1** Build canonical skill inventory and flattened-name map  
-  Enumerate active skills and nested review-task-derived entries, derive canonical flattened identifiers, and produce a deterministic inventory used by downstream migration checks.  
-  **Files:** `skills/**`, `scripts/skills/migration_map.py` (or equivalent inventory surface)  
-  **Done when:** Every active source resolves to one proposed canonical identifier with no unmapped artifacts.  
+- [x] **1.1** Build canonical skill inventory and flattened-name map
+  Enumerate active skills and derive canonical flattened identifiers, producing a deterministic inventory used by downstream migration checks.
+  **Files:** `skills/**`, `scripts/skills/` (or equivalent inventory surface)
+  **Done when:** Every active source resolves to one proposed canonical identifier with no unmapped artifacts.
   **Spec coverage:** `skills` / Canonical Skill Folder Contract, Flattened Name Resolution.
 
 - [x] **1.2** Define and apply canonical folder contract  
@@ -38,19 +38,19 @@
   Align skill discovery contracts to resolve canonical `SKILL.md` folders only.  
   **Files:** `scripts/benchmark/runner.py`, `scripts/tune/orchestrator.py`  
   **Done when:** Discovery no longer depends on category-local `*.md` skill files.  
-  **Spec coverage:** `agent-composition` / Canonical Skill Discovery Contract; `review-tasks` / Runtime Independence from Review-Task Trees.
+  **Spec coverage:** `agent-composition` / Canonical Skill Discovery Contract.
 
-- [x] **2.3** Align skill mapping outputs and lineage references  
-  Update migration mapping outputs to reference canonical flattened skill identities and non-normative historical lineage.  
-  **Files:** `scripts/skills/migration_map.py`, related artifacts/tests  
-  **Done when:** Mapping output references canonical active skill identities without requiring nested runtime trees.  
-  **Spec coverage:** `review-tasks` / Nested-to-Flat Lineage Clarity; `skills` / Guidance Resolution Through Canonical Skills.
+- [x] **2.3** Align skill mapping outputs and lineage references
+  Update mapping outputs to reference canonical flattened skill identities.
+  **Files:** `scripts/skills/`, related artifacts/tests
+  **Done when:** Mapping output references canonical active skill identities without requiring nested runtime trees.
+  **Spec coverage:** `skills` / Guidance Resolution Through Canonical Skills.
 
-- [x] **2.4** Update docs/spec language for strict no-legacy active behavior  
-  Ensure README and OpenSpec surfaces describe canonical foldered skills as exclusive active contract.  
-  **Files:** `README.md`, `openspec/specs/review-tasks/spec.md`, relevant change docs  
-  **Done when:** No active contract text implies legacy skill-path support.  
-  **Spec coverage:** `review-tasks` / Historical Inspection Boundaries; `agent-composition` / Legacy Reference Rejection.
+- [x] **2.4** Update docs/spec language for strict no-legacy active behavior
+  Ensure README and OpenSpec surfaces describe canonical foldered skills as exclusive active contract.
+  **Files:** `README.md`, relevant change docs
+  **Done when:** No active contract text implies legacy skill-path support.
+  **Spec coverage:** `agent-composition` / Legacy Reference Rejection.
 
 ## Phase 3: Conflict Reporting, Tests, and Verification
 

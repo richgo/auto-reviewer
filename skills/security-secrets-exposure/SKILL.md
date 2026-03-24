@@ -1,7 +1,7 @@
 ---
 name: security secrets exposure
 description: >
-  Migrated review-task skill for Secrets/Credentials Exposure. Use this skill whenever
+  Secrets/Credentials Exposure. Use this skill whenever
   diffs may introduce security issues on all, especially in all. Actively look for:
   Hardcoded secrets, API keys, passwords, or tokens in source code, config files
   committed to VCS, or logged/returned in... and report findings with critical severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Secrets/Credentials Exposure
-
-## Source Lineage
-- Original review task: `review-tasks/security/secrets-exposure.md`
-- Migrated skill artifact: `skills/review-task-security-secrets-exposure/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -57,8 +52,3 @@ stripe.api_key = os.environ['STRIPE_SECRET_KEY']
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding includes remediation (env var / secrets manager)
 - [ ] Severity assigned as critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

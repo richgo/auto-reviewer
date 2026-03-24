@@ -2,7 +2,7 @@
 
 ## Intent
 
-Build a comprehensive scoring harness to evaluate model × skill performance on real-world code review tasks, inspired by SWE-bench's approach to measuring software engineering capabilities. Uses the **GitHub Copilot SDK** as the unified LLM client — giving access to all models (Claude, GPT, Gemini, etc.) through a single interface with built-in auth, streaming, and tool support.
+Build a comprehensive scoring harness to evaluate model × skill performance on real-world code review scenarios, inspired by SWE-bench's approach to measuring software engineering capabilities. Uses the **GitHub Copilot SDK** as the unified LLM client — giving access to all models (Claude, GPT, Gemini, etc.) through a single interface with built-in auth, streaming, and tool support.
 
 ## Scope
 

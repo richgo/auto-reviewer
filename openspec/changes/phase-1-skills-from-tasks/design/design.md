@@ -4,17 +4,17 @@
 
 ## Overview
 
-Phase 1 transforms 197 atomic review tasks into 40 composable skills organized by concern (19), language (11), output format (5), orchestration (2), and tuning (3). Skills follow the Anthropic format with progressive disclosure and are validated via structured eval infrastructure.
+Phase 1 transforms the initial research corpus into 40 composable skills organized by concern (19), language (11), output format (5), orchestration (2), and tuning (3). Skills follow the Anthropic format with progressive disclosure and are validated via structured eval infrastructure.
 
 ## Architecture
 
 ### Components Affected
 - `skills/` directory structure (new) — 5 subdirectories with 40 markdown files
-- `evals/` directory (new) — JSON test cases extracted from review tasks
-- `review-tasks/` (historical, non-normative) — retained archive context
+- `evals/` directory (new) — JSON test cases for skill validation
+- `skills/` — canonical review guidance (historical archive context preserved)
 
 ### New Components
-- **Concern skills** (`skills/concerns/`): 19 skills grouping related review tasks
+- **Concern skills** (`skills/concerns/`): 19 skills grouped by concern area
   - 10 security sub-skills covering injection, auth, data protection, network, client-side, API, AI/LLM, supply chain, mobile, infrastructure
   - 9 other concern skills covering concurrency, correctness, testing, performance, reliability, API design, data integrity, observability, code quality
 - **Language skills** (`skills/languages/`): 11 skills with language-specific guidance (Python, TypeScript, Java, Kotlin, Swift, Go, Rust, C#, C++, Ruby, PHP)
@@ -27,7 +27,7 @@ Phase 1 transforms 197 atomic review tasks into 40 composable skills organized b
 
 ### Decision: Concern Grouping Strategy
 
-**Chosen:** Group review tasks by semantic similarity into 19 concern skills, with 10 security sub-skills
+**Chosen:** Group concerns by semantic similarity into 19 concern skills, with 10 security sub-skills
 **Alternatives considered:**
 - Flat list of 197 individual skills — rejected because it's unmanageable and creates massive dispatch overhead
 - Merge all security into one skill — rejected because a single security skill would exceed 2000 lines and lose focus
@@ -98,7 +98,7 @@ No API changes — this is skill content and infrastructure. Phase 2 will define
 
 ## Dependencies
 
-- Phase 0 review tasks (✅ complete, historical/non-normative archive context)
+- Phase 0 review research (complete, historical/non-normative archive context)
 - OWASP CheatSheetSeries (external) — referenced in security skills
 - Anthropic skill format spec (external) — defines skill structure
 

@@ -1,7 +1,7 @@
 ---
 name: security ios pasteboard leak
 description: >
-  Migrated review-task skill for iOS Pasteboard Data Leakage. Use this skill whenever
+  iOS Pasteboard Data Leakage. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Swift, Objective-C.
   Actively look for: Sensitive data copied to UIPasteboard.general accessible by other
   apps across system. and report findings with medium severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # iOS Pasteboard Data Leakage
-
-## Source Lineage
-- Original review task: `review-tasks/security/ios/pasteboard-leak.md`
-- Migrated skill artifact: `skills/review-task-security-ios-pasteboard-leak/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -59,8 +54,3 @@ Sensitive data copied to UIPasteboard.general accessible by other apps across sy
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

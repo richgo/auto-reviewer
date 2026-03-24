@@ -1,7 +1,7 @@
 ---
 name: concurrency thread unsafe collection
 description: >
-  Migrated review-task skill for Thread-Unsafe Collections. Use this skill whenever
+  Thread-Unsafe Collections. Use this skill whenever
   diffs may introduce concurrency issues on all, especially in all. Actively look for:
   Using non-synchronized collections (ArrayList, HashMap) from multiple threads without
   synchronization. and report findings with high severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Thread-Unsafe Collections
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/thread-unsafe-collection.md`
-- Migrated skill artifact: `skills/review-task-concurrency-thread-unsafe-collection/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `high`
@@ -56,8 +51,3 @@ Using non-synchronized collections (ArrayList, HashMap) from multiple threads wi
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

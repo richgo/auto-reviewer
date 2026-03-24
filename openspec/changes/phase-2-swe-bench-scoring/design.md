@@ -2,7 +2,7 @@
 
 ## Overview
 
-This design implements a comprehensive benchmark harness to evaluate model × skill performance on real-world code review tasks, inspired by SWE-bench's approach. The system uses the **GitHub Copilot SDK** as a unified LLM client, providing access to all models through a single interface. The harness runs skills against eval datasets, scores outputs using an LLM-as-judge approach with binary assertions, and generates performance matrices comparing models across skills. This enables data-driven model selection per skill and category.
+This design implements a comprehensive benchmark harness to evaluate model × skill performance on real-world code review scenarios, inspired by SWE-bench's approach. The system uses the **GitHub Copilot SDK** as a unified LLM client, providing access to all models through a single interface. The harness runs skills against eval datasets, scores outputs using an LLM-as-judge approach with binary assertions, and generates performance matrices comparing models across skills. This enables data-driven model selection per skill and category.
 
 ## Architecture
 

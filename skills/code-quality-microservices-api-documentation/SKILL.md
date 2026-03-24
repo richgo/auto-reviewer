@@ -1,18 +1,13 @@
 ---
 name: code quality microservices api documentation
 description: >
-  Migrated review-task skill for API Documentation Missing. Use this skill whenever
+  API Documentation Missing. Use this skill whenever
   diffs may introduce code-quality issues on microservices, especially in all. Actively
   look for: No OpenAPI spec, missing endpoint documentation, undocumented error codes.
   and report findings with medium severity expectations and actionable fixes.
 ---
 
 # API Documentation Missing
-
-## Source Lineage
-- Original review task: `review-tasks/code-quality/microservices/api-documentation.md`
-- Migrated skill artifact: `skills/review-task-code-quality-microservices-api-documentation/SKILL.md`
-
 ## Task Metadata
 - Category: `code-quality`
 - Severity: `medium`
@@ -52,8 +47,3 @@ No OpenAPI spec, missing endpoint documentation, undocumented error codes.
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Provides actionable recommendation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

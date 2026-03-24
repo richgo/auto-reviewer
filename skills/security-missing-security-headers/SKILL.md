@@ -1,7 +1,7 @@
 ---
 name: security missing security headers
 description: >
-  Migrated review-task skill for Missing Security Headers. Use this skill whenever diffs
+  Missing Security Headers. Use this skill whenever diffs
   may introduce security issues on web, especially in all. Actively look for: Missing
   security headers leave web applications vulnerable to XSS, clickjacking, MIME
   sniffing, and other client-side attacks. Critical headers... and report findings with
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Missing Security Headers
-
-## Source Lineage
-- Original review task: `review-tasks/security/missing-security-headers.md`
-- Migrated skill artifact: `skills/review-task-security-missing-security-headers/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -108,8 +103,3 @@ CSP_SCRIPT_SRC = ("'self'",)
 - [ ] Does NOT flag counter-example 2 (Django security settings)
 - [ ] Finding lists recommended header values
 - [ ] Severity assigned as medium (or high if CSP missing on auth pages)
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

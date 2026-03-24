@@ -89,14 +89,13 @@ The system SHALL define scoring metrics for skill performance.
 - THEN the benchmark-runner SHALL calculate: precision (true positives / (true positives + false positives)), recall (true positives / (true positives + false negatives)), F1 score (harmonic mean of precision and recall), false positive rate
 - AND skills SHALL meet minimum thresholds: precision >90%, recall >80%
 
-### Requirement: Eval Extraction from Review Tasks
+### Requirement: Eval Case Sourcing
 
-The system SHALL extract eval cases from Phase 0 review task files.
+The system SHALL source eval cases from the Phase 0 research corpus.
 
-#### Scenario: Automated Extraction
+#### Scenario: Eval Build
 
-- GIVEN review tasks contain inline eval cases
+- GIVEN the Phase 0 research corpus contains example cases
 - WHEN building eval JSON files
-- THEN eval cases SHALL be extracted programmatically from review task markdown files
+- THEN eval cases SHALL be built from research corpus examples
 - AND extraction SHALL preserve: code snippets, expected findings, counter-examples
-- AND eval id SHALL map to the source review task

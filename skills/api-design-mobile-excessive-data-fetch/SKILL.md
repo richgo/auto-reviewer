@@ -1,18 +1,13 @@
 ---
 name: api design mobile excessive data fetch
 description: >
-  Migrated review-task skill for Excessive Data Fetch. Use this skill whenever diffs may
+  Excessive Data Fetch. Use this skill whenever diffs may
   introduce api-design issues on mobile, especially in Swift, Kotlin. Actively look for:
   Downloading full payloads on cellular, missing pagination/field selection for mobile.
   and report findings with medium severity expectations and actionable fixes.
 ---
 
 # Excessive Data Fetch
-
-## Source Lineage
-- Original review task: `review-tasks/api-design/mobile/excessive-data-fetch.md`
-- Migrated skill artifact: `skills/review-task-api-design-mobile-excessive-data-fetch/SKILL.md`
-
 ## Task Metadata
 - Category: `api-design`
 - Severity: `medium`
@@ -52,8 +47,3 @@ Downloading full payloads on cellular, missing pagination/field selection for mo
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Provides actionable recommendation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

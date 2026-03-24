@@ -1,7 +1,7 @@
 ---
 name: data migration safety
 description: >
-  Migrated review-task skill for Migration Safety. Use this skill whenever diffs may
+  Migration Safety. Use this skill whenever diffs may
   introduce data issues on web, api, especially in all. Actively look for: Database
   migrations that are destructive, non-reversible, or unsafe to run on production —
   dropping columns/tables, changing types with... and report findings with high severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Migration Safety
-
-## Source Lineage
-- Original review task: `review-tasks/data/migration-safety.md`
-- Migrated skill artifact: `skills/review-task-data-migration-safety/SKILL.md`
-
 ## Task Metadata
 - Category: `data`
 - Severity: `high`
@@ -60,8 +55,3 @@ def upgrade():
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests safe alternative
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: performance memory leak
 description: >
-  Migrated review-task skill for Memory Leak. Use this skill whenever diffs may
+  Memory Leak. Use this skill whenever diffs may
   introduce performance issues on all, especially in all. Actively look for: Unbounded
   accumulation of objects in memory — event listeners not removed, caches without
   eviction, closures capturing large scopes,... and report findings with high severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Memory Leak
-
-## Source Lineage
-- Original review task: `review-tasks/performance/memory-leak.md`
-- Migrated skill artifact: `skills/review-task-performance-memory-leak/SKILL.md`
-
 ## Task Metadata
 - Category: `performance`
 - Severity: `high`
@@ -72,8 +67,3 @@ useEffect(() => {
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding identifies the leak source
 - [ ] Finding suggests cleanup mechanism
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

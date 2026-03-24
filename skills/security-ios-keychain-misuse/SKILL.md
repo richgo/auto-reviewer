@@ -1,7 +1,7 @@
 ---
 name: security ios keychain misuse
 description: >
-  Migrated review-task skill for iOS Keychain Misuse. Use this skill whenever diffs may
+  iOS Keychain Misuse. Use this skill whenever diffs may
   introduce security issues on mobile, especially in Swift, Objective-C. Actively look
   for: Wrong Keychain accessibility class (kSecAttrAccessibleAlways) or missing
   kSecAttrAccessControl flags. and report findings with medium severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # iOS Keychain Misuse
-
-## Source Lineage
-- Original review task: `review-tasks/security/ios/keychain-misuse.md`
-- Migrated skill artifact: `skills/review-task-security-ios-keychain-misuse/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -59,8 +54,3 @@ Wrong Keychain accessibility class (kSecAttrAccessibleAlways) or missing kSecAtt
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

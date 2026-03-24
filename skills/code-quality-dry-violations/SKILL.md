@@ -1,18 +1,13 @@
 ---
 name: code quality dry violations
 description: >
-  Migrated review-task skill for DRY Violations. Use this skill whenever diffs may
+  DRY Violations. Use this skill whenever diffs may
   introduce code-quality issues on all, especially in all. Actively look for: Duplicated
   code blocks, copy-paste without abstraction, repeated logic across files. and report
   findings with low severity expectations and actionable fixes.
 ---
 
 # DRY Violations
-
-## Source Lineage
-- Original review task: `review-tasks/code-quality/dry-violations.md`
-- Migrated skill artifact: `skills/review-task-code-quality-dry-violations/SKILL.md`
-
 ## Task Metadata
 - Category: `code-quality`
 - Severity: `low`
@@ -52,8 +47,3 @@ Duplicated code blocks, copy-paste without abstraction, repeated logic across fi
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Provides actionable recommendation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

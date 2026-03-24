@@ -201,7 +201,6 @@ db.session.commit()
 **Finding:** Critical — Plaintext password storage. Use bcrypt/scrypt/argon2.
 
 ## Migration Coverage
-Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)

@@ -1,18 +1,13 @@
 ---
 name: security microservices insecure messaging
 description: >
-  Migrated review-task skill for Insecure Messaging. Use this skill whenever diffs may
+  Insecure Messaging. Use this skill whenever diffs may
   introduce security issues on microservices, especially in all. Actively look for:
   Unencrypted message queues (Kafka, RabbitMQ), unsigned events enabling replay attacks.
   and report findings with high severity expectations and actionable fixes.
 ---
 
 # Insecure Messaging
-
-## Source Lineage
-- Original review task: `review-tasks/security/microservices/insecure-messaging.md`
-- Migrated skill artifact: `skills/review-task-security-microservices-insecure-messaging/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -55,8 +50,3 @@ Unencrypted message queues (Kafka, RabbitMQ), unsigned events enabling replay at
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

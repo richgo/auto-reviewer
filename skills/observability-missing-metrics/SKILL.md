@@ -1,7 +1,7 @@
 ---
 name: observability missing metrics
 description: >
-  Migrated review-task skill for Missing Metrics. Use this skill whenever diffs may
+  Missing Metrics. Use this skill whenever diffs may
   introduce observability issues on web, api, microservices, especially in all. Actively
   look for: No instrumentation for SLIs (latency, error rate, throughput), missing
   business metrics. and report findings with medium severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Missing Metrics
-
-## Source Lineage
-- Original review task: `review-tasks/observability/missing-metrics.md`
-- Migrated skill artifact: `skills/review-task-observability-missing-metrics/SKILL.md`
-
 ## Task Metadata
 - Category: `observability`
 - Severity: `medium`
@@ -53,8 +48,3 @@ No instrumentation for SLIs (latency, error rate, throughput), missing business 
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Provides actionable recommendation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

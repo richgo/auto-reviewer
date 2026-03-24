@@ -1,7 +1,7 @@
 ---
 name: security insecure crypto
 description: >
-  Migrated review-task skill for Insecure Cryptography. Use this skill whenever diffs
+  Insecure Cryptography. Use this skill whenever diffs
   may introduce security issues on all, especially in all. Actively look for: Insecure
   cryptography includes use of weak algorithms (DES, RC4, MD5), insecure modes (ECB),
   hardcoded encryption keys, insufficient key... and report findings with high severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Insecure Cryptography
-
-## Source Lineage
-- Original review task: `review-tasks/security/insecure-crypto.md`
-- Migrated skill artifact: `skills/review-task-security-insecure-crypto/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -102,8 +97,3 @@ function encrypt(data) {
 - [ ] Does NOT flag counter-example 2 (key from environment)
 - [ ] Finding references OWASP Cryptographic Storage Cheat Sheet
 - [ ] Severity assigned as high or critical for hardcoded keys
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

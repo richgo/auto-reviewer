@@ -1,7 +1,7 @@
 ---
 name: security android exported components
 description: >
-  Migrated review-task skill for Android Exported Components. Use this skill whenever
+  Android Exported Components. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Kotlin, Java, XML.
   Actively look for: Exported Android components (Activities, Services,
   BroadcastReceivers, ContentProviders) without proper permission checks allow malicious
@@ -10,11 +10,6 @@ description: >
 ---
 
 # Android Exported Components
-
-## Source Lineage
-- Original review task: `review-tasks/security/android/exported-components.md`
-- Migrated skill artifact: `skills/review-task-security-android-exported-components/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -120,8 +115,3 @@ class AdminActivity : AppCompatActivity() {
 - [ ] Does NOT flag counter-example 2 (exported=false)
 - [ ] Finding references OWASP MASVS-PLATFORM
 - [ ] Severity assigned as critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

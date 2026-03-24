@@ -1,18 +1,13 @@
 ---
 name: testing mock overuse
 description: >
-  Migrated review-task skill for Mock Overuse. Use this skill whenever diffs may
+  Mock Overuse. Use this skill whenever diffs may
   introduce testing issues on all, especially in all. Actively look for: Excessive
   mocking making tests fragile, testing mocks instead of behavior. and report findings
   with low severity expectations and actionable fixes.
 ---
 
 # Mock Overuse
-
-## Source Lineage
-- Original review task: `review-tasks/testing/mock-overuse.md`
-- Migrated skill artifact: `skills/review-task-testing-mock-overuse/SKILL.md`
-
 ## Task Metadata
 - Category: `testing`
 - Severity: `low`
@@ -54,8 +49,3 @@ Excessive mocking making tests fragile, testing mocks instead of behavior.
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding provides clear remediation steps
 - [ ] Severity matches impact level
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

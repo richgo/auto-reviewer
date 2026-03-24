@@ -1,7 +1,7 @@
 ---
 name: correctness null deref
 description: >
-  Migrated review-task skill for Null/Undefined Dereference. Use this skill whenever
+  Null/Undefined Dereference. Use this skill whenever
   diffs may introduce correctness issues on all, especially in all. Actively look for:
   Accessing properties or methods on a value that may be null/undefined/None, causing
   runtime crashes (NullPointerException, TypeError, segfault). and report findings with
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Null/Undefined Dereference
-
-## Source Lineage
-- Original review task: `review-tasks/correctness/null-deref.md`
-- Migrated skill artifact: `skills/review-task-correctness-null-deref/SKILL.md`
-
 ## Task Metadata
 - Category: `correctness`
 - Severity: `high`
@@ -63,8 +58,3 @@ function getUserEmail(users, id) {
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding identifies the nullable source
 - [ ] Finding suggests null check or optional chaining
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

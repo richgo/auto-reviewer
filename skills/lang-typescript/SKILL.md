@@ -297,11 +297,6 @@ type User = z.infer<typeof UserSchema>;  // Derive TS type from schema
 5. **Missing error handling in middleware** — Silent failures
 
 ## Related Security Tasks
-- `review-tasks/security/sql-injection.md`
-- `review-tasks/security/xss.md`
-- `review-tasks/security/command-injection.md`
-- `review-tasks/security/prototype-pollution.md`
-- `review-tasks/security/ssrf.md`
 
 ## Quick TypeScript Security Checklist
 - [ ] No SQL injection (parameterized queries)

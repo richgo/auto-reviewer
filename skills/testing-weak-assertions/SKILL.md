@@ -1,7 +1,7 @@
 ---
 name: testing weak assertions
 description: >
-  Migrated review-task skill for Weak Test Assertions. Use this skill whenever diffs may
+  Weak Test Assertions. Use this skill whenever diffs may
   introduce testing issues on all, especially in all. Actively look for: Tests that pass
   but don't actually verify meaningful behavior — assertions that are too broad, check
   only existence... and report findings with medium severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Weak Test Assertions
-
-## Source Lineage
-- Original review task: `review-tasks/testing/weak-assertions.md`
-- Migrated skill artifact: `skills/review-task-testing-weak-assertions/SKILL.md`
-
 ## Task Metadata
 - Category: `testing`
 - Severity: `medium`
@@ -67,8 +62,3 @@ test('creates user', async () => {
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific assertion improvements
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: security regex dos
 description: >
-  Migrated review-task skill for Regular Expression Denial of Service (ReDoS). Use this
+  Regular Expression Denial of Service (ReDoS). Use this
   skill whenever diffs may introduce security issues on all, especially in all. Actively
   look for: ReDoS occurs when regular expressions with catastrophic backtracking are
   applied to user-controlled input, causing exponential time complexity and... and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Regular Expression Denial of Service (ReDoS)
-
-## Source Lineage
-- Original review task: `review-tasks/security/regex-dos.md`
-- Migrated skill artifact: `skills/review-task-security-regex-dos/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -92,8 +87,3 @@ function validateEmail(email) {
 - [ ] Does NOT flag counter-example 2 (validator library)
 - [ ] Finding explains backtracking behavior
 - [ ] Severity assigned as medium (high if no rate limiting)
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

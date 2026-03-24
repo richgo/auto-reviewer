@@ -1,7 +1,7 @@
 ---
 name: security android webview security
 description: >
-  Migrated review-task skill for Android WebView Security. Use this skill whenever diffs
+  Android WebView Security. Use this skill whenever diffs
   may introduce security issues on mobile, especially in Kotlin, Java. Actively look
   for: WebView security issues include JavaScript enabled without validation, file://
   access allowing local file disclosure, addJavascriptInterface exposing native
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android WebView Security
-
-## Source Lineage
-- Original review task: `review-tasks/security/android/webview-security.md`
-- Migrated skill artifact: `skills/review-task-security-android-webview-security/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -82,8 +77,3 @@ webView.webViewClient = object : WebViewClient() {
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as high
 - [ ] References OWASP MASVS-PLATFORM
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

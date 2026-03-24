@@ -1,7 +1,7 @@
 ---
 name: testing android ui test gaps
 description: >
-  Migrated review-task skill for Android UI Test Coverage Gaps. Use this skill whenever
+  Android UI Test Coverage Gaps. Use this skill whenever
   diffs may introduce testing issues on mobile, especially in Kotlin, Java. Actively
   look for: Critical UI flows untested, missing Espresso/Compose tests, no screenshot
   regression tests. and report findings with medium severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android UI Test Coverage Gaps
-
-## Source Lineage
-- Original review task: `review-tasks/testing/android/ui-test-gaps.md`
-- Migrated skill artifact: `skills/review-task-testing-android-ui-test-gaps/SKILL.md`
-
 ## Task Metadata
 - Category: `testing`
 - Severity: `medium`
@@ -55,8 +50,3 @@ Critical UI flows untested, missing Espresso/Compose tests, no screenshot regres
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding provides clear remediation steps
 - [ ] Severity matches impact level
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

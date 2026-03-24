@@ -1,7 +1,7 @@
 ---
 name: security microservices distributed session
 description: >
-  Migrated review-task skill for Distributed Session Management. Use this skill whenever
+  Distributed Session Management. Use this skill whenever
   diffs may introduce security issues on microservices, especially in all. Actively look
   for: Inconsistent session handling across services, JWT validation gaps, missing token
   revocation. and report findings with medium severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Distributed Session Management
-
-## Source Lineage
-- Original review task: `review-tasks/security/microservices/distributed-session.md`
-- Migrated skill artifact: `skills/review-task-security-microservices-distributed-session/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -56,8 +51,3 @@ Inconsistent session handling across services, JWT validation gaps, missing toke
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as medium
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

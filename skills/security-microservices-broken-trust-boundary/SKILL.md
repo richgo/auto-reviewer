@@ -1,7 +1,7 @@
 ---
 name: security microservices broken trust boundary
 description: >
-  Migrated review-task skill for Broken Trust Boundary. Use this skill whenever diffs
+  Broken Trust Boundary. Use this skill whenever diffs
   may introduce security issues on microservices, especially in all. Actively look for:
   Internal services trusting external input without validation, missing API gateway
   enforcement. and report findings with critical severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Broken Trust Boundary
-
-## Source Lineage
-- Original review task: `review-tasks/security/microservices/broken-trust-boundary.md`
-- Migrated skill artifact: `skills/review-task-security-microservices-broken-trust-boundary/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -56,8 +51,3 @@ Internal services trusting external input without validation, missing API gatewa
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as critical
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

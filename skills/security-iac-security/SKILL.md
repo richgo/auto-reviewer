@@ -1,7 +1,7 @@
 ---
 name: security iac security
 description: >
-  Migrated review-task skill for Infrastructure as Code Security. Use this skill
+  Infrastructure as Code Security. Use this skill
   whenever diffs may introduce security issues on all, especially in Terraform,
   CloudFormation, Kubernetes YAML. Actively look for: IaC security issues include overly
   permissive IAM policies, public S3 buckets, unrestricted security groups, missing
@@ -10,11 +10,6 @@ description: >
 ---
 
 # Infrastructure as Code Security
-
-## Source Lineage
-- Original review task: `review-tasks/security/iac-security.md`
-- Migrated skill artifact: `skills/review-task-security-iac-security/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -123,8 +118,3 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "docs" {
 - [ ] Does NOT flag counter-example 2 (private + encrypted S3)
 - [ ] Finding references OWASP IaC Security
 - [ ] Severity assigned as high or critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

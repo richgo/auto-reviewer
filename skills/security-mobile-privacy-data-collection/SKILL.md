@@ -1,7 +1,7 @@
 ---
 name: security mobile privacy data collection
 description: >
-  Migrated review-task skill for Mobile Privacy Data Collection. Use this skill whenever
+  Mobile Privacy Data Collection. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Swift, Kotlin. Actively
   look for: Excessive permissions, tracking without consent, clipboard snooping,
   background location without justification. and report findings with medium severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Mobile Privacy Data Collection
-
-## Source Lineage
-- Original review task: `review-tasks/security/mobile/privacy-data-collection.md`
-- Migrated skill artifact: `skills/review-task-security-mobile-privacy-data-collection/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -59,8 +54,3 @@ Excessive permissions, tracking without consent, clipboard snooping, background 
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

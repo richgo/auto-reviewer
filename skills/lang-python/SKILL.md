@@ -316,11 +316,6 @@ def process_items(items: List[int], filter_val: Optional[int] = None) -> List[in
 Use `mypy` for static type checking.
 
 ## Related Security Tasks
-- `review-tasks/security/sql-injection.md`
-- `review-tasks/security/command-injection.md`
-- `review-tasks/security/insecure-deserialization.md`
-- `review-tasks/security/path-traversal.md`
-- `review-tasks/security/xss.md` (Django/Flask templates)
 
 ## Quick Python Security Checklist
 - [ ] No `eval()` or `exec()` with user input

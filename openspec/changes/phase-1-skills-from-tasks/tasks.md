@@ -129,7 +129,7 @@
 - [ ] Skills validated under 500 lines or using references/ (audit needed)
 
 **Quality gates met:**
-- [x] Skills reference review-tasks/ for detailed detection logic
+- [x] Skills contain detailed detection logic
 - [x] Security skills reference OWASP cheat sheets
 - [x] Platform-specific subsections present where applicable
 - [x] Eval cases include counter-examples for false positive prevention

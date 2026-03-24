@@ -1,7 +1,7 @@
 ---
 name: security ios insecure storage
 description: >
-  Migrated review-task skill for iOS Insecure Storage. Use this skill whenever diffs may
+  iOS Insecure Storage. Use this skill whenever diffs may
   introduce security issues on mobile, especially in Swift, Objective-C. Actively look
   for: Storing sensitive data in UserDefaults or plist files instead of Keychain with
   proper accessibility attributes. and report findings with high severity expectations
@@ -9,11 +9,6 @@ description: >
 ---
 
 # iOS Insecure Storage
-
-## Source Lineage
-- Original review task: `review-tasks/security/ios/insecure-storage.md`
-- Migrated skill artifact: `skills/review-task-security-ios-insecure-storage/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -59,8 +54,3 @@ Storing sensitive data in UserDefaults or plist files instead of Keychain with p
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

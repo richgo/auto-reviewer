@@ -33,7 +33,7 @@ The system SHALL express composition policy in terms of skill dependencies.
 - GIVEN repository signals are detected for composition
 - WHEN dependencies are selected
 - THEN selected dependencies SHALL refer to skill paths
-- AND policy evaluation SHALL not require standalone review-task dependencies.
+- AND policy evaluation SHALL resolve entirely through skill-path dependencies.
 
 ### Requirement: Agent Output Traceability to Skills
 
@@ -44,4 +44,4 @@ The system SHALL enable traceability from agent outputs to the skills that produ
 - GIVEN a review output produced by an agent flow
 - WHEN output metadata or routing context is inspected
 - THEN the output SHALL be attributable to participating skills
-- AND attribution SHALL not require standalone review-task lineage.
+- AND attribution SHALL be expressed at skill level.

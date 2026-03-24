@@ -1,7 +1,7 @@
 ---
 name: security mobile cert pinning
 description: >
-  Migrated review-task skill for Mobile Certificate Pinning. Use this skill whenever
+  Mobile Certificate Pinning. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Swift, Kotlin,
   Objective-C, Java. Actively look for: Missing certificate or public key pinning for
   sensitive API endpoints enabling MitM attacks. and report findings with high severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Mobile Certificate Pinning
-
-## Source Lineage
-- Original review task: `review-tasks/security/mobile/cert-pinning.md`
-- Migrated skill artifact: `skills/review-task-security-mobile-cert-pinning/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -59,8 +54,3 @@ Missing certificate or public key pinning for sensitive API endpoints enabling M
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

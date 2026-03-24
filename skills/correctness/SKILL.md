@@ -171,7 +171,6 @@ let name = user!.name  // Crash if user is nil
 **Finding:** High — Force unwrap crash risk. Use `guard let` or `if let`.
 
 ## Migration Coverage
-Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## Quick Checklist
 - [ ] All dereferences have null checks

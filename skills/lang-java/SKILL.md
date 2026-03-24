@@ -304,10 +304,6 @@ String json = """
 5. **Raw types:** Use generics (`List` → `List<String>`)
 
 ## Related Security Tasks
-- `review-tasks/security/sql-injection.md`
-- `review-tasks/security/command-injection.md`
-- `review-tasks/security/insecure-deserialization.md`
-- `review-tasks/security/xml-external-entity.md`
 
 ## OWASP References
 - [Java Security](https://cheatsheetseries.owasp.org/cheatsheets/Java_Security_Cheat_Sheet.html)

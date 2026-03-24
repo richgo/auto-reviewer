@@ -1,18 +1,13 @@
 ---
 name: concurrency ios main thread blocking
 description: >
-  Migrated review-task skill for iOS Main Thread Blocking. Use this skill whenever diffs
+  iOS Main Thread Blocking. Use this skill whenever diffs
   may introduce concurrency issues on mobile, especially in Swift, Objective-C. Actively
   look for: Synchronous network/DB on main thread, UI updates from background queue. and
   report findings with high severity expectations and actionable fixes.
 ---
 
 # iOS Main Thread Blocking
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/ios/main-thread-blocking.md`
-- Migrated skill artifact: `skills/review-task-concurrency-ios-main-thread-blocking/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `high`
@@ -55,8 +50,3 @@ Synchronous network/DB on main thread, UI updates from background queue.
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

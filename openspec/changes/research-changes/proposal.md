@@ -2,15 +2,15 @@
 
 ## Intent
 
-The project currently has a conceptual and structural mismatch: `review-tasks/` remains a separate primitive while runtime systems already tune and score **skills**. Maintaining both layers as independent artifacts creates duplication, ambiguous ownership, and drift between what is authored, what is benchmarked, and what is composed for execution.
+The project currently has a conceptual mismatch: runtime systems already tune and score **skills**, but architectural documentation still references a task-first primitive model. This creates duplication, ambiguous ownership, and drift between what is authored, what is benchmarked, and what is composed for execution.
 
 ## Scope
 
 ### In Scope
 - Reframe the primitive model so **skills** are the atomic tuneable unit.
 - Define **agents** as the orchestration/grouping layer that composes skills, including subagent execution boundaries.
-- Migrate all `review-tasks/` content into skill artifacts so bug classes live in one canonical layer.
-- Remove the standalone `review-tasks/` taxonomy from the active architecture and align repository docs/specs accordingly.
+- Ensure all bug classes live in skill artifacts as the canonical layer.
+- Remove task-first taxonomy language from the active architecture and align repository docs/specs accordingly.
 - Align repository documentation and OpenSpec artifacts with the flattened primitive model.
 
 ### Out of Scope
@@ -26,8 +26,7 @@ Adopt a fully flattened primitive model where all review guidance and eval inten
 
 This change affects architectural and specification surfaces that currently encode task-first assumptions:
 - `README.md` pipeline narrative and phase language.
-- `openspec/specs/review-tasks/spec.md` requirement framing.
-- `review-tasks/` content and directory role in the repository.
+- `openspec/specs/` requirement framing (retired task-first requirements).
 - Skill corpus organization under `skills/`, including concern/language coverage boundaries.
 - Historical/active OpenSpec change context in `openspec/changes/` that references tasks as a separate primitive.
 - Agent and composition descriptions (`agents/`, `scripts/compose/policy.yaml`).

@@ -1,7 +1,7 @@
 ---
 name: reliability android crash handling
 description: >
-  Migrated review-task skill for Android Crash Handling. Use this skill whenever diffs
+  Android Crash Handling. Use this skill whenever diffs
   may introduce reliability issues on mobile, especially in Kotlin, Java. Actively look
   for: Uncaught exception handler not set, no graceful crash recovery, missing
   breadcrumbs. and report findings with medium severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android Crash Handling
-
-## Source Lineage
-- Original review task: `review-tasks/reliability/android/crash-handling.md`
-- Migrated skill artifact: `skills/review-task-reliability-android-crash-handling/SKILL.md`
-
 ## Task Metadata
 - Category: `reliability`
 - Severity: `medium`
@@ -53,8 +48,3 @@ Uncaught exception handler not set, no graceful crash recovery, missing breadcru
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific improvements
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

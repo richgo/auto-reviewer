@@ -333,7 +333,6 @@ def call_other_service():
 ```
 
 ## Migration Coverage
-Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)

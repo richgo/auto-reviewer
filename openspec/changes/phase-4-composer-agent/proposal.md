@@ -237,12 +237,12 @@ v2.0.0  ─── Breaking changes (new skill format)
 
 - **APM is v0.1 (Working Draft)** — manifest schema may change
 - **Monorepo versioning** — git tags apply to the whole repo, not individual skills. A change to one skill bumps the version for all. Could mitigate with branch-per-skill or accept repo-level versioning.
-- **Skill interdependencies** — concern skills reference review-tasks at prompt-time. These references are documentation, not runtime deps, so this should be fine — the skill's `SKILL.md` body contains all needed instructions.
+- **Skill interdependencies** — concern skills are self-contained; the skill's `SKILL.md` body contains all needed instructions.
 - **Large dependency tree** — a full install might pull 30+ skills. APM handles this via parallel downloads and lockfile caching.
 
 ## Open Questions
 
 1. **Release cadence** — tag releases manually, or automate via CI on merge to main?
-2. **Skill independence** — should skills be fully self-contained (inline all review-task content) or reference review-tasks as a separate dependency?
+2. **Skill independence** — should skills be fully self-contained or reference external dependencies?
 3. **Config merging** — if a user already has an `apm.yml`, should the composer merge or create a separate file?
 4. **`apm pack` for distribution** — should we publish pre-packed bundles as GitHub release artifacts for air-gapped installs?

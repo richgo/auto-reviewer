@@ -1,7 +1,7 @@
 ---
 name: security third party code
 description: >
-  Migrated review-task skill for Third-Party Code Security. Use this skill whenever
+  Third-Party Code Security. Use this skill whenever
   diffs may introduce security issues on web, especially in JavaScript, TypeScript,
   HTML. Actively look for: Insecure third-party JavaScript and CSS integration can
   introduce XSS, data exfiltration, supply chain attacks, and privacy violations.
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Third-Party Code Security
-
-## Source Lineage
-- Original review task: `review-tasks/security/third-party-code.md`
-- Migrated skill artifact: `skills/review-task-security-third-party-code/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -112,8 +107,3 @@ app.get('/widget', (req, res) => {
 - [ ] Does NOT flag counter-example 2 (sandboxed iframe)
 - [ ] Finding recommends SRI and CSP script-src restrictions
 - [ ] Severity assigned as medium (critical for direct XSS)
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

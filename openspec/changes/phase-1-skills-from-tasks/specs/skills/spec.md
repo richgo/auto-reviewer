@@ -28,14 +28,14 @@ The system SHALL use references/ subdirectories for detailed content exceeding t
 
 ### Requirement: Concern Skill Organization
 
-The system SHALL group review tasks by concern area into composable skills.
+The system SHALL group review concerns by concern area into composable skills.
 
 #### Scenario: Concern Categories
 
-- GIVEN the 197 review tasks from Phase 0
+- GIVEN the Phase 0 research corpus
 - WHEN creating concern skills
 - THEN they SHALL be organized into 19 skills: 10 security sub-skills (injection, auth, data-protection, network, client-side, api, ai-llm, supply-chain, mobile, infrastructure), plus concurrency, correctness, testing, performance, reliability, api-design, data-integrity, observability, code-quality
-- AND each skill SHALL reference the underlying review tasks for detailed detection logic
+- AND each skill SHALL contain detailed detection logic
 
 ### Requirement: Language Skill Organization
 
@@ -104,4 +104,4 @@ The system SHALL include platform-specific guidance within concern skills.
 - WHEN writing the skill content
 - THEN it SHALL include subsections for platform-specific patterns (Android, iOS, web, microservices) where applicable
 - AND the diff-analysis skill SHALL detect the platform and the orchestrator SHALL route accordingly
-- AND platform subsections SHALL reference platform-specific review tasks from Phase 0
+- AND platform subsections SHALL include platform-specific guidance

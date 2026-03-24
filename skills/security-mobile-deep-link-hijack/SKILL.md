@@ -1,7 +1,7 @@
 ---
 name: security mobile deep link hijack
 description: >
-  Migrated review-task skill for Mobile Deep Link Hijacking. Use this skill whenever
+  Mobile Deep Link Hijacking. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Swift, Kotlin. Actively
   look for: Unvalidated deep link parameters enabling open redirect, injection, or
   unauthorized actions. and report findings with high severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Mobile Deep Link Hijacking
-
-## Source Lineage
-- Original review task: `review-tasks/security/mobile/deep-link-hijack.md`
-- Migrated skill artifact: `skills/review-task-security-mobile-deep-link-hijack/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -59,8 +54,3 @@ Unvalidated deep link parameters enabling open redirect, injection, or unauthori
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

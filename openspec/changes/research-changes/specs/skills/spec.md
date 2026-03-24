@@ -11,7 +11,7 @@ The system SHALL treat each skill as the smallest independently tuneable and ben
 - GIVEN a tuning run is planned
 - WHEN optimization targets are enumerated
 - THEN targets SHALL be expressed as skill identifiers
-- AND targets SHALL NOT require standalone review-task identifiers.
+- AND targets SHALL be expressed as skill identifiers only.
 
 #### Scenario: Skill-Scoped Benchmark Reporting
 
@@ -26,14 +26,14 @@ The system SHALL store bug-class review guidance in skills as the canonical sour
 
 #### Scenario: Migrated Guidance Availability
 
-- GIVEN a bug class previously documented in the review-task corpus
+- GIVEN a bug class in the review coverage surface
 - WHEN migration validation is performed
 - THEN equivalent guidance SHALL exist in one or more skill artifacts
 - AND active review behavior SHALL resolve through skill artifacts.
 
 ### Requirement: Skill-Level Coverage Preservation
 
-The system SHALL preserve concern and platform coverage through the skill corpus after review-task migration.
+The system SHALL preserve concern and platform coverage through the skill corpus.
 
 #### Scenario: Concern and Platform Continuity
 
@@ -51,7 +51,7 @@ The system SHALL associate eval datasets directly with skill identifiers.
 - GIVEN an eval case used by benchmark or tuning workflows
 - WHEN the eval case is resolved for execution
 - THEN it SHALL map to a skill identifier
-- AND execution SHALL NOT depend on a standalone review-task artifact.
+- AND execution SHALL depend only on skill artifacts.
 
 ### Requirement: Skill-Level Security Reference Mapping
 
@@ -62,4 +62,4 @@ The system SHALL maintain security reference mappings at the skill layer.
 - GIVEN a security capability is reviewed for reference traceability
 - WHEN references are inspected in the canonical review layer
 - THEN relevant OWASP or equivalent security references SHALL be available through security skills
-- AND reference completeness SHALL NOT require standalone review-task files.
+- AND reference completeness SHALL be satisfied through security skill artifacts.

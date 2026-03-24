@@ -1,7 +1,7 @@
 ---
 name: security android network security
 description: >
-  Migrated review-task skill for Android Network Security Config. Use this skill
+  Android Network Security Config. Use this skill
   whenever diffs may introduce security issues on mobile, especially in Kotlin, Java,
   XML. Actively look for: Missing network_security_config.xml, cleartext traffic
   allowed, certificate validation bypass, missing certificate pinning. and report
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android Network Security Config
-
-## Source Lineage
-- Original review task: `review-tasks/security/android/network-security.md`
-- Migrated skill artifact: `skills/review-task-security-android-network-security/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -59,8 +54,3 @@ Missing network_security_config.xml, cleartext traffic allowed, certificate vali
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

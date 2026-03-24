@@ -1,7 +1,7 @@
 ---
 name: performance n plus one
 description: >
-  Migrated review-task skill for N+1 Query. Use this skill whenever diffs may introduce
+  N+1 Query. Use this skill whenever diffs may introduce
   performance issues on web, api, especially in all. Actively look for: Loading a
   collection then executing a separate database query for each item in the collection,
   resulting in N+1... and report findings with high severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # N+1 Query
-
-## Source Lineage
-- Original review task: `review-tasks/performance/n-plus-one.md`
-- Migrated skill artifact: `skills/review-task-performance-n-plus-one/SKILL.md`
-
 ## Task Metadata
 - Category: `performance`
 - Severity: `high`
@@ -70,8 +65,3 @@ for order in orders:
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests eager loading fix
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

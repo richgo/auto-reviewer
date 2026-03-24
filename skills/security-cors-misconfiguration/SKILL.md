@@ -1,7 +1,7 @@
 ---
 name: security cors misconfiguration
 description: >
-  Migrated review-task skill for CORS Misconfiguration. Use this skill whenever diffs
+  CORS Misconfiguration. Use this skill whenever diffs
   may introduce security issues on web, api, especially in all. Actively look for: CORS
   (Cross-Origin Resource Sharing) misconfigurations allow unauthorized origins to access
   sensitive resources, leading to data theft or CSRF-like... and report findings with
@@ -9,11 +9,6 @@ description: >
 ---
 
 # CORS Misconfiguration
-
-## Source Lineage
-- Original review task: `review-tasks/security/cors-misconfiguration.md`
-- Migrated skill artifact: `skills/review-task-security-cors-misconfiguration/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -108,8 +103,3 @@ app.use(cors(corsOptions));
 - [ ] Does NOT flag counter-example 2 (CORS library with config)
 - [ ] Finding references OWASP CORS Security Cheat Sheet
 - [ ] Severity assigned as medium to high based on endpoint sensitivity
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

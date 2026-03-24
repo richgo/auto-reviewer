@@ -420,7 +420,6 @@ def get_products(req: ProductsRequest):  # No Depends() — FastAPI accepts Pyda
 - **Pydantic model parameter without `Depends()`** — FastAPI automatically treats fields of a Pydantic `BaseModel` parameter as query parameters in GET route handlers. `Depends()` is optional; omitting it is valid and documented FastAPI behavior. Do not flag its absence as an error.
 
 ## Migration Coverage
-Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [Input Validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)

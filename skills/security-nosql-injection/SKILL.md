@@ -1,7 +1,7 @@
 ---
 name: security nosql injection
 description: >
-  Migrated review-task skill for NoSQL Injection. Use this skill whenever diffs may
+  NoSQL Injection. Use this skill whenever diffs may
   introduce security issues on all, especially in JavaScript, TypeScript, Python, Java.
   Actively look for: NoSQL injection occurs when user input is passed unsanitized to
   NoSQL query operators, allowing attackers to manipulate query... and report findings
@@ -9,11 +9,6 @@ description: >
 ---
 
 # NoSQL Injection
-
-## Source Lineage
-- Original review task: `review-tasks/security/nosql-injection.md`
-- Migrated skill artifact: `skills/review-task-security-nosql-injection/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -98,8 +93,3 @@ results = db.products.find({'category': category})
 - [ ] Does NOT flag counter-example 2 (sanitized input)
 - [ ] Finding warns about object injection and operator abuse
 - [ ] Severity assigned as high or critical for $where usage
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

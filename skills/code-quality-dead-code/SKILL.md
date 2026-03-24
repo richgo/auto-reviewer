@@ -1,7 +1,7 @@
 ---
 name: code quality dead code
 description: >
-  Migrated review-task skill for Dead Code / Unused Imports. Use this skill whenever
+  Dead Code / Unused Imports. Use this skill whenever
   diffs may introduce code-quality issues on all, especially in all. Actively look for:
   Unreachable code, unused variables, unused imports, or commented-out code blocks left
   in the codebase. Increases cognitive load and... and report findings with low severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Dead Code / Unused Imports
-
-## Source Lineage
-- Original review task: `review-tasks/code-quality/dead-code.md`
-- Migrated skill artifact: `skills/review-task-code-quality-dead-code/SKILL.md`
-
 ## Task Metadata
 - Category: `code-quality`
 - Severity: `low`
@@ -73,8 +68,3 @@ def serialize(data):
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding lists specific unused items
 - [ ] Severity assigned as low
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

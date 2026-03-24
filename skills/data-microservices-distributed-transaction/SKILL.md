@@ -1,18 +1,13 @@
 ---
 name: data microservices distributed transaction
 description: >
-  Migrated review-task skill for Distributed Transaction Issues. Use this skill whenever
+  Distributed Transaction Issues. Use this skill whenever
   diffs may introduce data issues on microservices, especially in all. Actively look
   for: 2PC across services (fragile), missing saga pattern, no compensation on failure.
   and report findings with high severity expectations and actionable fixes.
 ---
 
 # Distributed Transaction Issues
-
-## Source Lineage
-- Original review task: `review-tasks/data/microservices/distributed-transaction.md`
-- Migrated skill artifact: `skills/review-task-data-microservices-distributed-transaction/SKILL.md`
-
 ## Task Metadata
 - Category: `data`
 - Severity: `high`
@@ -52,8 +47,3 @@ description: >
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Provides actionable recommendation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: security xml external entity
 description: >
-  Migrated review-task skill for XML External Entity (XXE) Injection. Use this skill
+  XML External Entity (XXE) Injection. Use this skill
   whenever diffs may introduce security issues on all, especially in Java, Python, PHP,
   .NET, C++. Actively look for: XXE vulnerabilities occur when XML parsers process user-
   controlled XML with external entity definitions enabled, allowing attackers to read...
@@ -9,11 +9,6 @@ description: >
 ---
 
 # XML External Entity (XXE) Injection
-
-## Source Lineage
-- Original review task: `review-tasks/security/xml-external-entity.md`
-- Migrated skill artifact: `skills/review-task-security-xml-external-entity/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -90,8 +85,3 @@ tree = fromstring(xml_data) # Safe by default
 - [ ] Does NOT flag counter-example 2 (defusedxml)
 - [ ] Finding lists specific features to disable
 - [ ] Severity assigned as high or critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

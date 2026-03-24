@@ -1,7 +1,7 @@
 ---
 name: security pinning bypass
 description: >
-  Migrated review-task skill for Certificate Pinning Bypass. Use this skill whenever
+  Certificate Pinning Bypass. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Java, Kotlin, Swift,
   Objective-C. Actively look for: Certificate pinning bypass occurs when mobile apps
   fail to implement or improperly implement TLS certificate pinning, allowing man-in-
@@ -10,11 +10,6 @@ description: >
 ---
 
 # Certificate Pinning Bypass
-
-## Source Lineage
-- Original review task: `review-tasks/security/pinning-bypass.md`
-- Migrated skill artifact: `skills/review-task-security-pinning-bypass/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -110,8 +105,3 @@ TrustKit.initSharedInstance(withConfiguration: trustKitConfig)
 - [ ] Does NOT flag counter-example 2 (TrustKit)
 - [ ] Finding recommends public key pinning with backup pins
 - [ ] Severity assigned as high for sensitive endpoints
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

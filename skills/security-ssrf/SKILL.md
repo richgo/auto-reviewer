@@ -1,7 +1,7 @@
 ---
 name: security ssrf
 description: >
-  Migrated review-task skill for Server-Side Request Forgery (SSRF). Use this skill
+  Server-Side Request Forgery (SSRF). Use this skill
   whenever diffs may introduce security issues on web, api, especially in all. Actively
   look for: Application makes HTTP requests to URLs controlled by user input without
   validation, allowing attackers to access internal services,... and report findings
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Server-Side Request Forgery (SSRF)
-
-## Source Lineage
-- Original review task: `review-tasks/security/ssrf.md`
-- Migrated skill artifact: `skills/review-task-security-ssrf/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -73,8 +68,3 @@ def proxy():
 - [ ] Finding mentions cloud metadata / internal network risk
 - [ ] Finding suggests allowlist-based validation
 - [ ] Severity assigned as critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

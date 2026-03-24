@@ -1,7 +1,7 @@
 ---
 name: performance web hydration mismatch
 description: >
-  Migrated review-task skill for Hydration Mismatch. Use this skill whenever diffs may
+  Hydration Mismatch. Use this skill whenever diffs may
   introduce performance issues on web, especially in JavaScript, TypeScript. Actively
   look for: SSR/client hydration mismatches causing double renders, missing Suspense
   boundaries. and report findings with medium severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Hydration Mismatch
-
-## Source Lineage
-- Original review task: `review-tasks/performance/web/hydration-mismatch.md`
-- Migrated skill artifact: `skills/review-task-performance-web-hydration-mismatch/SKILL.md`
-
 ## Task Metadata
 - Category: `performance`
 - Severity: `medium`
@@ -53,8 +48,3 @@ SSR/client hydration mismatches causing double renders, missing Suspense boundar
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific improvements
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: security ios screenshot exposure
 description: >
-  Migrated review-task skill for iOS Screenshot Exposure. Use this skill whenever diffs
+  iOS Screenshot Exposure. Use this skill whenever diffs
   may introduce security issues on mobile, especially in Swift, Objective-C. Actively
   look for: Sensitive screens not hidden during applicationWillResignActive, visible in
   app switcher screenshots. and report findings with low severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # iOS Screenshot Exposure
-
-## Source Lineage
-- Original review task: `review-tasks/security/ios/screenshot-exposure.md`
-- Migrated skill artifact: `skills/review-task-security-ios-screenshot-exposure/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `low`
@@ -59,8 +54,3 @@ Sensitive screens not hidden during applicationWillResignActive, visible in app 
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as low
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

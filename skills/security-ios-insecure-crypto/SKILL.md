@@ -1,7 +1,7 @@
 ---
 name: security ios insecure crypto
 description: >
-  Migrated review-task skill for iOS Insecure Cryptography. Use this skill whenever
+  iOS Insecure Cryptography. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Swift, Objective-C.
   Actively look for: Deprecated CommonCrypto usage, ECB cipher mode, hardcoded
   initialization vectors, weak key derivation. and report findings with high severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # iOS Insecure Cryptography
-
-## Source Lineage
-- Original review task: `review-tasks/security/ios/insecure-crypto.md`
-- Migrated skill artifact: `skills/review-task-security-ios-insecure-crypto/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -59,8 +54,3 @@ Deprecated CommonCrypto usage, ECB cipher mode, hardcoded initialization vectors
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

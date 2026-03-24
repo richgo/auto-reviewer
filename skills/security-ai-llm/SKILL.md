@@ -330,7 +330,6 @@ def read_document(filename: str) -> str:
 **Finding:** Critical — Path traversal in MCP tool. Agent could read /etc/passwd via filename="../../../etc/passwd".
 
 ## Migration Coverage
-Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [LLM Prompt Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)

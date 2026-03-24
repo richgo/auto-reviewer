@@ -162,7 +162,6 @@ exec(`ping -c 4 ${userInput}`, callback);
 **Finding:** Critical — Command injection. Attacker can inject `8.8.8.8; rm -rf /`.
 
 ## Migration Coverage
-Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [SQL Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)

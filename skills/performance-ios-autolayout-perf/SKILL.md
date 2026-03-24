@@ -1,7 +1,7 @@
 ---
 name: performance ios autolayout perf
 description: >
-  Migrated review-task skill for iOS AutoLayout Performance. Use this skill whenever
+  iOS AutoLayout Performance. Use this skill whenever
   diffs may introduce performance issues on mobile, especially in Swift, Objective-C.
   Actively look for: Deeply nested constraint hierarchies, excessive
   intrinsicContentSize calls, missing StackView. and report findings with medium
@@ -9,11 +9,6 @@ description: >
 ---
 
 # iOS AutoLayout Performance
-
-## Source Lineage
-- Original review task: `review-tasks/performance/ios/autolayout-perf.md`
-- Migrated skill artifact: `skills/review-task-performance-ios-autolayout-perf/SKILL.md`
-
 ## Task Metadata
 - Category: `performance`
 - Severity: `medium`
@@ -53,8 +48,3 @@ Deeply nested constraint hierarchies, excessive intrinsicContentSize calls, miss
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific improvements
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

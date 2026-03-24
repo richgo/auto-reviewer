@@ -1,7 +1,7 @@
 ---
 name: api design mobile offline sync
 description: >
-  Migrated review-task skill for Mobile Offline Sync Issues. Use this skill whenever
+  Mobile Offline Sync Issues. Use this skill whenever
   diffs may introduce api-design issues on mobile, especially in Swift, Kotlin. Actively
   look for: No conflict resolution for offline edits, missing CRDT/last-write-wins
   strategy, sync race conditions. and report findings with high severity expectations
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Mobile Offline Sync Issues
-
-## Source Lineage
-- Original review task: `review-tasks/api-design/mobile/offline-sync.md`
-- Migrated skill artifact: `skills/review-task-api-design-mobile-offline-sync/SKILL.md`
-
 ## Task Metadata
 - Category: `api-design`
 - Severity: `high`
@@ -53,8 +48,3 @@ No conflict resolution for offline edits, missing CRDT/last-write-wins strategy,
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Provides actionable recommendation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

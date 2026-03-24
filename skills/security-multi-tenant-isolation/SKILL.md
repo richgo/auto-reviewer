@@ -1,7 +1,7 @@
 ---
 name: security multi tenant isolation
 description: >
-  Migrated review-task skill for Multi-Tenant Isolation Failures. Use this skill
+  Multi-Tenant Isolation Failures. Use this skill
   whenever diffs may introduce security issues on all, especially in all. Actively look
   for: Multi-tenant isolation failures allow one tenant to access another tenant's data
   through missing tenant ID validation, SQL injection... and report findings with
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Multi-Tenant Isolation Failures
-
-## Source Lineage
-- Original review task: `review-tasks/security/multi-tenant-isolation.md`
-- Migrated skill artifact: `skills/review-task-security-multi-tenant-isolation/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -101,8 +96,3 @@ app.get('/api/reports', authenticateUser, async (req, res) => {
 - [ ] Does NOT flag counter-example 2 (tenant from session)
 - [ ] Finding references OWASP Multi-Tenant Security
 - [ ] Severity assigned as critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

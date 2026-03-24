@@ -1,7 +1,7 @@
 ---
 name: security android logging sensitive data
 description: >
-  Migrated review-task skill for Android Logging Sensitive Data. Use this skill whenever
+  Android Logging Sensitive Data. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Kotlin, Java. Actively
   look for: Log.d/Log.i calls with PII, authentication tokens, or secrets visible via
   logcat in release builds. and report findings with medium severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android Logging Sensitive Data
-
-## Source Lineage
-- Original review task: `review-tasks/security/android/logging-sensitive-data.md`
-- Migrated skill artifact: `skills/review-task-security-android-logging-sensitive-data/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -59,8 +54,3 @@ Log.d/Log.i calls with PII, authentication tokens, or secrets visible via logcat
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

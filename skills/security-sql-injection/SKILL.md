@@ -1,7 +1,7 @@
 ---
 name: security sql injection
 description: >
-  Migrated review-task skill for SQL Injection. Use this skill whenever diffs may
+  SQL Injection. Use this skill whenever diffs may
   introduce security issues on web, api, especially in all. Actively look for: User-
   controlled input concatenated or interpolated directly into SQL queries, allowing
   attackers to manipulate query logic, extract data, or... and report findings with
@@ -9,11 +9,6 @@ description: >
 ---
 
 # SQL Injection
-
-## Source Lineage
-- Original review task: `review-tasks/security/sql-injection.md`
-- Migrated skill artifact: `skills/review-task-security-sql-injection/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -81,8 +76,3 @@ user = User.objects.filter(username=username).first()
 - [ ] Does NOT flag counter-example 2 (ORM query)
 - [ ] Finding includes fix suggestion with parameterized query
 - [ ] Severity assigned as critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

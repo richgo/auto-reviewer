@@ -1,18 +1,13 @@
 ---
 name: concurrency microservices thundering herd
 description: >
-  Migrated review-task skill for Thundering Herd Problem. Use this skill whenever diffs
+  Thundering Herd Problem. Use this skill whenever diffs
   may introduce concurrency issues on microservices, especially in all. Actively look
   for: Cache stampede on expiry, synchronized retries overwhelming service, missing
   jitter. and report findings with medium severity expectations and actionable fixes.
 ---
 
 # Thundering Herd Problem
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/microservices/thundering-herd.md`
-- Migrated skill artifact: `skills/review-task-concurrency-microservices-thundering-herd/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `medium`
@@ -55,8 +50,3 @@ Cache stampede on expiry, synchronized retries overwhelming service, missing jit
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as medium
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

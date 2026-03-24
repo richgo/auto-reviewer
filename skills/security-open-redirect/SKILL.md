@@ -1,7 +1,7 @@
 ---
 name: security open redirect
 description: >
-  Migrated review-task skill for Open Redirect. Use this skill whenever diffs may
+  Open Redirect. Use this skill whenever diffs may
   introduce security issues on web, api, especially in all. Actively look for: Open
   redirect vulnerabilities occur when user-controlled input determines the target of a
   redirect without validation, allowing attackers to... and report findings with medium
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Open Redirect
-
-## Source Lineage
-- Original review task: `review-tasks/security/open-redirect.md`
-- Migrated skill artifact: `skills/review-task-security-open-redirect/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -101,8 +96,3 @@ app.post('/logout', (req, res) => {
 - [ ] Does NOT flag counter-example 2 (relative path check)
 - [ ] Finding recommends allowlist or relative path validation
 - [ ] Severity assigned as medium (high if combined with CRLF injection)
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

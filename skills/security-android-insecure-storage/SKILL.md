@@ -1,7 +1,7 @@
 ---
 name: security android insecure storage
 description: >
-  Migrated review-task skill for Android Insecure Storage. Use this skill whenever diffs
+  Android Insecure Storage. Use this skill whenever diffs
   may introduce security issues on mobile, especially in Kotlin, Java. Actively look
   for: Android insecure storage includes storing sensitive data in SharedPreferences,
   SQLite databases, or external storage without encryption, using world-readable... and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android Insecure Storage
-
-## Source Lineage
-- Original review task: `review-tasks/security/android/insecure-storage.md`
-- Migrated skill artifact: `skills/review-task-security-android-insecure-storage/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -118,8 +113,3 @@ val secretKey = keyGenerator.generateKey()
 - [ ] Does NOT flag counter-example 2 (Android Keystore)
 - [ ] Finding references OWASP MASVS-STORAGE
 - [ ] Severity assigned as high or critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: observability logging gaps
 description: >
-  Migrated review-task skill for Logging & Observability Gaps. Use this skill whenever
+  Logging & Observability Gaps. Use this skill whenever
   diffs may introduce observability issues on all, especially in all. Actively look for:
   Missing or inadequate logging in critical code paths — error handling without logs,
   business operations without audit trail,... and report findings with medium severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Logging & Observability Gaps
-
-## Source Lineage
-- Original review task: `review-tasks/observability/logging-gaps.md`
-- Migrated skill artifact: `skills/review-task-observability-logging-gaps/SKILL.md`
-
 ## Task Metadata
 - Category: `observability`
 - Severity: `medium`
@@ -67,8 +62,3 @@ except PaymentError as e:
 - [ ] Detects print-logging in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests structured logging with context
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

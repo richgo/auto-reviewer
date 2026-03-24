@@ -1,7 +1,7 @@
 ---
 name: concurrency microservices distributed lock
 description: >
-  Migrated review-task skill for Distributed Lock Issues. Use this skill whenever diffs
+  Distributed Lock Issues. Use this skill whenever diffs
   may introduce concurrency issues on microservices, especially in all. Actively look
   for: Missing TTL on distributed locks (Redis/etcd), deadlock in split-brain, lock not
   released on failure. and report findings with high severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Distributed Lock Issues
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/microservices/distributed-lock.md`
-- Migrated skill artifact: `skills/review-task-concurrency-microservices-distributed-lock/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `high`
@@ -56,8 +51,3 @@ Missing TTL on distributed locks (Redis/etcd), deadlock in split-brain, lock not
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

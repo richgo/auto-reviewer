@@ -1,18 +1,13 @@
 ---
 name: concurrency microservices event ordering
 description: >
-  Migrated review-task skill for Event Ordering Assumptions. Use this skill whenever
+  Event Ordering Assumptions. Use this skill whenever
   diffs may introduce concurrency issues on microservices, especially in all. Actively
   look for: Assuming ordered delivery from Kafka/RabbitMQ, missing sequence numbers or
   idempotency. and report findings with high severity expectations and actionable fixes.
 ---
 
 # Event Ordering Assumptions
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/microservices/event-ordering.md`
-- Migrated skill artifact: `skills/review-task-concurrency-microservices-event-ordering/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `high`
@@ -55,8 +50,3 @@ Assuming ordered delivery from Kafka/RabbitMQ, missing sequence numbers or idemp
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,3 +1,4 @@
+---
 name: api design breaking api change
 description: >
   Detect breaking API changes: removal, renaming, or re-typing of fields, parameters, or response shapes without versioning or a documented deprecation period.
@@ -5,6 +6,7 @@ category: api-design
 severity: high
 platforms: [all]
 languages: [all]
+---
 
 Purpose:
   - Identify code changes that alter a published API contract in a way that will break existing clients (removed fields, renamed fields, changed types, changed parameter semantics) when not accompanied by versioning, deprecation, or clear migration guidance.
@@ -45,8 +47,6 @@ Notes:
   - Keep guidance concise: what changed, why it breaks, and how to fix it.
 
 Migration:
-  - Origin: review-tasks/api-design/breaking-api-change.md
-  - Keep synchronized by re-running scripts/skills/review_task_converter_cli.py when source changes.
 
 Platform-Specific Guidance:
   Web/API: |

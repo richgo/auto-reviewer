@@ -1,7 +1,7 @@
 ---
 name: concurrency async misuse
 description: >
-  Migrated review-task skill for Async/Await Misuse. Use this skill whenever diffs may
+  Async/Await Misuse. Use this skill whenever diffs may
   introduce concurrency issues on all, especially in javascript, typescript, python,
   csharp, rust. Actively look for: Missing awaits, fire-and-forget promises, unhandled
   rejections, or blocking the event loop — leading to silent failures, data loss,... and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Async/Await Misuse
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/async-misuse.md`
-- Migrated skill artifact: `skills/review-task-concurrency-async-misuse/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `high`
@@ -66,8 +61,3 @@ async function saveAndNotify(data) {
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding identifies which async call is not awaited
 - [ ] Finding explains the consequence (unhandled errors, data loss)
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

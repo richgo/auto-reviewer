@@ -1,7 +1,7 @@
 ---
 name: security transaction authorization
 description: >
-  Migrated review-task skill for Transaction Authorization Flaws. Use this skill
+  Transaction Authorization Flaws. Use this skill
   whenever diffs may introduce security issues on web, api, especially in all. Actively
   look for: Transaction authorization flaws occur when sensitive operations (money
   transfers, password changes, privilege escalation) lack step-up authentication,
@@ -10,11 +10,6 @@ description: >
 ---
 
 # Transaction Authorization Flaws
-
-## Source Lineage
-- Original review task: `review-tasks/security/transaction-authorization.md`
-- Migrated skill artifact: `skills/review-task-security-transaction-authorization/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -115,8 +110,3 @@ app.post('/api/account/request-deletion', authenticateToken, async (req, res) =>
 - [ ] Does NOT flag counter-example 2 (confirmation email)
 - [ ] Finding references OWASP Transaction Authorization Cheat Sheet
 - [ ] Severity assigned as high or critical for financial ops
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

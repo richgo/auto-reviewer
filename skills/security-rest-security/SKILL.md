@@ -1,7 +1,7 @@
 ---
 name: security rest security
 description: >
-  Migrated review-task skill for REST API Security Issues. Use this skill whenever diffs
+  REST API Security Issues. Use this skill whenever diffs
   may introduce security issues on web, api, especially in all. Actively look for: REST
   API security issues include excessive data exposure, lack of rate limiting, missing
   authentication on endpoints, verbose error... and report findings with medium severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # REST API Security Issues
-
-## Source Lineage
-- Original review task: `review-tasks/security/rest-security.md`
-- Migrated skill artifact: `skills/review-task-security-rest-security/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -115,8 +110,3 @@ app.post('/api/auth/login', loginLimiter, async (req, res) => {
 - [ ] Does NOT flag counter-example 2 (rate limiting)
 - [ ] Finding references OWASP REST Security Cheat Sheet
 - [ ] Severity assigned as medium to high based on exposure
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

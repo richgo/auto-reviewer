@@ -1,0 +1,115 @@
+---
+name: api design inconsistent response shape
+description: >
+  Inconsistent Response Shape. Use this skill whenever
+  diffs may introduce api-design issues on web, api, microservices, especially in all.
+  Actively look for: APIs returning different response structures for success/error,
+  missing envelope pattern. and report findings with medium severity expectations and
+  actionable fixes.
+---
+
+# Inconsistent Response Shape
+## Task Metadata
+- Category: `api-design`
+- Severity: `medium`
+- Platforms: `web, api, microservices`
+- Languages: `all`
+
+## Purpose
+APIs returning different response structures for success/error, missing envelope pattern.
+
+## Detection Heuristics
+- Code patterns indicating the issue
+- API design smells or anti-patterns
+- Missing documentation or validation
+
+## Eval Cases
+### Case 1: Issue example
+```java
+// BUGGY CODE — should be detected
+```
+**Expected finding:** Medium — APIs returning different response structures for success/error, missing envelope pattern....
+
+### Case 2: Alternative scenario
+```java
+// BUGGY CODE — should be detected
+```
+**Expected finding:** Medium — Similar issue in different context.
+
+## Counter-Examples
+### Counter 1: Proper implementation
+```java
+// CORRECT CODE — should NOT be flagged
+```
+**Why it's correct:** Follows API design best practices and standards.
+
+## Binary Eval Assertions
+- [ ] Detects issue in eval case 1
+- [ ] Detects issue in eval case 2
+- [ ] Does NOT flag counter-example 1
+- [ ] Provides actionable recommendation
+
+## Platform-Specific Guidance
+Below are concrete, platform-targeted checks and remediation steps reviewers should apply when this skill fires.
+
+### Web / API
+- Check for a stable top-level envelope (example JSON):
+  - { "success": true/false, "data": ..., "error": { "code": "E123", "message": "Human friendly" }, "meta": { ... } }
+- Verify HTTP status codes match response shape: 2xx responses should contain the success envelope and 4xx/5xx should contain the error envelope; avoid returning HTML error pages or raw strings in JSON APIs.
+- Confirm OpenAPI/JSON Schema includes both success and error example payloads and that CI validates responses against those schemas.
+- Remediation steps:
+  - Add a global error handler/middleware that normalizes errors into the envelope and attaches correlation/request IDs.
+  - Update controllers/handlers to always return the envelope and move details into `data` or `error.details`.
+  - Add schema-based validation (OpenAPI, JSON Schema) and include example responses for each endpoint.
+- Tests & verification:
+  - Add contract tests (Pact or schema validator) that assert both success and error shapes.
+  - Add integration tests that intentionally trigger common errors and assert the error envelope and status code.
+
+### Android
+- Client-side parsing:
+  - Ensure the networking layer (Retrofit/OkHttp) uses a shared response wrapper (e.g., ApiResponse<T> / Envelope<T>) so success/error deserialize to a predictable model.
+  - Use Moshi/Gson adapters or a Kotlin sealed class (Result/Resource) to represent success vs error and centralize mapping in one place.
+- Defensive handling:
+  - Avoid ad-hoc JSON parsing scattered across the app; enforce a single decoder path and map unknown fields safely.
+  - Map HTTP status codes to domain errors and include fallback parsing for unexpected envelopes.
+- Remediation steps:
+  - Introduce a ResponseInterceptor that rewrites nonconforming responses into the expected envelope before deserialization.
+  - Add unit tests for the converter/adapter that feed both success and error payloads and assert correct mapping.
+- Tools & examples:
+  - Use Retrofit ConverterFactory, Moshi Kotlin, and OkHttp interceptors to normalize responses; consider a Result<T, ApiError> sealed type for callers.
+
+### iOS
+- Client-side decoding:
+  - Use a single Codable envelope type (e.g., ApiEnvelope<T>) and decode both success and error cases centrally.
+  - Prefer Swift Result<T, ApiError> or enum-based responses to make callers handle error cases explicitly.
+- Defensive handling:
+  - Avoid force unwraps when decoding; provide safe fallbacks and clear logs for decoding failures.
+  - Map server error codes/messages to app-specific error enums and ensure UI-friendly messages are derived from them.
+- Remediation steps:
+  - Add a NetworkInterceptor/ResponseHandler that converts nonconforming server responses into the envelope prior to decoding.
+  - Create decoder unit tests with sample success and error JSON to validate decoding behavior across OS versions.
+- Tools & examples:
+  - Use JSONDecoder with keyDecodingStrategy, Alamofire/Moya plugins for centralized response handling, and XCTest for decoder tests.
+
+### Microservices
+- Contract and schema enforcement:
+  - Enforce strict, machine-readable contracts (OpenAPI, Protobuf/gRPC). Include both success and error message definitions.
+  - Validate incoming/outgoing payloads at service boundaries (API gateway or middleware) and fail fast on nonconformant shapes.
+- Error propagation and stability:
+  - Define a stable set of error codes and an error envelope that services map to; never leak internal stack traces or internal domain objects.
+  - For internal RPC (gRPC), prefer structured status details (google.rpc.Status) and map them to the outward-facing REST envelope consistently.
+- Backwards compatibility & versioning:
+  - When changing response shapes, use additive changes (new fields) or version endpoints; maintain compatibility by supporting legacy envelopes for a deprecation period.
+- Observability & testing:
+  - Attach correlation IDs and logging metadata to every envelope; ensure metrics and SLOs consider error envelopes separately from transport errors.
+  - Add contract tests to CI (Pact/contract test) and schema checks as a gate for PRs.
+- Remediation steps:
+  - Introduce middleware to normalize responses and a schema validation step that fails builds when contracts diverge.
+  - Publish and enforce shared client/server SDKs or codegen (OpenAPI client, protobuf) so all services rely on the same canonical shapes.
+
+### Quick PR suggestions (cross-platform)
+- Provide a small patch that adds a response-envelope data type and updates one handler/client to use it, with unit tests for success and error paths.
+- Add or update OpenAPI/JSON Schema examples for the changed endpoints and include CI schema validation.
+- Add a short note in the PR description describing the contract change, migration plan for clients, and deprecation timeline if applicable.
+
+These platform-specific checks and fixes help reviewers produce actionable findings and concrete remediation the engineering team can apply.

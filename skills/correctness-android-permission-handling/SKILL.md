@@ -1,7 +1,7 @@
 ---
 name: correctness android permission handling
 description: >
-  Migrated review-task skill for Android Permission Handling. Use this skill whenever
+  Android Permission Handling. Use this skill whenever
   diffs may introduce correctness issues on mobile, especially in Kotlin, Java. Actively
   look for: Missing runtime permission checks (M+), assuming permissions granted, not
   handling denial. and report findings with medium severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android Permission Handling
-
-## Source Lineage
-- Original review task: `review-tasks/correctness/android/permission-handling.md`
-- Migrated skill artifact: `skills/review-task-correctness-android-permission-handling/SKILL.md`
-
 ## Task Metadata
 - Category: `correctness`
 - Severity: `medium`
@@ -55,8 +50,3 @@ Missing runtime permission checks (M+), assuming permissions granted, not handli
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding provides clear remediation steps
 - [ ] Severity matches impact level
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

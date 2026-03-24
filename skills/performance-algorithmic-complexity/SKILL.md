@@ -1,7 +1,7 @@
 ---
 name: performance algorithmic complexity
 description: >
-  Migrated review-task skill for Algorithmic Complexity. Use this skill whenever diffs
+  Algorithmic Complexity. Use this skill whenever diffs
   may introduce performance issues on all, especially in all. Actively look for:
   Unnecessarily expensive algorithms — O(n²) or worse when O(n) or O(n log n) solutions
   exist. Includes nested loops... and report findings with medium severity expectations
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Algorithmic Complexity
-
-## Source Lineage
-- Original review task: `review-tasks/performance/algorithmic-complexity.md`
-- Migrated skill artifact: `skills/review-task-performance-algorithmic-complexity/SKILL.md`
-
 ## Task Metadata
 - Category: `performance`
 - Severity: `medium`
@@ -72,8 +67,3 @@ def find_common(list_a, list_b):
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding identifies the complexity and suggests improvement
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

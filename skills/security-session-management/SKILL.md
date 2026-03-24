@@ -1,7 +1,7 @@
 ---
 name: security session management
 description: >
-  Migrated review-task skill for Session Management Flaws. Use this skill whenever diffs
+  Session Management Flaws. Use this skill whenever diffs
   may introduce security issues on web, api, especially in all. Actively look for:
   Session management flaws include predictable session IDs, missing session expiration,
   session fixation vulnerabilities, insecure session storage, and failure... and report
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Session Management Flaws
-
-## Source Lineage
-- Original review task: `review-tasks/security/session-management.md`
-- Migrated skill artifact: `skills/review-task-security-session-management/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -105,8 +100,3 @@ public void doLogin(HttpServletRequest request, HttpServletResponse response) {
 - [ ] Does NOT flag counter-example 2 (session regeneration)
 - [ ] Finding includes fix with Secure/HttpOnly/SameSite flags
 - [ ] Severity assigned as high or critical for fixation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

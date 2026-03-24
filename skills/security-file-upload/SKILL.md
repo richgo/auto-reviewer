@@ -1,7 +1,7 @@
 ---
 name: security file upload
 description: >
-  Migrated review-task skill for Insecure File Upload. Use this skill whenever diffs may
+  Insecure File Upload. Use this skill whenever diffs may
   introduce security issues on web, api, especially in all. Actively look for: Insecure
   file upload vulnerabilities allow attackers to upload malicious files (web shells,
   malware) leading to remote code execution,... and report findings with high severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Insecure File Upload
-
-## Source Lineage
-- Original review task: `review-tasks/security/file-upload.md`
-- Migrated skill artifact: `skills/review-task-security-file-upload/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -121,8 +116,3 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 - [ ] Does NOT flag counter-example 2 (content validation + re-encoding)
 - [ ] Finding references OWASP File Upload Cheat Sheet
 - [ ] Severity assigned as high or critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

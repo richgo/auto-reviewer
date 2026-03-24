@@ -173,7 +173,6 @@ viewModelScope.launch(Dispatchers.Main) {
 **Finding:** High — Network I/O on main thread causes ANR. Use `Dispatchers.IO`.
 
 ## Migration Coverage
-Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## Quick Checklist
 - [ ] Shared mutable state protected by locks or atomics

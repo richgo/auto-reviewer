@@ -1,7 +1,7 @@
 ---
 name: correctness ios lifecycle bugs
 description: >
-  Migrated review-task skill for iOS Lifecycle Bugs. Use this skill whenever diffs may
+  iOS Lifecycle Bugs. Use this skill whenever diffs may
   introduce correctness issues on mobile, especially in Swift, Objective-C. Actively
   look for: UIKit access before viewDidLoad, state corruption across scene lifecycle,
   background task expiration. and report findings with medium severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # iOS Lifecycle Bugs
-
-## Source Lineage
-- Original review task: `review-tasks/correctness/ios/lifecycle-bugs.md`
-- Migrated skill artifact: `skills/review-task-correctness-ios-lifecycle-bugs/SKILL.md`
-
 ## Task Metadata
 - Category: `correctness`
 - Severity: `medium`
@@ -55,8 +50,3 @@ UIKit access before viewDidLoad, state corruption across scene lifecycle, backgr
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding provides clear remediation steps
 - [ ] Severity matches impact level
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

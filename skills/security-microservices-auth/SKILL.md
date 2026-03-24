@@ -1,7 +1,7 @@
 ---
 name: security microservices auth
 description: >
-  Migrated review-task skill for Microservices Authentication. Use this skill whenever
+  Microservices Authentication. Use this skill whenever
   diffs may introduce security issues on microservices, especially in all. Actively look
   for: Missing service-to-service authentication, relying on network isolation, shared
   secrets across services. and report findings with high severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Microservices Authentication
-
-## Source Lineage
-- Original review task: `review-tasks/security/microservices/auth.md`
-- Migrated skill artifact: `skills/review-task-security-microservices-auth/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -56,8 +51,3 @@ Missing service-to-service authentication, relying on network isolation, shared 
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

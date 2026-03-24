@@ -1,18 +1,13 @@
 ---
 name: security web html injection
 description: >
-  Migrated review-task skill for HTML Injection. Use this skill whenever diffs may
+  HTML Injection. Use this skill whenever diffs may
   introduce security issues on web, especially in all. Actively look for: User content
   injected into meta tags, link href, form action enabling phishing or open redirect.
   and report findings with medium severity expectations and actionable fixes.
 ---
 
 # HTML Injection
-
-## Source Lineage
-- Original review task: `review-tasks/security/web/html-injection.md`
-- Migrated skill artifact: `skills/review-task-security-web-html-injection/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -58,8 +53,3 @@ User content injected into meta tags, link href, form action enabling phishing o
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

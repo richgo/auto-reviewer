@@ -1,18 +1,13 @@
 ---
 name: concurrency ios actor isolation
 description: >
-  Migrated review-task skill for Swift Actor Isolation. Use this skill whenever diffs
+  Swift Actor Isolation. Use this skill whenever diffs
   may introduce concurrency issues on mobile, especially in Swift. Actively look for:
   Missing @MainActor, Sendable protocol violations, data races across actors. and report
   findings with medium severity expectations and actionable fixes.
 ---
 
 # Swift Actor Isolation
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/ios/actor-isolation.md`
-- Migrated skill artifact: `skills/review-task-concurrency-ios-actor-isolation/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `medium`
@@ -55,8 +50,3 @@ Missing @MainActor, Sendable protocol violations, data races across actors.
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as medium
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

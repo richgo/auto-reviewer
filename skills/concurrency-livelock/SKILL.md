@@ -1,18 +1,13 @@
 ---
 name: concurrency livelock
 description: >
-  Migrated review-task skill for Livelock. Use this skill whenever diffs may introduce
+  Livelock. Use this skill whenever diffs may introduce
   concurrency issues on all, especially in all. Actively look for: Threads continuously
   changing state in response to each other without making progress. and report findings
   with medium severity expectations and actionable fixes.
 ---
 
 # Livelock
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/livelock.md`
-- Migrated skill artifact: `skills/review-task-concurrency-livelock/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `medium`
@@ -55,8 +50,3 @@ Threads continuously changing state in response to each other without making pro
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as medium
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

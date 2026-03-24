@@ -1,7 +1,7 @@
 ---
 name: security prototype pollution
 description: >
-  Migrated review-task skill for Prototype Pollution. Use this skill whenever diffs may
+  Prototype Pollution. Use this skill whenever diffs may
   introduce security issues on web, api, especially in JavaScript, TypeScript. Actively
   look for: Prototype pollution occurs when attacker-controlled properties like
   `__proto__`, `constructor`, or `prototype` modify JavaScript object prototypes,
@@ -10,11 +10,6 @@ description: >
 ---
 
 # Prototype Pollution
-
-## Source Lineage
-- Original review task: `review-tasks/security/prototype-pollution.md`
-- Migrated skill artifact: `skills/review-task-security-prototype-pollution/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -119,8 +114,3 @@ app.post('/api/settings', (req, res) => {
 - [ ] Does NOT flag counter-example 2 (Map usage)
 - [ ] Finding references OWASP Prototype Pollution Prevention
 - [ ] Severity assigned as high or critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

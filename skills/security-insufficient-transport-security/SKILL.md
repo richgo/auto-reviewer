@@ -1,7 +1,7 @@
 ---
 name: security insufficient transport security
 description: >
-  Migrated review-task skill for Insufficient Transport Layer Security. Use this skill
+  Insufficient Transport Layer Security. Use this skill
   whenever diffs may introduce security issues on web, api, mobile, especially in all.
   Actively look for: Insufficient transport security includes accepting unencrypted HTTP
   connections, weak TLS versions (< 1.2), insecure cipher suites, missing certificate...
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Insufficient Transport Layer Security
-
-## Source Lineage
-- Original review task: `review-tasks/security/insufficient-transport-security.md`
-- Migrated skill artifact: `skills/review-task-security-insufficient-transport-security/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -94,8 +89,3 @@ app.use(helmet.hsts({
 - [ ] Does NOT flag counter-example 2 (HSTS enabled)
 - [ ] Finding references OWASP Transport Layer Protection Cheat Sheet
 - [ ] Severity assigned as high or critical for disabled cert validation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

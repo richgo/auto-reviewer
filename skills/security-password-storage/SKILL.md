@@ -1,7 +1,7 @@
 ---
 name: security password storage
 description: >
-  Migrated review-task skill for Insecure Password Storage. Use this skill whenever
+  Insecure Password Storage. Use this skill whenever
   diffs may introduce security issues on all, especially in all. Actively look for:
   Insecure password storage includes plaintext passwords, weak hashing algorithms (MD5,
   SHA1), missing salt, inadequate work factor for bcrypt/scrypt/Argon2,... and report
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Insecure Password Storage
-
-## Source Lineage
-- Original review task: `review-tasks/security/password-storage.md`
-- Migrated skill artifact: `skills/review-task-security-password-storage/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -101,8 +96,3 @@ async function hashPassword(password) {
 - [ ] Does NOT flag counter-example 2 (Argon2)
 - [ ] Finding recommends bcrypt/scrypt/Argon2 with work factors
 - [ ] Severity assigned as critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

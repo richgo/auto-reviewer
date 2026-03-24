@@ -1,7 +1,7 @@
 ---
 name: security denial of service
 description: >
-  Migrated review-task skill for Denial of Service Vulnerabilities. Use this skill
+  Denial of Service Vulnerabilities. Use this skill
   whenever diffs may introduce security issues on all, especially in all. Actively look
   for: Denial of Service vulnerabilities allow attackers to exhaust system resources
   (CPU, memory, disk, network) through algorithmic complexity attacks,... and report
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Denial of Service Vulnerabilities
-
-## Source Lineage
-- Original review task: `review-tasks/security/denial-of-service.md`
-- Migrated skill artifact: `skills/review-task-security-denial-of-service/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -113,8 +108,3 @@ app.post('/api/find-duplicates', (req, res) => {
 - [ ] Does NOT flag counter-example 2 (input validation + efficient algorithm)
 - [ ] Finding recommends specific limits and timeouts
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

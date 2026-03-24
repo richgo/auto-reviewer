@@ -1,7 +1,7 @@
 ---
 name: concurrency ios gcd misuse
 description: >
-  Migrated review-task skill for iOS GCD Misuse. Use this skill whenever diffs may
+  iOS GCD Misuse. Use this skill whenever diffs may
   introduce concurrency issues on mobile, especially in Swift, Objective-C. Actively
   look for: Sync dispatch on main queue causing deadlock, missing DispatchGroup
   coordination. and report findings with high severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # iOS GCD Misuse
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/ios/gcd-misuse.md`
-- Migrated skill artifact: `skills/review-task-concurrency-ios-gcd-misuse/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `high`
@@ -56,8 +51,3 @@ Sync dispatch on main queue causing deadlock, missing DispatchGroup coordination
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: security path traversal
 description: >
-  Migrated review-task skill for Path Traversal. Use this skill whenever diffs may
+  Path Traversal. Use this skill whenever diffs may
   introduce security issues on web, api, especially in all. Actively look for: User
   input used to construct file paths without sanitization, allowing attackers to
   read/write arbitrary files via `../` sequences. and report findings with critical
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Path Traversal
-
-## Source Lineage
-- Original review task: `review-tasks/security/path-traversal.md`
-- Migrated skill artifact: `skills/review-task-security-path-traversal/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -66,8 +61,3 @@ def serve_file(filename):
 - [ ] Finding mentions `../` escape risk
 - [ ] Finding suggests path validation fix
 - [ ] Severity assigned as critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

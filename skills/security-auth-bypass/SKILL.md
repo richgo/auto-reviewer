@@ -1,7 +1,7 @@
 ---
 name: security auth bypass
 description: >
-  Migrated review-task skill for Authentication/Authorization Bypass. Use this skill
+  Authentication/Authorization Bypass. Use this skill
   whenever diffs may introduce security issues on web, api, mobile, especially in all.
   Actively look for: Missing or insufficient authentication/authorization checks
   allowing unauthorized access to resources or actions. Includes broken access control
@@ -10,11 +10,6 @@ description: >
 ---
 
 # Authentication/Authorization Bypass
-
-## Source Lineage
-- Original review task: `review-tasks/security/auth-bypass.md`
-- Migrated skill artifact: `skills/review-task-security-auth-bypass/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -83,8 +78,3 @@ def get_invoice(invoice_id):
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding includes specific fix (ownership check / middleware)
 - [ ] Severity assigned as critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

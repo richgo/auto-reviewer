@@ -1,7 +1,7 @@
 ---
 name: security web client side storage
 description: >
-  Migrated review-task skill for Client-Side Storage Security. Use this skill whenever
+  Client-Side Storage Security. Use this skill whenever
   diffs may introduce security issues on web, especially in JavaScript, TypeScript.
   Actively look for: Storing tokens or secrets in localStorage, unencrypted IndexedDB,
   sensitive data in sessionStorage. and report findings with medium severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Client-Side Storage Security
-
-## Source Lineage
-- Original review task: `review-tasks/security/web/client-side-storage.md`
-- Migrated skill artifact: `skills/review-task-security-web-client-side-storage/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -59,8 +54,3 @@ Storing tokens or secrets in localStorage, unencrypted IndexedDB, sensitive data
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

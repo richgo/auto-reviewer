@@ -1,7 +1,7 @@
 ---
 name: correctness ios retain cycle
 description: >
-  Migrated review-task skill for iOS Retain Cycles. Use this skill whenever diffs may
+  iOS Retain Cycles. Use this skill whenever diffs may
   introduce correctness issues on mobile, especially in Swift, Objective-C. Actively
   look for: Strong reference cycles in closures (missing [weak self]), delegates not
   weak, NotificationCenter leaks. and report findings with high severity expectations
@@ -9,11 +9,6 @@ description: >
 ---
 
 # iOS Retain Cycles
-
-## Source Lineage
-- Original review task: `review-tasks/correctness/ios/retain-cycle.md`
-- Migrated skill artifact: `skills/review-task-correctness-ios-retain-cycle/SKILL.md`
-
 ## Task Metadata
 - Category: `correctness`
 - Severity: `high`
@@ -55,8 +50,3 @@ Strong reference cycles in closures (missing [weak self]), delegates not weak, N
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding provides clear remediation steps
 - [ ] Severity matches impact level
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

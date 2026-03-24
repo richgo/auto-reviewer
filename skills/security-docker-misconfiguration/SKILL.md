@@ -1,7 +1,7 @@
 ---
 name: security docker misconfiguration
 description: >
-  Migrated review-task skill for Docker Misconfiguration. Use this skill whenever diffs
+  Docker Misconfiguration. Use this skill whenever diffs
   may introduce security issues on all, especially in Dockerfile, all. Actively look
   for: Docker security misconfigurations include running containers as root, exposing
   unnecessary ports, missing resource limits, using `latest` tags, insecure... and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Docker Misconfiguration
-
-## Source Lineage
-- Original review task: `review-tasks/security/docker-misconfiguration.md`
-- Migrated skill artifact: `skills/review-task-security-docker-misconfiguration/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -104,8 +99,3 @@ CMD ["python", "app.py"]
 - [ ] Does NOT flag counter-example 2 (runtime secrets)
 - [ ] Finding references OWASP Docker Security Cheat Sheet
 - [ ] Severity assigned as high for root or hardcoded secrets
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

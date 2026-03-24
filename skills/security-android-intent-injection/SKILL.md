@@ -1,7 +1,7 @@
 ---
 name: security android intent injection
 description: >
-  Migrated review-task skill for Android Intent Injection. Use this skill whenever diffs
+  Android Intent Injection. Use this skill whenever diffs
   may introduce security issues on mobile, especially in Kotlin, Java. Actively look
   for: Intent injection occurs when apps process untrusted Intent extras without
   validation or use implicit Intents for sensitive operations,... and report findings
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android Intent Injection
-
-## Source Lineage
-- Original review task: `review-tasks/security/android/intent-injection.md`
-- Migrated skill artifact: `skills/review-task-security-android-intent-injection/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -84,8 +79,3 @@ class FileViewerActivity : AppCompatActivity() {
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as high
 - [ ] References OWASP MASVS-PLATFORM
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

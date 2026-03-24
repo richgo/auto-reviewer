@@ -1,7 +1,7 @@
 ---
 name: security dom xss
 description: >
-  Migrated review-task skill for DOM-based XSS. Use this skill whenever diffs may
+  DOM-based XSS. Use this skill whenever diffs may
   introduce security issues on web, especially in JavaScript, TypeScript. Actively look
   for: DOM-based Cross-Site Scripting occurs when user-controlled data flows into
   dangerous JavaScript DOM sinks (innerHTML, document.write, eval) without
@@ -10,11 +10,6 @@ description: >
 ---
 
 # DOM-based XSS
-
-## Source Lineage
-- Original review task: `review-tasks/security/dom-xss.md`
-- Migrated skill artifact: `skills/review-task-security-dom-xss/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -82,8 +77,3 @@ document.getElementById('content').innerHTML = DOMPurify.sanitize(userInput);
 - [ ] Does NOT flag counter-example 2 (DOMPurify sanitization)
 - [ ] Finding includes sink location and data flow source
 - [ ] Severity assigned as high or critical based on sink danger
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

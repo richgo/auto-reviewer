@@ -1,18 +1,13 @@
 ---
 name: testing flaky test patterns
 description: >
-  Migrated review-task skill for Flaky Test Patterns. Use this skill whenever diffs may
+  Flaky Test Patterns. Use this skill whenever diffs may
   introduce testing issues on all, especially in all. Actively look for: Tests with race
   conditions, time dependencies, random data without seeds. and report findings with
   medium severity expectations and actionable fixes.
 ---
 
 # Flaky Test Patterns
-
-## Source Lineage
-- Original review task: `review-tasks/testing/flaky-test-patterns.md`
-- Migrated skill artifact: `skills/review-task-testing-flaky-test-patterns/SKILL.md`
-
 ## Task Metadata
 - Category: `testing`
 - Severity: `medium`
@@ -54,8 +49,3 @@ Tests with race conditions, time dependencies, random data without seeds.
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding provides clear remediation steps
 - [ ] Severity matches impact level
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

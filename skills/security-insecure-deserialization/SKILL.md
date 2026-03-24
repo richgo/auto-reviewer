@@ -1,7 +1,7 @@
 ---
 name: security insecure deserialization
 description: >
-  Migrated review-task skill for Insecure Deserialization. Use this skill whenever diffs
+  Insecure Deserialization. Use this skill whenever diffs
   may introduce security issues on all, especially in Java, Python, PHP, .NET,
   JavaScript. Actively look for: Insecure deserialization occurs when untrusted data is
   deserialized without validation, allowing attackers to execute arbitrary code, perform
@@ -10,11 +10,6 @@ description: >
 ---
 
 # Insecure Deserialization
-
-## Source Lineage
-- Original review task: `review-tasks/security/insecure-deserialization.md`
-- Migrated skill artifact: `skills/review-task-security-insecure-deserialization/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -104,8 +99,3 @@ public Object deserialize(byte[] data) throws IOException, ClassNotFoundExceptio
 - [ ] Does NOT flag counter-example 2 (ObjectInputFilter)
 - [ ] Finding references OWASP Deserialization Cheat Sheet
 - [ ] Severity assigned as critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: api design input validation
 description: >
-  Migrated review-task skill for Missing Input Validation. Use this skill whenever diffs
+  Missing Input Validation. Use this skill whenever diffs
   may introduce api-design issues on web, api, mobile, especially in all. Actively look
   for: API endpoints or functions that accept user input without validating type,
   format, range, or required fields — leading... and report findings with high severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Missing Input Validation
-
-## Source Lineage
-- Original review task: `review-tasks/api-design/input-validation.md`
-- Migrated skill artifact: `skills/review-task-api-design-input-validation/SKILL.md`
-
 ## Task Metadata
 - Category: `api-design`
 - Severity: `high`
@@ -77,8 +72,3 @@ app.post('/api/orders', async (req, res) => {
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests schema validation approach
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

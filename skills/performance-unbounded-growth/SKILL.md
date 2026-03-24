@@ -1,18 +1,13 @@
 ---
 name: performance unbounded growth
 description: >
-  Migrated review-task skill for Unbounded Growth. Use this skill whenever diffs may
+  Unbounded Growth. Use this skill whenever diffs may
   introduce performance issues on all, especially in all. Actively look for: Collections
   growing without bounds, memory leaks from uncleared caches or listeners. and report
   findings with medium severity expectations and actionable fixes.
 ---
 
 # Unbounded Growth
-
-## Source Lineage
-- Original review task: `review-tasks/performance/unbounded-growth.md`
-- Migrated skill artifact: `skills/review-task-performance-unbounded-growth/SKILL.md`
-
 ## Task Metadata
 - Category: `performance`
 - Severity: `medium`
@@ -52,8 +47,3 @@ Collections growing without bounds, memory leaks from uncleared caches or listen
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific improvements
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

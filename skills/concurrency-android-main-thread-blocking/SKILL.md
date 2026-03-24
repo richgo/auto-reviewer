@@ -1,18 +1,13 @@
 ---
 name: concurrency android main thread blocking
 description: >
-  Migrated review-task skill for Android Main Thread Blocking. Use this skill whenever
+  Android Main Thread Blocking. Use this skill whenever
   diffs may introduce concurrency issues on mobile, especially in Kotlin, Java. Actively
   look for: Network or database calls on main thread causing ANR, StrictMode violations.
   and report findings with high severity expectations and actionable fixes.
 ---
 
 # Android Main Thread Blocking
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/android/main-thread-blocking.md`
-- Migrated skill artifact: `skills/review-task-concurrency-android-main-thread-blocking/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `high`
@@ -55,8 +50,3 @@ Network or database calls on main thread causing ANR, StrictMode violations.
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

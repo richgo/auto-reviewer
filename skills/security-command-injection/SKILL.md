@@ -1,7 +1,7 @@
 ---
 name: security command injection
 description: >
-  Migrated review-task skill for Command Injection. Use this skill whenever diffs may
+  Command Injection. Use this skill whenever diffs may
   introduce security issues on all, especially in all. Actively look for: Command
   injection occurs when user-controlled input is passed unsanitized to shell execution
   functions, allowing attackers to execute arbitrary... and report findings with
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Command Injection
-
-## Source Lineage
-- Original review task: `review-tasks/security/command-injection.md`
-- Migrated skill artifact: `skills/review-task-security-command-injection/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -88,8 +83,3 @@ Process process = pb.start();
 - [ ] Does NOT flag counter-example 2 (ProcessBuilder with separate args)
 - [ ] Finding includes recommendation to use argument arrays
 - [ ] Severity assigned as critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

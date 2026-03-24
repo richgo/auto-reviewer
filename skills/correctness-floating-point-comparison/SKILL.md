@@ -1,18 +1,13 @@
 ---
 name: correctness floating point comparison
 description: >
-  Migrated review-task skill for Floating Point Comparison. Use this skill whenever
+  Floating Point Comparison. Use this skill whenever
   diffs may introduce correctness issues on all, especially in all. Actively look for:
   Direct equality comparison of floating point numbers without epsilon tolerance. and
   report findings with medium severity expectations and actionable fixes.
 ---
 
 # Floating Point Comparison
-
-## Source Lineage
-- Original review task: `review-tasks/correctness/floating-point-comparison.md`
-- Migrated skill artifact: `skills/review-task-correctness-floating-point-comparison/SKILL.md`
-
 ## Task Metadata
 - Category: `correctness`
 - Severity: `medium`
@@ -54,8 +49,3 @@ Direct equality comparison of floating point numbers without epsilon tolerance.
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding provides clear remediation steps
 - [ ] Severity matches impact level
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

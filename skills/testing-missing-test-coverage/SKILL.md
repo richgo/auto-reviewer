@@ -1,7 +1,7 @@
 ---
 name: testing missing test coverage
 description: >
-  Migrated review-task skill for Missing Test Coverage. Use this skill whenever diffs
+  Missing Test Coverage. Use this skill whenever diffs
   may introduce testing issues on all, especially in all. Actively look for: New code
   paths, branches, or error cases introduced without corresponding tests. Includes new
   functions without tests, new conditional... and report findings with medium severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Missing Test Coverage
-
-## Source Lineage
-- Original review task: `review-tasks/testing/missing-test-coverage.md`
-- Migrated skill artifact: `skills/review-task-testing-missing-test-coverage/SKILL.md`
-
 ## Task Metadata
 - Category: `testing`
 - Severity: `medium`
@@ -75,8 +70,3 @@ function getDiscount(user) {
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding identifies specific untested paths
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

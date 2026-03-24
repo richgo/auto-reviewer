@@ -1,18 +1,13 @@
 ---
 name: concurrency android handler looper
 description: >
-  Migrated review-task skill for Android Handler/Looper Issues. Use this skill whenever
+  Android Handler/Looper Issues. Use this skill whenever
   diffs may introduce concurrency issues on mobile, especially in Kotlin, Java. Actively
   look for: Posting to dead Handler, missing Looper cleanup, leaked delayed messages.
   and report findings with medium severity expectations and actionable fixes.
 ---
 
 # Android Handler/Looper Issues
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/android/handler-looper.md`
-- Migrated skill artifact: `skills/review-task-concurrency-android-handler-looper/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `medium`
@@ -55,8 +50,3 @@ Posting to dead Handler, missing Looper cleanup, leaked delayed messages.
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as medium
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

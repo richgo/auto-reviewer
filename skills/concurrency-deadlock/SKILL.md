@@ -1,7 +1,7 @@
 ---
 name: concurrency deadlock
 description: >
-  Migrated review-task skill for Deadlock. Use this skill whenever diffs may introduce
+  Deadlock. Use this skill whenever diffs may introduce
   concurrency issues on all, especially in java, python, go, csharp, cpp, rust. Actively
   look for: Two or more threads each holding a lock while waiting for a lock held by the
   other, causing... and report findings with high severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Deadlock
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/deadlock.md`
-- Migrated skill artifact: `skills/review-task-concurrency-deadlock/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `high`
@@ -79,8 +74,3 @@ synchronized (lockA) {
 - [ ] Finding identifies the circular wait pattern
 - [ ] Finding suggests fix (ordering, buffering)
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

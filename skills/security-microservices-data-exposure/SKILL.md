@@ -1,7 +1,7 @@
 ---
 name: security microservices data exposure
 description: >
-  Migrated review-task skill for Microservices Data Exposure. Use this skill whenever
+  Microservices Data Exposure. Use this skill whenever
   diffs may introduce security issues on microservices, especially in all. Actively look
   for: Over-fetching data across service boundaries, PII leaking between services
   without need-to-know. and report findings with high severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Microservices Data Exposure
-
-## Source Lineage
-- Original review task: `review-tasks/security/microservices/data-exposure.md`
-- Migrated skill artifact: `skills/review-task-security-microservices-data-exposure/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -56,8 +51,3 @@ Over-fetching data across service boundaries, PII leaking between services witho
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

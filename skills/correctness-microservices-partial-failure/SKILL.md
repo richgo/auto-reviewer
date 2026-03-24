@@ -1,18 +1,13 @@
 ---
 name: correctness microservices partial failure
 description: >
-  Migrated review-task skill for Partial Failure Handling. Use this skill whenever diffs
+  Partial Failure Handling. Use this skill whenever diffs
   may introduce correctness issues on microservices, especially in all. Actively look
   for: Multi-service operations without compensation/rollback, orphaned resources. and
   report findings with high severity expectations and actionable fixes.
 ---
 
 # Partial Failure Handling
-
-## Source Lineage
-- Original review task: `review-tasks/correctness/microservices/partial-failure.md`
-- Migrated skill artifact: `skills/review-task-correctness-microservices-partial-failure/SKILL.md`
-
 ## Task Metadata
 - Category: `correctness`
 - Severity: `high`
@@ -54,8 +49,3 @@ Multi-service operations without compensation/rollback, orphaned resources.
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding provides clear remediation steps
 - [ ] Severity matches impact level
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

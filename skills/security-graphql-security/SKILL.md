@@ -1,7 +1,7 @@
 ---
 name: security graphql security
 description: >
-  Migrated review-task skill for GraphQL Security Issues. Use this skill whenever diffs
+  GraphQL Security Issues. Use this skill whenever diffs
   may introduce security issues on web, api, especially in JavaScript, TypeScript,
   Python, Java. Actively look for: GraphQL security issues include query
   depth/complexity attacks (DoS), introspection exposure in production, missing
@@ -10,11 +10,6 @@ description: >
 ---
 
 # GraphQL Security Issues
-
-## Source Lineage
-- Original review task: `review-tasks/security/graphql-security.md`
-- Migrated skill artifact: `skills/review-task-security-graphql-security/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -104,8 +99,3 @@ const resolvers = {
 - [ ] Does NOT flag counter-example 2 (field authorization)
 - [ ] Finding references OWASP GraphQL Cheat Sheet
 - [ ] Severity assigned as high for authorization gaps
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

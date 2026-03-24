@@ -129,7 +129,6 @@ See platform-specific guidance above
 - **Fix:** Optimized code example
 
 ## Migration Coverage
-Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## Quick Checklist
 - [ ] No N+1 queries (use eager loading)

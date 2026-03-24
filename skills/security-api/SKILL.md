@@ -362,7 +362,6 @@ app.post('/api/purchase', async (req, res) => {
 **Finding:** Critical — Client-controlled payment amount. Attacker can set amount to $0.01 for any purchase.
 
 ## Migration Coverage
-Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## OWASP References
 - [GraphQL Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html)

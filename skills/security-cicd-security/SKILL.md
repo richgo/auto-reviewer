@@ -1,7 +1,7 @@
 ---
 name: security cicd security
 description: >
-  Migrated review-task skill for CI/CD Security Issues. Use this skill whenever diffs
+  CI/CD Security Issues. Use this skill whenever diffs
   may introduce security issues on all, especially in YAML, Groovy, all. Actively look
   for: CI/CD security issues include secrets in pipeline files, overly permissive
   workflows, missing code signing, unvalidated third-party actions, and... and report
@@ -9,11 +9,6 @@ description: >
 ---
 
 # CI/CD Security Issues
-
-## Source Lineage
-- Original review task: `review-tasks/security/cicd-security.md`
-- Migrated skill artifact: `skills/review-task-security-cicd-security/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -113,8 +108,3 @@ jobs:
 - [ ] Does NOT flag counter-example 2 (pinned SHA)
 - [ ] Finding references OWASP CI/CD Security Cheat Sheet
 - [ ] Severity assigned as high or critical for secrets
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

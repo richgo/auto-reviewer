@@ -1,7 +1,7 @@
 ---
 name: data pii exposure
 description: >
-  Migrated review-task skill for PII / Sensitive Data Exposure. Use this skill whenever
+  PII / Sensitive Data Exposure. Use this skill whenever
   diffs may introduce data issues on all, especially in all. Actively look for: Personal
   identifiable information (email, SSN, phone, address, health data) or sensitive data
   (passwords, tokens) leaked through API responses,... and report findings with critical
@@ -9,11 +9,6 @@ description: >
 ---
 
 # PII / Sensitive Data Exposure
-
-## Source Lineage
-- Original review task: `review-tasks/data/pii-exposure.md`
-- Migrated skill artifact: `skills/review-task-data-pii-exposure/SKILL.md`
-
 ## Task Metadata
 - Category: `data`
 - Severity: `critical`
@@ -62,8 +57,3 @@ app.get('/api/users/:id', async (req, res) => {
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding identifies specific sensitive fields
 - [ ] Severity assigned as critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

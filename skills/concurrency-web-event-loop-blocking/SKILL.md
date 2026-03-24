@@ -1,18 +1,13 @@
 ---
 name: concurrency web event loop blocking
 description: >
-  Migrated review-task skill for Event Loop Blocking. Use this skill whenever diffs may
+  Event Loop Blocking. Use this skill whenever diffs may
   introduce concurrency issues on web, especially in JavaScript, TypeScript. Actively
   look for: Long synchronous operations blocking UI, missing requestIdleCallback for
   heavy work. and report findings with high severity expectations and actionable fixes.
 ---
 
 # Event Loop Blocking
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/web/event-loop-blocking.md`
-- Migrated skill artifact: `skills/review-task-concurrency-web-event-loop-blocking/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `high`
@@ -55,8 +50,3 @@ Long synchronous operations blocking UI, missing requestIdleCallback for heavy w
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

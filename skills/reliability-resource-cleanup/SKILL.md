@@ -1,7 +1,7 @@
 ---
 name: reliability resource cleanup
 description: >
-  Migrated review-task skill for Resource Cleanup. Use this skill whenever diffs may
+  Resource Cleanup. Use this skill whenever diffs may
   introduce reliability issues on all, especially in all. Actively look for: File
   handles, database connections, network sockets, or locks opened but not properly
   closed in all code paths (including... and report findings with high severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Resource Cleanup
-
-## Source Lineage
-- Original review task: `review-tasks/reliability/resource-cleanup.md`
-- Migrated skill artifact: `skills/review-task-reliability-resource-cleanup/SKILL.md`
-
 ## Task Metadata
 - Category: `reliability`
 - Severity: `high`
@@ -68,8 +63,3 @@ def read_config(path):
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests context manager / try-with-resources
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

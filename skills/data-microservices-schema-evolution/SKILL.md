@@ -1,18 +1,13 @@
 ---
 name: data microservices schema evolution
 description: >
-  Migrated review-task skill for Schema Evolution Problems. Use this skill whenever
+  Schema Evolution Problems. Use this skill whenever
   diffs may introduce data issues on microservices, especially in all. Actively look
   for: Breaking schema changes in shared events/topics, no Avro/protobuf evolution. and
   report findings with medium severity expectations and actionable fixes.
 ---
 
 # Schema Evolution Problems
-
-## Source Lineage
-- Original review task: `review-tasks/data/microservices/schema-evolution.md`
-- Migrated skill artifact: `skills/review-task-data-microservices-schema-evolution/SKILL.md`
-
 ## Task Metadata
 - Category: `data`
 - Severity: `medium`
@@ -52,8 +47,3 @@ Breaking schema changes in shared events/topics, no Avro/protobuf evolution.
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Provides actionable recommendation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

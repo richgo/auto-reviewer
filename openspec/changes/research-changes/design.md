@@ -2,25 +2,25 @@
 
 ## Overview
 
-This change formalizes a flattened architecture where skills are the only atomic review primitive and agents are composition/execution wrappers over skills. The design migrates review-task guidance into the skill layer, retires task-first runtime assumptions, and aligns composition/tuning/benchmark behavior with what runtime tooling already does today. The result is a single canonical layer for review guidance, evaluation linkage, and model tuning.
+This change formalizes a flattened architecture where skills are the only atomic review primitive and agents are composition/execution wrappers over skills. The design aligns composition/tuning/benchmark behavior with what runtime tooling already does today. The result is a single canonical layer for review guidance, evaluation linkage, and model tuning.
 
 ## Architecture
 
 ### Components Affected
-- `review-tasks/` — transitioned from active architecture primitive to migration source, then retired from runtime dependency paths.
+- `skills/` — canonical review guidance and coverage surface (retired task-first runtime dependency paths).
 - `skills/` (`concerns/`, `languages/`, `core/`, `outputs/`, `tuning/`) — canonical review guidance and coverage surface.
 - `evals/` — canonical skill-linked eval datasets.
 - `scripts/tune/orchestrator.py` and `.github/workflows/autoresearch-tuning.yml` — existing skill-scoped tuning semantics used as the normative contract.
 - `scripts/benchmark/runner.py` — existing skill/eval discovery semantics used as the normative benchmark contract.
 - `scripts/compose/policy.yaml` and composition docs — explicit skill dependency composition model.
 - `agents/composer/agent.md`, `agents/adversarial/agent.md` — explicit agent-as-skill-group contract surfaces.
-- `README.md` and `openspec/specs/review-tasks/spec.md` — currently encode task-first architecture language that must be updated.
-- Historical OpenSpec change docs under `openspec/changes/` that describe review-tasks as atomic.
+- `README.md` — currently encodes task-first architecture language that must be updated.
+- Historical OpenSpec change docs under `openspec/changes/` that describe a task-first model.
 
 ### New Components
 - `openspec/changes/research-changes/specs/skills/spec.md` — skill atomicity and ownership deltas.
 - `openspec/changes/research-changes/specs/agent-composition/spec.md` — agent-as-skill-group deltas.
-- `openspec/changes/research-changes/specs/review-tasks/spec.md` — modified/removed review-task deltas for flattened architecture.
+- `openspec/changes/research-changes/specs/skills/spec.md` — skill atomicity and ownership deltas for flattened architecture.
 
 ## Technical Decisions
 
@@ -28,8 +28,8 @@ This change formalizes a flattened architecture where skills are the only atomic
 
 **Chosen:** Treat skills as the only independently tuneable, benchmarkable, and executable primitive.
 **Alternatives considered:**
-- Keep dual primitives (review-tasks + skills) — rejected because it preserves duplicated ownership and ongoing drift between authored and executable layers.
-- Keep review-tasks atomic and regenerate skills periodically — rejected because runtime tooling already resolves and reports by skill identifiers.
+- Keep dual primitives — rejected because it preserves duplicated ownership and ongoing drift between authored and executable layers.
+- Regenerate skills periodically from a secondary source — rejected because runtime tooling already resolves and reports by skill identifiers.
 
 **Rationale:** Current tuning and benchmark flows already operate at skill granularity, so formalizing skill atomicity removes conceptual mismatch and avoids dual-source maintenance.
 
@@ -44,10 +44,10 @@ This change formalizes a flattened architecture where skills are the only atomic
 
 ### Decision: Migrate Review-Task Guidance into Skills, Then Retire Task-First Contracts
 
-**Chosen:** Migrate bug-class guidance into skill artifacts and retire standalone review-task requirements as active runtime obligations.
+**Chosen:** Store bug-class guidance in skill artifacts as the sole active runtime obligation.
 **Alternatives considered:**
-- Leave review-tasks as permanent parallel references — rejected because it preserves split ownership for guidance and evaluation intent.
-- Hard-delete review-tasks without migration mapping — rejected because it risks coverage loss and broken lineage.
+- Maintain parallel reference layers — rejected because it preserves split ownership for guidance and evaluation intent.
+- Remove guidance without ensuring skill coverage — rejected because it risks coverage loss.
 
 **Rationale:** A migration-first retirement preserves review coverage while converging ownership to one canonical layer.
 
@@ -55,7 +55,7 @@ This change formalizes a flattened architecture where skills are the only atomic
 
 **Chosen:** Re-home concern/platform/security-reference guarantees in the skill layer after migration.
 **Alternatives considered:**
-- Preserve exact review-task count obligations in active specs — rejected because count-based task inventory is tied to a retired primitive.
+- Preserve count-based inventory obligations in active specs — rejected because count-based inventory is tied to a retired primitive.
 - Drop explicit coverage guarantees — rejected because regression detection becomes subjective.
 
 **Rationale:** Flattening should simplify primitives, not weaken coverage accountability.
@@ -71,7 +71,7 @@ This change formalizes a flattened architecture where skills are the only atomic
 
 ## Data Flow
 
-1. Migration input is read from existing review-task guidance and mapped into skill-level guidance ownership.
+1. Skill artifacts are the canonical source for review guidance ownership.
 2. Skill artifacts become the canonical source for review instructions and reference mappings.
 3. Eval datasets resolve by skill identifier and are consumed by benchmark/tuning workflows.
 4. Tuning workflows enumerate skill × model pairs and persist score trajectories keyed by skill identifiers.
@@ -109,7 +109,7 @@ The design relies on existing repository components and workflows:
 - **Spec conformance tests:** validate that skill/tuning/benchmark/composition contracts are expressed with skill identifiers and no standalone task requirement for execution.
 - **Coverage regression checks:** verify concern/platform/security-reference coverage remains represented in skills after migration.
 - **Contract alignment checks:** confirm agent/composition artifacts continue to reference skill paths and skill-attributable outputs.
-- **Documentation consistency checks:** verify pipeline and architecture language no longer defines review-tasks as active atomic runtime units.
+- **Documentation consistency checks:** verify pipeline and architecture language consistently defines skills as the atomic runtime unit.
 - **Migration integrity review:** perform mapping validation from prior task guidance to skill artifacts, with explicit checks for omissions.
 
 ## Edge Cases

@@ -2,7 +2,7 @@
 
 ## Intent
 
-The current skill corpus does not match the Claude skills contract. Active skills are mostly file-based (`skills/<group>/<skill>.md`) while migrated review-task skills exist in nested trees (`skills/review-tasks/...`). This creates conflicting skill identities, duplicate flattened names, and inconsistent ownership of metadata/content. Without one canonical folder-based model, composition, validation, benchmarking, and tuning contracts remain ambiguous.
+The current skill corpus does not match the Claude skills contract. Active skills are mostly file-based (`skills/<group>/<skill>.md`) while some skills exist in nested trees. This creates conflicting skill identities, duplicate flattened names, and inconsistent ownership of metadata/content. Without one canonical folder-based model, composition, validation, benchmarking, and tuning contracts remain ambiguous.
 
 ## Scope
 
@@ -30,11 +30,11 @@ This change affects all surfaces that currently assume file-based skill placemen
 - `skills/` corpus layout and naming authority.
 - Composer policy/selection/validation surfaces (`scripts/compose/policy.yaml`, `scripts/compose/*.py`, `agents/composer/agent.md`).
 - Benchmark and tuning skill discovery assumptions (`scripts/benchmark/runner.py`, `scripts/tune/orchestrator.py`).
-- Skill mapping and migration inventory outputs (`scripts/skills/migration_map.py` and related tests).
+- Skill mapping and migration inventory outputs (`scripts/skills/` and related tests).
 - Repository/OpenSpec documentation that currently describes category file layouts.
 
 Known manual-fix error classes:
-- Flattened-name collisions between active concern skills and review-task-derived trees (for example `api-design`, `code-quality`, `concurrency`, `correctness`, `observability`, `performance`, `reliability`, `testing`, and `security-mobile`).
+- Flattened-name collisions between active concern skills (for example `api-design`, `code-quality`, `concurrency`, `correctness`, `observability`, `performance`, `reliability`, `testing`, and `security-mobile`).
 - Naming divergence where semantically related coverage resolves to different flattened names (`data-integrity` vs `data` lineage) and requires explicit canonical ownership.
 - Non-mergeable duplicate content conflicts where sources disagree on front matter semantics or incompatible scope boundaries.
 

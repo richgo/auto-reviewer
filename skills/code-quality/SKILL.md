@@ -343,7 +343,6 @@ router.put('/users/:id', validateEmail, (req, res) => { ... });
 ```
 
 ## Migration Coverage
-Review guidance from the legacy review-task corpus is now consolidated in this skill and validated via the migration inventory (`openspec/changes/research-changes/artifacts/review-task-skill-map.csv`).
 
 ## Quick Checklist
 - [ ] No unreachable or commented-out code

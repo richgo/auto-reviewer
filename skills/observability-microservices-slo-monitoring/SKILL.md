@@ -1,7 +1,7 @@
 ---
 name: observability microservices slo monitoring
 description: >
-  Migrated review-task skill for SLO Monitoring Missing. Use this skill whenever diffs
+  SLO Monitoring Missing. Use this skill whenever diffs
   may introduce observability issues on microservices, especially in all. Actively look
   for: No SLI/SLO definitions, missing error budget tracking, no alerting on latency
   percentiles. and report findings with medium severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # SLO Monitoring Missing
-
-## Source Lineage
-- Original review task: `review-tasks/observability/microservices/slo-monitoring.md`
-- Migrated skill artifact: `skills/review-task-observability-microservices-slo-monitoring/SKILL.md`
-
 ## Task Metadata
 - Category: `observability`
 - Severity: `medium`
@@ -53,8 +48,3 @@ No SLI/SLO definitions, missing error budget tracking, no alerting on latency pe
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Provides actionable recommendation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

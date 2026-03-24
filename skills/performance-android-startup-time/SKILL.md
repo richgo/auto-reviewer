@@ -1,7 +1,7 @@
 ---
 name: performance android startup time
 description: >
-  Migrated review-task skill for Android App Startup Time. Use this skill whenever diffs
+  Android App Startup Time. Use this skill whenever diffs
   may introduce performance issues on mobile, especially in Kotlin, Java. Actively look
   for: Heavy initialization in Application.onCreate, synchronous disk I/O at launch,
   missing lazy init. and report findings with medium severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android App Startup Time
-
-## Source Lineage
-- Original review task: `review-tasks/performance/android/startup-time.md`
-- Migrated skill artifact: `skills/review-task-performance-android-startup-time/SKILL.md`
-
 ## Task Metadata
 - Category: `performance`
 - Severity: `medium`
@@ -53,8 +48,3 @@ Heavy initialization in Application.onCreate, synchronous disk I/O at launch, mi
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific improvements
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: security clickjacking
 description: >
-  Migrated review-task skill for Clickjacking Vulnerabilities. Use this skill whenever
+  Clickjacking Vulnerabilities. Use this skill whenever
   diffs may introduce security issues on web, especially in all. Actively look for:
   Clickjacking (UI redressing) attacks trick users into clicking hidden elements by
   overlaying transparent iframes over legitimate UI. Prevention... and report findings
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Clickjacking Vulnerabilities
-
-## Source Lineage
-- Original review task: `review-tasks/security/clickjacking.md`
-- Migrated skill artifact: `skills/review-task-security-clickjacking/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -109,8 +104,3 @@ app.get('/settings', (req, res) => {
 - [ ] Does NOT flag counter-example 2 (CSP frame-ancestors)
 - [ ] Finding recommends X-Frame-Options or CSP frame-ancestors
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

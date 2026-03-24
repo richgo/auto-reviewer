@@ -1,18 +1,13 @@
 ---
 name: correctness microservices idempotency
 description: >
-  Migrated review-task skill for Missing Idempotency. Use this skill whenever diffs may
+  Missing Idempotency. Use this skill whenever diffs may
   introduce correctness issues on microservices, especially in all. Actively look for:
   Non-idempotent message handlers, duplicate processing, missing idempotency keys. and
   report findings with high severity expectations and actionable fixes.
 ---
 
 # Missing Idempotency
-
-## Source Lineage
-- Original review task: `review-tasks/correctness/microservices/idempotency.md`
-- Migrated skill artifact: `skills/review-task-correctness-microservices-idempotency/SKILL.md`
-
 ## Task Metadata
 - Category: `correctness`
 - Severity: `high`
@@ -54,8 +49,3 @@ Non-idempotent message handlers, duplicate processing, missing idempotency keys.
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding provides clear remediation steps
 - [ ] Severity matches impact level
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

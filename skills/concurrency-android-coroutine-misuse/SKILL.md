@@ -1,18 +1,13 @@
 ---
 name: concurrency android coroutine misuse
 description: >
-  Migrated review-task skill for Android Coroutine Misuse. Use this skill whenever diffs
+  Android Coroutine Misuse. Use this skill whenever diffs
   may introduce concurrency issues on mobile, especially in Kotlin. Actively look for:
   Wrong dispatcher (Dispatchers.Main for I/O), leaked GlobalScope, missing structured
   concurrency. and report findings with high severity expectations and actionable fixes.
 ---
 
 # Android Coroutine Misuse
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/android/coroutine-misuse.md`
-- Migrated skill artifact: `skills/review-task-concurrency-android-coroutine-misuse/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `high`
@@ -55,8 +50,3 @@ Wrong dispatcher (Dispatchers.Main for I/O), leaked GlobalScope, missing structu
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

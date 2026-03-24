@@ -1,7 +1,7 @@
 ---
 name: security ai agent security
 description: >
-  Migrated review-task skill for AI Agent Security. Use this skill whenever diffs may
+  AI Agent Security. Use this skill whenever diffs may
   introduce security issues on all, especially in all. Actively look for: AI agents with
   tool use, code execution, or multi-step workflows face risks including unauthorized
   tool invocation, insufficient sandboxing,... and report findings with high severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # AI Agent Security
-
-## Source Lineage
-- Original review task: `review-tasks/security/ai-agent-security.md`
-- Migrated skill artifact: `skills/review-task-security-ai-agent-security/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -116,8 +111,3 @@ const agent = new Agent({
 - [ ] Does NOT flag counter-example 2 (resource constraints)
 - [ ] Finding references OWASP AI Agent Security principles
 - [ ] Severity assigned as high or critical for code exec
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

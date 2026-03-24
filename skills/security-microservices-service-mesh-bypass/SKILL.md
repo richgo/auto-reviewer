@@ -1,18 +1,13 @@
 ---
 name: security microservices service mesh bypass
 description: >
-  Migrated review-task skill for Service Mesh Bypass. Use this skill whenever diffs may
+  Service Mesh Bypass. Use this skill whenever diffs may
   introduce security issues on microservices, especially in all. Actively look for:
   Direct pod-to-pod communication bypassing Istio/Linkerd policies and mTLS enforcement.
   and report findings with high severity expectations and actionable fixes.
 ---
 
 # Service Mesh Bypass
-
-## Source Lineage
-- Original review task: `review-tasks/security/microservices/service-mesh-bypass.md`
-- Migrated skill artifact: `skills/review-task-security-microservices-service-mesh-bypass/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -55,8 +50,3 @@ Direct pod-to-pod communication bypassing Istio/Linkerd policies and mTLS enforc
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

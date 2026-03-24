@@ -1,18 +1,13 @@
 ---
 name: data android room migration
 description: >
-  Migrated review-task skill for Android Room Migration Issues. Use this skill whenever
+  Android Room Migration Issues. Use this skill whenever
   diffs may introduce data issues on mobile, especially in Kotlin, Java. Actively look
   for: Destructive Room migration, missing Migration objects, schema hash mismatch
   crashes. and report findings with high severity expectations and actionable fixes.
 ---
 
 # Android Room Migration Issues
-
-## Source Lineage
-- Original review task: `review-tasks/data/android/room-migration.md`
-- Migrated skill artifact: `skills/review-task-data-android-room-migration/SKILL.md`
-
 ## Task Metadata
 - Category: `data`
 - Severity: `high`
@@ -52,8 +47,3 @@ Destructive Room migration, missing Migration objects, schema hash mismatch cras
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Provides actionable recommendation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

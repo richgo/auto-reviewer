@@ -1,7 +1,7 @@
 ---
 name: security prompt injection
 description: >
-  Migrated review-task skill for Prompt Injection (LLM). Use this skill whenever diffs
+  Prompt Injection (LLM). Use this skill whenever diffs
   may introduce security issues on all, especially in all. Actively look for: Prompt
   injection attacks manipulate LLM inputs to override system instructions, leak
   confidential context, trigger unintended actions, or bypass... and report findings
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Prompt Injection (LLM)
-
-## Source Lineage
-- Original review task: `review-tasks/security/prompt-injection.md`
-- Migrated skill artifact: `skills/review-task-security-prompt-injection/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -104,8 +99,3 @@ const agent = new AIAgent({
 - [ ] Does NOT flag counter-example 2 (approval workflow)
 - [ ] Finding references OWASP LLM Top 10 (LLM01: Prompt Injection)
 - [ ] Severity assigned as critical for agent systems
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: security mass assignment
 description: >
-  Migrated review-task skill for Mass Assignment. Use this skill whenever diffs may
+  Mass Assignment. Use this skill whenever diffs may
   introduce security issues on web, api, especially in all. Actively look for: Accepting
   and applying all user-supplied fields to a model/object without filtering, allowing
   attackers to set privileged fields (role,... and report findings with high severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Mass Assignment
-
-## Source Lineage
-- Original review task: `review-tasks/security/mass-assignment.md`
-- Migrated skill artifact: `skills/review-task-security-mass-assignment/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -68,8 +63,3 @@ app.post('/api/users', async (req, res) => {
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding identifies privileged fields at risk
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

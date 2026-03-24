@@ -1,7 +1,7 @@
 ---
 name: concurrency race condition
 description: >
-  Migrated review-task skill for Race Condition. Use this skill whenever diffs may
+  Race Condition. Use this skill whenever diffs may
   introduce concurrency issues on all, especially in all. Actively look for: Multiple
   threads/coroutines/requests accessing shared mutable state without synchronization,
   leading to data corruption, lost updates, or inconsistent reads. and report findings
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Race Condition
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/race-condition.md`
-- Migrated skill artifact: `skills/review-task-concurrency-race-condition/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `high`
@@ -107,8 +102,3 @@ public class RequestCounter {
 - [ ] Does NOT flag counter-example 2
 - [ ] Finding identifies the shared state and suggests synchronization
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

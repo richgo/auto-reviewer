@@ -1,7 +1,7 @@
 ---
 name: security oauth misconfiguration
 description: >
-  Migrated review-task skill for OAuth/SAML Misconfiguration. Use this skill whenever
+  OAuth/SAML Misconfiguration. Use this skill whenever
   diffs may introduce security issues on web, api, especially in all. Actively look for:
   OAuth and SAML misconfigurations include missing state parameter validation, insecure
   redirect URIs, weak JWT signatures, accepting unsigned SAML... and report findings
@@ -9,11 +9,6 @@ description: >
 ---
 
 # OAuth/SAML Misconfiguration
-
-## Source Lineage
-- Original review task: `review-tasks/security/oauth-misconfiguration.md`
-- Migrated skill artifact: `skills/review-task-security-oauth-misconfiguration/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -128,8 +123,3 @@ app.post('/api/auth', async (req, res) => {
 - [ ] Does NOT flag counter-example 2 (secure JWT verification)
 - [ ] Finding references OWASP OAuth2/JWT/SAML cheat sheets
 - [ ] Severity assigned as high or critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

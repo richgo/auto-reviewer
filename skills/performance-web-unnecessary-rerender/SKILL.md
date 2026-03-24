@@ -1,7 +1,7 @@
 ---
 name: performance web unnecessary rerender
 description: >
-  Migrated review-task skill for Unnecessary Re-renders. Use this skill whenever diffs
+  Unnecessary Re-renders. Use this skill whenever diffs
   may introduce performance issues on web, especially in JavaScript, TypeScript.
   Actively look for: React/Vue components re-rendering unnecessarily, missing
   memoization, prop drilling. and report findings with medium severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Unnecessary Re-renders
-
-## Source Lineage
-- Original review task: `review-tasks/performance/web/unnecessary-rerender.md`
-- Migrated skill artifact: `skills/review-task-performance-web-unnecessary-rerender/SKILL.md`
-
 ## Task Metadata
 - Category: `performance`
 - Severity: `medium`
@@ -53,8 +48,3 @@ React/Vue components re-rendering unnecessarily, missing memoization, prop drill
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific improvements
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: security xss
 description: >
-  Migrated review-task skill for Cross-Site Scripting (XSS). Use this skill whenever
+  Cross-Site Scripting (XSS). Use this skill whenever
   diffs may introduce security issues on web, especially in javascript, typescript,
   python, java, ruby, php. Actively look for: User-controlled input rendered in HTML
   without proper encoding/escaping, allowing attackers to inject malicious scripts that
@@ -10,11 +10,6 @@ description: >
 ---
 
 # Cross-Site Scripting (XSS)
-
-## Source Lineage
-- Original review task: `review-tasks/security/xss.md`
-- Migrated skill artifact: `skills/review-task-security-xss/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -80,8 +75,3 @@ function Comment({ comment }) {
 - [ ] Does NOT flag counter-example 2 (DOMPurify)
 - [ ] Finding includes sanitization fix suggestion
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

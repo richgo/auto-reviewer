@@ -1,7 +1,7 @@
 ---
 name: reliability ios crash recovery
 description: >
-  Migrated review-task skill for iOS Crash Recovery. Use this skill whenever diffs may
+  iOS Crash Recovery. Use this skill whenever diffs may
   introduce reliability issues on mobile, especially in Swift, Objective-C. Actively
   look for: No scene restoration, corrupted UserDefaults on crash, missing Core Data
   transactions. and report findings with medium severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # iOS Crash Recovery
-
-## Source Lineage
-- Original review task: `review-tasks/reliability/ios/crash-recovery.md`
-- Migrated skill artifact: `skills/review-task-reliability-ios-crash-recovery/SKILL.md`
-
 ## Task Metadata
 - Category: `reliability`
 - Severity: `medium`
@@ -53,8 +48,3 @@ No scene restoration, corrupted UserDefaults on crash, missing Core Data transac
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific improvements
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

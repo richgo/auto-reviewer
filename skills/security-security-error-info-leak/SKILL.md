@@ -1,7 +1,7 @@
 ---
 name: security security error info leak
 description: >
-  Migrated review-task skill for Security Error Information Leakage. Use this skill
+  Security Error Information Leakage. Use this skill
   whenever diffs may introduce security issues on all, especially in all. Actively look
   for: Verbose error messages exposing stack traces, SQL queries, file paths, or
   internal architecture details. and report findings with medium severity expectations
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Security Error Information Leakage
-
-## Source Lineage
-- Original review task: `review-tasks/security/security-error-info-leak.md`
-- Migrated skill artifact: `skills/review-task-security-security-error-info-leak/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -56,8 +51,3 @@ Verbose error messages exposing stack traces, SQL queries, file paths, or intern
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as medium
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

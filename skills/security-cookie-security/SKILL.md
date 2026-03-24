@@ -1,7 +1,7 @@
 ---
 name: security cookie security
 description: >
-  Migrated review-task skill for Cookie Security Flaws. Use this skill whenever diffs
+  Cookie Security Flaws. Use this skill whenever diffs
   may introduce security issues on web, especially in all. Actively look for: Cookie
   security flaws include missing Secure, HttpOnly, and SameSite flags, overly broad
   domain/path scope, excessive expiration times, and... and report findings with high
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Cookie Security Flaws
-
-## Source Lineage
-- Original review task: `review-tasks/security/cookie-security.md`
-- Migrated skill artifact: `skills/review-task-security-cookie-security/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -114,8 +109,3 @@ app.post('/checkout', (req, res) => {
 - [ ] Does NOT flag counter-example 2 (server-side storage)
 - [ ] Finding lists all three flags: Secure, HttpOnly, SameSite
 - [ ] Severity assigned as high or critical for auth cookies
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

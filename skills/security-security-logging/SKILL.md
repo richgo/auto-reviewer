@@ -1,18 +1,13 @@
 ---
 name: security security logging
 description: >
-  Migrated review-task skill for Security Logging Gaps. Use this skill whenever diffs
+  Security Logging Gaps. Use this skill whenever diffs
   may introduce security issues on all, especially in all. Actively look for: Missing
   logs for security events: auth failures, privilege changes, data access, admin
   actions. and report findings with medium severity expectations and actionable fixes.
 ---
 
 # Security Logging Gaps
-
-## Source Lineage
-- Original review task: `review-tasks/security/security-logging.md`
-- Migrated skill artifact: `skills/review-task-security-security-logging/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -55,8 +50,3 @@ Missing logs for security events: auth failures, privilege changes, data access,
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as medium
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

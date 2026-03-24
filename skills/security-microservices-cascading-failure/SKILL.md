@@ -1,18 +1,13 @@
 ---
 name: security microservices cascading failure
 description: >
-  Migrated review-task skill for Cascading Failure Prevention. Use this skill whenever
+  Cascading Failure Prevention. Use this skill whenever
   diffs may introduce security issues on microservices, especially in all. Actively look
   for: Missing circuit breakers, unbounded retries causing cascade, no bulkhead
   isolation. and report findings with high severity expectations and actionable fixes.
 ---
 
 # Cascading Failure Prevention
-
-## Source Lineage
-- Original review task: `review-tasks/security/microservices/cascading-failure.md`
-- Migrated skill artifact: `skills/review-task-security-microservices-cascading-failure/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -55,8 +50,3 @@ Missing circuit breakers, unbounded retries causing cascade, no bulkhead isolati
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as high
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

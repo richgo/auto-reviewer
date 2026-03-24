@@ -1,7 +1,7 @@
 ---
 name: security password reset flaws
 description: >
-  Migrated review-task skill for Password Reset Flaws. Use this skill whenever diffs may
+  Password Reset Flaws. Use this skill whenever diffs may
   introduce security issues on web, api, especially in all. Actively look for: Password
   reset flaws include predictable reset tokens, token reuse, missing token expiration,
   lack of rate limiting, insecure delivery... and report findings with high severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Password Reset Flaws
-
-## Source Lineage
-- Original review task: `review-tasks/security/password-reset-flaws.md`
-- Migrated skill artifact: `skills/review-task-security-password-reset-flaws/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -119,8 +114,3 @@ def reset_password(token):
 - [ ] Finding recommends secrets.token_urlsafe or equivalent
 - [ ] Severity assigned as high or critical for predictable tokens
 - [ ] References OWASP Forgot Password Cheat Sheet
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

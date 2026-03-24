@@ -1,18 +1,13 @@
 ---
 name: performance microservices payload bloat
 description: >
-  Migrated review-task skill for Payload Bloat. Use this skill whenever diffs may
+  Payload Bloat. Use this skill whenever diffs may
   introduce performance issues on microservices, especially in all. Actively look for:
   Over-fetching entire entities across boundaries, missing field selection/projections.
   and report findings with medium severity expectations and actionable fixes.
 ---
 
 # Payload Bloat
-
-## Source Lineage
-- Original review task: `review-tasks/performance/microservices/payload-bloat.md`
-- Migrated skill artifact: `skills/review-task-performance-microservices-payload-bloat/SKILL.md`
-
 ## Task Metadata
 - Category: `performance`
 - Severity: `medium`
@@ -52,8 +47,3 @@ Over-fetching entire entities across boundaries, missing field selection/project
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific improvements
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: performance ios large asset loading
 description: >
-  Migrated review-task skill for iOS Large Asset Loading. Use this skill whenever diffs
+  iOS Large Asset Loading. Use this skill whenever diffs
   may introduce performance issues on mobile, especially in Swift, Objective-C. Actively
   look for: Loading full-res images without downsampling, missing NSCache, no
   progressive loading. and report findings with medium severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # iOS Large Asset Loading
-
-## Source Lineage
-- Original review task: `review-tasks/performance/ios/large-asset-loading.md`
-- Migrated skill artifact: `skills/review-task-performance-ios-large-asset-loading/SKILL.md`
-
 ## Task Metadata
 - Category: `performance`
 - Severity: `medium`
@@ -53,8 +48,3 @@ Loading full-res images without downsampling, missing NSCache, no progressive lo
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific improvements
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

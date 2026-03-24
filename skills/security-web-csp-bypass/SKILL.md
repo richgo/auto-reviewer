@@ -1,7 +1,7 @@
 ---
 name: security web csp bypass
 description: >
-  Migrated review-task skill for Content Security Policy Bypass. Use this skill whenever
+  Content Security Policy Bypass. Use this skill whenever
   diffs may introduce security issues on web, especially in JavaScript, TypeScript,
   HTML. Actively look for: CSP with unsafe-inline/unsafe-eval, nonce misuse, missing
   object-src none, JSONP endpoints. and report findings with medium severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Content Security Policy Bypass
-
-## Source Lineage
-- Original review task: `review-tasks/security/web/csp-bypass.md`
-- Migrated skill artifact: `skills/review-task-security-web-csp-bypass/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -59,8 +54,3 @@ CSP with unsafe-inline/unsafe-eval, nonce misuse, missing object-src none, JSONP
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

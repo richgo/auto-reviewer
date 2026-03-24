@@ -1,18 +1,13 @@
 ---
 name: code quality missing documentation
 description: >
-  Migrated review-task skill for Missing Documentation. Use this skill whenever diffs
+  Missing Documentation. Use this skill whenever diffs
   may introduce code-quality issues on all, especially in all. Actively look for: Public
   APIs without docstrings, complex logic without comments, missing README. and report
   findings with low severity expectations and actionable fixes.
 ---
 
 # Missing Documentation
-
-## Source Lineage
-- Original review task: `review-tasks/code-quality/missing-documentation.md`
-- Migrated skill artifact: `skills/review-task-code-quality-missing-documentation/SKILL.md`
-
 ## Task Metadata
 - Category: `code-quality`
 - Severity: `low`
@@ -52,8 +47,3 @@ Public APIs without docstrings, complex logic without comments, missing README.
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Provides actionable recommendation
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: security ldap injection
 description: >
-  Migrated review-task skill for LDAP Injection. Use this skill whenever diffs may
+  LDAP Injection. Use this skill whenever diffs may
   introduce security issues on all, especially in Java, C#, Python, PHP. Actively look
   for: LDAP injection occurs when user input is concatenated into LDAP filter strings
   without escaping, allowing attackers to manipulate... and report findings with high
@@ -9,11 +9,6 @@ description: >
 ---
 
 # LDAP Injection
-
-## Source Lineage
-- Original review task: `review-tasks/security/ldap-injection.md`
-- Migrated skill artifact: `skills/review-task-security-ldap-injection/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -91,8 +86,3 @@ conn.search('ou=users,dc=example,dc=com', search_filter)
 - [ ] Does NOT flag counter-example 2 (ldap3 escape_filter_chars)
 - [ ] Finding references OWASP LDAP Injection Prevention guide
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

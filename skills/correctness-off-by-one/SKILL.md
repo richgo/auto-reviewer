@@ -1,18 +1,13 @@
 ---
 name: correctness off by one
 description: >
-  Migrated review-task skill for Off-by-One Error. Use this skill whenever diffs may
+  Off-by-One Error. Use this skill whenever diffs may
   introduce correctness issues on all, especially in all. Actively look for: Boundary
   errors in loops, array indexing, or range calculations where the count is one too many
   or one... and report findings with medium severity expectations and actionable fixes.
 ---
 
 # Off-by-One Error
-
-## Source Lineage
-- Original review task: `review-tasks/correctness/off-by-one.md`
-- Migrated skill artifact: `skills/review-task-correctness-off-by-one/SKILL.md`
-
 ## Task Metadata
 - Category: `correctness`
 - Severity: `medium`
@@ -64,8 +59,3 @@ for (int i = 0; i < 10; i++) {
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding identifies the off-by-one boundary
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

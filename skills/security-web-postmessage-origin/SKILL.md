@@ -1,7 +1,7 @@
 ---
 name: security web postmessage origin
 description: >
-  Migrated review-task skill for postMessage Origin Validation. Use this skill whenever
+  postMessage Origin Validation. Use this skill whenever
   diffs may introduce security issues on web, especially in JavaScript, TypeScript.
   Actively look for: window.postMessage without origin validation, accepting messages
   from *, window.opener attacks. and report findings with high severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # postMessage Origin Validation
-
-## Source Lineage
-- Original review task: `review-tasks/security/web/postmessage-origin.md`
-- Migrated skill artifact: `skills/review-task-security-web-postmessage-origin/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -59,8 +54,3 @@ window.postMessage without origin validation, accepting messages from *, window.
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: security credential stuffing
 description: >
-  Migrated review-task skill for Credential Stuffing Prevention. Use this skill whenever
+  Credential Stuffing Prevention. Use this skill whenever
   diffs may introduce security issues on web, api, especially in all. Actively look for:
   Credential stuffing attacks use stolen username/password pairs from other breaches to
   compromise accounts. Prevention requires rate limiting, CAPTCHA,... and report
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Credential Stuffing Prevention
-
-## Source Lineage
-- Original review task: `review-tasks/security/credential-stuffing.md`
-- Migrated skill artifact: `skills/review-task-security-credential-stuffing/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -116,8 +111,3 @@ async function registerUser(email, password) {
 - [ ] Does NOT flag counter-example 2 (breach password check)
 - [ ] Finding references OWASP Credential Stuffing Prevention
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

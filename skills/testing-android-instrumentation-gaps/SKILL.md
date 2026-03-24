@@ -1,7 +1,7 @@
 ---
 name: testing android instrumentation gaps
 description: >
-  Migrated review-task skill for Android Instrumentation Gaps. Use this skill whenever
+  Android Instrumentation Gaps. Use this skill whenever
   diffs may introduce testing issues on mobile, especially in Kotlin, Java. Actively
   look for: Database migrations untested, missing Robolectric for unit tests, no
   integration tests. and report findings with medium severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android Instrumentation Gaps
-
-## Source Lineage
-- Original review task: `review-tasks/testing/android/instrumentation-gaps.md`
-- Migrated skill artifact: `skills/review-task-testing-android-instrumentation-gaps/SKILL.md`
-
 ## Task Metadata
 - Category: `testing`
 - Severity: `medium`
@@ -55,8 +50,3 @@ Database migrations untested, missing Robolectric for unit tests, no integration
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding provides clear remediation steps
 - [ ] Severity matches impact level
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

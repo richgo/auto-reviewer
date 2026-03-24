@@ -1,7 +1,7 @@
 ---
 name: security ios ats bypass
 description: >
-  Migrated review-task skill for iOS ATS Bypass. Use this skill whenever diffs may
+  iOS ATS Bypass. Use this skill whenever diffs may
   introduce security issues on mobile, especially in Swift, Objective-C. Actively look
   for: App Transport Security disabled via NSAllowsArbitraryLoads or NSExceptionDomains
   allowing unencrypted HTTP. and report findings with high severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # iOS ATS Bypass
-
-## Source Lineage
-- Original review task: `review-tasks/security/ios/ats-bypass.md`
-- Migrated skill artifact: `skills/review-task-security-ios-ats-bypass/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -59,8 +54,3 @@ App Transport Security disabled via NSAllowsArbitraryLoads or NSExceptionDomains
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

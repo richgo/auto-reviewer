@@ -1,7 +1,7 @@
 ---
 name: security mcp tool poisoning
 description: >
-  Migrated review-task skill for MCP Tool Poisoning. Use this skill whenever diffs may
+  MCP Tool Poisoning. Use this skill whenever diffs may
   introduce security issues on all, especially in all. Actively look for: Model Context
   Protocol (MCP) tool poisoning occurs when AI systems trust malicious or compromised
   MCP servers that provide... and report findings with critical severity expectations
@@ -9,11 +9,6 @@ description: >
 ---
 
 # MCP Tool Poisoning
-
-## Source Lineage
-- Original review task: `review-tasks/security/mcp-tool-poisoning.md`
-- Migrated skill artifact: `skills/review-task-security-mcp-tool-poisoning/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `critical`
@@ -136,8 +131,3 @@ async function invokeMCPTool(serverUrl: string, toolName: string, params: object
 - [ ] Does NOT flag counter-example 2 (schema validation)
 - [ ] Finding references OWASP MCP Security guidelines
 - [ ] Severity assigned as critical
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

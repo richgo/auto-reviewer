@@ -1,7 +1,7 @@
 ---
 name: security mobile binary hardening
 description: >
-  Migrated review-task skill for Mobile Binary Hardening. Use this skill whenever diffs
+  Mobile Binary Hardening. Use this skill whenever diffs
   may introduce security issues on mobile, especially in Swift, Kotlin, Java. Actively
   look for: Missing ProGuard/R8 obfuscation, debug symbols in release, no root/jailbreak
   detection, anti-tamper missing. and report findings with medium severity expectations
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Mobile Binary Hardening
-
-## Source Lineage
-- Original review task: `review-tasks/security/mobile/binary-hardening.md`
-- Migrated skill artifact: `skills/review-task-security-mobile-binary-hardening/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -59,8 +54,3 @@ Missing ProGuard/R8 obfuscation, debug symbols in release, no root/jailbreak det
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

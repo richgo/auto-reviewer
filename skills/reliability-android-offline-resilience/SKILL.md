@@ -1,7 +1,7 @@
 ---
 name: reliability android offline resilience
 description: >
-  Migrated review-task skill for Android Offline Resilience. Use this skill whenever
+  Android Offline Resilience. Use this skill whenever
   diffs may introduce reliability issues on mobile, especially in Kotlin, Java. Actively
   look for: No offline queue, crashes on network unavailable, missing
   ConnectivityManager checks. and report findings with medium severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android Offline Resilience
-
-## Source Lineage
-- Original review task: `review-tasks/reliability/android/offline-resilience.md`
-- Migrated skill artifact: `skills/review-task-reliability-android-offline-resilience/SKILL.md`
-
 ## Task Metadata
 - Category: `reliability`
 - Severity: `medium`
@@ -53,8 +48,3 @@ No offline queue, crashes on network unavailable, missing ConnectivityManager ch
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific improvements
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

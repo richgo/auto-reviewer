@@ -4,7 +4,7 @@
 
 ## Intent
 
-Transform the 197 atomic review tasks (Phase 0 deliverable) into composable, deployable **skills** that can be used by LLM-based code review agents. Skills group related tasks by concern area, language, output format, and orchestration needs, enabling modular and maintainable code review automation.
+Build composable, deployable **skills** from the Phase 0 research corpus that can be used by LLM-based code review agents. Skills group related concerns by concern area, language, output format, and orchestration needs, enabling modular and maintainable code review automation.
 
 ## Scope
 
@@ -26,10 +26,10 @@ Transform the 197 atomic review tasks (Phase 0 deliverable) into composable, dep
 
 ## Approach
 
-1. **Group review tasks by concern:** Map the 197 tasks to 19 concern skills based on semantic similarity and detection patterns
+1. **Group concerns by area:** Map coverage to 19 concern skills based on semantic similarity and detection patterns
 2. **Extract language-specific guidance:** Pull framework-specific security rules from OWASP (Django, Rails, Laravel, etc.) into language skills
 3. **Define skill format:** Use Anthropic skill format with pushy, trigger-focused descriptions and structured markdown content
-4. **Build eval infrastructure:** Extract eval cases from review tasks into structured JSON with assertions and scoring rubric
+4. **Build eval infrastructure:** Build structured JSON eval cases with assertions and scoring rubric
 5. **Create orchestration layer:** Design review-orchestrator to dispatch concern/language skills based on diff analysis
 6. **Enable progressive disclosure:** Keep skills concise with references/ subdirectories for detailed OWASP mappings, payload catalogs, and example code
 7. **Design tuning loop:** Build autoresearch-style skills that can measure performance, identify weaknesses, and mutate prompts iteratively
@@ -39,12 +39,11 @@ Transform the 197 atomic review tasks (Phase 0 deliverable) into composable, dep
 ### Affected Areas
 - `skills/` directory structure (new): concerns/, languages/, outputs/, core/, tuning/
 - `evals/` directory (new): JSON files with test cases for automated validation
-- `review-tasks/` (historical, non-normative): retained Phase 0 archive context
+- Phase 0 research corpus (historical, non-normative): retained archive context
 - Future Phase 2 runtime integration points
 
 ### Integration Points
-- Historical migration context may cite `review-tasks/` files for traceability
-- Evals extract test cases from review task eval sections
+- Evals extract test cases from the research corpus
 - Orchestrator dispatches skills based on diff analysis (language detection, changed files)
 - Output skills consume findings from concern/language skills and format for different consumers
 
@@ -65,7 +64,7 @@ Transform the 197 atomic review tasks (Phase 0 deliverable) into composable, dep
    - **Resolution:** Defer to Phase 2. Initial version is v1, breaking changes trigger new major version. Skills are stateless so no migration concerns.
 
 3. What's the right balance between specificity (narrow detection) and generalization (broader patterns)?
-   - **Resolution:** Start specific (mirror review tasks closely), tune for generalization in Phase 3 based on false positive rate.
+   - **Resolution:** Start specific, tune for generalization in Phase 3 based on false positive rate.
 
 4. Should skills be language-agnostic where possible, or always language-specific?
    - **Resolution:** Concern skills are language-agnostic with language subsections for platform-specific patterns. Language skills are always language-specific.

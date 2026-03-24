@@ -10,12 +10,12 @@ This change standardizes skill identity around Claude’s folder-based contract:
 - `skills/` corpus structure and canonical naming boundaries.
 - `scripts/compose/` policy, selection, and validation assumptions about skill paths.
 - `scripts/benchmark/runner.py` and `scripts/tune/orchestrator.py` discovery assumptions.
-- `scripts/skills/migration_map.py` path emission and lineage references.
+- `scripts/skills/` path emission and lineage references.
 - `agents/composer/agent.md` and related contracts that reference skill paths.
 - `README.md` and OpenSpec capability deltas that describe active skill shape.
 
 ### New Components
-- Canonicalized OpenSpec deltas for `skills`, `agent-composition`, and `review-tasks` in this change folder.
+- Canonicalized OpenSpec deltas for `skills` and `agent-composition` in this change folder.
 - `tasks.md` execution plan for restructuring, conflict handling, and contract verification.
 
 ## Technical Decisions
@@ -95,13 +95,13 @@ No new runtime dependencies are required. Existing repository tooling is updated
 ## Migration / Backwards Compatibility
 
 - This change intentionally removes active legacy path compatibility.
-- Historical lineage remains visible in review-task artifacts/specs but is non-normative.
+- Historical lineage is non-normative.
 - Compatibility risk is managed through explicit validation failures and manual conflict reporting rather than alias layers.
 
 ## Testing Strategy
 
 - **Canonical structure tests:** Validate all active skills resolve to folder + `SKILL.md` (specs: `skills` Canonical Skill Folder Contract).
-- **Name flattening tests:** Validate nested lineage resolves to expected flattened identifiers (specs: `skills` Flattened Name Resolution; `review-tasks` Nested-to-Flat Lineage Clarity).
+- **Name flattening tests:** Validate nested lineage resolves to expected flattened identifiers (specs: `skills` Flattened Name Resolution).
 - **Duplicate merge tests:** Validate a single canonical artifact per flattened identifier (specs: `skills` Canonical Duplicate Merge, Front Matter Consolidation).
 - **Legacy rejection tests:** Validate composition/routing/validation reject legacy paths with explicit errors (specs: `agent-composition` Legacy Reference Rejection, Canonical Dependency Resolution).
 - **Discovery tests:** Validate compose/tune/benchmark discover canonical folder-based skills only (specs: `agent-composition` Canonical Skill Discovery Contract).
@@ -114,3 +114,4 @@ No new runtime dependencies are required. Existing repository tooling is updated
 - Duplicate sources with incompatible front matter semantics.
 - Residual legacy path references in composer policy/tests/docs.
 - Partial migration where some tools still assume `*.md` category files.
+

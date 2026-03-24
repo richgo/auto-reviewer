@@ -1,7 +1,7 @@
 ---
 name: security android backup exposure
 description: >
-  Migrated review-task skill for Android Backup Data Exposure. Use this skill whenever
+  Android Backup Data Exposure. Use this skill whenever
   diffs may introduce security issues on mobile, especially in Kotlin, Java, XML.
   Actively look for: allowBackup=true in manifest exposing app data via adb backup
   without encryption or exclusion rules. and report findings with medium severity
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android Backup Data Exposure
-
-## Source Lineage
-- Original review task: `review-tasks/security/android/backup-exposure.md`
-- Migrated skill artifact: `skills/review-task-security-android-backup-exposure/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `medium`
@@ -59,8 +54,3 @@ allowBackup=true in manifest exposing app data via adb backup without encryption
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as medium
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

@@ -1,7 +1,7 @@
 ---
 name: performance android bitmap memory
 description: >
-  Migrated review-task skill for Android Bitmap Memory. Use this skill whenever diffs
+  Android Bitmap Memory. Use this skill whenever diffs
   may introduce performance issues on mobile, especially in Kotlin, Java. Actively look
   for: Loading full-res bitmaps into ImageView, missing Glide/Coil downsampling, Bitmap
   not recycled. and report findings with high severity expectations and actionable
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Android Bitmap Memory
-
-## Source Lineage
-- Original review task: `review-tasks/performance/android/bitmap-memory.md`
-- Migrated skill artifact: `skills/review-task-performance-android-bitmap-memory/SKILL.md`
-
 ## Task Metadata
 - Category: `performance`
 - Severity: `high`
@@ -53,8 +48,3 @@ Loading full-res bitmaps into ImageView, missing Glide/Coil downsampling, Bitmap
 - [ ] Detects issue in eval case 2
 - [ ] Does NOT flag counter-example 1
 - [ ] Finding suggests specific improvements
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

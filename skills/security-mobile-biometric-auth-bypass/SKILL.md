@@ -1,7 +1,7 @@
 ---
 name: security mobile biometric auth bypass
 description: >
-  Migrated review-task skill for Mobile Biometric Authentication Bypass. Use this skill
+  Mobile Biometric Authentication Bypass. Use this skill
   whenever diffs may introduce security issues on mobile, especially in Swift, Kotlin.
   Actively look for: Local-only biometric check without backend token validation,
   bypassable via debugger or root. and report findings with high severity expectations
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Mobile Biometric Authentication Bypass
-
-## Source Lineage
-- Original review task: `review-tasks/security/mobile/biometric-auth-bypass.md`
-- Migrated skill artifact: `skills/review-task-security-mobile-biometric-auth-bypass/SKILL.md`
-
 ## Task Metadata
 - Category: `security`
 - Severity: `high`
@@ -59,8 +54,3 @@ Local-only biometric check without backend token validation, bypassable via debu
 - [ ] Finding includes file and line reference
 - [ ] Finding includes actionable fix suggestion
 - [ ] Severity assigned as high
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.

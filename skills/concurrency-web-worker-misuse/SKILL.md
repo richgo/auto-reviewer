@@ -1,7 +1,7 @@
 ---
 name: concurrency web worker misuse
 description: >
-  Migrated review-task skill for Web Worker Misuse. Use this skill whenever diffs may
+  Web Worker Misuse. Use this skill whenever diffs may
   introduce concurrency issues on web, especially in JavaScript, TypeScript. Actively
   look for: SharedArrayBuffer without Atomics, excessive postMessage overhead, missing
   worker error handling. and report findings with medium severity expectations and
@@ -9,11 +9,6 @@ description: >
 ---
 
 # Web Worker Misuse
-
-## Source Lineage
-- Original review task: `review-tasks/concurrency/web/worker-misuse.md`
-- Migrated skill artifact: `skills/review-task-concurrency-web-worker-misuse/SKILL.md`
-
 ## Task Metadata
 - Category: `concurrency`
 - Severity: `medium`
@@ -56,8 +51,3 @@ SharedArrayBuffer without Atomics, excessive postMessage overhead, missing worke
 - [ ] Finding includes actionable remediation
 - [ ] Severity assigned as medium
 - [ ] References relevant standards or guidelines
-
-## Migration Notes
-- This skill is generated from the legacy review-task corpus for one-to-one lineage.
-- Keep this artifact synchronized by re-running `scripts/skills/review_task_converter_cli.py`
-  whenever review-task source files change.
