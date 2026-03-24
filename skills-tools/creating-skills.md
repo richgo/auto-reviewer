@@ -1,318 +1,333 @@
 # Creating and Improving Skills
 
-This document describes the complete workflow for creating new skills in auto-reviewer and iteratively improving them.
+This document describes the target workflow for authoring skills in `auto-reviewer`.
+
+The main rethink is simple: this should feel like **one skill pipeline**, not three or four separate tools that happen to live next to each other.
+
+## Recommended Product Shape
+
+User-facing workflow should collapse into **one tool with two primary modes**:
+
+1. `create` - generate or refine a skill and produce evals
+2. `tune` - run the tuning cascade and decide whether the skill is ready, benchmark-worthy, or needs manual review
+
+Benchmarking still matters, but it should be a **stage inside the pipeline**, not a separate product the author has to mentally stitch together.
 
 ## The Workflow
 
-The skill creation and improvement process consists of 4 main phases:
+### Mode 1: Create
 
-### Phase 1: Draft & Create with Skill Creator
+`create` should take an idea, repo examples, or an existing draft and do the full authoring pass:
 
-**Tool:** `skills-tools/skill-creator/` (Copilot skill)
+1. Capture the intent of the skill
+2. Draft `skills/<skill-name>/SKILL.md`
+3. Generate an initial eval set in `evals/<skill-name>.json`
+4. Run a quick trigger/detection validation pass
+5. Produce a review report showing what looks good and what still needs work
 
-The skill creator is an interactive agent that guides you through:
+Expected output from `create`:
 
-1. **Capture Intent** — Understand what the skill should detect/enable and when it should trigger
-2. **Interview & Research** — Ask probing questions about edge cases, formats, and success criteria
-3. **Write SKILL.md** — Create the skill with frontmatter (name, description) and detection logic
-4. **Draft Test Cases** — Create a few representative code examples to test against
+- `skills/<skill-name>/SKILL.md`
+- `evals/<skill-name>.json`
+- a small report artifact summarizing trigger quality and obvious gaps
 
-The skill creator helps with:
-- Writing the SKILL.md file with proper formatting and structure
-- Debugging early detection logic
-- Creating test case datasets
-- Generating quantitative evaluations (JSON assertions)
+This means the skill author does **not** separately think "now I use skill-creator, now I use eval-viewer, now I wire JSON by hand." The tool should do that in one flow.
 
-**Input:** Your problem description or existing code patterns
-**Output:** A `skills/<skill-name>/SKILL.md` file and initial test cases
+### Mode 2: Tune
 
-**Key Scripts:**
-- `quick_validate.py` — Syntax-check and lint your SKILL.md
-- `package_skill.py` — Bundle skill for distribution
-- `run_eval.py` — Run eval cases against a skill
+Once the skill and evals exist, `tune` should start the optimization loop:
 
----
+1. Load the skill and linked eval set
+2. Run the configured cascade
+3. Keep the best candidate that improves score without unacceptable regression
+4. Record tuning history
+5. Optionally benchmark the promoted candidate
+6. If the target is still missed, add the skill to `skills-tools/needs-review.md`
 
-### Phase 2: Evaluate Triggers with Skill Creator
+Expected output from `tune`:
 
-**Tool:** `skills-tools/skill-creator/eval-viewer/` + `run_eval.py`
+- tuned skill content or promoted candidate snapshot
+- tuning history logs
+- optional benchmark report
+- `needs-review.md` entry if the cascade fails
 
-After drafting, evaluate how well your skill triggers and detects the patterns it's designed for.
+## What This Means for the Tooling Split
 
-1. **Create Test Prompts** — Write concrete code examples that should/shouldn't trigger
-2. **Run Evaluations** — Execute the skill against test cases with a specific LLM
-3. **Analyze Results** — Review raw outputs and quantitative metrics (precision, recall, F1)
-4. **Iterate** — Refine skill description and detection logic based on results
+The current layout suggests four products:
 
-**Process:**
+- `skill-creator/`
+- `skill-optimizer/`
+- `benchmark-runner/`
+- `local-calibration/`
+
+That split is probably too literal.
+
+### Suggested shape
+
+- **One authoring front door** for create + tune
+- **One shared runtime library** for eval execution, scoring, model access, history, and reporting
+- **One optional downstream calibration tool** for repo-specific adaptation after a skill is already good globally
+
+In practice, that means:
+
+- `skill-creator/`, `skill-optimizer/`, and `benchmark-runner/` should converge into a single concept such as `skill-pipeline/`
+- `local-calibration/` can stay separate because it solves a different problem: adapting already-good skills to a specific installed repo
+
+## Current Repository Reality
+
+Today the code already hints at this consolidation:
+
+- `skills-tools/skill-creator/scripts/run_loop.py` already combines eval + improve into a loop
+- `scripts/tune/autoresearch.py` already owns mutation and acceptance logic
+- `scripts/tune/cascade.py` adds staged escalation
+- `scripts/benchmark/runner.py` is a downstream validation stage
+
+The bigger problem is that model access and pipeline orchestration are still fragmented.
+
+## Most Important Missing Abstraction: LLM Transport
+
+Right now the repo has duplicated Copilot SDK wrappers:
+
+- `skills-tools/skill-creator/scripts/copilot_sdk.py`
+- `scripts/benchmark/copilot_client.py`
+- `scripts/tune/llm_client.py` wrapping benchmark transport
+
+That duplication is the clearest sign that the next architectural step is not "more workflow docs" but a shared model layer.
+
+### Recommended interface
+
+Introduce a provider-agnostic transport contract used by create, eval, tune, and benchmark stages.
+
+Example shape:
+
+```python
+class LLMTransport(Protocol):
+    def list_models(self) -> list[ModelInfo]: ...
+    def complete(self, request: CompletionRequest) -> CompletionResponse: ...
+    def supports(self, capability: ModelCapability) -> bool: ...
+```
+
+With shared types:
+
+- `CompletionRequest`
+  - `prompt`
+  - `system`
+  - `model`
+  - `temperature`
+  - `max_tokens`
+  - `response_format`
+- `CompletionResponse`
+  - `text`
+  - `model`
+  - `provider`
+  - `usage`
+  - `raw`
+- `ModelInfo`
+  - provider name
+  - model id
+  - capabilities
+  - context size if known
+
+### Providers
+
+Then implement transports such as:
+
+- `CopilotSDKTransport`
+- `ClaudeTransport`
+- `CodexTransport`
+
+The rest of the pipeline should depend on the interface, not on Copilot-specific session setup.
+
+### Why this matters
+
+This unlocks:
+
+- running the same create/tune flow with Copilot, Claude, or Codex
+- comparing provider/model combinations without forking pipeline code
+- removing duplicated auth, retry, timeout, and response parsing logic
+- making benchmark results more credible because the execution path is shared
+
+## How the Unified Tool Could Work
+
+### Command shape
+
 ```bash
-cd skills-tools/skill-creator
-python scripts/run_eval.py \
-  --skill security-injection \
-  --eval-file evals/security-injection.json \
-  --model gpt-5-mini
+python scripts/skill_pipeline.py create --idea "detect insecure deserialization"
+python scripts/skill_pipeline.py tune --skill insecure-deserialization
 ```
 
-Then use `generate_review.py` to visualize results for analysis.
+Or, if you want a single verb:
 
-**Key Files:**
-- `evals/<skill-name>.json` — Test cases with expected findings and assertions
-- Counter-examples in evals prevent false positives
-- Assertions check: detection, severity, actionable advice, evidence cited
-
-**Success Criteria:**
-- ✓ Skill detects true positives reliably (recall > 90%)
-- ✓ Minimal false positives (FPR < 5%)
-- ✓ Clear, actionable finding descriptions
-- ✓ Passes all eval assertions
-
----
-
-### Phase 3: Tune with Autoresearch
-
-**Tool:** `scripts/tune/autoresearch.py` + `scripts/tune/cascade.py`
-
-After the skill is stable, use automated tuning to improve it across model × skill combinations.
-
-Autoresearch runs mutation loops that:
-1. Analyze failure patterns in eval cases
-2. Generate prompt variants to address failures
-3. Score mutations against full eval suite
-4. Accept mutations that improve metrics (F1, FPR)
-5. Repeat until convergence or max iterations
-
-**Multi-Model Cascade:**
-
-If a skill fails to reach 95% pass rate in tuning:
-
-1. **Stage 1** (gpt-5-mini): 5 iterations
-   - Fast, cheap model for initial improvement
-   - If reaches 95% → ✓ complete
-   - If < 95% → escalate to Stage 2
-
-2. **Stage 2** (claude-haiku-4.5): 3 iterations
-   - More capable model for difficult cases
-   - If reaches 95% → ✓ complete with better model
-   - If < 95% → mark for manual review
-
-3. **Failure Tracking** (skills-tools/needs-review.md)
-   - Skills that failed cascade are tracked with:
-     - Best model attempted
-     - Best pass rate achieved
-     - Link to tuning history
-   - Awaits manual intervention
-
-**Running Tuning:**
 ```bash
-python scripts/tune/autoresearch.py \
-  --skills security-injection \
-  --models gpt-5-mini \
-  --max-rounds 10
+python scripts/skill_pipeline.py run --skill insecure-deserialization --stage create
+python scripts/skill_pipeline.py run --skill insecure-deserialization --stage tune
 ```
 
-**Configuration:** `scripts/tune/config.yaml`
-- Controls max rounds, convergence thresholds, mutation budgets
-- Cascade models and iteration limits
-- F1/FPR improvement gates
+### `create` stage responsibilities
 
-**Artifacts:**
-- `tune-history/<skill>/<model>.jsonl` — Immutable run history
-- `skills/model-scores.yml` — Best-per-model skill snapshots
-- Automatic git commits with performance deltas
+`create` should orchestrate these internal steps:
 
----
+1. Generate or refine the skill draft
+2. Generate seed evals from the requirement plus a few negative cases
+3. Run quick validation on trigger quality
+4. Ask for human review only where necessary
+5. Write a manifest linking the skill to its eval file and artifacts
 
-### Phase 4: Benchmark Against Tasks
+### `tune` stage responsibilities
 
-**Tool:** `scripts/benchmark/runner.py` + `scripts/benchmark/scorer.py`
+`tune` should orchestrate these internal steps:
 
-After tuning, benchmark the skill against a reference task suite to measure final performance.
+1. Resolve the skill manifest
+2. Choose provider/model sequence from config
+3. Run cascade stage 1
+4. Escalate if target is missed
+5. Promote the best candidate
+6. Optionally run benchmark before final promotion
+7. Record failure in `needs-review.md` if the target still is not met
 
-Benchmarking provides:
-- **Absolute metrics** — How well does this skill detect real-world bugs?
-- **Comparison** — How does this model × skill perform vs. others?
-- **Variance analysis** — How consistent are results across runs?
+## Add a Skill Manifest
 
-**Running Benchmarks:**
-```bash
-python scripts/benchmark/runner.py \
-  --skills security-injection \
-  --models gpt-5-mini,claude-haiku-4.5 \
-  --evals evals/ \
-  --output benchmark-results/
+The pipeline gets simpler if each skill has lightweight metadata describing where its artifacts live.
+
+Suggested example:
+
+```yaml
+skill: insecure-deserialization
+skill_path: skills/insecure-deserialization/SKILL.md
+eval_path: evals/insecure-deserialization.json
+owner: security
+status: draft
+benchmark_profile: default
 ```
 
-**Output:**
-- Pass/fail rates per skill × model
-- Precision, recall, F1 scores
-- False positive rate, false negative rate
-- Variance across multiple runs
-- Detailed failure reports
+This avoids hard-coding path conventions into every script and makes resume/retry flows much easier.
 
-**Acceptance Criteria:**
-- ✓ F1 ≥ 0.85 (good balance of precision & recall)
-- ✓ FPR ≤ 5% (minimal false alarms)
-- ✓ FNR ≤ 10% (catches most real issues)
-- ✓ Variance < 5% (consistent across runs)
+## What Should Probably Change in `skills-tools/`
 
----
+### Keep
 
-## What's in Skills-Tools
+- documentation for the authoring workflow
+- `needs-review.md`
+- any human-facing review/report helpers
 
-### Subdirectories
+### Consolidate
 
-- **skill-creator/** — Interactive skill creation and evaluation (phase 1-2)
-  - Scripts for drafting, testing, and reporting on skills
-  - Eval viewer for analyzing detection patterns
-  - Integration with Copilot SDK for model access
+- `skill-creator/`
+- `skill-optimizer/`
+- `benchmark-runner/`
 
-- **skill-optimizer/** — Autoresearch mutation engine (documentation, see phase 3)
-  - Links to tuning scripts in scripts/tune/
+These should read as implementation details or modules of the same pipeline, not as separate end-user tools.
 
-- **benchmark-runner/** — Benchmark execution and scoring (documentation, see phase 4)
-  - Links to scoring scripts in scripts/benchmark/
+### Keep separate
 
-- **local-calibration/** — Repository-specific skill adaptation
-  - Tools to collect local evals and overlay on global benchmarks
-  - Helps skills adapt to repo conventions and patterns
+- `local-calibration/`
 
-### What's NO LONGER NEEDED
+That belongs after the global skill pipeline, because it tunes for local repo conventions rather than for the canonical skill itself.
 
-❌ **Legacy skill paths** — Single files, scattered across folders
-- All skills now follow `skills/<skill-name>/SKILL.md` canonical format
-- Phase 1 (skills-from-tasks) established this structure
-- Simplified routing and composition
+## What Is No Longer Needed
 
-❌ **Manual benchmark aggregation**
-- Autoresearch + benchmark runner automate iteration
-- No need for manual result compilation
+### Separate product boundaries for create / optimize / benchmark
 
-❌ **Provider-specific CLI wrappers**
-- All model access now via Copilot SDK + GitHub CLI auth
-- Unified authentication and model selection
+Authors should not have to decide which tool owns the next step. The pipeline should know.
 
----
+### Duplicate provider wrappers
 
-## Workflow Diagram
+The current multiple Copilot-specific wrappers should be replaced by one shared transport layer.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ PHASE 1: DRAFT & CREATE                                     │
-│ Tool: skill-creator (interactive agent)                     │
-│ Output: skills/<skill>/SKILL.md + initial evals             │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-                     ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PHASE 2: EVALUATE TRIGGERS                                  │
-│ Tool: skill-creator eval-viewer + run_eval.py              │
-│ Process: Test prompts → Run → Analyze → Refine             │
-│ Success: Recall > 90%, FPR < 5%                            │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-                     ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PHASE 3: TUNE WITH AUTORESEARCH                             │
-│ Tool: scripts/tune/autoresearch.py + cascade.py            │
-│ Process: Mutate → Score → Accept/Reject → Iterate          │
-│ Cascade: gpt-5-mini (5 iter) → claude-haiku-4.5 (3 iter)   │
-│ Failure: Track in skills-tools/needs-review.md             │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-                     ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PHASE 4: BENCHMARK AGAINST TASKS                            │
-│ Tool: scripts/benchmark/runner.py + scorer.py              │
-│ Metrics: F1, precision, recall, FPR, variance              │
-│ Acceptance: F1 ≥ 0.85, FPR ≤ 5%, stable results            │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-                     ▼
-          ✓ SKILL READY FOR PRODUCTION
-           (Added to skill library & APM package)
-```
+### Copilot-specific assumptions in pipeline docs
 
----
+Copilot SDK can remain the default transport for this repo, but the architecture should not require it.
 
-## What's Missing from the Process
+## Better Gaps to Track
 
-### Gaps to Address (Future Phases)
+The old gaps section focused too early on language and platform specialization. Those are real, but they are not the first-order architecture problem.
 
-1. **Language-Specific Tuning**
-   - Current: Tuning per model (gpt-5-mini, claude-haiku-4.5)
-   - Missing: Language-specific variants (Python, TypeScript, Java, etc.)
-   - Impact: Skills may not generalize well across languages
-   - Solution: Extend cascade to include language-specific models
+The more important gaps are:
 
-2. **Platform-Specific Variants**
-   - Current: Generic skill prompts apply equally to all platforms
-   - Missing: Mobile (Android/iOS), web, microservices, cloud variants
-   - Impact: Mobile-specific bugs may not trigger reliably
-   - Solution: Create platform-aware subsections in skills
+1. **Unified entrypoint**
+   - Current: authoring, tuning, and benchmarking are described as separate tools
+   - Missing: one pipeline command with `create` and `tune` modes
+   - Why it matters: lower cognitive overhead and clearer automation
 
-3. **Regression Prevention in Production**
-   - Current: Benchmark once at tuning completion
-   - Missing: Continuous monitoring of skill performance on live PRs
-   - Impact: Skills may degrade over time with new code patterns
-   - Solution: Add periodic re-benchmarking in CI/CD (Phase 5+)
+2. **Provider-agnostic LLM transport**
+   - Current: Copilot wrapper logic exists in multiple places
+   - Missing: shared transport abstraction for Copilot, Claude, and Codex
+   - Why it matters: easier experimentation, less duplication, cleaner testing
 
-4. **Cross-Skill Interaction Testing**
-   - Current: Skills tuned and tested independently
-   - Missing: Testing combinations (e.g., auth + crypto skills together)
-   - Impact: May miss ordering/interaction issues in reports
-   - Solution: Add integration test suite combining related skills
+3. **Shared workflow state**
+   - Current: each script infers paths and state on its own
+   - Missing: manifest or run state linking skill, evals, logs, benchmark outputs, and promotion status
+   - Why it matters: resumability and traceability
 
-5. **Skill Deprecation & Archival**
-   - Current: No mechanism to retire obsolete skills
-   - Missing: Version management, transition paths for renamed skills
-   - Impact: Technical debt accumulates
-   - Solution: Add skill lifecycle management (Phase 5+)
+4. **Generated eval quality control**
+   - Current: eval generation is part of the story, but not strongly governed
+   - Missing: explicit checks for class balance, negative examples, language coverage, and assertion quality
+   - Why it matters: tuning only works if the eval set is trustworthy
 
----
+5. **Promotion gates**
+   - Current: tuning and benchmark stages exist, but promotion policy is implied
+   - Missing: explicit rules for when a candidate becomes the new default
+   - Why it matters: avoids accidental regressions and makes automation safe
+
+6. **Structured manual review queue**
+   - Current: `needs-review.md` is useful for humans
+   - Missing: optional machine-readable companion data for automation and dashboards
+   - Why it matters: easier follow-up and triage at scale
+
+7. **Cross-skill and regression checks**
+   - Current: most evaluation is skill-local
+   - Missing: checks for interaction effects and scheduled revalidation
+   - Why it matters: production quality depends on the whole system, not just one isolated skill
+
+8. **Lifecycle management**
+   - Current: skill creation is documented better than skill retirement
+   - Missing: deprecation, replacement, archival, and migration guidance
+   - Why it matters: the corpus will otherwise accumulate stale skills
+
+## Additional Improvements Worth Considering
+
+Beyond the transport abstraction and unified CLI, the next useful moves would be:
+
+- **Separate deterministic logic from model logic**
+  - scoring, file IO, manifests, artifact writing, and report generation should not depend on provider code
+
+- **Use structured outputs where possible**
+  - eval generation, mutation proposals, and benchmark summaries should prefer schema-shaped responses over free-form text
+
+- **Support resume/replay**
+  - long-running tuning jobs should be restartable from logs and manifests instead of starting over
+
+- **Add explicit model roles**
+  - one model can draft evals, another can mutate skills, another can judge outputs; this should be configured, not hard-coded
+
+- **Make benchmark a policy stage**
+  - benchmark should be invocable from `tune` as a gate, not treated as a disconnected tool
+
+- **Introduce artifact directories per skill**
+  - for example `artifacts/<skill>/create/`, `artifacts/<skill>/tune/`, `artifacts/<skill>/benchmark/`
 
 ## Quick Reference
 
-### Creating a New Skill
-
-1. Use `skill-creator` agent:
-   ```
-   "I want to create a skill for detecting X in code"
-   ```
-
-2. Let the agent guide you through intent capture, research, and SKILL.md writing
-
-3. Test with eval cases using `run_eval.py`
-
-4. Refine based on results (repeat until stable)
-
-### Tuning an Existing Skill
+### Recommended future UX
 
 ```bash
-python scripts/tune/autoresearch.py \
-  --skills <skill-name> \
-  --models gpt-5-mini,claude-haiku-4.5 \
-  --cascade-enabled
+python scripts/skill_pipeline.py create --idea "detect weak JWT validation"
+python scripts/skill_pipeline.py tune --skill weak-jwt-validation
 ```
 
-Monitor `skills-tools/needs-review.md` for skills that need manual attention.
+### Reasonable internal implementation split
 
-### Benchmarking Results
+- `scripts/skill_pipeline.py` - orchestration entrypoint
+- `scripts/llm/` - provider transports and shared request/response types
+- `scripts/evals/` - eval generation, loading, validation
+- `scripts/tune/` - mutation, scoring, cascade, promotion
+- `scripts/benchmark/` - final benchmark execution and reporting
 
-```bash
-python scripts/benchmark/runner.py \
-  --skills <skill-name> \
-  --models gpt-5-mini,claude-haiku-4.5 \
-  --output benchmark-results/
-```
+## Helpful References
 
-Check `benchmark-results/<skill>/<model>/report.md` for detailed analysis.
-
----
-
-## Helpful Resources
-
-- **Skill Creator:** `skills-tools/skill-creator/SKILL.md` — Interactive agent documentation
-- **Autoresearch Design:** `openspec/changes/phase-3-autoresearch-tuning/design.md`
-- **Phase 1 Skills:** `skills/` — 234+ examples to learn from
-- **Eval Format:** `evals/<skill>.json` — Test case structure reference
-- **Benchmark Scoring:** `scripts/benchmark/scorer.py` — Metric definitions
+- `skills-tools/skill-creator/SKILL.md` - current authoring guidance
+- `skills-tools/skill-creator/scripts/run_loop.py` - existing eval/improve loop
+- `scripts/tune/autoresearch.py` - current tuning loop
+- `scripts/tune/cascade.py` - staged escalation logic
+- `scripts/tune/llm_client.py` - current tune-side model interface
+- `scripts/benchmark/copilot_client.py` - current benchmark-side transport
