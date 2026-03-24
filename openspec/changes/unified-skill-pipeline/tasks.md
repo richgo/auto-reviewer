@@ -27,7 +27,7 @@
 
 ## Phase 3: Tune Stage
 
-- [ ] **3.1** Build the pipeline `tune` stage entrypoint
+- [x] **3.1** Build the pipeline `tune` stage entrypoint
   Extend the pipeline orchestration entry module with a `tune` stage that resolves the canonical skill and eval artifacts from workflow state and fails clearly when required inputs are missing. Covers `tuning` **Unified Tuning Entry** and edge case handling from the design.
 
 - [ ] **3.2** Refactor autoresearch and cascade behind pipeline contracts
