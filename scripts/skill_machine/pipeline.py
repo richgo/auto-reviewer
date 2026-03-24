@@ -91,3 +91,24 @@ def run_create_stage(
         "eval_ready": eval_ready,
         "validation_artifact_path": validation_artifact_path,
     }
+
+
+def run_tune_stage(
+    *,
+    skill_name: str,
+    skills_dir: Path,
+    evals_dir: Path,
+    state_dir: Path,
+) -> Dict[str, str]:
+    state = resolve_skill_state(
+        skill_name=skill_name,
+        skills_dir=skills_dir,
+        evals_dir=evals_dir,
+        state_dir=state_dir,
+    )
+    return {
+        "skill": state.skill_name,
+        "skill_path": str(state.skill_path),
+        "eval_path": str(state.eval_path),
+        "state_path": str(state.state_path),
+    }
