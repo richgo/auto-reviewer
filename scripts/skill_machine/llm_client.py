@@ -91,6 +91,7 @@ class LLMClient:
         max_tokens: int = 4096,
         temperature: float = 0.7,
         model: Optional[str] = None,
+        response_format: Optional[str] = None,
     ) -> str:
         target_model = model or self.model
         response = self._transport.complete(
@@ -100,6 +101,7 @@ class LLMClient:
                 model=target_model,
                 max_tokens=max_tokens,
                 temperature=temperature,
+                response_format=response_format,
             )
         )
         return response.text

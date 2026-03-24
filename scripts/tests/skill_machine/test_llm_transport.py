@@ -56,6 +56,25 @@ class TestLLMTransportTypes(unittest.TestCase):
         self.assertEqual(77, captured["request"].max_tokens)
         self.assertEqual(0.1, captured["request"].temperature)
 
+    def test_llm_client_forwards_response_format_to_transport_request(self):
+        captured = {}
+
+        class FakeTransport:
+            def complete(self, request):
+                captured["request"] = request
+                return CompletionResponse(
+                    text="ok",
+                    model=request.model,
+                    provider="fake",
+                    usage={},
+                    raw=None,
+                )
+
+        client = LLMClient(model="gpt-5-mini", transport=FakeTransport())
+        client.complete("hello", response_format="json")
+
+        self.assertEqual("json", captured["request"].response_format)
+
     def test_copilot_transport_maps_prompt_and_model_from_request(self):
         captured = {}
 
