@@ -72,6 +72,7 @@ In practice, that means:
 
 - `skill-creator/`, `skill-optimizer/`, and `benchmark-runner/` should converge into a single concept such as `skill-pipeline/`
 - `local-calibration/` can stay separate because it solves a different problem: adapting already-good skills to a specific installed repo
+- `local-calibration/` remains outside canonical create/tune promotion flow so repo-specific adaptation does not redefine canonical skill outcomes
 
 ## Current Repository Reality
 
