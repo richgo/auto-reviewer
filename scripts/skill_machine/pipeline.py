@@ -106,6 +106,8 @@ def run_tune_stage(
         evals_dir=evals_dir,
         state_dir=state_dir,
     )
+    if not state.eval_path.exists():
+        raise FileNotFoundError(f"Eval file not found: {state.eval_path}")
     return {
         "skill": state.skill_name,
         "skill_path": str(state.skill_path),

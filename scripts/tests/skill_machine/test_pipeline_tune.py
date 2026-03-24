@@ -35,6 +35,30 @@ class TestPipelineTuneStage(unittest.TestCase):
         self.assertEqual(str(evals_dir / "security-injection.json"), result["eval_path"])
         self.assertEqual(str(state_dir / "security-injection.json"), result["state_path"])
 
+    def test_tune_stage_fails_when_eval_file_is_missing(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            evals_dir = root / "evals"
+            state_dir = root / ".skill-machine" / "workflow"
+            (skills_dir / "security-injection").mkdir(parents=True)
+            (skills_dir / "security-injection" / "SKILL.md").write_text(
+                "skill",
+                encoding="utf-8",
+            )
+            evals_dir.mkdir(parents=True)
+
+            with self.assertRaisesRegex(
+                FileNotFoundError,
+                "Eval file not found",
+            ):
+                run_tune_stage(
+                    skill_name="security-injection",
+                    skills_dir=skills_dir,
+                    evals_dir=evals_dir,
+                    state_dir=state_dir,
+                )
+
 
 if __name__ == "__main__":
     unittest.main()
