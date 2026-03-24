@@ -184,6 +184,45 @@ class TestPipelineTuneStage(unittest.TestCase):
             state_payload = state_path.read_text(encoding="utf-8")
             self.assertIn('"benchmark_artifact_path"', state_payload)
 
+    def test_tune_stage_keeps_local_calibration_state_separate_from_canonical_state(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            evals_dir = root / "evals"
+            state_dir = root / ".skill-machine" / "workflow"
+            (skills_dir / "security-injection").mkdir(parents=True)
+            (skills_dir / "security-injection" / "SKILL.md").write_text(
+                "skill",
+                encoding="utf-8",
+            )
+            evals_dir.mkdir(parents=True)
+            (evals_dir / "security-injection.json").write_text("{}", encoding="utf-8")
+            state_dir.mkdir(parents=True, exist_ok=True)
+            canonical_state_path = state_dir / "security-injection.json"
+            canonical_state_path.write_text(
+                json.dumps(
+                    {
+                        "skill": "security-injection",
+                        "status": "canonical",
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_tune_stage(
+                skill_name="security-injection",
+                skills_dir=skills_dir,
+                evals_dir=evals_dir,
+                state_dir=state_dir,
+                local_calibration=True,
+            )
+
+            local_state = Path(result["state_path"])
+            self.assertTrue(local_state.exists())
+            self.assertIn("local-calibration", str(local_state))
+            canonical_state = canonical_state_path.read_text(encoding="utf-8")
+            self.assertIn('"status": "canonical"', canonical_state)
+
 
 if __name__ == "__main__":
     unittest.main()

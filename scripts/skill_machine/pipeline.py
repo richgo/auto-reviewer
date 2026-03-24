@@ -101,12 +101,14 @@ def run_tune_stage(
     evals_dir: Path,
     state_dir: Path,
     benchmark_runner: Callable[..., Dict[str, Any]] | None = None,
+    local_calibration: bool = False,
 ) -> Dict[str, str]:
+    resolved_state_dir = state_dir / "local-calibration" if local_calibration else state_dir
     state = resolve_skill_state(
         skill_name=skill_name,
         skills_dir=skills_dir,
         evals_dir=evals_dir,
-        state_dir=state_dir,
+        state_dir=resolved_state_dir,
     )
     if not state.eval_path.exists():
         raise FileNotFoundError(f"Eval file not found: {state.eval_path}")
@@ -117,6 +119,11 @@ def run_tune_stage(
         models = state_payload.get("tune_models", [])
         if isinstance(models, list):
             tune_models = [str(model) for model in models]
+    elif local_calibration:
+        state_payload = {
+            "skill": state.skill_name,
+            "status": "local_calibration",
+        }
     benchmark_ran = False
     benchmark_passed = False
     benchmark_artifact_path = ""
@@ -141,10 +148,11 @@ def run_tune_stage(
         benchmark_ran=benchmark_ran,
         benchmark_passed=benchmark_passed,
     )
-    if state.state_path.exists():
+    if state.state_path.exists() or local_calibration:
         state_payload["benchmark_artifact_path"] = benchmark_artifact_path
         state_payload["benchmark_passed"] = benchmark_passed
         state_payload["outcome_status"] = outcome.status.value
+        state.state_path.parent.mkdir(parents=True, exist_ok=True)
         state.state_path.write_text(json.dumps(state_payload, indent=2), encoding="utf-8")
     return {
         "skill": state.skill_name,
