@@ -30,7 +30,7 @@
 - [x] **3.1** Build the pipeline `tune` stage entrypoint
   Extend the pipeline orchestration entry module with a `tune` stage that resolves the canonical skill and eval artifacts from workflow state and fails clearly when required inputs are missing. Covers `tuning` **Unified Tuning Entry** and edge case handling from the design.
 
-- [ ] **3.2** Refactor autoresearch and cascade behind pipeline contracts
+- [x] **3.2** Refactor autoresearch and cascade behind pipeline contracts
   Adapt `scripts/tune/autoresearch.py`, `scripts/tune/cascade.py`, and related modules to use the shared workflow state and provider transport interfaces rather than direct provider/session assumptions. Covers `tuning` **Unified Tuning Entry** and **Provider-Agnostic Model Interaction**.
 
 - [ ] **3.3** Integrate benchmark as a tune-stage validation gate
