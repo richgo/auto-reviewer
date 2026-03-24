@@ -1,0 +1,106 @@
+{
+  "description": "Eval cases for AI/LLM security: prompt injection, AI agent security, MCP tool poisoning",
+  "source_of_truth": "skill-eval",
+  "skill": "security-ai-llm",
+  "cases": [
+    {
+      "id": "prompt-injection-001",
+      "name": "Direct prompt injection via user input",
+      "description": "User input concatenated directly into prompt without sanitization",
+      "code_snippet": "def process_user_request(user_input):\n    prompt = f\"Summarize this text: {user_input}\"\n    response = openai.ChatCompletion.create(\n        model=\"gpt-4\",\n        messages=[{\"role\": \"user\", \"content\": prompt}]\n    )\n    return response.choices[0].message.content",
+      "language": "python",
+      "expected_findings": [{
+        "type": "prompt-injection",
+        "line": 2,
+        "description_contains": ["prompt injection", "concatenation", "structured format"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "ai-agent-001",
+      "name": "Unrestricted AI agent tool access",
+      "description": "AI agent allowed to execute arbitrary tools without validation",
+      "code_snippet": "def agent_execute_tool(tool_name, *args):\n    if tool_name == \"execute\":\n        return eval(args[0])\n    elif tool_name == \"query_db\":\n        return db.query(args[0])\n    elif tool_name == \"delete_file\":\n        return os.remove(args[0])\n\ndef process_agent_action(action, tool_name, args):\n    if action == 'execute_tool':\n        return agent_execute_tool(tool_name, *args)",
+      "language": "python",
+      "expected_findings": [{
+        "type": "unsafe-tool-execution",
+        "line": 3,
+        "description_contains": ["eval", "unsafe execution", "validate tool access"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "mcp-injection-001",
+      "name": "MCP tool argument injection",
+      "description": "Passing unvalidated user input to MCP tool arguments",
+      "code_snippet": "async function query_database(userQuery) {\n  const result = await mcpClient.callTool('query_db', {\n    sql: `SELECT * FROM users WHERE name LIKE '%${userQuery}%'`\n  });\n  return result;\n}",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "mcp-injection",
+        "line": 3,
+        "description_contains": ["injection", "validate arguments", "parameterized"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "ai-jailbreak-001",
+      "name": "Insufficient prompt guardrails",
+      "description": "System prompt vulnerable to jailbreak attempts",
+      "code_snippet": "system_prompt = \"You are a helpful assistant that answers any question.\"\n\ndef chat(user_message):\n    response = openai.ChatCompletion.create(\n        model=\"gpt-3.5-turbo\",\n        messages=[\n            {\"role\": \"system\", \"content\": system_prompt},\n            {\"role\": \"user\", \"content\": user_message}\n        ]\n    )\n    return response.choices[0].message.content",
+      "language": "python",
+      "expected_findings": [{
+        "type": "insufficient-guardrails",
+        "line": 1,
+        "description_contains": ["jailbreak", "guardrails", "sensitive instruction"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "sensitive-context-001",
+      "name": "Exposing sensitive data in LLM context",
+      "description": "Passing sensitive user data to LLM without redaction",
+      "code_snippet": "def generate_summary(user_data):\n    prompt = f\"\"\"\n    Please summarize this user profile:\n    Name: {user_data['name']}\n    Email: {user_data['email']}\n    SSN: {user_data['ssn']}\n    Credit Card: {user_data['cc_number']}\n    \"\"\"\n    return openai.Completion.create(prompt=prompt)",
+      "language": "python",
+      "expected_findings": [{
+        "type": "pii-exposure",
+        "line": 2,
+        "description_contains": ["PII", "SSN", "sensitive data", "redact"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "safe-prompt-001",
+      "name": "Properly sanitized prompt with structured format",
+      "description": "User input safely integrated into prompt with validation",
+      "code_snippet": "def process_user_request(user_input):\n    if not isinstance(user_input, str) or len(user_input) > 1000:\n        raise ValueError('Invalid input')\n    \n    prompt = \"Summarize the following text:\\n\\n{text}\\n\\nProvide a concise summary.\"\n    response = openai.ChatCompletion.create(\n        model=\"gpt-4\",\n        messages=[{\"role\": \"user\", \"content\": prompt.format(text=user_input)}]\n    )\n    return response.choices[0].message.content",
+      "language": "python",
+      "expected_findings": [],
+      "assertions": {
+        "no_false_positive": true
+      }
+    }
+  ]
+}

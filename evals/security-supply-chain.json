@@ -1,0 +1,106 @@
+{
+  "description": "Eval cases for supply chain security: dependencies, version pinning, XXE, manifest validation",
+  "source_of_truth": "skill-eval",
+  "skill": "security-supply-chain",
+  "cases": [
+    {
+      "id": "dependency-001",
+      "name": "Unpinned dependency versions",
+      "description": "Dependencies without fixed versions vulnerable to compromised updates",
+      "code_snippet": "{\n  \"dependencies\": {\n    \"express\": \"*\",\n    \"lodash\": \"^4.0\",\n    \"axios\": \"latest\",\n    \"mongoose\": \">= 5.0\"\n  }\n}",
+      "language": "json",
+      "expected_findings": [{
+        "type": "unpinned-dependency",
+        "line": 2,
+        "description_contains": ["pin version", "lock file", "specific version"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "xxe-001",
+      "name": "XXE vulnerability in XML parsing",
+      "description": "XML parser without XXE protection enabled",
+      "code_snippet": "import xml.etree.ElementTree as ET\n\ndef parse_xml_config(xml_string):\n    parser = ET.XMLParser()\n    root = ET.fromstring(xml_string, parser=parser)\n    return root\n\nconfig = parse_xml_config(user_provided_xml)",
+      "language": "python",
+      "expected_findings": [{
+        "type": "xxe",
+        "line": 4,
+        "description_contains": ["XXE", "DTD", "external entity", "defusedxml"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "transitive-001",
+      "name": "Known vulnerable transitive dependency",
+      "description": "Unaware of vulnerable indirect dependencies",
+      "code_snippet": "{\n  \"dependencies\": {\n    \"web-framework\": \"1.0.0\"\n  }\n}\n// web-framework depends on vulnerable-lib@2.1.0 with CVE-2024-1234",
+      "language": "json",
+      "expected_findings": [{
+        "type": "vulnerable-transitive",
+        "line": 2,
+        "description_contains": ["transitive", "vulnerable", "audit", "CVE"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "unsigned-001",
+      "name": "Installation of unsigned packages",
+      "description": "No verification of package signatures or checksums",
+      "code_snippet": "#!/bin/bash\necho \"Installing dependencies...\"\nnpm install\npython -m pip install -r requirements.txt\necho \"Dependencies installed\"",
+      "language": "bash",
+      "expected_findings": [{
+        "type": "unsigned-package",
+        "line": 3,
+        "description_contains": ["signature verification", "checksum", "package integrity"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "typosquatting-001",
+      "name": "Susceptibility to typosquatting",
+      "description": "Installation process doesn't validate package sources",
+      "code_snippet": "{\n  \"dependencies\": {\n    \"lodash\": \"4.17.21\",\n    \"lodash_\": \"4.0.0\",\n    \"react\": \"18.0.0\",\n    \"react-native-cli\": \"2.0.0\"\n  }\n}",
+      "language": "json",
+      "expected_findings": [{
+        "type": "typosquatting",
+        "line": 3,
+        "description_contains": ["typosquatting", "package name", "verify registry"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "safe-deps-001",
+      "name": "Properly pinned and verified dependencies",
+      "description": "Dependencies with exact versions and lock file",
+      "code_snippet": "{\n  \"dependencies\": {\n    \"express\": \"4.18.2\",\n    \"lodash\": \"4.17.21\",\n    \"axios\": \"1.6.0\"\n  }\n}",
+      "language": "json",
+      "expected_findings": [],
+      "assertions": {
+        "no_false_positive": true
+      }
+    }
+  ]
+}

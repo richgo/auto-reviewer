@@ -1,0 +1,115 @@
+{
+  "description": "Eval cases for client-side security vulnerabilities: Cookie security, clickjacking, prototype pollution, third-party code security",
+  "source_of_truth": "skill-eval",
+  "skill": "security-client-side",
+  "cases": [
+    {
+      "id": "cookie-001",
+      "name": "Missing HttpOnly flag on session cookie",
+      "description": "Session cookie set without HttpOnly flag, allowing XSS attacks to steal it",
+      "code_snippet": "response.cookie('sessionId', token, {\n  secure: true,\n  sameSite: 'Strict'\n  // Missing: httpOnly: true\n});",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "cookie-missing-httponly",
+        "line": 1,
+        "description_contains": ["HttpOnly", "cookie", "XSS"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "cookie-002",
+      "name": "Insecure cookie over HTTP",
+      "description": "Cookie set without secure flag on non-HTTPS connection",
+      "code_snippet": "app.get('/login', (req, res) => {\n  res.cookie('auth', loginToken, {\n    httpOnly: true,\n    sameSite: 'Lax'\n  });\n  res.json({ success: true });\n});",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "cookie-not-secure",
+        "line": 2,
+        "description_contains": ["secure flag", "HTTPS", "cookie"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "clickjacking-001",
+      "name": "Missing X-Frame-Options header",
+      "description": "Page can be embedded in iframe, vulnerable to clickjacking",
+      "code_snippet": "app.get('/admin', (req, res) => {\n  res.setHeader('Content-Type', 'text/html');\n  // Missing: res.setHeader('X-Frame-Options', 'DENY');\n  res.send(adminPanel);\n});",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "clickjacking-vulnerability",
+        "line": 1,
+        "description_contains": ["X-Frame-Options", "clickjacking", "iframe"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "prototype-pollution-001",
+      "name": "Prototype pollution via Object.assign",
+      "description": "User-controlled object merged into config without validation",
+      "code_snippet": "function mergeConfig(userInput) {\n  const defaultConfig = { admin: false, debug: false };\n  return Object.assign(defaultConfig, JSON.parse(userInput));\n}\n// Attacker sends: {\"__proto__\": {\"admin\": true}}",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "prototype-pollution",
+        "line": 3,
+        "description_contains": ["prototype", "Object.assign", "sanitize"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "third-party-001",
+      "name": "Untrusted third-party script with no integrity check",
+      "description": "Loading external script without Subresource Integrity (SRI)",
+      "code_snippet": "<script src=\"https://cdn.example.com/analytics.js\"></script>\n<!-- Missing: integrity=\"sha384-...\" -->\n<script src=\"https://trusted-lib.com/ui.js\"></script>",
+      "language": "html",
+      "expected_findings": [{
+        "type": "third-party-script-no-sri",
+        "line": 1,
+        "description_contains": ["Subresource Integrity", "integrity", "third-party"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "csp-bypass-001",
+      "name": "Overly permissive Content Security Policy",
+      "description": "CSP allows 'unsafe-inline' or overly broad sources",
+      "code_snippet": "app.use((req, res, next) => {\n  res.setHeader('Content-Security-Policy', \"script-src 'unsafe-inline' * http://\");\n  next();\n});",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "csp-too-permissive",
+        "line": 2,
+        "description_contains": ["unsafe-inline", "CSP", "overly permissive"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "description": "Eval cases for mobile security: Android/iOS specific vulnerabilities, insecure storage, permissions",
+  "source_of_truth": "skill-eval",
+  "skill": "security-mobile",
+  "cases": [
+    {
+      "id": "android-storage-001",
+      "name": "Storing sensitive data in app cache",
+      "description": "Authentication tokens stored in unencrypted shared preferences",
+      "code_snippet": "SharedPreferences sharedPref = context.getSharedPreferences(\n    \"user_data\", Context.MODE_PRIVATE);\nsharedPref.edit()\n    .putString(\"authToken\", token)\n    .putString(\"userId\", userId)\n    .putString(\"password\", password)\n    .apply();",
+      "language": "java",
+      "expected_findings": [{
+        "type": "insecure-storage",
+        "line": 3,
+        "description_contains": ["SharedPreferences", "encrypt", "sensitive data"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "ios-storage-001",
+      "name": "Logging sensitive user data",
+      "description": "Sensitive information logged to system logs visible to any app",
+      "code_snippet": "func login(username: String, password: String) {\n    print(\"Login attempt: \\(username) with password: \\(password)\")\n    let credentials = \"\\(username):\\(password)\"\n    let encodedAuth = credentials.data(using: .utf8)?.base64EncodedString()\n    print(\"Auth header: \\(encodedAuth ?? \\\"\\\")\")\n}",
+      "language": "swift",
+      "expected_findings": [{
+        "type": "logged-credentials",
+        "line": 2,
+        "description_contains": ["sensitive data logging", "password", "credentials"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "android-ssl-001",
+      "name": "Disabled SSL certificate verification",
+      "description": "Network requests with SSL pinning disabled vulnerable to MITM",
+      "code_snippet": "val client = OkHttpClient.Builder()\n    .hostnameVerifier { _, _ -> true }\n    .build()\n\nval sslContext = SSLContext.getInstance(\"TLS\")\nsslContext.init(null, arrayOf(TrustAllCerts()), null)\nval client2 = OkHttpClient.Builder()\n    .sslSocketFactory(sslContext.socketFactory, TrustAllCerts())\n    .build()",
+      "language": "kotlin",
+      "expected_findings": [{
+        "type": "disabled-ssl-verification",
+        "line": 2,
+        "description_contains": ["SSL verification", "MITM", "certificate pinning"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "intent-exposure-001",
+      "name": "Exported component without protection",
+      "description": "Android component exported without permission protection",
+      "code_snippet": "<!-- AndroidManifest.xml -->\n<activity\n    android:name=\".AuthActivity\"\n    android:exported=\"true\">\n    <intent-filter>\n        <action android:name=\"com.example.LOGIN\" />\n        <category android:name=\"android.intent.category.DEFAULT\" />\n    </intent-filter>\n</activity>",
+      "language": "xml",
+      "expected_findings": [{
+        "type": "exported-component",
+        "line": 3,
+        "description_contains": ["exported component", "permission", "intent-filter"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "permission-001",
+      "name": "Unnecessary broad permissions",
+      "description": "Requesting excessive permissions not needed for app functionality",
+      "code_snippet": "<!-- AndroidManifest.xml -->\n<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />\n<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />\n<uses-permission android:name=\"android.permission.READ_CONTACTS\" />\n<uses-permission android:name=\"android.permission.READ_CALENDAR\" />\n<uses-permission android:name=\"android.permission.CAMERA\" />\n<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />\n<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+      "language": "xml",
+      "expected_findings": [{
+        "type": "excessive-permissions",
+        "line": 2,
+        "description_contains": ["minimize permissions", "principle of least privilege", "necessary"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "safe-ios-001",
+      "name": "Secure credential storage on iOS",
+      "description": "Credentials properly stored in Keychain",
+      "code_snippet": "func saveCredentials(username: String, password: String) {\n    let query: [String: Any] = [\n        kSecClass as String: kSecClassGenericPassword,\n        kSecAttrService as String: \"com.example.app\",\n        kSecAttrAccount as String: username,\n        kSecValueData as String: password.data(using: .utf8)!\n    ]\n    SecItemAdd(query as CFDictionary, nil)\n}",
+      "language": "swift",
+      "expected_findings": [],
+      "assertions": {
+        "no_false_positive": true
+      }
+    }
+  ]
+}

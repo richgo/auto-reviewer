@@ -1,0 +1,106 @@
+{
+  "description": "Eval cases for testing practices: coverage, assertions, isolation, mocking, flaky tests",
+  "source_of_truth": "skill-eval",
+  "skill": "testing",
+  "cases": [
+    {
+      "id": "coverage-001",
+      "name": "Untested error path",
+      "description": "Error handling code without test coverage",
+      "code_snippet": "function processPayment(amount) {\n    try {\n        const result = chargeCard(amount);\n        return { success: true, transactionId: result.id };\n    } catch (error) {\n        logger.error('Payment failed', error);\n        // No test for this catch block\n        return { success: false, error: 'Payment processing failed' };\n    }\n}",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "missing-test-coverage",
+        "line": 5,
+        "description_contains": ["test coverage", "error handling", "test case"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "assertions-001",
+      "name": "Weak test assertions",
+      "description": "Test with insufficient or overly broad assertions",
+      "code_snippet": "def test_user_creation():\n    user = create_user('john@example.com', 'password123')\n    assert user is not None\n    assert user  # Too broad\n    assert isinstance(user, User)\n    # Missing specific assertions about email, password, created_at, etc.",
+      "language": "python",
+      "expected_findings": [{
+        "type": "weak-assertions",
+        "line": 2,
+        "description_contains": ["assertion", "verify properties", "specific values"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "isolation-001",
+      "name": "Test with shared mutable state",
+      "description": "Tests modifying shared state causing interdependencies",
+      "code_snippet": "class TestDatabase(unittest.TestCase):\n    _cache = {}\n    \n    def test_user_creation(self):\n        self._cache['test_user'] = create_user('test@example.com')\n        assert self._cache['test_user'].id > 0\n    \n    def test_user_deletion(self):\n        user = self._cache.get('test_user')\n        if user:\n            delete_user(user.id)\n        assert user is None",
+      "language": "python",
+      "expected_findings": [{
+        "type": "test-isolation",
+        "line": 2,
+        "description_contains": ["shared state", "setup/teardown", "independent tests"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "mocking-001",
+      "name": "Test making real external calls",
+      "description": "Test calling real database instead of using mocks",
+      "code_snippet": "def test_get_user():\n    # Makes real database call - slow and fragile\n    user = get_user_from_db(1)\n    assert user.name == 'John'\n    assert user.email == 'john@example.com'\n    # Database might be down, test is unreliable",
+      "language": "python",
+      "expected_findings": [{
+        "type": "unmocked-external",
+        "line": 2,
+        "description_contains": ["mock", "stub", "real database call"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "flaky-001",
+      "name": "Time-dependent test",
+      "description": "Test with race condition or timing dependency",
+      "code_snippet": "def test_async_operation():\n    result = async_function()\n    time.sleep(0.1)  # Unreliable - might not be enough\n    assert result.is_complete == True\n    assert result.status == 'SUCCESS'\n\nasync def test_concurrent_requests():\n    tasks = [make_request() for _ in range(10)]\n    asyncio.sleep(0.5)  # Magic number, fragile\n    assert all(t.done() for t in tasks)",
+      "language": "python",
+      "expected_findings": [{
+        "type": "flaky-test",
+        "line": 2,
+        "description_contains": ["flaky test", "time.sleep", "wait for completion"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "safe-test-001",
+      "name": "Well-structured unit test",
+      "description": "Properly isolated test with clear setup and assertions",
+      "code_snippet": "def test_user_creation_with_valid_email():\n    # Arrange\n    email = 'test@example.com'\n    password = 'secure_password123'\n    \n    # Act\n    user = create_user(email, password)\n    \n    # Assert\n    assert user.id is not None\n    assert user.email == email\n    assert user.is_active == True\n    assert user.created_at is not None",
+      "language": "python",
+      "expected_findings": [],
+      "assertions": {
+        "no_false_positive": true
+      }
+    }
+  ]
+}

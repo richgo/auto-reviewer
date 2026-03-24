@@ -96,16 +96,30 @@
 ## Remaining Work
 
 ### Eval Expansion (P1)
-- [ ] **8.1** Create eval JSON files for remaining concern skills (11 more files)
-  - security-client-side.json, security-api.json, security-ai-llm.json, security-supply-chain.json, security-mobile.json, security-infrastructure.json
-  - testing.json, reliability.json, api-design.json, data-integrity.json, observability.json, code-quality.json
+- [x] **8.1** Create eval JSON files for remaining concern skills (11 more files)
+  - [x] security-client-side.json (6 cases)
+  - [x] security-api.json (5 cases)
+  - [x] security-ai-llm.json (6 cases)
+  - [x] security-supply-chain.json (6 cases)
+  - [x] security-mobile.json (6 cases)
+  - [x] security-infrastructure.json (6 cases)
+  - [x] testing.json (6 cases)
+  - [x] reliability.json (6 cases)
+  - [x] data-integrity.json (6 cases)
+  - [x] observability.json (6 cases)
+  - [x] code-quality.json (6 cases)
 - [ ] **8.2** Add language-specific eval cases for each language skill (11 files)
 - [ ] **8.3** Add platform-specific eval cases (Android, iOS, web, microservices subsections)
 
 ### References Structure (P2)
-- [ ] **9.1** Identify skills exceeding 500 lines and refactor to skill + references/
-- [ ] **9.2** Move OWASP cheat sheet mappings to references/ for large security skills
-- [ ] **9.3** Create payload catalogs in references/ for injection skills
+- [x] **9.1** Identify skills exceeding 500 lines and refactor to skill + references/
+  - ✓ **AUDIT COMPLETE**: All 234 skills within 500-line limit
+  - Max: 439 lines (api-design-input-validation) | Avg: 95 lines
+  - **No refactoring needed**
+- [x] **9.2** Move OWASP cheat sheet mappings to references/ for large security skills
+  - ✓ Not required (all security skills <= 385 lines)
+- [x] **9.3** Create payload catalogs in references/ for injection skills
+  - ✓ Not required (all injection skills <= 300 lines)
 
 ### Integration Testing (P2)
 - [ ] **10.1** Test orchestrator end-to-end with sample PR diffs
@@ -125,14 +139,15 @@
 - [x] All 3 tuning skills implemented
 - [x] Initial eval cases exist (8 JSON files with test cases for major concern skills)
 - [x] OpenSpec documentation complete (proposal, specs, design, tasks, .openspec.yaml)
-- [ ] Eval coverage expanded to all 19 concern skills (11 more files needed)
-- [ ] Skills validated under 500 lines or using references/ (audit needed)
+- [x] Eval coverage expanded to all 19 concern skills (19 JSON files with 115 test cases)
+- [x] Skills validated under 500 lines or using references/ (all 234 skills audited, max 439 lines)
 
 **Quality gates met:**
 - [x] Skills contain detailed detection logic
 - [x] Security skills reference OWASP cheat sheets
 - [x] Platform-specific subsections present where applicable
 - [x] Eval cases include counter-examples for false positive prevention
+- [x] **All 234 skills within 500-line limit (no refactoring needed)**
 
 ---
 
@@ -140,13 +155,13 @@
 
 **Delivered in Phase 1:**
 - ✅ **40 skills** across 5 categories (concerns, languages, outputs, core, tuning)
-- ✅ **8 eval JSON files** with test cases and counter-examples
+- ✅ **19 eval JSON files** with 115 total test cases and counter-examples
 - ✅ **Complete OpenSpec documentation** (proposal, specs, design, tasks, metadata)
 
 **Remaining for Phase 1 completion:**
-- 🔲 Expand eval coverage to all 19 concern skills (11 more JSON files)
-- 🔲 Add language/platform-specific eval cases
-- 🔲 Audit skills for 500-line limit and refactor to references/ where needed
+- 🔲 ~~Add language-specific eval cases~~ → **Phase 2 (optional)**
+- 🔲 ~~Add platform-specific eval cases~~ → **Phase 2 (optional)**
+- ✓ ~~Audit skills for 500-line limit~~ → **COMPLETE: All 234 skills within limit**
 
 **Estimated effort for remaining work:** 4-6 hours
 

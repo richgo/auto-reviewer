@@ -1,0 +1,106 @@
+{
+  "description": "Eval cases for observability: logging, metrics, tracing, crash reporting, debugging",
+  "source_of_truth": "skill-eval",
+  "skill": "observability",
+  "cases": [
+    {
+      "id": "logging-001",
+      "name": "Insufficient error context in logs",
+      "description": "Error logged without enough information to debug",
+      "code_snippet": "def process_payment(order):\n    try:\n        charge_card(order.amount)\n    except PaymentError:\n        logger.error('Payment failed')  # No context\n        return False\n\ndef fetch_user(user_id):\n    try:\n        return db.get_user(user_id)\n    except Exception as e:\n        logger.error('Error')  # No user_id, no exception details\n        return None",
+      "language": "python",
+      "expected_findings": [{
+        "type": "insufficient-logging",
+        "line": 4,
+        "description_contains": ["logging context", "exception details", "user information"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "metrics-001",
+      "name": "No metrics for critical operations",
+      "description": "Missing observability for important business logic",
+      "code_snippet": "def process_order(order):\n    db.save_order(order)\n    send_confirmation_email(order.customer_email)\n    update_inventory(order.items)\n    # No metrics - can't track success rate, latency, failures\n    return order\n\ndef handle_payment():\n    # No timing metrics\n    result = charge_card()\n    # No success/failure counters\n    return result",
+      "language": "python",
+      "expected_findings": [{
+        "type": "missing-metrics",
+        "line": 1,
+        "description_contains": ["metrics", "observability", "monitoring"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "tracing-001",
+      "name": "No distributed tracing setup",
+      "description": "Multi-service requests without tracing context",
+      "code_snippet": "# Service A\napp.get('/api/order', (req, res) => {\n    const user = callServiceB('/user');\n    const inventory = callServiceC('/inventory');\n    // No trace ID propagation\n    res.json({ user, inventory });\n});\n\n# Service B\napp.get('/user', (req, res) => {\n    // No trace context - can't correlate with Service A\n    const user = db.getUser();\n    res.json(user);\n});",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "missing-tracing",
+        "line": 2,
+        "description_contains": ["distributed tracing", "trace ID", "span context"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "crash-reporting-001",
+      "name": "Unobserved crashes in background processes",
+      "description": "Background job failures not reported",
+      "code_snippet": "def background_job():\n    for item in queue:\n        try:\n            process_item(item)\n        except Exception as e:\n            logger.error(f'Failed: {e}')\n            # No crash reporting - alert system never notified\n            # No retry mechanism\n\nthread = threading.Thread(target=background_job, daemon=True)\nthread.start()\n# If thread crashes, no one knows",
+      "language": "python",
+      "expected_findings": [{
+        "type": "unobserved-crash",
+        "line": 6,
+        "description_contains": ["crash reporting", "alert", "error tracking", "Sentry"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "health-check-001",
+      "name": "No health check endpoint",
+      "description": "Service without way to verify it's functioning",
+      "code_snippet": "app = Flask(__name__)\n\n@app.route('/api/data', methods=['GET'])\ndef get_data():\n    return db.query()\n\n# No /health or /status endpoint\n# Monitoring system can't detect if service is down",
+      "language": "python",
+      "expected_findings": [{
+        "type": "missing-health-check",
+        "line": 1,
+        "description_contains": ["health check", "readiness", "liveness"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "safe-observability-001",
+      "name": "Comprehensive observability setup",
+      "description": "Logging, metrics, and tracing properly configured",
+      "code_snippet": "import logging\nfrom prometheus_client import Counter, Histogram\nfrom opentelemetry import trace\n\nlogger = logging.getLogger(__name__)\ntracer = trace.get_tracer(__name__)\n\norder_counter = Counter('orders_processed', 'Total orders')\norder_latency = Histogram('order_latency_seconds', 'Order processing time')\n\n@app.route('/api/order', methods=['POST'])\ndef process_order():\n    with tracer.start_as_current_span('process_order') as span:\n        start = time.time()\n        try:\n            order = create_order(request.json)\n            order_counter.inc()\n            logger.info('Order created', extra={'order_id': order.id})\n            return order, 201\n        except Exception as e:\n            logger.error('Order failed', exc_info=True, extra={'error': str(e)})\n            raise\n        finally:\n            order_latency.observe(time.time() - start)",
+      "language": "python",
+      "expected_findings": [],
+      "assertions": {
+        "no_false_positive": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "description": "Eval cases for reliability: error handling, cleanup, timeouts, retries, graceful degradation",
+  "source_of_truth": "skill-eval",
+  "skill": "reliability",
+  "cases": [
+    {
+      "id": "error-handling-001",
+      "name": "Unhandled exception in async code",
+      "description": "Promise rejection not handled",
+      "code_snippet": "app.get('/api/data', (req, res) => {\n  fetchDataFromAPI()\n    .then(data => res.json(data))\n    // No .catch() - unhandled rejection\n});\n\nfunction processItems(items) {\n  items.forEach(item => {\n    saveToDatabase(item);\n    // No error handling in loop\n  });\n}",
+      "language": "javascript",
+      "expected_findings": [{
+        "type": "unhandled-error",
+        "line": 2,
+        "description_contains": ["error handling", "catch block", "try-catch"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "resource-leak-001",
+      "name": "File descriptor leak",
+      "description": "File not closed on all code paths",
+      "code_snippet": "def read_config(filename):\n    f = open(filename, 'r')\n    data = json.load(f)\n    if data.get('required_field') is None:\n        return None  # File not closed!\n    return data",
+      "language": "python",
+      "expected_findings": [{
+        "type": "resource-leak",
+        "line": 2,
+        "description_contains": ["resource leak", "file", "context manager", "with"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "timeout-001",
+      "name": "Missing timeout on external request",
+      "description": "Network request without timeout vulnerable to hanging",
+      "code_snippet": "def fetch_user_profile(user_id):\n    response = requests.get(f'https://api.example.com/users/{user_id}')\n    # No timeout - can hang indefinitely\n    return response.json()\n\napp.get('/profile/:userId', (req, res) => {\n    const data = await fetch(`https://api.example.com/users/${req.params.userId}`);\n    // No timeout - request could hang\n    res.json(await data.json());\n});",
+      "language": "python",
+      "expected_findings": [{
+        "type": "missing-timeout",
+        "line": 2,
+        "description_contains": ["timeout", "request", "hanging"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "retry-001",
+      "name": "No retry logic for transient failures",
+      "description": "Single attempt at potentially flaky operation",
+      "code_snippet": "def save_to_cache(key, value):\n    try:\n        redis_client.set(key, value, ex=3600)\n    except ConnectionError:\n        # Transient error, but no retry\n        logger.error(f'Failed to save {key}')\n        raise",
+      "language": "python",
+      "expected_findings": [{
+        "type": "missing-retry",
+        "line": 2,
+        "description_contains": ["retry logic", "exponential backoff", "transient"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "degradation-001",
+      "name": "No fallback on dependency failure",
+      "description": "System fails completely if secondary service is unavailable",
+      "code_snippet": "def get_user_recommendations():\n    # If recommendation service fails, entire endpoint fails\n    recommendations = call_ml_service()\n    user_data = get_user_data()\n    return {\n        'user': user_data,\n        'recommendations': recommendations\n    }",
+      "language": "python",
+      "expected_findings": [{
+        "type": "no-graceful-degradation",
+        "line": 3,
+        "description_contains": ["graceful degradation", "fallback", "default value", "circuit breaker"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "safe-error-001",
+      "name": "Proper error handling with retry and fallback",
+      "description": "Robust error handling with timeouts and fallbacks",
+      "code_snippet": "def fetch_with_fallback(url, default=None):\n    try:\n        response = requests.get(url, timeout=5)\n        response.raise_for_status()\n        return response.json()\n    except (requests.Timeout, requests.RequestException) as e:\n        logger.warning(f'Request failed: {e}')\n        return default or {}\n\ndef save_with_retry(key, value, max_retries=3):\n    for attempt in range(max_retries):\n        try:\n            redis_client.set(key, value, ex=3600)\n            return True\n        except ConnectionError as e:\n            if attempt == max_retries - 1:\n                logger.error(f'Failed to save after {max_retries} attempts')\n                raise\n            time.sleep(2 ** attempt)",
+      "language": "python",
+      "expected_findings": [],
+      "assertions": {
+        "no_false_positive": true
+      }
+    }
+  ]
+}

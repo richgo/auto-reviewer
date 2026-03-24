@@ -1,0 +1,106 @@
+{
+  "description": "Eval cases for data integrity: PII, migrations, serialization, schema validation",
+  "source_of_truth": "skill-eval",
+  "skill": "data-integrity",
+  "cases": [
+    {
+      "id": "pii-001",
+      "name": "Unencrypted PII in database",
+      "description": "Sensitive personal data stored without encryption",
+      "code_snippet": "CREATE TABLE users (\n    id SERIAL PRIMARY KEY,\n    email VARCHAR(255),\n    phone VARCHAR(20),\n    ssn VARCHAR(11),\n    credit_card VARCHAR(20),\n    date_of_birth DATE\n);\n\ndef save_user(email, phone, ssn, cc):\n    query = '''INSERT INTO users (email, phone, ssn, credit_card)\n              VALUES (%s, %s, %s, %s)'''\n    db.execute(query, (email, phone, ssn, cc))",
+      "language": "python",
+      "expected_findings": [{
+        "type": "unencrypted-pii",
+        "line": 5,
+        "description_contains": ["encryption", "PII", "sensitive data"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "migration-001",
+      "name": "Unsafe database migration",
+      "description": "Migration that could cause data loss",
+      "code_snippet": "def migrate():\n    # Drops column without backup\n    db.execute('ALTER TABLE users DROP COLUMN legacy_field')\n    # No DEFAULT value - NULLs all existing records\n    db.execute('ALTER TABLE users ADD COLUMN status VARCHAR(50)')\n    # No index on frequently queried column\n    db.execute('ALTER TABLE orders ADD COLUMN customer_id INT')",
+      "language": "python",
+      "expected_findings": [{
+        "type": "unsafe-migration",
+        "line": 2,
+        "description_contains": ["migration", "backup", "data loss", "default value"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "serialization-001",
+      "name": "Unsafe deserialization",
+      "description": "Deserializing untrusted data with pickle",
+      "code_snippet": "import pickle\n\ndef deserialize_user(data):\n    # pickle.loads is unsafe with untrusted data\n    user = pickle.loads(data)\n    return user\n\napp.post('/api/user', (req, res) => {\n    const user = JSON.parse(req.body.data);\n    // Re-assigning properties without validation\n    Object.assign(globalConfig, user.settings);\n});",
+      "language": "python",
+      "expected_findings": [{
+        "type": "unsafe-deserialization",
+        "line": 4,
+        "description_contains": ["pickle", "deserialize", "untrusted", "validate"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "validation-001",
+      "name": "Missing schema validation",
+      "description": "Storing data without validating against schema",
+      "code_snippet": "def save_product(data):\n    # No schema validation\n    product = Product()\n    product.name = data.get('name')\n    product.price = data.get('price')  # Could be string, negative, null\n    product.description = data.get('description')  # No length check\n    product.tags = data.get('tags')  # Could be any type\n    db.save(product)\n    return product",
+      "language": "python",
+      "expected_findings": [{
+        "type": "missing-validation",
+        "line": 4,
+        "description_contains": ["schema validation", "validate input", "type check"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true
+      }
+    },
+    {
+      "id": "denormalization-001",
+      "name": "Denormalized data without synchronization",
+      "description": "Redundant data stored without updating synchronously",
+      "code_snippet": "def update_user_email(user_id, new_email):\n    # Updates primary table\n    db.execute('UPDATE users SET email = %s WHERE id = %s', (new_email, user_id))\n    # Denormalized copy in cache - could get out of sync\n    # No cache invalidation\n    return True",
+      "language": "python",
+      "expected_findings": [{
+        "type": "denormalization-sync",
+        "line": 2,
+        "description_contains": ["denormalized data", "cache invalidation", "consistency"]
+      }],
+      "assertions": {
+        "detected_bug": true,
+        "correct_severity": true,
+        "actionable_fix": true,
+        "evidence_cited": true
+      }
+    },
+    {
+      "id": "safe-data-001",
+      "name": "Properly validated and encrypted data storage",
+      "description": "Data with encryption, validation, and schema enforcement",
+      "code_snippet": "from cryptography.fernet import Fernet\nfrom pydantic import BaseModel, EmailStr, validator\n\nclass UserSchema(BaseModel):\n    email: EmailStr\n    ssn: str\n    phone: str\n    \n    @validator('ssn')\n    def validate_ssn(cls, v):\n        if not re.match(r'^\\d{3}-\\d{2}-\\d{4}$', v):\n            raise ValueError('Invalid SSN format')\n        return v\n\ndef save_user(data: UserSchema):\n    cipher = Fernet(encryption_key)\n    encrypted_ssn = cipher.encrypt(data.ssn.encode())\n    user = User(email=data.email, ssn=encrypted_ssn)\n    db.save(user)",
+      "language": "python",
+      "expected_findings": [],
+      "assertions": {
+        "no_false_positive": true
+      }
+    }
+  ]
+}
