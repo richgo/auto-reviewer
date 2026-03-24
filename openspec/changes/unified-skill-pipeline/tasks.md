@@ -8,7 +8,7 @@
 - [x] **1.2** Add canonical workflow-state support for skills
   Create a workflow-state layer that resolves a canonical skill, its linked eval file, and lifecycle metadata without changing the existing `skills/<skill>/SKILL.md` and `evals/<skill>.json` layout. Touch new pipeline/state files plus resolution logic used by `scripts/tune/` and authoring flows. Covers `skills` spec requirements **Unified Skill Authoring Workflow** and **Skill Workflow State Association**, plus `evals` **Eval File Lifecycle Ownership**.
 
-- [ ] **1.3** Define promotion outcome records
+- [x] **1.3** Define promotion outcome records
   Add a shared outcome model for `promotable`, `gated`, and `needs_review` results, and integrate it with existing tuning history / `scripts/tune/needs_review.py` flows so unresolved candidates remain visible. Covers `tuning` spec requirement **Promotion Decision Visibility**.
 
 ## Phase 2: Create Stage
