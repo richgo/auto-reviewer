@@ -16,7 +16,7 @@
 - [x] **2.1** Build the pipeline `create` stage entrypoint
   Add a pipeline orchestration entry module that accepts a canonical skill target and coordinates draft/update flow using existing authoring helpers from `skills-tools/skill-creator/scripts/`. Touch the new pipeline entry module and minimal adapters around authoring scripts. Covers `skills` **Unified Skill Authoring Workflow**.
 
-- [ ] **2.2** Wire create-stage eval generation
+- [x] **2.2** Wire create-stage eval generation
   Integrate eval creation/update into the `create` stage so every created or revised skill produces a linked `evals/<skill>.json` artifact. Touch create-stage orchestration plus eval generation/resolution helpers. Covers `evals` **Create-Stage Eval Generation** and **Eval File Lifecycle Ownership**.
 
 - [ ] **2.3** Add eval readiness validation
