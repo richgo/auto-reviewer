@@ -23,8 +23,6 @@ def resolve_skill_state(
     if not skill_path.exists():
         raise FileNotFoundError(f"Skill file not found: {skill_path}")
     eval_path = evals_dir / f"{skill_name}.json"
-    if not eval_path.exists():
-        raise FileNotFoundError(f"Eval file not found: {eval_path}")
 
     return SkillWorkflowState(
         skill_name=skill_name,

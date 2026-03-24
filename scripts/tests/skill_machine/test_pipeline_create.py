@@ -87,6 +87,33 @@ class TestPipelineCreateStage(unittest.TestCase):
             payload = Path(result["state_path"]).read_text(encoding="utf-8")
             self.assertIn('"updated_at"', payload)
 
+    def test_create_stage_generates_eval_stub_when_missing(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            skills_dir = root / "skills"
+            evals_dir = root / "evals"
+            state_dir = root / ".skill-machine" / "workflow"
+            (skills_dir / "security-injection").mkdir(parents=True)
+            (skills_dir / "security-injection" / "SKILL.md").write_text(
+                "skill",
+                encoding="utf-8",
+            )
+            evals_dir.mkdir(parents=True)
+
+            result = run_create_stage(
+                skill_name="security-injection",
+                skills_dir=skills_dir,
+                evals_dir=evals_dir,
+                state_dir=state_dir,
+                generate_eval_stub=True,
+            )
+
+            eval_path = Path(result["eval_path"])
+            self.assertTrue(eval_path.exists())
+            content = eval_path.read_text(encoding="utf-8")
+            self.assertIn('"skill": "security-injection"', content)
+            self.assertIn('"cases": []', content)
+
 
 if __name__ == "__main__":
     unittest.main()

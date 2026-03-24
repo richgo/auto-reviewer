@@ -66,13 +66,13 @@ class TestWorkflowState(unittest.TestCase):
             )
             evals_dir.mkdir(parents=True)
 
-            with self.assertRaises(FileNotFoundError):
-                resolve_skill_state(
-                    skill_name="security-injection",
-                    skills_dir=skills_dir,
-                    evals_dir=evals_dir,
-                    state_dir=state_dir,
-                )
+            state = resolve_skill_state(
+                skill_name="security-injection",
+                skills_dir=skills_dir,
+                evals_dir=evals_dir,
+                state_dir=state_dir,
+            )
+            self.assertEqual(evals_dir / "security-injection.json", state.eval_path)
 
 
 if __name__ == "__main__":

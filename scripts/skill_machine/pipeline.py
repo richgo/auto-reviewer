@@ -15,6 +15,7 @@ def run_create_stage(
     evals_dir: Path,
     state_dir: Path,
     persist_state: bool = False,
+    generate_eval_stub: bool = False,
 ) -> Dict[str, str]:
     state = resolve_skill_state(
         skill_name=skill_name,
@@ -33,6 +34,18 @@ def run_create_stage(
                     "eval_path": str(state.eval_path),
                     "status": "create_started",
                     "updated_at": timestamp,
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+    if generate_eval_stub and not state.eval_path.exists():
+        state.eval_path.parent.mkdir(parents=True, exist_ok=True)
+        state.eval_path.write_text(
+            json.dumps(
+                {
+                    "skill": state.skill_name,
+                    "cases": [],
                 },
                 indent=2,
             ),
