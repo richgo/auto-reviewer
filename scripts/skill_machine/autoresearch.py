@@ -20,7 +20,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 from datetime import datetime
 from dataclasses import dataclass
 
@@ -29,6 +29,7 @@ import yaml
 from rich.console import Console
 from rich.progress import track
 
+from llm.transport import LLMTransport
 from .llm_client import LLMClient
 from .scorer import Scorer, EvalScore
 from .mutator import Mutator
@@ -115,7 +116,8 @@ class AutoResearcher:
         max_iterations: int,
         target_pass_rate: float,
         output_path: Path,
-        log_path: Path
+        log_path: Path,
+        transport: Optional[LLMTransport] = None,
     ):
         """
         Initialize AutoResearcher.
@@ -137,7 +139,7 @@ class AutoResearcher:
         self.output_path = output_path
         self.log_path = log_path
         
-        self.llm = LLMClient(model)
+        self.llm = LLMClient(model, transport=transport)
         self.scorer = Scorer(model)
         self.mutator = Mutator(model)
         
