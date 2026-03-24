@@ -19,6 +19,17 @@ The canonical unified lifecycle entrypoint is `scripts/skill_machine/pipeline.py
 
 Use that entrypoint for `create` and `tune` orchestration so authors follow one unified lifecycle instead of stitching together separate tools.
 
+## Transition guidance
+
+During migration, legacy entrypoints remain supported as internal building blocks, but they are no longer the user-facing orchestration surface.
+
+- Canonical entrypoint: `scripts/skill_machine/pipeline.py`
+- Legacy entrypoints supported as internal building blocks:
+  - `skills-tools/skill-creator/scripts/run_loop.py`
+  - `scripts/skill_machine/autoresearch.py`
+  - `scripts/skill_machine/cascade.py`
+  - `scripts/benchmark/runner.py`
+
 ## The Workflow
 
 ### Mode 1: Create
