@@ -49,7 +49,7 @@
 
 ## Phase 5: Testing & Verification
 
-- [ ] **5.1** Write unit tests for provider transport and workflow state
+- [x] **5.1** Write unit tests for provider transport and workflow state
   Add tests covering provider-neutral request/response behavior, artifact resolution, lifecycle state transitions, and explicit failure on missing inputs. Reference `skills` **Skill Artifact Resolution** and `tuning` **Shared Model Contract** scenarios.
 
 - [ ] **5.2** Write unit tests for eval readiness validation and promotion outcomes
