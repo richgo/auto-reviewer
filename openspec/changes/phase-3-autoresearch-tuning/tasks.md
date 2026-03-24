@@ -62,7 +62,7 @@
 - [x] **4.3** Implement needs-review tracking and generation
    Create `scripts/tune/needs_review.py` to generate and maintain `skills-tools/needs-review.md` with skills that failed cascade; track skill name, best model attempted, final pass rate, and tuning history link. Format as sortable checklist for manual intervention workflow.
 
-- [ ] **4.4** Add cascade configuration and policy controls
+- [x] **4.4** Add cascade configuration and policy controls
    Extend `scripts/tune/config.yaml` with cascade sequence definition (models, iteration limits, threshold targets); add `--cascade-enabled`, `--cascade-models`, and `--max-stages` CLI overrides for testing and workflow dispatch control.
 
 - [ ] **4.5** Test cascade orchestration end-to-end

@@ -24,10 +24,32 @@ class NeedsReviewTracker:
     def _load(self):
         """Load existing needs-review.md if it exists."""
         if self.review_file.exists():
-            # Parse existing entries (simplified - assumes consistent format)
+            # Parse existing entries from file
             content = self.review_file.read_text(encoding="utf-8")
-            # For now, we'll just initialize empty and rebuild on each add
-            self.skills = {}
+            # Extract skills from markdown (e.g., "- [ ] **security-injection** — ...")
+            for line in content.split('\n'):
+                if line.startswith("- [ ] **"):
+                    # Parse: "- [ ] **skill-name** — model @ XX% ([History](link))"
+                    parts = line.split(" — ")
+                    if len(parts) >= 2:
+                        skill_name = line.split("**")[1]
+                        # Extract model and pass rate from "model @ XX%"
+                        rest = parts[1]
+                        model_parts = rest.split(" @ ")
+                        if len(model_parts) >= 2:
+                            model = model_parts[0]
+                            pass_rate_str = model_parts[1].split("%")[0]
+                            try:
+                                pass_rate = int(pass_rate_str) / 100.0
+                                # Extract history link
+                                history_link = rest.split("(")[1].split(")")[0] if "(" in rest else ""
+                                self.skills[skill_name] = {
+                                    "best_model": model,
+                                    "best_pass_rate": pass_rate,
+                                    "history_link": history_link,
+                                }
+                            except (ValueError, IndexError):
+                                pass
         else:
             self.skills = {}
 
@@ -46,6 +68,9 @@ class NeedsReviewTracker:
             best_pass_rate: Best pass rate achieved (0.0-1.0).
             history_link: Path to tuning history file.
         """
+        # Reload to get any changes made by other processes
+        self._load()
+        
         self.skills[skill_name] = {
             "best_model": best_model,
             "best_pass_rate": best_pass_rate,
