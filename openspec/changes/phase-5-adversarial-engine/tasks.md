@@ -11,7 +11,10 @@
   In `agents/adversarial/agent.md`, define local DB path, required tables/keys (`runs`, `findings`, `stances`, `verdicts`, cleanup tracking), resume key semantics, and transaction boundaries for deterministic reruns. (Design: SQLite as Local Source of Truth)
 
 - [x] **1.3** Add adversarial runtime config and local artifact ignore rules  
-  Update `apm.yml` with additive `config.adversarial` defaults (panel size, round limits, db path, retention policy) and update `.gitignore` to exclude `.auto-reviewer/adversarial.db` plus transient artifact directories. (Design: API Changes + Migration/Backwards Compatibility)
+  Update `apm.yml` with additive `config.adversarial` defaults (panel size, round limits, db path, retention policy, and stage-specific model mapping for detector/challenger/defender/judge) and update `.gitignore` to exclude `.auto-reviewer/adversarial.db` plus transient artifact directories. (Design: API Changes + Migration/Backwards Compatibility)
+
+- [x] **1.5** Add reviewer and stage task status persistence contract  
+  Extend `agents/adversarial/agent.md` SQLite contract to require persisted `stage_tasks` and `reviewers` entities with explicit status lifecycle, one reviewer per skill/concern, and transaction boundaries that survive mid-run interruption. (Design: Reviewer and Stage Task Durability)
 
 - [x] **1.4** Add explicit post-merge cleanup contract  
   Create `agents/adversarial/cleanup.md` (or equivalent section in `agents/adversarial/agent.md`) defining merge-triggered archive/purge flow, stale-row pruning, and idempotent SQLite vacuum behavior. (Design: Mandatory Post-Merge Cleanup)
@@ -23,6 +26,9 @@
 
 - [x] **2.2** Define canonical finding fingerprint and SQL consensus routing rules  
   Extend `agents/adversarial/agent.md` with canonical finding fields, fingerprinting rules, and deterministic SQL-backed routing to `high-confidence`, `contested`, and `debunked` buckets. (Design: SQL-Backed Consensus and Confidence Routing)
+
+- [x] **2.6** Define interruption resume semantics for task/reviewer recovery  
+  Require `adversarial-resume` to continue from durable stage/reviewer statuses without duplicate assignment or duplicate review emission after connection/provider interruption. (Design: Reviewer and Stage Task Durability)
 
 - [x] **2.3** Update review report output contract for adversarial metadata  
   Update `skills/outputs/review-report.md` templates/examples to include confidence class, consensus score, and compact challenge/defense summary sections while keeping existing report structure stable. (Design: Components Affected outputs + Backwards Compatibility)
@@ -36,10 +42,10 @@
 ## Phase 3: Testing & Verification
 
 - [x] **3.1** Write unit tests for adversarial agent contract and SQLite schema rules  
-  Add tests under `scripts/tests/adversarial/` to validate required agent commands, round ordering, required SQL schema elements, confidence bucket definitions, and cleanup idempotency clauses.
+  Add tests under `scripts/tests/adversarial/` to validate required agent commands, round ordering, stage-model config keys, required SQL schema elements, reviewer/task status lifecycle, confidence bucket definitions, and cleanup idempotency clauses.
 
 - [x] **3.2** Write integration tests for run → resume → cleanup flow  
-  Add fixture-driven integration tests using temporary SQLite DB/artifact paths to verify run creation, resume by `(repo, pr, commit_sha)`, deterministic verdict materialization, and post-merge purge/retention behavior.
+  Add fixture-driven integration tests using temporary SQLite DB/artifact paths to verify run creation, one-reviewer-per-concern assignment, durable stage/reviewer status transitions, resume by `(repo, pr, commit_sha)` after interruption, deterministic verdict materialization, and post-merge purge/retention behavior.
 
 - [x] **3.3** Write output compatibility tests for confidence rendering  
   Add tests asserting `review-report` and `inline-comments` render adversarial metadata (`confidence`, `consensus`, debate summary) while preserving existing legacy-required fields and ordering.

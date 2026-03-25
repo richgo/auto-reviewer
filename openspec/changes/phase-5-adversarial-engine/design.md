@@ -10,7 +10,7 @@ Phase 5 adopts an `agent.md`-only adversarial workflow: orchestration logic live
 - `agents/` — adds adversarial entry instructions and command contract for generate/review/cleanup lifecycle.
 - `skills/core/review-orchestrator.md` — extended to call adversarial mode and consume confidence-tiered outputs.
 - `skills/outputs/review-report.md` and `skills/outputs/inline-comments.md` — extended to render confidence class and debate evidence summary.
-- `apm.yml` (`config.adversarial`) — controls panel size, round limits, and cleanup policy.
+- `apm.yml` (`config.adversarial`) — controls panel size, round limits, stage-specific model mapping, and cleanup policy.
 - `README.md` and usage docs — documents adversarial run lifecycle, local persistence, and merge cleanup semantics.
 - `.gitignore` and local runtime conventions — ensures local DB/artifacts are never committed.
 
@@ -58,6 +58,24 @@ Phase 5 adopts an `agent.md`-only adversarial workflow: orchestration logic live
 
 **Rationale:** SQL-backed aggregation makes decision logic auditable and stable across reruns while supporting transparent threshold tuning.
 
+### Decision: Stage-Specific Model Assignment
+
+**Chosen:** Support explicit model selection per adversarial stage (`detector`, `challenger`, `defender`, `judge`) with optional ordered fallback lists per stage.
+**Alternatives considered:**
+- Single model shared across all stages — rejected because stage responsibilities differ and benefit from specialized model strengths.
+- Global model pool with no stage pinning — rejected because behavior is less deterministic and harder to debug/reproduce.
+
+**Rationale:** Stage-level assignment enables role specialization while preserving deterministic reruns and clear operator control.
+
+### Decision: Reviewer and Stage Task Durability
+
+**Chosen:** Persist one reviewer assignment per skill/concern and explicit stage task records with statuses in SQLite, committed at each stage boundary.
+**Alternatives considered:**
+- Persist only aggregate run/finding rows — rejected because mid-run interruption recovery becomes lossy.
+- Reconstruct reviewer/task state from logs — rejected because reconstruction is fragile and non-deterministic.
+
+**Rationale:** Durable reviewer/task state guarantees resumability after connection failures and provides an auditable execution trail.
+
 ### Decision: Mandatory Post-Merge Cleanup
 
 **Chosen:** Execute cleanup immediately after merge detection: archive minimal summary rows, purge heavy round artifacts, and vacuum SQLite.
@@ -80,12 +98,14 @@ Phase 5 adopts an `agent.md`-only adversarial workflow: orchestration logic live
 
 1. User invokes adversarial review through `agents/adversarial/agent.md`.
 2. Agent initializes/opens `.auto-reviewer/adversarial.db` and creates a `run` record keyed by repo + PR + commit SHA.
-3. Detector round writes normalized candidate findings into SQLite (canonical fingerprint, severity, provenance).
-4. Challenger and defender rounds append per-model stances and evidence rows linked to finding fingerprints.
-5. Judge round writes arbitration outcomes for unresolved findings.
-6. Confidence routing query materializes final buckets (`high-confidence`, `contested`, `debunked`) and exports output payloads.
-7. Output skills render confidence and debate summary into report/comment formats.
-8. On merge detection, cleanup contract archives lightweight run summary, deletes transient artifacts, prunes stale DB rows, and vacuums database.
+3. Agent materializes stage tasks and reviewer assignments (one reviewer per skill/concern) with `pending` status in SQLite.
+4. Detector round writes normalized candidate findings into SQLite (canonical fingerprint, severity, provenance) and updates task/reviewer statuses transactionally.
+5. Challenger and defender rounds append per-model stances and evidence rows linked to finding fingerprints, with status transitions persisted at each stage boundary.
+6. Judge round writes arbitration outcomes for unresolved findings and final stage statuses.
+7. On interruption, resume loads incomplete tasks/reviewer statuses and continues from the first non-completed stage without duplicate assignments.
+8. Confidence routing query materializes final buckets (`high-confidence`, `contested`, `debunked`) and exports output payloads.
+9. Output skills render confidence and debate summary into report/comment formats.
+10. On merge detection, cleanup contract archives lightweight run summary, deletes transient artifacts, prunes stale DB rows, and vacuums database.
 
 ## API Changes
 
@@ -94,7 +114,8 @@ No external service API changes.
 Internal interface updates:
 - New adversarial agent command contract in `agent.md` (run, resume, cleanup).
 - Additive output payload fields for confidence class, consensus score, and debate summary reference.
-- Additive `apm.yml` adversarial config keys for SQLite path, retention, and post-merge cleanup policy.
+- Additive `apm.yml` adversarial config keys for SQLite path, retention, post-merge cleanup policy, and `models_by_stage` mapping.
+- Additive SQLite entities for stage tasks and reviewer assignments with explicit statuses.
 
 ## Dependencies
 
@@ -113,6 +134,7 @@ Internal interface updates:
 
 - Agent contract tests validating command flow, role transitions, and deterministic prompt boundaries.
 - SQLite schema and query tests for run state, finding clustering, consensus routing, and resume behavior.
+- SQLite schema and query tests for reviewer/task status durability and one-reviewer-per-concern invariants.
 - Integration tests for end-to-end multi-round flow using mocked model responses and deterministic DB snapshots.
 - Integration tests for degraded fallback paths (provider failure, quorum loss, DB lock) with explicit status assertions.
 - Output compatibility tests ensuring review-report/inline-comments render confidence and debate context without regressions.
@@ -122,6 +144,7 @@ Internal interface updates:
 
 - **SQLite locked during concurrent runs:** agent uses bounded retry/backoff; if lock persists, run degrades with explicit status.
 - **Interrupted run before verdict:** resume command reloads open run state from SQLite and continues from last completed round.
+- **Interrupted run mid-stage due to connection failure:** resume reloads incomplete `stage_tasks` and `reviewers` status rows and resumes exactly once per pending/running item.
 - **Conflicting duplicate findings across models:** canonical fingerprinting plus SQL clustering prevents double-reporting.
 - **Judge output malformed:** routing falls back to aggregate stance thresholds and marks arbitration parse error.
 - **Merge event without completed cleanup:** cleanup is idempotent and safe to re-run.

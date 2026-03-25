@@ -11,6 +11,9 @@ Build a multi-model adversarial review system where different LLMs cross-examine
 - Define roles: Detector (finds issues), Challenger (questions findings), Defender (justifies original finding), Judge (final decision)
 - Multi-round protocol: Round 1 (independent detection), Round 2 (challenges issued), Round 3 (defenses provided), Round 4 (judge scores confidence)
 - Confidence scoring: Findings that survive adversarial scrutiny get high confidence (✅), Contested findings get flagged for human review (⚠️), Debunked findings are suppressed (❌)
+- Stage-specific model options: allow different model assignments for detector/challenger/defender/judge with ordered per-stage fallback
+- Durable workflow persistence: persist all review stages, reviewer assignments, and task statuses in SQLite so reviews can resume after connection/provider interruption
+- Reviewer assignment model: exactly one reviewer per skill/concern per run, tracked with explicit lifecycle status
 
 ### Out of Scope
 - Real-time adversarial review (runs async, results delivered later)
@@ -48,3 +51,4 @@ Build a multi-model adversarial review system where different LLMs cross-examine
 3. Should models know their role (detector vs challenger) or be blind?
 4. How to weight votes (equal weight or model-specific weights based on Phase 2 benchmark)?
 5. Should adversarial review replace single-model review or augment it?
+6. What default stage-model mapping should be shipped for detector/challenger/defender/judge?

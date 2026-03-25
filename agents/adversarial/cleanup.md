@@ -7,9 +7,10 @@
 ## Required Actions
 
 1. archive lightweight run summary metadata for audit.
-2. purge transient round artifacts from `.skill-machine/adversarial-artifacts/`.
+2. purge transient round artifacts from `.auto-reviewer/adversarial-artifacts/`.
 3. prune stale rows based on configured retention rules.
 4. vacuum the sqlite database to reclaim space.
+5. preserve reviewer/task lifecycle rows required for interrupted-run resume and audit integrity.
 
 ## Safety Rules
 

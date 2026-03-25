@@ -17,7 +17,51 @@ config:
     enabled: true
     min_models: 2
     cross_examination: true
-    panel_size: 3
+    panel_size: 4
     max_rounds: 4
-    db_path: .skill-machine/adversarial.db
+    round_limits:
+      detector: 1
+      challenger: 1
+      defender: 1
+      judge: 1
+    db_path: .auto-reviewer/adversarial.db
+    artifacts_path: .auto-reviewer/adversarial-artifacts
+    resume_key_fields: [repo, pr, commit_sha]
     retention_days: 14
+    models_by_stage:
+      detector:
+        - gpt-5.3-codex
+      challenger:
+        - claude-sonnet-4.6
+      defender:
+        - gpt-5.3-codex
+      judge:
+        - claude-opus-4.6
+    fallback_models_by_stage:
+      detector:
+        - claude-sonnet-4.6
+      challenger:
+        - gpt-5.3-codex
+      defender:
+        - claude-sonnet-4.6
+      judge:
+        - gpt-5.3-codex
+    reviewer_assignment:
+      strategy: one-per-concern
+      unique_key: [run_id, concern_id]
+    persistence:
+      required_tables:
+        - runs
+        - stage_tasks
+        - reviewers
+        - findings
+        - stances
+        - verdicts
+        - run_events
+        - cleanup_events
+      run_statuses: [pending, in_progress, paused, completed, degraded, failed]
+      stage_task_statuses: [pending, running, blocked, completed, failed]
+      reviewer_statuses: [pending, running, completed, failed, skipped]
+    cleanup:
+      on_merge: true
+      preserve_audit_rows: true
