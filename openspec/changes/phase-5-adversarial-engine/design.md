@@ -76,6 +76,15 @@ Phase 5 adopts an `agent.md`-only adversarial workflow: orchestration logic live
 
 **Rationale:** Durable reviewer/task state guarantees resumability after connection failures and provides an auditable execution trail.
 
+### Decision: Strict Schema Adherence
+
+**Chosen:** Define a concrete SQLite schema contract (DDL, constraints, indexes) and require strict runtime adherence to those constraints.
+**Alternatives considered:**
+- Soft schema guidance without executable DDL — rejected because implementations drift and resume guarantees weaken.
+- Application-only validation without DB constraints — rejected because invariant enforcement becomes incomplete under retries/concurrency.
+
+**Rationale:** Hard DB constraints plus transactional stage boundaries produce deterministic behavior, stronger data integrity, and safer interruption recovery.
+
 ### Decision: Mandatory Post-Merge Cleanup
 
 **Chosen:** Execute cleanup immediately after merge detection: archive minimal summary rows, purge heavy round artifacts, and vacuum SQLite.
@@ -116,6 +125,7 @@ Internal interface updates:
 - Additive output payload fields for confidence class, consensus score, and debate summary reference.
 - Additive `apm.yml` adversarial config keys for SQLite path, retention, post-merge cleanup policy, and `models_by_stage` mapping.
 - Additive SQLite entities for stage tasks and reviewer assignments with explicit statuses.
+- Additive mandatory SQLite DDL and strict adherence invariants (foreign keys, uniqueness, check constraints, idempotent upserts).
 
 ## Dependencies
 
@@ -135,6 +145,8 @@ Internal interface updates:
 - Agent contract tests validating command flow, role transitions, and deterministic prompt boundaries.
 - SQLite schema and query tests for run state, finding clustering, consensus routing, and resume behavior.
 - SQLite schema and query tests for reviewer/task status durability and one-reviewer-per-concern invariants.
+- Schema contract tests that execute the documented DDL and assert all CHECK/UNIQUE/FOREIGN KEY constraints are active.
+- Transaction tests verifying no partial stage completion rows are visible after simulated mid-transaction failure.
 - Integration tests for end-to-end multi-round flow using mocked model responses and deterministic DB snapshots.
 - Integration tests for degraded fallback paths (provider failure, quorum loss, DB lock) with explicit status assertions.
 - Output compatibility tests ensuring review-report/inline-comments render confidence and debate context without regressions.
@@ -150,3 +162,4 @@ Internal interface updates:
 - **Merge event without completed cleanup:** cleanup is idempotent and safe to re-run.
 - **Retention misconfiguration (zero-day or negative window):** agent enforces safe minimum retention before purge.
 - **Repository switch with stale DB path:** run key includes repo fingerprint to prevent cross-repo contamination.
+- **Constraint violation during resume (duplicate reviewer/finding/verdict):** fail/degrade explicitly, record structured error event, and do not silently continue.

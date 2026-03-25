@@ -2,53 +2,47 @@
 
 ## Intent
 
-Build a multi-model adversarial review system where different LLMs cross-examine each other's findings, challenge assumptions, and debate edge cases. This creates a "panel of experts" approach to code review, surfacing blind spots and reducing both false positives and false negatives through collaborative scrutiny.
+Current review behavior does not clearly separate multi-model issue discovery from adversarial scrutiny, and it does not enforce reviewer independence from the original finder. This can weaken trust in adjudication quality and make provenance/auditability unclear when recovering interrupted runs. The change aims to ensure that multiple LLMs first run code-review skills over a codebase or PR/diff, findings are durably deduplicated in the database, and adversarial review is performed only after detection is complete by reviewers that are not the same model that authored the finding.
 
 ## Scope
 
 ### In Scope
-- Implement adversarial review workflow: multiple models (e.g., GPT-4, Claude Opus, Gemini Pro) independently review code, findings are aggregated, each model challenges others' findings ("Is this really a bug? What if X?"), consensus emerges through debate rounds
-- Define roles: Detector (finds issues), Challenger (questions findings), Defender (justifies original finding), Judge (final decision)
-- Multi-round protocol: Round 1 (independent detection), Round 2 (challenges issued), Round 3 (defenses provided), Round 4 (judge scores confidence)
-- Confidence scoring: Findings that survive adversarial scrutiny get high confidence (✅), Contested findings get flagged for human review (⚠️), Debunked findings are suppressed (❌)
-- Stage-specific model options: allow different model assignments for detector/challenger/defender/judge with ordered per-stage fallback
-- Durable workflow persistence: persist all review stages, reviewer assignments, and task statuses in SQLite so reviews can resume after connection/provider interruption
-- Reviewer assignment model: exactly one reviewer per skill/concern per run, tracked with explicit lifecycle status
+- Multi-LLM detection phase where multiple models run review skills against the target codebase or PR/diff.
+- Persistent finding capture in SQLite including deduped/canonicalized issue records before adversarial review begins.
+- Explicit phase boundary: adversarial challenge/defense/judgment starts only after detection completion criteria are met.
+- Reviewer independence requirement: the model reviewing/challenging a finding must be different from the model that found/wrote that finding.
+- Provenance tracking in DB for both sides of each issue lifecycle: who found an issue and who reviewed/judged it.
+- Resume-safe persistence semantics for detection and adversarial phases so interrupted runs can continue without losing finder/reviewer attribution.
 
 ### Out of Scope
 - Real-time adversarial review (runs async, results delivered later)
 - Fine-tuning models for debate (prompt-based roles only)
 - Human-in-the-loop during debate (fully automated)
+- Replacing non-adversarial review paths outside this phase boundary definition
+- Model-training or benchmark policy changes unrelated to finder/reviewer separation and provenance
 
 ## Approach
 
-1. **Model Selection:** Choose 3-5 diverse models (different architectures, training data, strengths)
-2. **Independent Review:** Each model runs skills independently against PR diff
-3. **Finding Aggregation:** Union of all findings from all models
-4. **Challenge Phase:** Each model reviews others' findings and issues challenges
-5. **Defense Phase:** Original detector model defends its finding
-6. **Consensus Scoring:** Judge model (or voting) assigns confidence score
-7. **Output:** Findings with high consensus → reported, Low consensus → flagged for human review, Debunked → suppressed
+Use a two-phase lifecycle with a strict gate between discovery and adversarial scrutiny. First, run independent multi-model detection and persist normalized, deduplicated findings as the shared source of truth. Then run adversarial review over that finalized finding set with enforced model separation between finder and reviewer roles, preserving complete finder/reviewer attribution in database records for auditability and recovery.
 
 ## Impact
 
 ### Affected Areas
-- New `adversarial/` directory with orchestration logic and debate protocols
-- Output skills enhanced to show confidence scores and debate summaries
-- May require significant compute (5 models × multiple rounds)
+- `agents/adversarial/agent.md` proposal contract expectations for phase ordering, reviewer independence, and provenance requirements.
+- SQLite persistence contract surfaces for detection records, deduped findings, and reviewer attribution.
+- Review orchestration expectations where adversarial processing depends on completion of multi-model detection.
+- Output/reporting expectations that rely on stored finder/reviewer identity metadata.
 
 ## Risks
 
-1. **Cost:** Running 5 models × 3 rounds = 15x the baseline cost → Mitigation: Reserve for critical PRs (security-sensitive repos, production deployments)
-2. **Latency:** Multi-round debate may take minutes → Mitigation: Async execution, deliver results when ready
-3. **Debate Quality:** Models may agree on false positives → Mitigation: Include model with known disagreement tendency (e.g., strict vs permissive)
-4. **Complexity:** Debate protocol is non-trivial to implement → Mitigation: Start with simple 2-round (detect + challenge), iterate
+1. **Latency increase:** waiting for full detection completion before adversarial review may delay final output.
+2. **Assignment constraints:** enforcing reviewer/finder model separation may reduce scheduling flexibility when model availability is limited.
+3. **Deduplication correctness:** incorrect canonicalization could merge distinct issues or split duplicates, affecting later adversarial review quality.
+4. **Provenance integrity:** incomplete or inconsistent finder/reviewer attribution can undermine auditability and resume behavior.
 
 ## Open Questions
 
-1. How many models? (3 minimum for tiebreaking, 5 for diversity)
-2. How many debate rounds? (2-4 rounds, tradeoff: depth vs latency)
-3. Should models know their role (detector vs challenger) or be blind?
-4. How to weight votes (equal weight or model-specific weights based on Phase 2 benchmark)?
-5. Should adversarial review replace single-model review or augment it?
-6. What default stage-model mapping should be shipped for detector/challenger/defender/judge?
+1. What defines detection completion for starting adversarial review (all detector tasks complete vs quorum-based completion)?
+2. How should the system behave when no eligible reviewer model remains that differs from the finding author model?
+3. What minimum provenance fields are required in outputs versus retained only in DB?
+4. Should dedupe happen strictly before adversarial review only, or also allow additional dedupe checkpoints after adversarial stages?
